@@ -19,7 +19,7 @@
        <div style="display: flex;height: 50px">
        <img src="../../assets/logo_index.png" width="48" height="48" style="padding: 10px;"/>
         <span class="indextitle">一机游大数据趋势分析平台</span>
-          <div style="display: flex;margin-left: 900px">
+          <div style="display: flex;margin-left: 72%">
          <span class="indexright"> <Icon type="md-person" size="21" /> 管理员,您好</span>
          <span class="indexright"> <Icon type="ios-mail-outline" size="30"/> 3封未读</span>
          <span class="indexright"> <Icon type="md-log-out" size="21"/> </span>
