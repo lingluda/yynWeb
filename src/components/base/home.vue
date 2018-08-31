@@ -16,15 +16,21 @@
 </div> -->
 <Layout>
      <Header style="background: rgb(38, 38, 38);padding: unset;height: 50px">
-       <div style="display: flex;height: 50px">
+       <Row>
+         <Col span="19">
+           <div style="display: flex">
        <img src="../../assets/logo_index.png" width="48" height="48" style="padding: 10px;"/>
         <span class="indextitle">一机游大数据趋势分析平台</span>
-          <div style="display: flex;margin-left: 72%">
+           </div>
+         </Col>
+         <Col span="5">
+           <div style="display: flex">
          <span class="indexright"> <Icon type="md-person" size="21" /> 管理员,您好</span>
          <span class="indexright"> <Icon type="ios-mail-outline" size="30"/> 3封未读</span>
          <span class="indexright"> <Icon type="md-log-out" size="21"/> </span>
-          </div>
-       </div>
+           </div>
+         </Col>
+       </Row>
       </Header>
     <Layout>
    <Sider hide-trigger style="display: flex;height: calc(100vh-50px);background-color: rgb(51, 51, 51)">

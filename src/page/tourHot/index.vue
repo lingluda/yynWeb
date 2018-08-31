@@ -21,7 +21,7 @@
           <p >今年总接待游客量:<span style="font-size: 48px;color: rgb(0, 118, 255);">1211212人</span></p>
         </div>
         <p style="margin-left: 30%">个市州所占比例</p>
-        <div id="chart" style="width:85%;height:400px;position: center"></div>
+        <div id="chart" class="content"></div>
       </Col>
       <Col span="1">
         <Divider type="vertical" style="height:90vh"/>
@@ -44,7 +44,7 @@
           </Row>
         </div>
         <p style="margin-left: 25%">日期区间客流趋势分析</p>
-        <div id="line" style="width:85%;height:400px;"></div>
+        <div id="line" class="content"></div>
       </Col>
     </Row>
    </Card>
@@ -153,6 +153,10 @@
   }
   .btn{
     margin-top: 20px;
+  }
+  .content{
+    width:85%;
+    height:400px;
   }
 
 </style>
