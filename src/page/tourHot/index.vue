@@ -12,7 +12,7 @@
           <Select size="small" style="width: 120px">
             <Option>全省</Option>
           </Select>
-          <Row style="border: 1px solid #e8eaec;margin-bottom: 20px;margin-top: 15px">
+          <Row style="border: 1px solid #dcdee2;margin-bottom: 20px;margin-top: 15px">
             <Col span="8" style="padding: 20px">
               <p>今日总接待游客量</p>
               <span>210,760</span><span>个</span>
@@ -29,13 +29,13 @@
           </Row>
           <Row :gutter="16">
             <Col span="12">
-              <card style="border: 1px solid #e8eaec">
+              <card style="border: 1px solid #dcdee2">
                 <span class="tis">各市州所占比例</span>
                 <div id="mybar" style="width: 85%;height: 400px"></div>
               </card>
             </Col>
             <Col span="12">
-              <card style="border: 1px solid #e8eaec">
+              <card style="border: 1px solid #dcdee2">
                 <span class="tis">日期区间客流 趋势分析</span><span>(人数：万)</span>
                 <div id="myline" style="width: 85%;height: 400px"></div>
               </card>

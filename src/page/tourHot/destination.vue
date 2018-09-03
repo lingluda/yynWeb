@@ -14,14 +14,14 @@
             <Radio label="default">搜索引擎</Radio>
             <Radio label="small">网站报道</Radio>
           </RadioGroup>
-          <div style="border: 1px solid #e8eaec;margin-top: 20px">
+          <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div style="margin-top: 10px;margin-right: 30px;margin-left: 30px">
               <span class="tis">一机游用户DAU</span><span>(单位：万次)</span> <DatePicker type="date" placeholder="自选时间" size="small" style="width: 120px;float: right"></DatePicker>
             </div>
-            <div id="simBar" style="width: 800px;height: 300px;"></div>
+            <div id="simBar" style="width: 100%;height: 300px;"></div>
           </div>
         </card>
-        <card>
+        <card style="margin-top: 20px">
           <div>
             <Table border :columns="columns" :data="data"></Table>
           </div>
@@ -94,8 +94,8 @@
       },
           },
           grid: {
-            left: '0',
-            right: '0',
+            left: '3%',
+            right: '5%',
             bottom: '3%',
             containLabel: true
           },
