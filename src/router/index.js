@@ -21,6 +21,13 @@ export default new Router({
       },
       children: [
         {
+          path: 'tourhot',
+          name: 'tourhot',
+          component: resolve => {
+            require(['../page/tourhot.vue'], resolve)
+          }
+        },
+        {
           path: 'analysisform',
           name: 'analysisform',
           component: resolve => {

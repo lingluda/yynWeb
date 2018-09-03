@@ -1,130 +1,156 @@
 <template>
-  <div style="height: 100vh">
-    <ButtonGroup>
-      <Button style="width: 130px" @click="pic('index')">首页</Button>
-      <Button type="primary" style="width: 130px" @click="pic('destination')">热门目的地</Button>
-      <Button style="width: 130px" @click="pic('scenic')">热门景区</Button>
-      <Button style="width: 130px" @click="pic('hotmap')">景区客流热力分布</Button>
-    </ButtonGroup>
-    <card class="btn">
-    <p class="ti">热门目的地网络热度TOP10</p>
-    <ButtonGroup style="margin-left: 110px">
-      <Button type="primary" size="small">APP访问</Button>
-      <Button size="small">搜索引擎</Button>
-      <Button size="small">网站报道</Button>
-    </ButtonGroup>
-      <Select size="small" style="width: 100px;margin-left: 400px">
-        <Option>2018-08-30</Option>
-      </Select>
-    <p style="margin-left: 110px;margin-top: 30px">一机游用户访问DAU（万次）</p>
-    <div id="bar" style="width: 800px;height: 300px;margin-left: 50px"></div>
-    </card>
-    <card class="btn">
-      <p class="ti">热门路线TOP10</p>
-      <Select size="small" style="width: 100px;margin-left: 700px">
-        <Option>222</Option>
-      </Select>
-      <div id="hotline" style="width: 800px;height: 800px"></div>
-    </card>
+  <div>
+    <a style="margin-right: 10px;">
+      <Icon type="md-arrow-back" size="16"/>
+    </a> <span class="ti">旅游热度</span>
+    <Tabs value="destination" @on-click="pic">
+      <TabPane label="首页" name="index">
+      </TabPane  >
+      <TabPane label="热门目的地" name="destination">
+        <card>
+          <p class="tis">热门目的地网络热度TOP10</p>
+          <RadioGroup type="button" size="small">
+            <Radio label="large">APP访问</Radio>
+            <Radio label="default">搜索引擎</Radio>
+            <Radio label="small">网站报道</Radio>
+          </RadioGroup>
+          <div style="border: 1px solid #e8eaec;margin-top: 20px">
+            <div style="margin-top: 10px;margin-right: 30px;margin-left: 30px">
+              <span class="tis">一机游用户DAU</span><span>(单位：万次)</span> <DatePicker type="date" placeholder="自选时间" size="small" style="width: 120px;float: right"></DatePicker>
+            </div>
+            <div id="simBar" style="width: 800px;height: 300px;"></div>
+          </div>
+        </card>
+        <card>
+          <div>
+            <Table border :columns="columns" :data="data"></Table>
+          </div>
+        </card>
+      </TabPane>
+      <TabPane label="热门景区" name="scenic">
+      </TabPane>
+      <TabPane label="景区客流热力发布" name="hotmap">
+      </TabPane>
+    </Tabs>
   </div>
 </template>
+
 <script>
   export default {
+    name: "tourhot",
     data() {
-      return {}
+      return {
+        columns: [
+          {
+            title: '热门路线',
+            key: 'name',
+          },
+          {
+            title: '购买次数',
+            key: 'num',
+          },{
+            title: '热门路线DAU量(次)',
+            key: 'dau',
+          },
+          {
+            title: '价格(元)',
+            key: 'unit',
+          }
+        ],
+        data:[
+          {
+            name:'西双',
+            num:25,
+            dau:39,
+            unit:344,
+          }
+        ]
+      }
     },
     mounted() {
-      this.drawBar();
-      this.drawLine();
+      this.initSimBar()
+      this.initSimBars()
     },
     methods: {
-      pic(val) {
-        this.$router.push(val)
-      },
-      drawBar() {
-        let myBar = this.$echarts.init(document.getElementById("bar"))
-        myBar.setOption({
-          color: ['#3398DB'],
+      initSimBar(){
+        let simbar = this.$echarts.init(document.getElementById("simBar"),'macarons')
+        simbar.setOption({
           tooltip: {
             trigger: 'axis',
-            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-              type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-            }
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+              type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            },
+            backgroundColor:'#323232'
           },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-          },
-          xAxis: [
-            {
-              type: 'category',
-              data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-              axisTick: {
-                alignWithLabel: true
-              }
-            }
-          ],
-          yAxis: [
-            {
-              type: 'value'
-            }
-          ],
-          series: [
-            {
-              name: '直接访问',
-              type: 'bar',
-              barWidth: '60%',
-              data: [10, 52, 200, 334, 390, 330, 220]
-            }
-          ]
-        })
-      },
-      drawLine(){
-        let myLine=this.$echarts.init(document.getElementById("hotline"))
-        myLine.setOption({
-          title: {
-            text: '世界人口总量',
-            subtext: '数据来自网络'
-          },
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          legend: {
-            data: ['2011年', '2012年']
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-          },
+          color:['#006EFF'],
           xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01]
+            type: 'category',
+            data: ['云南', '曲靖', '红河', '玉溪', '大理', '丽江', '昭通','西双版纳','昆明'],
+            axisLine:{
+              lineStyle:{
+                color:'#888888',
+        width:2
+      }
+      },
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '3%',
+            containLabel: true
           },
           yAxis: {
-            type: 'category',
-            data: ['巴西','印尼','美国','印度','中国','世界人口(万)']
-          },
-          series: [
-            {
-              name: '2011年',
-              type: 'bar',
-              data: [18203, 23489, 29034, 104970, 131744, 630230]
-            },
-            {
-              name: '2012年',
-              type: 'bar',
-              data: [19325, 23438, 31000, 121594, 134141, 681807]
+            type: 'value',
+            axisLine:{
+              lineStyle:{
+                color:'#888888',
+                width:2
+              }
             }
-          ]
+          },
+          series: [{
+            data: [4, 3, 3, 2, 2, 2, 2,2,1],
+            type: 'bar',
+            barWidth:40
+          }]
         })
+      },
+      initSimBars(){
+        let simbars = this.$echarts.init(document.getElementById("simBars"),'macarons')
+        simbars.setOption({
+          tooltip: {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+              type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            },
+          backgroundColor:'#323232'
+          },
+          xAxis: {
+            type: 'category',
+            data: ['云南', '曲靖', '红河', '玉溪', '大理', '丽江', '昭通','西双版纳','昆明']
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [{
+            data: [4, 3, 3, 2, 2, 2, 2,2,1],
+            type: 'bar'
+          }]
+        })
+      },
+      pic(val){
+        this.$router.push(val)
       }
     }
   }
 </script>
+
+<style scoped>
+
+</style>
