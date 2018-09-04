@@ -1,8 +1,10 @@
 <template>
   <div>
+    <div class="ti">
     <a style="margin-right: 10px;">
       <Icon type="md-arrow-back" size="16"/>
-    </a> <span class="ti">旅游热度</span>
+    </a> <span >旅游热度</span>
+    </div>
     <Tabs value="index" @on-click="click">
       <TabPane label="首页" name="index">
         <card >
@@ -177,7 +179,7 @@
 
 <style>
   .ti {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #000000;
     font-size: 15px;
     font-weight: bold;

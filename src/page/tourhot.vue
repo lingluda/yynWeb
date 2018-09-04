@@ -373,7 +373,7 @@
 
 <style scoped>
   .ti {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     color: #101010;
     font-size: 15px;
     font-weight: bold;

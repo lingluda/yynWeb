@@ -1,5 +1,352 @@
 <template>
   <div>
-    <p>analysis</p>
+  <div class="ti">
+    <a style="margin-right: 10px;">
+      <Icon type="md-arrow-back" size="16"/>
+    </a> <span >旅游热度</span>
+  </div>
+    <div>
+    <card>
+      <p class="tis">舆情总体指标</p>
+      <Row style="width: 100%;height: 300px;border: 1px solid #dcdee2">
+        <p style="margin-top: 20px;margin-left: 10px">云南省舆情正负面情绪分析</p>
+        <Col span="12">
+          <div id="health" style="width: 100%;height: 235px"></div>
+        </Col>
+        <Col span="12">
+          <div id="unhealth" style="width: 100%;height: 235px"></div>
+        </Col>
+      </Row>
+      <Row style="width: 100%;height: 300px;border: 1px solid #dcdee2;margin-top: 20px">
+        <div style="margin-top: 20px;margin-left: 10px;margin-right: 15px">
+        <span >云南省舆情正负面情绪分析</span>
+        <Select style="width: 120px;float: right">
+          <Option>理解</Option>
+        </Select>
+        </div>
+        <Col span="12">
+          <div id="health1" style="width: 100%;height: 235px"></div>
+        </Col>
+        <Col span="12">
+          <div id="unhealth1" style="width: 100%;height: 235px"></div>
+        </Col>
+      </Row>
+    </card>
+      <Row :gutter="16" style="margin-top: 20px;">
+        <Col span="12" style="height: 200px">
+          <card>
+            <p class="tis">全省网络热词TOP10</p>
+            <Table :columns="columns1" :data="data1"></Table>
+          </card>
+        </Col>
+        <Col span="12" style="height: 200px">
+          <card>
+            <div >
+            <span class="tis">州市网络热词TOP10</span>
+              <Select style="width: 120px;float: right">
+                <Option>丽江市</Option>
+              </Select>
+            </div>
+            <Table :columns="columns1" :data="data1"></Table>
+          </card>
+        </Col>
+      </Row>
+    </div>
   </div>
 </template>
+<script>
+  export default {
+    data(){
+      return{
+        columns1: [
+          {
+            title: 'Name',
+            key: 'name'
+          },
+          {
+            title: 'Age',
+            key: 'age'
+          },
+          {
+            title: 'Address',
+            key: 'address'
+          }
+        ],
+        data1: [
+          {
+            name: 'John Brown',
+            age: 18,
+            address: 'New York No. 1 Lake Park',
+            date: '2016-10-03'
+          },
+          {
+            name: 'Jim Green',
+            age: 24,
+            address: 'London No. 1 Lake Park',
+            date: '2016-10-01'
+          },
+          {
+            name: 'Joe Black',
+            age: 30,
+            address: 'Sydney No. 1 Lake Park',
+            date: '2016-10-02'
+          },
+          {
+            name: 'Jon Snow',
+            age: 26,
+            address: 'Ottawa No. 2 Lake Park',
+            date: '2016-10-04'
+          }
+        ]
+      }
+    },
+    mounted(){
+      this.initHealth()
+      this.initUNHealth()
+      this.initHealth1()
+      this.initUNHealth1()
+    },
+    methods:{
+      initHealth(){
+      let health = this.$echarts.init(document.getElementById("health"))
+        health.setOption({
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c} ({d}%)",
+            backgroundColor:'#323232'
+          },
+          legend: {
+            //orient: 'vertical',
+            bottom:0,
+            left: 'center',
+            data:['媒体正面情绪','媒体中面情绪','媒体负面情绪']
+          },
+          series: [
+            {
+              name:'',
+              type:'pie',
+              radius: ['50%', '70%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '15',
+                    fontWeight: 'bold',
+                    color:'#000000'
+                  }
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data:[
+                {value:335, name:'媒体正面情绪'},
+                {value:310, name:'媒体中面情绪'},
+                {value:234, name:'媒体负面情绪'}
+              ],
+              itemStyle: {
+                normal: {
+                  label: {
+                    show: true,
+                    formatter: '{b} : {c} \n ({d}%)'
+                  },
+                  labelLine: {
+                    show: true
+                  }
+                }
+              }
+            }
+          ],
+          color: ['#006EFF','#29CC85','#ffbb00','#ff584c','#9741d9','#1fc0cc','#7ff936','#ff9c19','#e63984','#655ce6','#47cc50','#fb0b6']
+        })
+      },
+      initUNHealth(){
+        let unhealth = this.$echarts.init(document.getElementById("unhealth"))
+        unhealth.setOption({
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c} ({d}%)",
+            backgroundColor:'#323232'
+          },
+          legend: {
+            //orient: 'vertical',
+            bottom:0,
+            left: 'center',
+            data:['媒体正面情绪','媒体中面情绪','媒体负面情绪']
+          },
+          series: [
+            {
+              name:'',
+              type:'pie',
+              radius: ['50%', '70%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '15',
+                    fontWeight: 'bold',
+                    color:'#000000'
+                  }
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data:[
+                {value:335, name:'媒体正面情绪'},
+                {value:310, name:'媒体中面情绪'},
+                {value:234, name:'媒体负面情绪'}
+              ],
+              itemStyle: {
+                normal: {
+                  label: {
+                    show: true,
+                    formatter: '{b} : {c} \n ({d}%)'
+                  },
+                  labelLine: {
+                    show: true
+                  }
+                }
+              }
+            }
+          ],
+          color: ['#29CC85','#ffbb00','#ff584c','#9741d9','#1fc0cc','#7ff936','#ff9c19','#e63984','#655ce6','#47cc50','#fb0b6']
+        })
+      },
+      initHealth1(){
+        let health1 = this.$echarts.init(document.getElementById("health1"))
+        health1.setOption({
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c} ({d}%)",
+            backgroundColor:'#323232'
+          },
+          legend: {
+            //orient: 'vertical',
+            bottom:0,
+            left: 'center',
+            data:['媒体正面情绪','媒体中面情绪','媒体负面情绪']
+          },
+          series: [
+            {
+              name:'',
+              type:'pie',
+              radius: ['50%', '70%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '15',
+                    fontWeight: 'bold',
+                    color:'#000000'
+                  }
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data:[
+                {value:335, name:'媒体正面情绪'},
+                {value:310, name:'媒体中面情绪'},
+                {value:234, name:'媒体负面情绪'}
+              ],
+              itemStyle: {
+                normal: {
+                  label: {
+                    show: true,
+                    formatter: '{b} : {c} \n ({d}%)'
+                  },
+                  labelLine: {
+                    show: true
+                  }
+                }
+              }
+            }
+          ],
+          color: ['#006EFF','#29CC85','#ffbb00','#ff584c','#9741d9','#1fc0cc','#7ff936','#ff9c19','#e63984','#655ce6','#47cc50','#fb0b6']
+        })
+      },
+      initUNHealth1(){
+        let unhealth1 = this.$echarts.init(document.getElementById("unhealth1"))
+        unhealth1.setOption({
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: {c} ({d}%)",
+            backgroundColor:'#323232'
+          },
+          legend: {
+            //orient: 'vertical',
+            bottom:0,
+            left: 'center',
+            data:['媒体正面情绪','媒体中面情绪','媒体负面情绪']
+          },
+          series: [
+            {
+              name:'',
+              type:'pie',
+              radius: ['50%', '70%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '15',
+                    fontWeight: 'bold',
+                    color:'#000000'
+                  }
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data:[
+                {value:335, name:'媒体正面情绪'},
+                {value:310, name:'媒体中面情绪'},
+                {value:234, name:'媒体负面情绪'}
+              ],
+              itemStyle: {
+                normal: {
+                  label: {
+                    show: true,
+                    formatter: '{b} : {c} \n ({d}%)'
+                  },
+                  labelLine: {
+                    show: true
+                  }
+                }
+              }
+            }
+          ],
+          color: ['#29CC85','#ffbb00','#ff584c','#9741d9','#1fc0cc','#7ff936','#ff9c19','#e63984','#655ce6','#47cc50','#fb0b6']
+        })
+      },
+    }
+  }
+</script>

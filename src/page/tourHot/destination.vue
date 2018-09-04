@@ -1,8 +1,10 @@
 <template>
   <div>
-    <a style="margin-right: 10px;">
-      <Icon type="md-arrow-back" size="16"/>
-    </a> <span class="ti">旅游热度</span>
+    <div class="ti">
+      <a style="margin-right: 10px;">
+        <Icon type="md-arrow-back" size="16"/>
+      </a> <span >旅游热度</span>
+    </div>
     <Tabs value="destination" @on-click="pic">
       <TabPane label="首页" name="index">
       </TabPane  >
@@ -111,7 +113,7 @@
           series: [{
             data: [4, 3, 3, 2, 2, 2, 2,2,1],
             type: 'bar',
-            barWidth:40
+            barWidth:'50%'
           }]
         })
       },
