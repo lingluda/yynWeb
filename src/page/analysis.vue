@@ -18,9 +18,9 @@
         </Col>
       </Row>
       <Row style="width: 100%;height: 300px;border: 1px solid #dcdee2;margin-top: 20px">
-        <div style="margin-top: 20px;margin-left: 10px;margin-right: 15px">
+        <div style="height: 25px;margin-top: 20px;margin-left: 10px;margin-right: 15px">
         <span >云南省舆情正负面情绪分析</span>
-        <Select style="width: 120px;float: right">
+        <Select size="small" style="width: 120px;float: right">
           <Option>理解</Option>
         </Select>
         </div>

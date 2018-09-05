@@ -136,7 +136,7 @@
         let sex = this.$echarts.init(document.getElementById("sex"))
         sex.setOption({
           title : {
-            text: '性别占比',
+            text: '性别占比(%)',
             textStyle:{
               fontSize:14,
             },
@@ -193,7 +193,7 @@
         let Sin = this.$echarts.init(document.getElementById("in"))
         Sin.setOption({
           title : {
-            text: '收入占比',
+            text: '收入占比(%)',
             textStyle:{
               fontSize:14,
             },
@@ -251,7 +251,7 @@
         let os = this.$echarts.init(document.getElementById("os"))
         os.setOption({
           title : {
-            text: '操作系统',
+            text: '操作系统(%)',
             textStyle:{
               fontSize:14,
             },
@@ -363,7 +363,7 @@
         let age = this.$echarts.init(document.getElementById("age"),)
         age.setOption({
           title: {
-            text: '年龄占比',
+            text: '年龄占比(%)',
             textStyle:{
               fontSize:14,
             },
@@ -385,7 +385,7 @@
           },
           xAxis: {
             type: 'value',
-            name: '%',
+
             boundaryGap: [0, 0.1]
           },
           yAxis: {
@@ -414,7 +414,7 @@
         let edu = this.$echarts.init(document.getElementById("edu"),)
         edu.setOption({
           title: {
-            text: '学历占比',
+            text: '学历占比(%)',
             textStyle:{
               fontSize:14,
             },
@@ -436,7 +436,7 @@
           },
           xAxis: {
             type: 'value',
-            name: '%',
+
             boundaryGap: [0, 0.1]
           },
           yAxis: {
@@ -465,7 +465,7 @@
         let client = this.$echarts.init(document.getElementById("client"),)
         client.setOption({
           title: {
-            text: '终端类型',
+            text: '终端类型(%)',
             textStyle:{
               fontSize:14,
             },
@@ -487,7 +487,7 @@
           },
           xAxis: {
             type: 'value',
-            name: '%',
+
             boundaryGap: [0, 0.1]
           },
           yAxis: {
@@ -516,7 +516,7 @@
         let indu = this.$echarts.init(document.getElementById("industry"),)
         indu.setOption({
           title: {
-            text: '工作行业',
+            text: '工作行业(%)',
             textStyle:{
               fontSize:14,
             },
@@ -538,7 +538,7 @@
           },
           xAxis: {
             type: 'value',
-            name: '%',
+
             boundaryGap: [0, 0.1]
           },
           yAxis: {
@@ -567,7 +567,7 @@
         let city = this.$echarts.init(document.getElementById("city"),)
         city.setOption({
           title: {
-            text: '来源城市',
+            text: '来源城市(%)',
             textStyle:{
               fontSize:14,
             },
@@ -589,7 +589,7 @@
           },
           xAxis: {
             type: 'value',
-            name: '%',
+
             boundaryGap: [0, 0.1]
           },
           yAxis: {
@@ -618,7 +618,7 @@
         let pro = this.$echarts.init(document.getElementById("province"),)
         pro.setOption({
           title: {
-            text: '来源省份',
+            text: '来源省份(%)',
             textStyle:{
               fontSize:14,
             },
@@ -640,7 +640,7 @@
           },
           xAxis: {
             type: 'value',
-            name: '%',
+
             boundaryGap: [0, 0.1]
           },
           yAxis: {
