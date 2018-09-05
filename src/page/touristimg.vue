@@ -20,13 +20,13 @@
       <DatePicker size="small" type="date" placeholder="自选时间" style="width: 120px"></DatePicker>
       <Row :gutter="16" style="margin-top: 20px">
         <Col span="8">
-            <div style="display: flex;border: 1px solid #dcdee2;height: 320px;">
-            <div style="width: 32px;height: 320px;">
-              <Icon type="ios-woman" size="32" color="#ff50fe"/>
+            <div style="display: flex;border: 1px solid #dcdee2;height: 320px;width: 100%">
+            <div style="width: 15%;height: 320px;display: flex">
+              <Icon type="ios-woman" size="32" color="#ff50fe" style="display: flex;align-items: center;float: right"/>
             </div>
-            <div id="sex" style="width: 256px;height: 320px;"></div>
-            <div style="width: 32px;height: 320px;">
-              <Icon type="ios-man" size="32" color="#1ea9ff"/>
+            <div id="sex" style="width: 70%;height: 320px;"></div>
+            <div style="width: 15%;height: 320px;display: flex">
+              <Icon type="ios-man" size="32" color="#1ea9ff" style="display: flex;align-items: center;"/>
             </div>
             </div>
         </Col>
@@ -73,11 +73,20 @@
         <Option>昆明</Option>
       </Select>
       <Row :gutter="16" style="margin-top: 20px;margin-bottom: 40px">
-        <Col span="12">
-          <div style="background-color: yellow;height: 500px"></div>
+        <Col span="10">
+          <div>
+            <Tabs value="name1">
+              <TabPane label="迁入" name="name1">
+                <Table  height="446" :columns="columns1" :data="data1"></Table>
+              </TabPane>
+              <TabPane label="迁出" name="name2">
+                <Table  height="446" :columns="columns1" :data="data1"></Table>
+              </TabPane>
+            </Tabs>
+          </div>
         </Col>
-        <Col span="12">
-          <div style="background-color: yellow;height: 500px"></div>
+        <Col span="14">
+          <div id="moveMap" style="border: 1px solid #dcdee2;height: 500px"></div>
         </Col>
       </Row>
     </card>
@@ -90,7 +99,7 @@
       <DatePicker size="small" type="date" placeholder="自选时间" style="width: 120px"></DatePicker>
       <Row :gutter="16" style="margin-top: 20px;margin-bottom: 40px">
         <Col span="8">
-          <div style="height: 400px;border: 1px solid green">
+          <div style="height: 400px;border: 1px solid #dcdee2">
             <div style="margin-top: 40px;margin-left: 20px">
             <p style="font-weight: bold">平台活跃用户数</p>
             <span style="font-size: 32px">210000</span>个
@@ -108,16 +117,56 @@
           </div>
         </Col>
         <Col span="16">
-          <div id="cash" style="border: 1px solid yellow;height:400px;width:100%;float: left"></div>
+          <div id="cash" style="border: 1px solid #dcdee2;height:400px;width:100%;float: left"></div>
         </Col>
       </Row>
     </card>
   </div>
 </template>
 <script>
+  import AMap from 'AMap'
   export default {
     data() {
-      return {}
+      return {
+        columns1: [
+          {
+            title:'排名',
+            type: 'index',
+            width: 60,
+            align: 'center'
+          },
+          {
+            title: '路线',
+            key: 'line'
+          },
+          {
+            title: '热度',
+            key: 'hot'
+          },
+          {
+            title: '汽车',
+            key: 'card'
+          },
+          {
+            title: '火车',
+            key: 'train'
+          },
+          {
+            title: '飞机',
+            key: 'air'
+          },
+        ],
+        data1: [
+          {
+            line: '深圳-昆明',
+            hot: 18.8,
+            card: '38%',
+            train: '62%',
+            air:'0%'
+          },
+
+        ]
+      }
     },
     mounted() {
       this.initSex()
@@ -130,8 +179,45 @@
       this.initCity()
       this.initPro()
       this.initCash()
+      this.initMap()
     },
     methods: {
+      initMap(){
+        var map = new AMap.Map('moveMap', {
+          resizeEnable: true,
+          center: [108.397428, 26.90923],
+          zoom: 5
+        });
+        var lineArr = [
+          ['102.83322', '24.88339746520424'],
+          ['114.05956000000003', '22.54666503349262']
+        ];
+        var polyline = new AMap.Polyline({
+          path: lineArr,            // 设置线覆盖物路径
+          strokeColor: '#3366FF',   // 线颜色
+          strokeOpacity: 1,         // 线透明度
+          strokeWeight: 2,          // 线宽
+          strokeStyle: 'solid',     // 线样式
+          strokeDasharray: [10, 5], // 补充线样式
+          geodesic: true            // 绘制大地线
+        });
+        polyline.setMap(map);
+
+        var lineArr1 = [
+          ['102.83322', '24.88339746520424'],
+          ['114.30524999999997', '30.594828718750055']
+        ];
+        var polyline1 = new AMap.Polyline({
+          path: lineArr1,            // 设置线覆盖物路径
+          strokeColor: '#3366FF',   // 线颜色
+          strokeOpacity: 1,         // 线透明度
+          strokeWeight: 2,          // 线宽
+          strokeStyle: 'solid',     // 线样式
+          strokeDasharray: [10, 5], // 补充线样式
+          geodesic: true            // 绘制大地线
+        });
+        polyline1.setMap(map);
+      },
       initSex() {
         let sex = this.$echarts.init(document.getElementById("sex"))
         sex.setOption({
