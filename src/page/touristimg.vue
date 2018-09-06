@@ -22,7 +22,7 @@
         <Col span="8">
             <div style="display: flex;border: 1px solid #dcdee2;height: 320px;width: 100%">
             <div style="width: 15%;height: 320px;display: flex">
-              <Icon type="ios-woman" size="32" color="#ff50fe" style="display: flex;align-items: center;float: right"/>
+              <Icon type="ios-woman" size="32" color="#ff50fe" style="display: flex;align-items: center;margin-left: 60%"/>
             </div>
             <div id="sex" style="width: 70%;height: 320px;"></div>
             <div style="width: 15%;height: 320px;display: flex">
@@ -75,12 +75,12 @@
       <Row :gutter="16" style="margin-top: 20px;margin-bottom: 40px">
         <Col span="10">
           <div>
-            <Tabs value="name1">
+            <Tabs value="name1" style="border-top: 1px solid #dcdee2;border-left: 1px solid #dcdee2;border-right: 1px solid #dcdee2">
               <TabPane label="迁入" name="name1">
-                <Table  height="446" :columns="columns1" :data="data1"></Table>
+                <Table  height="449" :columns="columns1" :data="data1"></Table>
               </TabPane>
               <TabPane label="迁出" name="name2">
-                <Table  height="446" :columns="columns1" :data="data1"></Table>
+                <Table  height="449" :columns="columns1" :data="data1"></Table>
               </TabPane>
             </Tabs>
           </div>
@@ -164,7 +164,69 @@
             train: '62%',
             air:'0%'
           },
-
+          {
+            line: '深圳-昆明',
+            hot: 18.8,
+            card: '38%',
+            train: '62%',
+            air:'0%'
+          },
+          {
+            line: '深圳-昆明',
+            hot: 18.8,
+            card: '38%',
+            train: '62%',
+            air:'0%'
+          },
+          {
+            line: '深圳-昆明',
+            hot: 18.8,
+            card: '38%',
+            train: '62%',
+            air:'0%'
+          },
+          {
+            line: '深圳-昆明',
+            hot: 18.8,
+            card: '38%',
+            train: '62%',
+            air:'0%'
+          },
+          {
+            line: '深圳-昆明',
+            hot: 18.8,
+            card: '38%',
+            train: '62%',
+            air:'0%'
+          },
+          {
+            line: '深圳-昆明',
+            hot: 18.8,
+            card: '38%',
+            train: '62%',
+            air:'0%'
+          },
+          {
+            line: '深圳-昆明',
+            hot: 18.8,
+            card: '38%',
+            train: '62%',
+            air:'0%'
+          },
+          {
+            line: '深圳-昆明',
+            hot: 18.8,
+            card: '38%',
+            train: '62%',
+            air:'0%'
+          },
+          {
+            line: '深圳-昆明',
+            hot: 18.8,
+            card: '38%',
+            train: '62%',
+            air:'0%'
+          },
         ]
       }
     },
@@ -183,7 +245,24 @@
     },
     methods: {
       initMap(){
-        var map = new AMap.Map('moveMap', {
+        var center = new qq.maps.LatLng(26.90923, 108.397428);
+        var map = new qq.maps.Map(document.getElementById('moveMap'),{
+          center: center,
+          zoom: 5
+        });
+        var path1=[
+          new qq.maps.LatLng(24.87966,102.83322),
+          new qq.maps.LatLng(22.54666503349262, 114.05956000000003)
+        ];
+        var polyline = new qq.maps.Polyline({
+          path: path1,
+          strokeColor: '#0ef94a',
+          strokeWeight: 2,
+          editable:false,
+          map: map
+        });
+
+        /*var map = new AMap.Map('moveMap', {
           resizeEnable: true,
           center: [108.397428, 26.90923],
           zoom: 5
@@ -216,7 +295,7 @@
           strokeDasharray: [10, 5], // 补充线样式
           geodesic: true            // 绘制大地线
         });
-        polyline1.setMap(map);
+        polyline1.setMap(map);*/
       },
       initSex() {
         let sex = this.$echarts.init(document.getElementById("sex"))
@@ -244,7 +323,7 @@
           },
           series: [
             {
-              name: '访问来源',
+              name: '性别占比',
               type: 'pie',
               radius: ['50%', '70%'],
               avoidLabelOverlap: false,
@@ -301,7 +380,7 @@
           },
           series: [
             {
-              name: '访问来源',
+              name: '收入占比',
               type: 'pie',
               radius: ['50%', '70%'],
               avoidLabelOverlap: false,
@@ -359,7 +438,7 @@
           },
           series: [
             {
-              name: '访问来源',
+              name: '操作系统',
               type: 'pie',
               radius: ['50%', '70%'],
               avoidLabelOverlap: false,
@@ -411,9 +490,9 @@
           },
           series: [
             {
-              name: '访问来源',
+              name: '消费分析',
               type: 'pie',
-              radius: ['50%', '70%'],
+              //radius: ['50%', '70%'],
               avoidLabelOverlap: false,
               label: {
                 normal: {
@@ -755,3 +834,11 @@
     }
   }
 </script>
+<style scoped>
+  .ivu-table-wrapper{
+    border: unset;
+  }
+  div.ivu-table:after {
+    background-color:unset !important;
+  }
+</style>

@@ -28,7 +28,7 @@
           <div style="display: flex;justify-content: flex-end">
             <span class="indexright"> <Icon type="md-person" size="21"/> 管理员,您好</span>
             <span class="indexright"> <Icon type="ios-mail-outline" size="30"/> 3封未读</span>
-            <span class="indexright"> <Icon type="md-log-out" size="21"/> </span>
+            <span class="indexright" @click="selected('login')"><Icon type="md-log-out" size="21"/> </span>
           </div>
         </Col>
       </Row>

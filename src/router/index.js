@@ -7,7 +7,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: 'login',
+      path: '/login',
       name: 'login',
       component: resolve => {
         require(['../components/base/login.vue'], resolve)
@@ -21,28 +21,33 @@ export default new Router({
       },
       children: [
         {
-          path: 'tourhot',
+          path:'/',
+          name:'index',
+          redirect:'index'
+        },
+        {
+          path: '/tourhot',
           name: 'tourhot',
           component: resolve => {
             require(['../page/tourhot.vue'], resolve)
           }
         },
         {
-          path: 'analysisform',
+          path: '/analysisform',
           name: 'analysisform',
           component: resolve => {
             require(['../page/analysisform.vue'], resolve)
           }
         },
         {
-          path: 'touristimg',
+          path: '/touristimg',
           name: 'touristimg',
           component: resolve => {
             require(['../page/touristimg.vue'], resolve)
           }
         },
         {
-          path: 'touristexp',
+          path: '/touristexp',
           name: 'touristexp',
           component: resolve => {
             require(['../page/touristexp.vue'], resolve)
@@ -56,28 +61,28 @@ export default new Router({
           }
         },
         {
-          path: 'scenic',
+          path: '/scenic',
           name: 'scenic',
           component: resolve => {
             require(['../page/tourHot/scenic.vue'], resolve)
           }
         },
         {
-          path: 'hotmap',
+          path: '/hotmap',
           name: 'hotmap',
           component: resolve => {
             require(['../page/tourHot/hotmap.vue'], resolve)
           }
         },
         {
-          path: 'index',
+          path: '/index',
           name: 'Index',
           component: resolve => {
             require(['../page/tourHot/index.vue'], resolve)
           }
         },
         {
-          path: 'destination',
+          path: '/destination',
           name: 'destination',
           component: resolve => {
             require(['../page/tourHot/destination.vue'], resolve)
