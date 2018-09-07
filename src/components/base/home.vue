@@ -19,7 +19,7 @@
       <Row type="flex" justify="center" align="middle" style="height: 50px">
         <Col span="19">
           <div style="display: flex;">
-            <img src="../../assets/logo2.png" width="45" height="45" style="padding: 5px;margin-top: 8px;margin-left: 8px"/>
+            <img src="../../assets/logo.png" width="28" height="28" style="padding: 5px;margin-top: 18px;margin-left: 8px"/>
             <Divider type="vertical" style="height: 50px;background-color: #000000"></Divider>
             <span class="indextitle">一机游大数据趋势分析平台</span>
           </div>

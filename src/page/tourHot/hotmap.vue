@@ -57,9 +57,9 @@
               <span style="font-weight: bold;font-size: 32px">0.9</span><span>% (上升百分百)</span>
               </div>
             </Col>
-           
+
             <Col span="7">
-              
+
               <p style="font-weight: bold">当前实时客流人数环比</p>
             </Col>
           </Row>
