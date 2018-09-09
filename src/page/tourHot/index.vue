@@ -29,11 +29,29 @@
               <span>2.2</span><span>%(<Icon type="md-arrow-round-down" style="height: 18px;color: green"/>下降百分比)</span>
             </Col>
           </Row>
+        </card>
           <Row :gutter="16">
             <Col span="12">
-              <card style="border: 1px solid #dcdee2">
-                <span class="tis">各市州所占比例</span>
-                <div id="mybar" style="width: 85%;height: 400px"></div>
+              <card>
+                <p class="tis">游客人数</p>
+                <DatePicker size="small" type="daterange" placement="bottom-end" placeholder="自选时间"
+                            style="width: 200px"></DatePicker>
+                <Select size="small" style="width: 120px">
+                  <Option>全省</Option>
+                </Select>
+                <Row style="border: 1px solid #dcdee2;margin-bottom: 20px;margin-top: 20px">
+                  <Col span="12" style="padding: 20px">
+                    <p>今日总接待游客量</p>
+                    <span>210,760</span><span>个</span>
+                  </Col>
+                  <!--<Col span="1"><Divider type="vertical"/></Col>-->
+                  <Col span="12" style="padding: 20px">
+                    <p>与昨日环比</p>
+                    <span>6.2</span><span>%(<Icon type="md-arrow-round-up" style="color: red;height: 18px"/>上升百分比)</span>
+                  </Col>
+                </Row>
+
+                <div id="mybar" style="width: 100%;height: 400px;border: 1px solid #dcdee2"></div>
               </card>
             </Col>
             <Col span="12">
@@ -43,7 +61,7 @@
               </card>
             </Col>
           </Row>
-        </card>
+
       </TabPane  >
       <TabPane label="热门目的地" name="destination" >
       </TabPane>
@@ -70,6 +88,14 @@
       initBar() {
         let mybar = this.$echarts.init(document.getElementById("mybar"),'macarons')
         mybar.setOption({
+          //各市州所占比例
+          title : {
+            text: '各市州所占比例',
+            textStyle:{
+              fontSize:14,
+            },
+            x:'left'
+          },
           tooltip: {
             trigger: 'item',
             formatter: "{a} <br/>{b}: {c} ({d}%)",

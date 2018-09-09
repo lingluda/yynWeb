@@ -9,9 +9,12 @@
         </Input>
       </FormItem>
       <FormItem prop="password">
-        <Input type="password" v-model="formInline.password" placeholder="密   码">
+        <Input type="text" v-model="formInline.password" icon="md-eye" @on-click="change(false)" v-if="isshow"  placeholder="密   码">
+        </Input>
+        <Input type="password" v-model="formInline.password" icon="md-eye-off" @on-click="change(true)"  v-if="!isshow" placeholder="密   码">
         </Input>
       </FormItem>
+
       <FormItem prop="code">
         <Input type="text" v-model="formInline.code" placeholder="验证码">
         </Input>
@@ -31,6 +34,7 @@
   export default {
     data(){
       return{
+        isshow:false,
         formInline: {
           user: '',
           password: ''
@@ -50,10 +54,13 @@
 
     },
     methods:{
+      change(val){
+        this.isshow=val;
+      },
       login(val){
         this.$refs[val].validate((valid)=>{
           if(valid){
-            console.log(this.formInline.user)
+            console.log(this.formInline.password)
             this.$router.push('index')
           }
         })
@@ -82,8 +89,8 @@
   }
   .footer{
     background-color: #034441;
-    opacity: 0.7;
-    color: white;
+    opacity: 0.8;
+    color: rgb(255, 255, 255);
     height: 34px;
     line-height: 34px;
     text-align: center;
