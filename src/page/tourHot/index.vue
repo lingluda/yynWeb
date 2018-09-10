@@ -8,7 +8,7 @@
     <Tabs value="index" @on-click="click">
       <TabPane label="首页" name="index">
         <card >
-          <p class="tis">全区游客人数</p>
+          <p class="tis">全区游客人数  <Icon size="16" type="ios-help-circle-outline" /></p>
           <DatePicker size="small" type="daterange" placement="bottom-end" placeholder="自选时间"
                       style="width: 200px"></DatePicker>
           <Select size="small" style="width: 120px">

@@ -31,6 +31,7 @@
     </div>
 </template>
 <script>
+  import http from '@/http.js'
   export default {
     data(){
       return{
@@ -55,6 +56,9 @@
     },
     methods:{
       change(val){
+        http.get('/api/data/sysUser/userlist',{}).then(resp=>{
+          console.log(resp)
+        })
         this.isshow=val;
       },
       login(val){
