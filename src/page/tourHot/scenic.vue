@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="ti">
-      <a style="margin-right: 10px;">
-        <Icon type="md-arrow-back" size="16"/>
-      </a> <span >旅游热度</span>
+      <span >旅游热度</span>
     </div>
     <Tabs value="scenic" @on-click="pic">
       <TabPane label="首页" name="index">
@@ -118,7 +116,7 @@
           legend: {
             bottom: 10,
             left: 'center',
-            data: ['峰值']
+            data: ['峰值','景区历史游客峰值']
           },
           grid: {
             left: '3%',
@@ -152,9 +150,15 @@
               type: 'bar',
               data: [1, 2, 3, 4, 5,6,7,8,9,10],
               barWidth:'50%'
+            },
+            {
+              name: '景区历史游客峰值',
+              type: 'line',
+              data: [1, 2, 3, 4, 5,6,7,8,9,10],
+              barWidth:'50%'
             }
           ],
-          color: ['#006EFF',]
+          color: ['#006EFF','orange']
         })
       },
       initMax2(){
@@ -170,7 +174,7 @@
           legend: {
             bottom: 10,
             left: 'center',
-            data: ['今日景区客流','昨日景区客流']
+            data: ['今日景区客流','昨日景区客流','客流变化量']
           },
           grid: {
             left: '3%',
@@ -209,8 +213,13 @@
               type: 'bar',
               data: [1, 2, 3, 4, 5,6,7,8,9,10]
             },
+            {
+              name: '客流变化量',
+              type: 'line',
+              data: [1, 2, 3, 4, 5,6,7,8,9,10]
+            }
           ],
-          color:['#006EFF','#29CC85']
+          color:['#006EFF','#29CC85','red']
         })
       },
       initSimBars(){

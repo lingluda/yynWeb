@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="ti">
-      <a style="margin-right: 10px;">
-        <Icon type="md-arrow-back" size="16"/>
-      </a> <span >旅游热度</span>
+      <span >旅游热度</span>
     </div>
     <Tabs value="hotmap" @on-click="pic">
       <TabPane label="首页" name="index">

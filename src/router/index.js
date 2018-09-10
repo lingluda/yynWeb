@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
 
@@ -25,13 +24,7 @@ export default new Router({
           name:'index',
           redirect:'index'
         },
-        {
-          path: '/tourhot',
-          name: 'tourhot',
-          component: resolve => {
-            require(['../page/tourhot.vue'], resolve)
-          }
-        },
+
         {
           path: '/analysisform',
           name: 'analysisform',

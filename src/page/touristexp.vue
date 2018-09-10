@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="ti">
-      <a style="margin-right: 10px;">
-        <Icon type="md-arrow-back" size="16"/>
-      </a> <span >游客体验</span>
+     <span >游客体验</span>
     </div>
     <card>
       <p class="tis">投诉分析</p>

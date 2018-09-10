@@ -1,48 +1,27 @@
 <template>
   <div>
     <div class="ti">
-    <a style="margin-right: 10px;">
-      <Icon type="md-arrow-back" size="16"/>
-    </a> <span >旅游热度</span>
+     <span >旅游热度</span>
     </div>
     <Tabs value="index" @on-click="click">
       <TabPane label="首页" name="index">
-        <card >
-          <p class="tis">全区游客人数  <Icon size="16" type="ios-help-circle-outline" /></p>
-          <DatePicker size="small" type="daterange" placement="bottom-end" placeholder="自选时间"
-                      style="width: 200px"></DatePicker>
-          <Select size="small" style="width: 120px">
-            <Option>全省</Option>
-          </Select>
-          <Row style="border: 1px solid #dcdee2;margin-bottom: 20px;margin-top: 15px">
-            <Col span="8" style="padding: 20px">
-              <p>今日总接待游客量</p>
-              <span>210,760</span><span>个</span>
-            </Col>
-            <!--<Col span="1"><Divider type="vertical"/></Col>-->
-            <Col span="8" style="padding: 20px">
-              <p>今日接待游客量同比</p>
-              <span>6.2</span><span>%(<Icon type="md-arrow-round-up" style="color: red;height: 18px"/>上升百分比)</span>
-            </Col>
-            <Col span="8" style="padding: 20px">
-              <p>今日接待游客量同比</p>
-              <span>2.2</span><span>%(<Icon type="md-arrow-round-down" style="height: 18px;color: green"/>下降百分比)</span>
-            </Col>
-          </Row>
-        </card>
           <Row :gutter="16">
             <Col span="12">
               <card>
-                <p class="tis">游客人数</p>
+                <div style="margin-bottom: 20px">
+                <span style="font-weight: bold;color: #000000">游客人数 <Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
+                </div>
                 <DatePicker size="small" type="daterange" placement="bottom-end" placeholder="自选时间"
-                            style="width: 200px"></DatePicker>
-                <Select size="small" style="width: 120px">
+                            style="width: 150px;"></DatePicker>
+                <Select size="small" style="width: 150px">
                   <Option>全省</Option>
                 </Select>
                 <Row style="border: 1px solid #dcdee2;margin-bottom: 20px;margin-top: 20px">
                   <Col span="12" style="padding: 20px">
-                    <p>今日总接待游客量</p>
-                    <span>210,760</span><span>个</span>
+                    <div style="margin-bottom: 10px">
+                    <span>今日总接待游客量 <Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
+                    </div>
+                    <span style="font-size: 28px">210,760</span><span>  人次</span>
                   </Col>
                   <!--<Col span="1"><Divider type="vertical"/></Col>-->
                   <Col span="12" style="padding: 20px">
@@ -50,18 +29,42 @@
                     <span>6.2</span><span>%(<Icon type="md-arrow-round-up" style="color: red;height: 18px"/>上升百分比)</span>
                   </Col>
                 </Row>
-
-                <div id="mybar" style="width: 100%;height: 400px;border: 1px solid #dcdee2"></div>
+                <div style="border: 1px solid #dcdee2">
+                  <div style="margin-top: 20px;margin-left: 20px">
+                    <span style="font-weight: bold;color: #000000">各州市占比 <Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
+                  </div>
+                <div id="mybar" style="width: 100%;height: 400px;"></div>
+                </div>
               </card>
+
             </Col>
             <Col span="12">
-              <card style="border: 1px solid #dcdee2">
-                <span class="tis">日期区间客流 趋势分析</span><span>(人数：万)</span>
+              <card>
+                <div style="margin-bottom: 20px">
+                  <span style="font-weight: bold;color: #000000">客流统计 <Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
+                </div>
+                <DatePicker size="small" type="daterange" placement="bottom-end" placeholder="自选时间"
+                            style="width: 150px;"></DatePicker>
+                <Select size="small" style="width: 150px">
+                  <Option>全省</Option>
+                </Select>
+                <Row style="border: 1px solid #dcdee2;margin-bottom: 20px;margin-top: 20px">
+                  <Col span="12" style="padding: 20px">
+                    <div style="margin-bottom: 10px">
+                      <span>累计游客接待量 <Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
+                    </div>
+                    <span style="font-size: 28px">210,760</span><span>  人次</span>
+                  </Col>
+              </Row>
+              <div style="border: 1px solid #dcdee2">
+                <div style="margin-top: 20px;margin-left: 20px">
+                  <span style="font-weight: bold;color: #000000">日期区间客流 趋势分析 (人数：万)<Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
+                </div>
                 <div id="myline" style="width: 85%;height: 400px"></div>
+              </div>
               </card>
             </Col>
           </Row>
-
       </TabPane  >
       <TabPane label="热门目的地" name="destination" >
       </TabPane>
@@ -88,56 +91,24 @@
       initBar() {
         let mybar = this.$echarts.init(document.getElementById("mybar"),'macarons')
         mybar.setOption({
-          //各市州所占比例
-          title : {
-            text: '各市州所占比例',
-            textStyle:{
-              fontSize:14,
-            },
-            x:'left'
-          },
           tooltip: {
             trigger: 'item',
             formatter: "{a} <br/>{b}: {c} ({d}%)",
             backgroundColor:'#323232'
           },
-          legend: {
-            //orient: 'vertical',
-            bottom: 10,
-            left: 'center',
-            data:['曲靖','丽江','昆明','重庆','柬埔寨']
-          },
+
           series: [
             {
               name:'今日接待',
               type:'pie',
-              radius: ['50%', '70%'],
+              radius: ['0%', '60%'],
               avoidLabelOverlap: false,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-                emphasis: {
-                  show: true,
-                  textStyle: {
-                    fontSize: '15',
-                    fontWeight: 'bold',
-                    color:'#000000'
-                  }
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
               data:[
                 {value:335, name:'曲靖'},
                 {value:310, name:'丽江'},
                 {value:234, name:'昆明'},
                 {value:135, name:'重庆'},
-                {value:1548, name:'柬埔寨'}
+                {value:548, name:'柬埔寨'}
               ],
               itemStyle: {
                 normal: {

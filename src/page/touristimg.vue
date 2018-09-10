@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="ti">
-      <a style="margin-right: 10px;">
-        <Icon type="md-arrow-back" size="16"/>
-      </a> <span >游客画像</span>
+     <span >游客画像</span>
     </div>
     <card>
       <p class="tis">基本属性分析</p>
