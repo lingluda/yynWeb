@@ -13,7 +13,11 @@
       <TabPane label="景区客流热力发布" name="hotmap">
         <card>
           <div style="margin-bottom: 20px">
-          <p class="tis">景区客流热力分布图</p>
+            <div style="margin-bottom: 20px">
+              <span style="font-weight: bold;color: #000000">景区客流热力分布图</span>
+              <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+              </Tooltip>
+            </div>
           <Select size="small" style="width: 120px">
             <Option>城市</Option>
           </Select>
@@ -31,7 +35,11 @@
           <div id="hotmap" style="width: 100%;height: 400px;" class="heatmap"></div>
         </card>
         <card style="margin-bottom: 40px;margin-top: 20px">
-          <p class="tis">景区接待客流数</p>
+          <div style="margin-bottom: 20px">
+            <span style="font-weight: bold;color: #000000">景区接待客流数</span>
+            <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+            </Tooltip>
+          </div>
           <RadioGroup type="button" size="small">
             <Radio label="large">当日</Radio>
             <Radio label="default">当月</Radio>
@@ -63,6 +71,8 @@
           </Row>
           </div>
         </card>
+      </TabPane>
+      <TabPane label="平台运营" name="platform">
       </TabPane>
     </Tabs>
   </div>

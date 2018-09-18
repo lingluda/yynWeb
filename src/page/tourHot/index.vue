@@ -5,66 +5,24 @@
     </div>
     <Tabs value="index" @on-click="click">
       <TabPane label="首页" name="index">
-          <Row :gutter="16">
-            <Col span="12">
-              <card>
-                <div style="margin-bottom: 20px">
-                <span style="font-weight: bold;color: #000000">游客人数 <Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
-                </div>
-                <DatePicker size="small" type="daterange" placement="bottom-end" placeholder="自选时间"
-                            style="width: 150px;"></DatePicker>
-                <Select size="small" style="width: 150px">
-                  <Option>全省</Option>
-                </Select>
-                <Row style="border: 1px solid #dcdee2;margin-bottom: 20px;margin-top: 20px">
-                  <Col span="12" style="padding: 20px">
-                    <div style="margin-bottom: 10px">
-                    <span>今日总接待游客量 <Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
-                    </div>
-                    <span style="font-size: 28px">210,760</span><span>  人次</span>
-                  </Col>
-                  <!--<Col span="1"><Divider type="vertical"/></Col>-->
-                  <Col span="12" style="padding: 20px">
-                    <p>与昨日环比</p>
-                    <span>6.2</span><span>%(<Icon type="md-arrow-round-up" style="color: red;height: 18px"/>上升百分比)</span>
-                  </Col>
-                </Row>
-                <div style="border: 1px solid #dcdee2">
-                  <div style="margin-top: 20px;margin-left: 20px">
-                    <span style="font-weight: bold;color: #000000">各州市占比 <Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
-                  </div>
-                <div id="mybar" style="width: 100%;height: 400px;"></div>
-                </div>
-              </card>
 
-            </Col>
-            <Col span="12">
-              <card>
-                <div style="margin-bottom: 20px">
-                  <span style="font-weight: bold;color: #000000">客流统计 <Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
-                </div>
-                <DatePicker size="small" type="daterange" placement="bottom-end" placeholder="自选时间"
-                            style="width: 150px;"></DatePicker>
-                <Select size="small" style="width: 150px">
-                  <Option>全省</Option>
-                </Select>
-                <Row style="border: 1px solid #dcdee2;margin-bottom: 20px;margin-top: 20px">
-                  <Col span="12" style="padding: 20px">
-                    <div style="margin-bottom: 10px">
-                      <span>累计游客接待量 <Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
-                    </div>
-                    <span style="font-size: 28px">210,760</span><span>  人次</span>
-                  </Col>
-              </Row>
-              <div style="border: 1px solid #dcdee2">
-                <div style="margin-top: 20px;margin-left: 20px">
-                  <span style="font-weight: bold;color: #000000">日期区间客流 趋势分析 (人数：万)<Icon size="16" style="margin-bottom: 1px" type="ios-help-circle-outline" /></span>
-                </div>
-                <div id="myline" style="width: 85%;height: 400px"></div>
-              </div>
-              </card>
-            </Col>
-          </Row>
+        <card>
+          <div>
+            <div style="margin-bottom: 20px;width: 200px">
+              <span style="font-weight: bold;color: #000000">游客人数</span>
+              <Tooltip content="这是怎么个一回事啊，我航线知道" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+              </Tooltip>
+            </div>
+            <div>
+            <DatePicker size="small" v-model="date"  type="date" placeholder="自选时间" @on-change="change1"
+                        style="width: 150px;"></DatePicker>
+
+            <Select size="small" v-model="city" clearable style="width: 150px" @on-change="change3">
+              <Option v-for="item in cityData" :value="item.code">{{item.name}}</Option>
+            </Select>
+            </div>
+          </div>
+        </card>
       </TabPane  >
       <TabPane label="热门目的地" name="destination" >
       </TabPane>
@@ -72,22 +30,64 @@
       </TabPane>
       <TabPane label="景区客流热力发布" name="hotmap">
       </TabPane>
+      <TabPane label="平台运营" name="platform">
+      </TabPane>
     </Tabs>
   </div>
 </template>
 
 <script>
+  import http from '@/http.js'
+  import city from '@/components/select/city.vue'
   export default {
+    comments:{
+      'city_select':city,
+    },
     data() {
       return {
-
+        date: '',
+        cityData:[],
+        city:'',
+        pieData:[],
       }
     },
     mounted() {
       this.initBar()
       this.initLine()
+      this.getCity()
+      this.init()
     },
     methods: {
+      init(){
+        console.log(1111111111111111111)
+        console.log('当前时间：',http.getCurrentDate())
+      },
+      change1(val){
+        this.date = val;
+        http.get('/api/get_tourism_dist_by_date',{date:this.date,city:this.city}).then(resp=>{
+          this.pieData = resp.data.hits;
+          console.log(this.pieData)
+          this.initBar()
+        })
+        http.get('/api/get_tourism_qty_by_date',{date:this.date,city:this.city}).then(resp=>{
+          console.log('qq1qqq',resp)
+        })
+      },
+      change3(val){
+        this.city = val;
+        http.get('/api/get_tourism_dist_by_date',{date:this.date,city:this.city}).then(resp=>{
+          console.log(resp)
+          this.pieData = resp.hits;
+        })
+        http.get('/api/get_tourism_qty_by_date',{date:this.date,city:this.city}).then(resp=>{
+          console.log('qq1qqq',resp)
+        })
+      },
+      getCity(){
+        http.get('api/get_all_city',{}).then(resp=>{
+          this.cityData = resp.data.hits;
+        })
+      },
       initBar() {
         let mybar = this.$echarts.init(document.getElementById("mybar"),'macarons')
         mybar.setOption({
@@ -103,13 +103,7 @@
               type:'pie',
               radius: ['0%', '60%'],
               avoidLabelOverlap: false,
-              data:[
-                {value:335, name:'曲靖'},
-                {value:310, name:'丽江'},
-                {value:234, name:'昆明'},
-                {value:135, name:'重庆'},
-                {value:548, name:'柬埔寨'}
-              ],
+              data:this.pieData,
               itemStyle: {
                 normal: {
                   label: {
@@ -170,6 +164,9 @@
       click(val){
         this.$router.push(val)
       }
+    },
+    watch:{
+
     }
   }
 </script>

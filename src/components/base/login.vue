@@ -22,9 +22,6 @@
       <FormItem>
         <Button style="width: 100%;background-color: #1076ff;color: white" @click="login('formInline')">登&nbsp;&nbsp;录</Button>
       </FormItem>
-   <!--   <FormItem>
-        <Button style="width: 100%;background-color: #1076ff;color: white" @click="reset('formInline')">登&nbsp;&nbsp;录</Button>
-      </FormItem>-->
       <a style="float: right">忘记密码？</a>
     </Form>
     <p class="footer">Copyright © 2018 FasterSoft Corporation,All Rights Reserved 滇 ICP 备 1213423 号</p>
@@ -56,16 +53,17 @@
     },
     methods:{
       change(val){
-        http.get('/api/data/sysUser/userlist',{}).then(resp=>{
-          console.log(resp)
-        })
+
         this.isshow=val;
       },
       login(val){
         this.$refs[val].validate((valid)=>{
           if(valid){
-            console.log(this.formInline.password)
-            this.$router.push('index')
+            http.get('/api/login',{user_name:this.formInline.user,pwd:this.formInline.password}).then(resp=>{
+              if(resp.data.errcode===0){
+                this.$router.push('index')
+              }
+            })
           }
         })
       },

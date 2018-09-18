@@ -4,7 +4,11 @@
      <span >游客体验</span>
     </div>
     <card>
-      <p class="tis">投诉分析</p>
+      <div style="margin-bottom: 20px">
+        <span style="font-weight: bold;color: #000000">投诉分析</span>
+        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+        </Tooltip>
+      </div>
       <RadioGroup type="button" size="small">
         <Radio label="all">全部</Radio>
         <Radio label="default">飞机</Radio>
@@ -16,15 +20,27 @@
       <div style="border: 1px solid #dcdee2;width: 100%;height: 150px;margin-bottom: 20px;margin-top: 20px">
         <Row style="padding: 40px">
           <Col span="8">
-            <p class="tis">日新增投诉量</p>
+            <div style="margin-bottom: 20px">
+              <span style="font-weight: bold;color: #000000">日新增投诉量</span>
+              <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+              </Tooltip>
+            </div>
             <span style="font-size: 20px">210</span><span>个(新关闭22，未关闭188)</span>
           </Col>
           <Col span="8">
-            <p class="tis">日新增投诉量同比</p>
+            <div style="margin-bottom: 20px">
+              <span style="font-weight: bold;color: #000000">日新增投诉量同比</span>
+              <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+              </Tooltip>
+            </div>
             <span style="font-size: 20px">6.2%</span><span>(上升百分比)</span>
           </Col>
           <Col span="8">
-            <p class="tis">日新增投诉量环比</p>
+            <div style="margin-bottom: 20px">
+              <span style="font-weight: bold;color: #000000">日新增投诉量环比</span>
+              <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+              </Tooltip>
+            </div>
             <span style="font-size: 20px">2.2%</span><span>(下降百分比)</span>
           </Col>
         </Row>
@@ -99,6 +115,7 @@
             containLabel: true
           },
           legend:{
+            icon:'circle',
             data:['平均时长', '最大时长', '最小时长']
           },
           xAxis: {

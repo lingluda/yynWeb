@@ -4,7 +4,11 @@
      <span >游客画像</span>
     </div>
     <card>
-      <p class="tis">基本属性分析</p>
+      <div style="margin-bottom: 20px">
+        <span style="font-weight: bold;color: #000000">基本属性分析</span>
+        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+        </Tooltip>
+      </div>
       <RadioGroup type="button" size="small">
         <Radio label="large">全省</Radio>
         <Radio label="default">州市/景区</Radio>
@@ -15,7 +19,7 @@
       <Select size="small" style="width: 120px" placeholder="清选择">
         <Option>区域</Option>
       </Select>
-      <DatePicker size="small" type="date" placeholder="自选时间" style="width: 120px"></DatePicker>
+      <DatePicker size="small" type="date" v-model="picDate" placeholder="自选时间" style="width: 120px"></DatePicker>
       <Row :gutter="16" style="margin-top: 20px">
         <Col span="8">
             <div style="display: flex;border: 1px solid #dcdee2;height: 320px;width: 100%">
@@ -29,21 +33,21 @@
             </div>
         </Col>
         <Col span="8">
+          <div id="in" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
+        </Col>
+        <Col span="8">
+          <div id="os" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
+        </Col>
+      </Row>
+      <Row :gutter="16" style="margin-top: 20px">
+        <Col span="8">
           <div id="age" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
         </Col>
         <Col span="8">
           <div id="edu" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
         </Col>
-      </Row>
-      <Row :gutter="16" style="margin-top: 20px">
-        <Col span="8">
-          <div id="in" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
-        </Col>
         <Col span="8">
           <div id="client" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
-        </Col>
-        <Col span="8">
-          <div id="os" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
         </Col>
       </Row>
       <Row :gutter="16" style="margin-top: 20px;margin-bottom: 40px">
@@ -59,7 +63,11 @@
       </Row>
     </card>
     <card style="margin-top: 20px">
-      <p class="tis">人口迁移分析</p>
+      <div style="margin-bottom: 20px">
+        <span style="font-weight: bold;color: #000000">人口迁移分析</span>
+        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+        </Tooltip>
+      </div>
       <RadioGroup type="button" size="small">
         <Radio label="all">全部</Radio>
         <Radio label="default">飞机</Radio>
@@ -73,11 +81,11 @@
       <Row :gutter="16" style="margin-top: 20px;margin-bottom: 40px">
         <Col span="10">
           <div>
-            <Tabs value="name1" style="border-top: 1px solid #dcdee2;border-left: 1px solid #dcdee2;border-right: 1px solid #dcdee2">
-              <TabPane label="迁入" name="name1">
+            <Tabs v-model="tabname" style="border-top: 1px solid #dcdee2;border-left: 1px solid #dcdee2;border-right: 1px solid #dcdee2">
+              <TabPane label="迁入" name="in">
                 <Table  height="449" :columns="columns1" :data="data1"></Table>
               </TabPane>
-              <TabPane label="迁出" name="name2">
+              <TabPane label="迁出" name="out">
                 <Table  height="449" :columns="columns1" :data="data1"></Table>
               </TabPane>
             </Tabs>
@@ -89,7 +97,11 @@
       </Row>
     </card>
     <card style="margin-top: 20px">
-    <p class="tis">消费维度分析</p>
+      <div style="margin-bottom: 20px">
+        <span style="font-weight: bold;color: #000000">消费维度分析</span>
+        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+        </Tooltip>
+      </div>
     <RadioGroup type="button" size="small">
       <Radio label="all">当日</Radio>
       <Radio label="default">当月</Radio>
@@ -122,28 +134,48 @@
   </div>
 </template>
 <script>
-  import AMap from 'AMap'
+  import http from '@/http.js'
+  import '@/dateFormate.js'
   export default {
     data() {
       return {
+        tabname:'in',
+        sexData:[],
+        inData:[],
+        osData:[],
+        ageDatax:[],
+        ageDatay:[],
+        eduDatax:[],
+        eduDatay:[],
+        cliData:[],
+        ddData:[],
+        cityData:[],
+        proData:[],
+        picDate:'',
         columns1: [
           {
             title:'排名',
             type: 'index',
-            width: 60,
+            width: 50,
             align: 'center'
           },
           {
-            title: '路线',
-            key: 'line'
+            title: '起始站',
+            key: 'from',
+            width: 80
+          },
+          {
+            title: '终点站',
+            key: 'to',
+            width: 80
           },
           {
             title: '热度',
-            key: 'hot'
+            key: 'n'
           },
           {
             title: '汽车',
-            key: 'card'
+            key: 'car'
           },
           {
             title: '火车',
@@ -151,89 +183,14 @@
           },
           {
             title: '飞机',
-            key: 'air'
+            key: 'plane'
           },
         ],
-        data1: [
-          {
-            line: '深圳-昆明',
-            hot: 18.8,
-            card: '38%',
-            train: '62%',
-            air:'0%'
-          },
-          {
-            line: '深圳-昆明',
-            hot: 18.8,
-            card: '38%',
-            train: '62%',
-            air:'0%'
-          },
-          {
-            line: '深圳-昆明',
-            hot: 18.8,
-            card: '38%',
-            train: '62%',
-            air:'0%'
-          },
-          {
-            line: '深圳-昆明',
-            hot: 18.8,
-            card: '38%',
-            train: '62%',
-            air:'0%'
-          },
-          {
-            line: '深圳-昆明',
-            hot: 18.8,
-            card: '38%',
-            train: '62%',
-            air:'0%'
-          },
-          {
-            line: '深圳-昆明',
-            hot: 18.8,
-            card: '38%',
-            train: '62%',
-            air:'0%'
-          },
-          {
-            line: '深圳-昆明',
-            hot: 18.8,
-            card: '38%',
-            train: '62%',
-            air:'0%'
-          },
-          {
-            line: '深圳-昆明',
-            hot: 18.8,
-            card: '38%',
-            train: '62%',
-            air:'0%'
-          },
-          {
-            line: '深圳-昆明',
-            hot: 18.8,
-            card: '38%',
-            train: '62%',
-            air:'0%'
-          },
-          {
-            line: '深圳-昆明',
-            hot: 18.8,
-            card: '38%',
-            train: '62%',
-            air:'0%'
-          },
-        ]
+        data1: []
       }
     },
     mounted() {
-      this.initSex()
-      this.initAge()
-      this.initIn()
-      this.initOS()
-      this.initEdu()
+      this.init()
       this.initClient()
       this.initIndu()
       this.initCity()
@@ -242,6 +199,37 @@
       this.initMap()
     },
     methods: {
+      init(){
+        var date = new Date().format(
+          "yyyy-MM-dd"
+        )
+        this.picDate = date;
+        http.get('api/get_portrait_base_by_date',{date:'2018-09-14'}).then(resp=>{
+          this.sexData =resp.data.hist.gender;
+          this.inData =resp.data.hist.consumpting;
+          for (var i=0;i<resp.data.hist.edu.length;i++){
+            this.eduDatax.push(resp.data.hist.edu[i].name)
+            this.eduDatay.push(resp.data.hist.edu[i].value)
+          }
+          this.osData =resp.data.hist.mobile;
+          for (var i=0;i<resp.data.hist.age.length;i++){
+            this.ageDatax.push(resp.data.hist.age[i].name)
+            this.ageDatay.push(resp.data.hist.age[i].value)
+          }
+          this.carData =resp.data.hist.car;
+          this.initSex();
+          this.initOS();
+          this.initIn();
+          this.initEdu();
+          this.initAge();
+          http.get('api/get_portrait_origin_city_by_date',{date:'2018-09-14',type:'city'}).then(resp=>{
+            console.log('city',resp)
+          })
+          http.get('api/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
+            this.data1 = resp.data.hits
+          })
+        })
+      },
       initMap(){
         var center = new qq.maps.LatLng(26.90923, 108.397428);
         var map = new qq.maps.Map(document.getElementById('moveMap'),{
@@ -259,43 +247,9 @@
           editable:false,
           map: map
         });
-
-        /*var map = new AMap.Map('moveMap', {
-          resizeEnable: true,
-          center: [108.397428, 26.90923],
-          zoom: 5
-        });
-        var lineArr = [
-          ['102.83322', '24.88339746520424'],
-          ['114.05956000000003', '22.54666503349262']
-        ];
-        var polyline = new AMap.Polyline({
-          path: lineArr,            // 设置线覆盖物路径
-          strokeColor: '#3366FF',   // 线颜色
-          strokeOpacity: 1,         // 线透明度
-          strokeWeight: 2,          // 线宽
-          strokeStyle: 'solid',     // 线样式
-          strokeDasharray: [10, 5], // 补充线样式
-          geodesic: true            // 绘制大地线
-        });
-        polyline.setMap(map);
-
-        var lineArr1 = [
-          ['102.83322', '24.88339746520424'],
-          ['114.30524999999997', '30.594828718750055']
-        ];
-        var polyline1 = new AMap.Polyline({
-          path: lineArr1,            // 设置线覆盖物路径
-          strokeColor: '#3366FF',   // 线颜色
-          strokeOpacity: 1,         // 线透明度
-          strokeWeight: 2,          // 线宽
-          strokeStyle: 'solid',     // 线样式
-          strokeDasharray: [10, 5], // 补充线样式
-          geodesic: true            // 绘制大地线
-        });
-        polyline1.setMap(map);*/
       },
       initSex() {
+        console.log('123122222222222',this.sexData)
         let sex = this.$echarts.init(document.getElementById("sex"))
         sex.setOption({
           title : {
@@ -317,7 +271,8 @@
           legend: {
             bottom:10,
             x: 'center',
-            data: ['男',  '女']
+            icon:'circle',
+            data: ['女士','男士']
           },
           series: [
             {
@@ -344,10 +299,7 @@
                   show: false
                 }
               },
-              data: [
-                {value: 335, name: '男'},
-                {value: 310, name: '女'},
-              ]
+              data: this.sexData
             }
           ]
         })
@@ -356,7 +308,7 @@
         let Sin = this.$echarts.init(document.getElementById("in"))
         Sin.setOption({
           title : {
-            text: '收入占比(%)',
+            text: '消费占比(%)',
             textStyle:{
               fontSize:14,
             },
@@ -374,7 +326,8 @@
           legend: {
             bottom:10,
             x: 'center',
-            data: ['低收入', '中收入', '高收入']
+            icon:'circle',
+            data: ['低消费', '较低消费', '中消费','较高消费','高消费']
           },
           series: [
             {
@@ -401,11 +354,7 @@
                   show: false
                 }
               },
-              data: [
-                {value: 335, name: '低收入'},
-                {value: 310, name: '中收入'},
-                {value: 310, name: '高收入'},
-              ]
+              data: this.inData
             }
           ]
         })
@@ -432,7 +381,8 @@
           legend: {
             bottom:10,
             x: 'center',
-            data: ['安卓',  'IOS']
+            icon:'circle',
+            data: ['Android',  'IOS']
           },
           series: [
             {
@@ -459,10 +409,7 @@
                   show: false
                 }
               },
-              data: [
-                {value: 335, name: '安卓'},
-                {value: 310, name: 'IOS'},
-              ]
+              data: this.osData
             }
           ]
         })
@@ -484,6 +431,7 @@
             right:24,
             top:120,
             bottom:12,
+            icon:'circle',
             data: ['安卓',  'IOS1',  'IOS2',  'IOS3',  'IOS4']
           },
           series: [
@@ -553,14 +501,14 @@
           },
           yAxis: {
             type: 'category',
-            data: ['>55','45-54','35-44','25-34','19-24','0-18']
+            data: this.ageDatax
           },
 
           series: [
             {
               name: '2011年',
               type: 'bar',
-              data: [34.12, 29, 12, 21, 12,32],
+              data: this.ageDatay,
               barWidth:'50%',
               label: {
                 normal: {
@@ -604,14 +552,14 @@
           },
           yAxis: {
             type: 'category',
-            data: ['博士','硕士','本科','专科','高中']
+            data: this.eduDatax
           },
 
           series: [
             {
               name: '2011年',
               type: 'bar',
-              data: [34.12, 29, 12, 21, 12],
+              data: this.eduDatay,
               barWidth:'50%',
               label: {
                 normal: {
@@ -828,7 +776,15 @@
           color:['#006EFF'],
         })
       },
-
+      clicktab(){
+        http.get('api/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
+          this.data1 = resp.data.hits
+        })
+      }
+    },
+    watch:{
+      picDate:'dateChange',
+      tabname:'clicktab'
     }
   }
 </script>

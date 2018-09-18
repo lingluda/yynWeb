@@ -5,9 +5,17 @@
   </div>
     <div>
     <card>
-      <p class="tis">舆情总体指标</p>
+      <div style="margin-bottom: 20px">
+        <span style="font-weight: bold;color: #000000">舆情总体指标</span>
+        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+        </Tooltip>
+      </div>
       <Row style="width: 100%;height: 300px;border: 1px solid #dcdee2">
-        <p style="margin-top: 20px;margin-left: 10px">云南省舆情正负面情绪分析</p>
+        <div style="margin-bottom: 20px">
+          <span style="font-weight: bold;color: #000000">云南省舆情正负面情绪分析</span>
+          <Tooltip content="云南省舆情正负面情绪分析text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+          </Tooltip>
+        </div>
         <Col span="12">
           <div id="health" style="width: 100%;height: 235px"></div>
         </Col>
@@ -15,35 +23,31 @@
           <div id="unhealth" style="width: 100%;height: 235px"></div>
         </Col>
       </Row>
-      <Row style="width: 100%;height: 300px;border: 1px solid #dcdee2;margin-top: 20px">
-        <div style="height: 25px;margin-top: 20px;margin-left: 10px;margin-right: 15px">
-        <span >云南省舆情正负面情绪分析</span>
-        <Select size="small" style="width: 120px;float: right">
-          <Option>理解</Option>
-        </Select>
-        </div>
-        <Col span="12">
-          <div id="health1" style="width: 100%;height: 235px"></div>
-        </Col>
-        <Col span="12">
-          <div id="unhealth1" style="width: 100%;height: 235px"></div>
-        </Col>
-      </Row>
+
     </card>
       <Row :gutter="16" style="margin-top: 20px;">
         <Col span="12" style="height: 200px">
           <card>
-            <p class="tis">全省网络热词TOP10</p>
+            <div style="margin-bottom: 20px">
+              <span style="font-weight: bold;color: #000000">全省网络热词TOP10</span>
+              <Tooltip content="云南省舆情正负面情绪分析text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+              </Tooltip>
+            </div>
             <Table :columns="columns1" :data="data1"></Table>
           </card>
         </Col>
-        <Col span="12" style="height: 200px">
+        <Col span="12" style="height: 300px">
           <card>
             <div >
-            <span class="tis">州市网络热词TOP10</span>
-              <Select style="width: 120px;float: right">
-                <Option>丽江市</Option>
-              </Select>
+              <div style="margin-bottom: 20px">
+                <span style="font-weight: bold;color: #000000">州市网络热词TOP10</span>
+                <Tooltip content="云南省舆情正负面情绪分析text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                </Tooltip>
+                <Select style="width: 120px;float: right">
+                  <Option>丽江市</Option>
+                </Select>
+              </div>
+
             </div>
             <Table :columns="columns1" :data="data1"></Table>
           </card>
@@ -117,6 +121,7 @@
             //orient: 'vertical',
             bottom:0,
             left: 'center',
+            icon:'circle',
             data:['媒体正面情绪','媒体中面情绪','媒体负面情绪']
           },
           series: [
@@ -177,6 +182,7 @@
             //orient: 'vertical',
             bottom:0,
             left: 'center',
+            icon:'circle',
             data:['媒体正面情绪','媒体中面情绪','媒体负面情绪']
           },
           series: [
@@ -236,6 +242,7 @@
           legend: {
             //orient: 'vertical',
             bottom:0,
+            icon:'circle',
             left: 'center',
             data:['媒体正面情绪','媒体中面情绪','媒体负面情绪']
           },
@@ -296,6 +303,7 @@
           legend: {
             //orient: 'vertical',
             bottom:0,
+            icon:'circle',
             left: 'center',
             data:['媒体正面情绪','媒体中面情绪','媒体负面情绪']
           },

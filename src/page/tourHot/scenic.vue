@@ -10,15 +10,21 @@
       </TabPane>
       <TabPane label="热门景区" name="scenic">
         <card>
-          <p class="tis">热门景区网络热度TOP10</p>
-          <RadioGroup type="button" size="small">
-            <Radio label="large">APP访问</Radio>
-            <Radio label="default">搜索引擎</Radio>
-            <Radio label="small">网站报道</Radio>
+          <div style="margin-bottom: 20px">
+            <span style="font-weight: bold;color: #000000">热门景区网络热度TOP10</span>
+            <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+            </Tooltip>
+          </div>
+          <RadioGroup type="button" v-model="chanclick" size="small">
+            <Radio label="app">APP访问</Radio>
+            <Radio label="search">搜索引擎</Radio>
+            <Radio label="website">网站报道</Radio>
           </RadioGroup>
           <div style="border: 1px solid #e8eaec;margin-top: 20px">
-            <div style="margin-top: 10px;margin-right: 30px;margin-left: 30px">
-              <span class="tis">一机游用户DAU</span><span>(单位：万次)</span> <DatePicker type="date" placeholder="自选时间" size="small" style="width: 120px;float: right"></DatePicker>
+            <div style="margin-bottom: 20px">
+              <span style="font-weight: bold;color: #000000">一机游用户DAU (单位：万次)</span>
+              <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+              </Tooltip>
             </div>
             <div id="simBars" style="width: 100%;height: 300px;"></div>
 
@@ -29,8 +35,10 @@
             <Row :gutter="16">
               <Col span="12">
                 <div style="border: 1px solid #dcdee2">
-                  <div style="padding: 15px">
-                    <span class="tis">景区客流TOP10</span><span>(单位：万人)</span>
+                  <div style="margin-bottom: 20px">
+                    <span style="font-weight: bold;color: #000000">景区客流TOP10 (单位：万人)</span>
+                    <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                    </Tooltip>
                   </div>
                   <RadioGroup type="button" size="small" style="margin-left: 15px">
                     <Radio label="large">当日</Radio>
@@ -44,8 +52,10 @@
 
               <Col span="12">
                 <div style="border: 1px solid #dcdee2">
-                  <div style="padding: 15px">
-                    <span class="tis">景区客流TOP10</span><span>(单位：万人)</span>
+                  <div style="margin-bottom: 20px">
+                    <span style="font-weight: bold;color: #000000">景区客流TOP10 (单位：万人)</span>
+                    <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                    </Tooltip>
                   </div>
                   <RadioGroup type="button" size="small" style="margin-left: 15px">
                     <Radio label="large">增量</Radio>
@@ -61,15 +71,21 @@
       </TabPane>
       <TabPane label="景区客流热力发布" name="hotmap">
       </TabPane>
+      <TabPane label="平台运营" name="platform">
+      </TabPane>
     </Tabs>
   </div>
 </template>
 
 <script>
+  import http from '@/http.js'
   export default {
     name: "tourhot",
     data() {
       return {
+        barDatax:[],
+        barDatay:[],
+        chanclick:'app',
         columns: [
           {
             title: '热门路线',
@@ -101,8 +117,19 @@
       this.initMax1()
       this.initMax2()
       this.initSimBars()
+      this.init()
     },
     methods: {
+      init(){
+        http.get('api/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
+          console.log(resp.data.hits)
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.barDatax.push(resp.data.hits[i].name)
+            this.barDatay.push(parseInt(resp.data.hits[i].dau))
+          }
+          this.initSimBars()
+        })
+      },
       initMax1(){
         let max1 = this.$echarts.init(document.getElementById("max1"),'macarons')
         max1.setOption({
@@ -116,6 +143,7 @@
           legend: {
             bottom: 10,
             left: 'center',
+            icon:'circle',
             data: ['峰值','景区历史游客峰值']
           },
           grid: {
@@ -174,6 +202,7 @@
           legend: {
             bottom: 10,
             left: 'center',
+            icon:'circle',
             data: ['今日景区客流','昨日景区客流','客流变化量']
           },
           grid: {
@@ -234,7 +263,7 @@
           },
           xAxis: {
             type: 'category',
-            data: ['云南', '曲靖', '红河', '玉溪', '大理', '丽江', '昭通','西双版纳','昆明'],
+            data: this.barDatax,
             axisLine:{
               lineStyle:{
                 color:'#888888',
@@ -258,7 +287,7 @@
             }
           },
           series: [{
-            data: [4, 3, 3, 2, 2, 2, 2,2,1],
+            data: this.barDatay,
             type: 'bar',
             barWidth:'50%'
           }],
@@ -267,7 +296,22 @@
       },
       pic(val){
         this.$router.push(val)
+      },
+      chanchange(){
+        this.barDatax=[]
+        this.barDatay=[]
+        http.get('api/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
+          console.log(resp.data.hits)
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.barDatax.push(resp.data.hits[i].name)
+            this.barDatay.push(parseInt(resp.data.hits[i].dau))
+          }
+          this.initSimBars()
+        })
       }
+    },
+    watch:{
+      chanclick:'chanchange'
     }
   }
 </script>

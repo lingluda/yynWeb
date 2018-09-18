@@ -19,12 +19,11 @@ export default new Router({
         require(['../components/base/home.vue'], resolve)
       },
       children: [
-        {
+               {
           path:'/',
           name:'index',
           redirect:'index'
         },
-
         {
           path: '/analysisform',
           name: 'analysisform',
@@ -71,7 +70,14 @@ export default new Router({
           path: '/index',
           name: 'Index',
           component: resolve => {
-            require(['../page/tourHot/index.vue'], resolve)
+            require(['../page/tourHot/index2.vue'], resolve)
+          }
+        },
+        {
+          path:'platform',
+          name:'platform',
+          component: resolve => {
+            require(['../page/tourHot/platform.vue'], resolve)
           }
         },
         {
