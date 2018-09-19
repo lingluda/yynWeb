@@ -22,10 +22,49 @@
           </div>
           <Row :gutter="16">
             <Col span="12">
-              <div style="border: 1px solid yellow;height:200px"></div>
+              <div style="border: 1px solid #dcdee2;height:120px;padding: 20px">
+                <Row>
+                  <Col span="12">
+                    <div style="margin-bottom: 20px;width: 50%">
+                      <span style="font-weight: bold;color: #000000">新增用户量</span>
+                      <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                      </Tooltip>
+                    </div>
+                  </Col>
+                  <Col span="12">
+                    <span style="background-color: aliceblue">&nbsp;&nbsp;与上月同比&nbsp;&nbsp;5%&nbsp;&nbsp;</span>
+                  </Col>
+                  <Col span="12">
+                    <span style="font-size: 28px;color: blue;background-color: aliceblue">5000人</span>
+                  </Col>
+                  <Col span="12">
+                    <span style="background-color: aliceblue">&nbsp;&nbsp;与上月同比&nbsp;&nbsp;5%&nbsp;&nbsp;</span>
+                  </Col>
+                </Row>
+              </div>
             </Col>
             <Col span="12">
-              <div style="border: 1px solid yellow;height:200px"></div>
+              <div style="border: 1px solid #dcdee2;height:120px;padding: 20px">
+                <Row>
+                  <Col span="12">
+                <div style="margin-bottom: 20px;width: 50%">
+                  <span style="font-weight: bold;color: #000000">新增用户量</span>
+                  <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                  </Tooltip>
+                </div>
+                  </Col>
+                  <Col span="12">
+                    <span style="font-size: 28px;color: blue;background-color: aliceblue">5000人</span>
+                    <span style="background-color: aliceblue">&nbsp;&nbsp;与上月同比&nbsp;&nbsp;5%&nbsp;&nbsp;</span>
+                  </Col>
+                  <Col span="12">
+                    <span style="font-size: 28px;color: blue;">5000人</span>
+                  </Col>
+                  <Col span="12">
+                <span style="background-color: aliceblue">&nbsp;&nbsp;与上月同比&nbsp;&nbsp;5%&nbsp;&nbsp;</span>
+                  </Col>
+                </Row>
+              </div>
             </Col>
           </Row>
         </card>
@@ -36,7 +75,7 @@
             </Tooltip>
             <DatePicker size="small" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
           </div>
-          <div id="trend" style="border: 1px solid yellow;height: 400px;width: 100%"></div>
+          <div id="trend" style="border: 1px solid #dcdee2;height: 400px;width: 100%"></div>
         </card>
       </TabPane>
     </Tabs>

@@ -110,11 +110,16 @@
             dau:39,
             unit:344,
           }
-        ]
+        ],
+        max1his:[],
+        max1n:[],
+        max1y:[],
+        max2his:[],
+        max2n:[],
+        max2y:[],
       }
     },
     mounted() {
-      this.initMax1()
       this.initMax2()
       this.initSimBars()
       this.init()
@@ -128,6 +133,23 @@
             this.barDatay.push(parseInt(resp.data.hits[i].dau))
           }
           this.initSimBars()
+        })
+        http.get('api/get_scenic_tourist_top_by_date',{date:'2018-09-14',top:10}).then(resp=>{
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.max1his.push(resp.data.hits[i].his)
+            this.max1n.push(resp.data.hits[i].n)
+            this.max1y.push(resp.data.hits[i].city)
+          }
+          this.initMax1()
+        })
+        http.get('api/get_scenic_tourist_ince_by_date',{date:'2018-09-16',top:10}).then(resp=>{
+          console.log('top',resp.data.hits)
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.max2his.push(resp.data.hits[i].his)
+            this.max2n.push(resp.data.hits[i].n)
+            this.max2y.push(resp.data.hits[i].city)
+          }
+          this.initMax2()
         })
       },
       initMax1(){
@@ -164,7 +186,7 @@
           },
           yAxis: {
             type: 'category',
-            data: ['大理','大理','大理','大理','野象谷','西双版纳','西双版纳','西双版纳','玉龙雪山','玉龙雪山'],
+            data: this.max1y,
             axisLine:{
               lineStyle:{
                 color:'#888888',
@@ -176,13 +198,13 @@
             {
               name: '峰值',
               type: 'bar',
-              data: [1, 2, 3, 4, 5,6,7,8,9,10],
+              data: this.max1n,
               barWidth:'50%'
             },
             {
               name: '景区历史游客峰值',
               type: 'line',
-              data: [1, 2, 3, 4, 5,6,7,8,9,10],
+              data: this.max1his,
               barWidth:'50%'
             }
           ],
