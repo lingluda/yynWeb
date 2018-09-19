@@ -166,19 +166,19 @@
         )
         console.log('当前时间：',date)
         this.date = date*/
-        http.get('/api/get_tourism_dist_by_date',{date:'2018-09-16',city_id:this.city}).then(resp=>{
+        http.get('/bi/bi/get_tourism_dist_by_date',{date:'2018-09-16',city_id:this.city}).then(resp=>{
           this.pieData = resp.data.hits;
           console.log(this.pieData)
           this.initBar()
         })
-        http.get('/api/get_tourism_qty_by_date',{date:'2018-09-16',city_id:this.city}).then(resp=>{
+        http.get('/bi/bi/get_tourism_qty_by_date',{date:'2018-09-16',city_id:this.city}).then(resp=>{
           console.log('qq1qqq',resp.data.hits.total)
           this.link = resp.data.hits.link;
           this.ratio = resp.data.hits.ratio;
           this.total = resp.data.hits.total;
 
         })
-        http.get('api/get_tourism_trend_by_timespan',{startTime:'2018-09-14',endTime:'2018-09-16'}).then(resp=>{
+        http.get('bi/bi/get_tourism_trend_by_timespan',{startTime:'2018-09-14',endTime:'2018-09-16'}).then(resp=>{
           console.log(resp.data)
           this.totalP = resp.data.hits.total;
           for(var i=0;i<resp.data.hits.list.length;i++){
@@ -190,12 +190,12 @@
       },
       change1(val){
         this.date = val;
-        http.get('/api/get_tourism_dist_by_date',{date:this.date,city_id:this.city}).then(resp=>{
+        http.get('/bi/bi/get_tourism_dist_by_date',{date:this.date,city_id:this.city}).then(resp=>{
           this.pieData = resp.data.hits;
           console.log(this.pieData)
           this.initBar()
         })
-        http.get('/api/get_tourism_qty_by_date',{date:this.date,city_id:this.city}).then(resp=>{
+        http.get('/bi/bi/get_tourism_qty_by_date',{date:this.date,city_id:this.city}).then(resp=>{
           console.log('qq1qqq',resp.data.hits.total)
           this.link = resp.data.hits.link;
           this.ratio = resp.data.hits.ratio;
@@ -204,11 +204,11 @@
       },
       change3(val){
         this.city = val;
-        http.get('/api/get_tourism_dist_by_date',{date:this.date,city_id:this.city}).then(resp=>{
+        http.get('/bi/bi/get_tourism_dist_by_date',{date:this.date,city_id:this.city}).then(resp=>{
           console.log(resp)
           this.pieData = resp.hits;
         })
-        http.get('/api/get_tourism_qty_by_date',{date:this.date,city_id:this.city}).then(resp=>{
+        http.get('/bi/bi/get_tourism_qty_by_date',{date:this.date,city_id:this.city}).then(resp=>{
           console.log('qq1qqq',resp.data.hits.total)
           this.link = resp.data.hits.link;
           this.ratio = resp.data.hits.ratio;
@@ -224,7 +224,7 @@
         )
         console.log('日期其：：：：啊啊啊',val)
         this.date1=val;
-        http.get('api/get_tourism_trend_by_timespan',{startTime:this.date1[0],endTime:this.date1[1]}).then(resp=>{
+        http.get('bi/bi/get_tourism_trend_by_timespan',{startTime:this.date1[0],endTime:this.date1[1]}).then(resp=>{
           console.log(resp.data)
           this.totalP = resp.data.hits.total;
           for(var i=0;i<resp.data.hits.list.length;i++){
@@ -238,7 +238,7 @@
       },
       change5(val){},
       getCity(){
-        http.get('api/get_all_city',{}).then(resp=>{
+        http.get('bi/bi/get_all_city',{}).then(resp=>{
           this.cityData = resp.data.hits;
         })
       },

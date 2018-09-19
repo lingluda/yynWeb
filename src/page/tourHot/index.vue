@@ -72,27 +72,27 @@
       },
       change1(val){
         this.date = val;
-        http.get('/api/get_tourism_dist_by_date',{date:this.date,city:this.city}).then(resp=>{
+        http.get('/bi/bi/get_tourism_dist_by_date',{date:this.date,city:this.city}).then(resp=>{
           this.pieData = resp.data.hits;
           console.log(this.pieData)
           this.initBar()
         })
-        http.get('/api/get_tourism_qty_by_date',{date:this.date,city:this.city}).then(resp=>{
+        http.get('/bi/bi/get_tourism_qty_by_date',{date:this.date,city:this.city}).then(resp=>{
           console.log('qq1qqq',resp)
         })
       },
       change3(val){
         this.city = val;
-        http.get('/api/get_tourism_dist_by_date',{date:this.date,city:this.city}).then(resp=>{
+        http.get('/bi/bi/get_tourism_dist_by_date',{date:this.date,city:this.city}).then(resp=>{
           console.log(resp)
           this.pieData = resp.hits;
         })
-        http.get('/api/get_tourism_qty_by_date',{date:this.date,city:this.city}).then(resp=>{
+        http.get('/bi/bi/get_tourism_qty_by_date',{date:this.date,city:this.city}).then(resp=>{
           console.log('qq1qqq',resp)
         })
       },
       getCity(){
-        http.get('api/get_all_city',{}).then(resp=>{
+        http.get('bi/bi/get_all_city',{}).then(resp=>{
           this.cityData = resp.data.hits;
         })
       },

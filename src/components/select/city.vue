@@ -18,7 +18,7 @@
       },
       methods:{
         init(){
-          http.get('api/get_all_city',{}).then(resp=>{
+          http.get('bi/bi/get_all_city',{}).then(resp=>{
             this.cityData = resp.data.hits;
             console.log('11111111111111:::',this.cityData)
           })

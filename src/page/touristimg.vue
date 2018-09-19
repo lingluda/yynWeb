@@ -204,7 +204,7 @@
           "yyyy-MM-dd"
         )
         this.picDate = date;
-        http.get('api/get_portrait_base_by_date',{date:'2018-09-14'}).then(resp=>{
+        http.get('bi/bi/get_portrait_base_by_date',{date:'2018-09-14'}).then(resp=>{
           this.sexData =resp.data.hist.gender;
           this.inData =resp.data.hist.consumpting;
           for (var i=0;i<resp.data.hist.edu.length;i++){
@@ -222,17 +222,17 @@
           this.initIn();
           this.initEdu();
           this.initAge();
-          http.get('api/get_portrait_origin_by_date',{date:'2018-09-14',type:'city',scenic:'',city_id:''}).then(resp=>{
+          http.get('bi/bi/get_portrait_origin_by_date',{date:'2018-09-14',type:'city',scenic:'',city_id:''}).then(resp=>{
             console.log('city',resp)
           })
-          http.get('api/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
+          http.get('bi/bi/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
             this.data1 = resp.data.hits;
           })
-          http.get('api/get_consume_by_date',{date:'2018-08-01',city_id:392}).then(resp=>{
+          http.get('bi/bi/get_consume_by_date',{date:'2018-08-01',city_id:392}).then(resp=>{
             this.vagprice = resp.data.hist.avg_amount;
               this.middle= resp.data.hist.median_amount;
           })
-          http.get('api/get_consume_type_by_mon',{startTime:'2018-07',endTime:'2018-09'}).then(resp=>{
+          http.get('bi/bi/get_consume_type_by_mon',{startTime:'2018-07',endTime:'2018-09'}).then(resp=>{
             console.log('get_consume_type_by_mon',resp.data.hits)
             this.cashData=resp.data.hits;
             for (var i=0;i<resp.data.hits.length;i++) {
@@ -786,7 +786,7 @@
         })
       },
       clicktab(){
-        http.get('api/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
+        http.get('bi/bi/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
           this.data1 = resp.data.hits;
           console.log('this.data1',this.data1)
         })
