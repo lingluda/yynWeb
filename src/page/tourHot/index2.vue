@@ -10,7 +10,7 @@
               <card>
                 <div style="margin-bottom: 20px">
                   <span style="font-weight: bold;color: #000000">游客人数</span>
-                    <Tooltip content="Hereisthe111111111111111prompttext" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                    <Tooltip content="游客人数" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                     </Tooltip>
                 </div>
 
@@ -26,20 +26,27 @@
                   <Col span="12" style="padding: 20px">
                     <div style="margin-bottom: 20px">
                       <span style="font-weight: bold;color: #000000">今日总接待游客量</span>
-                      <Tooltip content="Hereisthe111111111111111prompttext" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                      <Tooltip content="今日总接待游客量" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                       </Tooltip>
                     </div>
                     <span style="font-size: 28px">{{total}}</span><span>  人次</span>
                   </Col>
                   <Col span="12" style="padding: 20px">
-                    <p>与昨日环比</p>
-                    <span>{{ratio}}</span><span>%(<Icon type="md-arrow-round-up" style="color: red;height: 18px"/>上升百分比)</span>
+                    <div style="width: 180px; padding:5px;background-color: azure">
+                    <span style="margin-left: 8px">与昨日环比&nbsp;&nbsp;&nbsp;</span>
+                    <span>  <Icon type="md-arrow-round-up" style="color: red;height: 18px"/>{{ratio}}%</span>
+                    </div>
+
+                    <div style="width: 180px; padding:5px;background-color: azure;margin-top: 20px">
+                    <span style="margin-left: 8px">与上月同比&nbsp;&nbsp;&nbsp;</span>
+                    <span>  <Icon type="md-arrow-round-up" style="color: red;height: 18px"/>{{ratio}}%</span>
+                    </div>
                   </Col>
                 </Row>
                 <div style="border: 1px solid #dcdee2">
-                  <div style="margin-bottom: 20px">
+                  <div style="padding: 20px">
                     <span style="font-weight: bold;color: #000000">各州市占比</span>
-                    <Tooltip content="Hereisthe111111111111111prompttext" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                    <Tooltip content="各州市占比" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                     </Tooltip>
                   </div>
                 <div id="mybar" style="width: 100%;height: 400px;"></div>
@@ -51,7 +58,7 @@
               <card>
                 <div style="margin-bottom: 20px">
                   <span style="font-weight: bold;color: #000000">客流统计</span>
-                  <Tooltip content="Hereisthe111111111111111prompttext" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                  <Tooltip content="客流统计" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                   </Tooltip>
                 </div>
                 <DatePicker size="small" v-model="date1" :options="options2" type="daterange" placeholder="自选时间" @on-change="change4"
@@ -65,16 +72,16 @@
                   <Col span="12" style="padding: 20px">
                     <div style="margin-bottom: 20px">
                       <span style="font-weight: bold;color: #000000">累计游客接待量</span>
-                      <Tooltip content="Hereisthe111111111111111prompttext" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                      <Tooltip content="累计游客接待量" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                       </Tooltip>
                     </div>
                     <span style="font-size: 28px">{{totalP}}</span><span>  人次</span>
                   </Col>
               </Row>
               <div style="border: 1px solid #dcdee2">
-                <div style="margin-bottom: 20px">
+                <div style="padding: 20px">
                   <span style="font-weight: bold;color: #000000">日期区间客流 趋势分析 (人数：万)</span>
-                  <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                  <Tooltip content="日期区间客流 趋势分析 (人数：万)" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                   </Tooltip>
                 </div>
                 <div id="myline" style="width: 100%;height: 400px"></div>
@@ -108,8 +115,8 @@
         totalP:'',
         lineDatax:[],
         lineDatay:[],
-        date: '',
-        date1: [],
+        date: '2018-09-16',
+        date1: ['2018-09-14','2018-09-16'],
         cityData:[],
         city:'',
         city1:'',
@@ -154,22 +161,31 @@
     },
     methods: {
       init(){
-        var date = new Date().format(
+       /* var date = new Date().format(
           "yyyy-MM-dd"
         )
         console.log('当前时间：',date)
-        this.date = date
-        http.get('/api/get_tourism_dist_by_date',{date:this.date,city_id:this.city}).then(resp=>{
+        this.date = date*/
+        http.get('/api/get_tourism_dist_by_date',{date:'2018-09-16',city_id:this.city}).then(resp=>{
           this.pieData = resp.data.hits;
           console.log(this.pieData)
           this.initBar()
         })
-        http.get('/api/get_tourism_qty_by_date',{date:this.date,city_id:this.city}).then(resp=>{
+        http.get('/api/get_tourism_qty_by_date',{date:'2018-09-16',city_id:this.city}).then(resp=>{
           console.log('qq1qqq',resp.data.hits.total)
           this.link = resp.data.hits.link;
           this.ratio = resp.data.hits.ratio;
           this.total = resp.data.hits.total;
 
+        })
+        http.get('api/get_tourism_trend_by_timespan',{startTime:'2018-09-14',endTime:'2018-09-16'}).then(resp=>{
+          console.log(resp.data)
+          this.totalP = resp.data.hits.total;
+          for(var i=0;i<resp.data.hits.list.length;i++){
+            this.lineDatax.push(resp.data.hits.list[i].date)
+            this.lineDatay.push(resp.data.hits.list[i].value)
+          }
+          this.initLine()
         })
       },
       change1(val){

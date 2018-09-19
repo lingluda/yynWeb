@@ -108,26 +108,21 @@
     </RadioGroup>
       <DatePicker size="small" type="date" placeholder="自选时间" style="width: 120px"></DatePicker>
       <Row :gutter="16" style="margin-top: 20px;margin-bottom: 40px">
-        <Col span="8">
-          <div style="height: 400px;border: 1px solid #dcdee2">
-            <div style="margin-top: 40px;margin-left: 20px">
-            <p style="font-weight: bold">平台活跃用户数</p>
-            <span style="font-size: 32px">210000</span>个
-            </div>
-            <Divider></Divider>
-            <div style="margin-left: 20px">
+        <Col span="12">
+          <div style="height: 300px;border: 1px solid #dcdee2">
+            <div style="margin-left: 20px;margin-top: 20px">
             <p style="font-weight: bold">用户平均消费金额</p>
-            <span style="font-size: 32px">2350</span>元
+            <span style="font-size: 32px">{{vagprice}}</span>元
             </div>
             <Divider></Divider>
             <div style="margin-left: 20px">
             <p style="font-weight: bold">中位点用户消费金额</p>
-            <span style="font-size: 32px">2000</span>元
+            <span style="font-size: 32px">{{middle}}</span>元
             </div>
           </div>
         </Col>
-        <Col span="16">
-          <div id="cash" style="border: 1px solid #dcdee2;height:400px;width:100%;float: left"></div>
+        <Col span="12">
+          <div id="cash" style="border: 1px solid #dcdee2;height:300px;width:100%"></div>
         </Col>
       </Row>
     </card>
@@ -139,6 +134,8 @@
   export default {
     data() {
       return {
+        vagprice:'',
+        middle:'',
         tabname:'in',
         sexData:[],
         inData:[],
@@ -156,7 +153,7 @@
           {
             title:'排名',
             type: 'index',
-            width: 50,
+            width: 60,
             align: 'center'
           },
           {
@@ -186,7 +183,10 @@
             key: 'plane'
           },
         ],
-        data1: []
+        data1: [],
+        cashData:[],
+        cashDataX:[],
+
       }
     },
     mounted() {
@@ -195,7 +195,7 @@
       this.initIndu()
       this.initCity()
       this.initPro()
-      this.initCash()
+
       this.initMap()
     },
     methods: {
@@ -222,13 +222,28 @@
           this.initIn();
           this.initEdu();
           this.initAge();
-          http.get('api/get_portrait_origin_city_by_date',{date:'2018-09-14',type:'city'}).then(resp=>{
+          http.get('api/get_portrait_origin_by_date',{date:'2018-09-14',type:'city',scenic:'',city_id:''}).then(resp=>{
             console.log('city',resp)
           })
           http.get('api/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
-            this.data1 = resp.data.hits
+            this.data1 = resp.data.hits;
+          })
+          http.get('api/get_consume_by_date',{date:'2018-08-01',city_id:392}).then(resp=>{
+            this.vagprice = resp.data.hist.avg_amount;
+              this.middle= resp.data.hist.median_amount;
+          })
+          http.get('api/get_consume_type_by_mon',{startTime:'2018-07',endTime:'2018-09'}).then(resp=>{
+            console.log('get_consume_type_by_mon',resp.data.hits)
+            this.cashData=resp.data.hits;
+            for (var i=0;i<resp.data.hits.length;i++) {
+              this.cashDataX.push(resp.data.hits[i].name)
+            }
+            console.log('this.cashData',this.cashData)
+            console.log('this.cashData',this.cashDataX)
+            this.initCash()
           })
         })
+
       },
       initMap(){
         var center = new qq.maps.LatLng(26.90923, 108.397428);
@@ -324,7 +339,7 @@
 
           },
           legend: {
-            bottom:10,
+            bottom:3,
             x: 'center',
             icon:'circle',
             data: ['低消费', '较低消费', '中消费','较高消费','高消费']
@@ -348,7 +363,7 @@
                   }
                 }
               },
-              color: ['#006EFF','#29CC85','#ffbb00'],
+              color: ['#006EFF','#29CC85','#ffbb00','#ff584c','#9741d9','#1fc0cc','#7ff936','#ff9c19','#e63984','#655ce6','#47cc50','#fb0b6'],
               labelLine: {
                 normal: {
                   show: false
@@ -428,11 +443,11 @@
           },
           legend: {
             orient:'vertical',
-            right:24,
+            right:40,
             top:120,
             bottom:12,
             icon:'circle',
-            data: ['安卓',  'IOS1',  'IOS2',  'IOS3',  'IOS4']
+            data: this.cashDataX
           },
           series: [
             {
@@ -459,13 +474,7 @@
                   show: false
                 }
               },
-              data: [
-                {value: 335, name: '安卓'},
-                {value: 310, name: 'IOS1'},
-                {value: 310, name: 'IOS2'},
-                {value: 310, name: 'IOS3'},
-                {value: 310, name: 'IOS4'},
-              ]
+              data: this.cashData
             }
           ]
         })
@@ -778,7 +787,8 @@
       },
       clicktab(){
         http.get('api/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
-          this.data1 = resp.data.hits
+          this.data1 = resp.data.hits;
+          console.log('this.data1',this.data1)
         })
       }
     },

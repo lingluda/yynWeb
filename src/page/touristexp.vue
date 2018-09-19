@@ -25,7 +25,7 @@
               <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
             </div>
-            <span style="font-size: 20px">210</span><span>个(新关闭22，未关闭188)</span>
+            <span style="font-size: 20px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
           </Col>
           <Col span="8">
             <div style="margin-bottom: 20px">
@@ -33,7 +33,7 @@
               <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
             </div>
-            <span style="font-size: 20px">6.2%</span><span>(上升百分比)</span>
+            <span style="font-size: 20px">{{link}}</span><span>(上升百分比)</span>
           </Col>
           <Col span="8">
             <div style="margin-bottom: 20px">
@@ -41,7 +41,7 @@
               <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
             </div>
-            <span style="font-size: 20px">2.2%</span><span>(下降百分比)</span>
+            <span style="font-size: 20px">{{ratio}}</span><span>(下降百分比)</span>
           </Col>
         </Row>
       </div>
@@ -57,17 +57,51 @@
   </div>
 </template>
 <script>
+  import http from '@/http.js'
   export default {
     data(){
       return{
-
+        add:'',
+        link:'',
+        ratio:'',
+        close:'',
+        unclose:'',
+        timeX:[],
+        timeY:[],
+        procX1:[],
+        procX2:[],
+        procX3:[],
+        procY1:[],
+        procY2:[],
       }
     },
     mounted(){
-      this.initComplain()
-      this.initProcess()
+
+
+      this.init()
     },
     methods:{
+      init(){
+        http.get('api/get_complaint_by_date',{date:'2018-08-03'}).then(resp=>{
+          console.log('游客体验：：',resp.data.hits)
+          this.add=resp.data.hits.total;
+          this.close=resp.data.hits.closed;
+          this.unclose=resp.data.hits.unclosed;
+          this.link=resp.data.hits.link;
+          this.ratio=resp.data.hits.ratio;
+          this.timeX.push(parseInt(resp.data.hits.avg_proc));
+          this.timeX.push(parseInt(resp.data.hits.max_proc));
+          this.timeX.push(parseInt(resp.data.hits.min_proc));
+          this.initComplain()
+          for (var i=0;i<resp.data.hits.proc_stat.length;i++){
+            this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg))
+            this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max))
+            this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min))
+            this.procY1.push(resp.data.hits.proc_stat[i].name)
+          }
+          this.initProcess()
+        })
+      },
       initComplain(){
       let complain = this.$echarts.init(document.getElementById("complain"))
         complain.setOption({
@@ -92,7 +126,7 @@
             type: 'value'
           },
           series: [{
-            data: [ 4, 7, 1],
+            data: this.timeX,
             type: 'bar',
             barWidth:'50%'
           }]
@@ -120,24 +154,24 @@
           },
           xAxis: {
             type: 'category',
-            data: ['投诉受理', '投诉反馈', '二次处理','二次反馈','巡回法庭','处理完成']
+            data: this.procY1
           },
           yAxis: {
             type: 'value'
           },
           series: [
             {
-            data: [ 4, 4, 4,4,4,4],
+            data: this.procX1,
               name:'平均时长',
             type: 'bar',
           },
             {
-              data: [ 7, 7, 7,7,7,7],
+              data: this.procX2,
               name:'最大时长',
               type: 'bar',
             },
             {
-              data: [ 1, 1, 1,1,1,1],
+              data: this.procX3,
               name:'最小时长',
               type: 'bar',
             },

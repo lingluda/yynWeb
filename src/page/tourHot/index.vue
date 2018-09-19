@@ -7,20 +7,28 @@
       <TabPane label="首页" name="index">
 
         <card>
-          <div>
+          <div style="display: flex">
             <div style="margin-bottom: 20px;width: 200px">
               <span style="font-weight: bold;color: #000000">游客人数</span>
               <Tooltip content="这是怎么个一回事啊，我航线知道" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
             </div>
-            <div>
-            <DatePicker size="small" v-model="date"  type="date" placeholder="自选时间" @on-change="change1"
+            <div style="justify-content: flex-end">
+            <DatePicker size="small" v-model="date" type="date" placeholder="自选时间" @on-change="change1"
                         style="width: 150px;"></DatePicker>
-
             <Select size="small" v-model="city" clearable style="width: 150px" @on-change="change3">
               <Option v-for="item in cityData" :value="item.code">{{item.name}}</Option>
             </Select>
             </div>
+          </div>
+          <div style="width: 100%;height: 200px;border: 1px solid yellow">
+                <Row style="padding: 40px;">
+                  <Col span="8" style="border-right: 1px solid yellow">
+                    <Icon type="md-desktop" size="60"/>
+                    <span>12121</span>
+                    <span>asdfasdf</span>
+                  </Col>
+                </Row>
           </div>
         </card>
       </TabPane  >

@@ -42,3 +42,11 @@ function encodeUrl(obj) {
 
 
 export default http;
+
+function addresstolatlag(address) {
+  var url = 'http://api.map.baidu.com/geocoder/v2/?address='+address+'&output=json&ak=PPmicK2C744fFQt2QtIOmpZ9Cqwu2DhR';
+  var result ='';
+  if (result = file_get_contents(url)) {
+    return result;
+  }
+}

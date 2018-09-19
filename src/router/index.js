@@ -74,6 +74,13 @@ export default new Router({
           }
         },
         {
+          path: '/index2',
+          name: 'Index',
+          component: resolve => {
+            require(['../page/tourHot/index2.vue'], resolve)
+          }
+        },
+        {
           path:'platform',
           name:'platform',
           component: resolve => {
