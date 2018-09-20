@@ -111,7 +111,7 @@
                             <span class="lyrd_index_today_dw">人次</span>
                           </div>
                       </div>
-             
+
                   </div>
                   <div class="lyrd_index_kltj_chart_right">
                       <div id="table1" style="height:300px;min-width: 400px;"></div>
@@ -122,16 +122,14 @@
       </TabPane  >
       <TabPane label="热度排行" name="destination" >
       </TabPane>
-      <TabPane label="热门景区" name="scenic">
-      </TabPane>
-      <TabPane label="景区客流热力发布" name="hotmap">
+      <TabPane label="景区客流热力" name="hotmap">
       </TabPane>
       <TabPane label="平台运营" name="platform">
       </TabPane>
     </Tabs>
   </div>
 </template>
- 
+
 
 <style lang="less" scoped>
 .ti {
