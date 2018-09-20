@@ -34,7 +34,6 @@
       </TabPane  >
       <TabPane label="热门排行" name="destination" >
       </TabPane>
-
       <TabPane label="景区客流热力" name="hotmap">
       </TabPane>
       <TabPane label="平台运营" name="platform">

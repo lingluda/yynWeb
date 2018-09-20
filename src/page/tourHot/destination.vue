@@ -33,7 +33,7 @@
             <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
           </div>
-          <RadioGroup type="button" v-model="chan" size="small">
+          <RadioGroup type="button" v-model="chanclick" size="small">
             <Radio label="app">APP访问</Radio>
             <Radio label="search">搜索引擎</Radio>
             <Radio label="website">网站报道</Radio>
@@ -171,7 +171,7 @@
             this.barDatax1.push(resp.data.hits[i].name)
             this.barDatay1.push(parseInt(resp.data.hits[i].dau))
           }
-          this.initSimBars()
+          this.initSimBars1()
         })
         http.get('bi/get_scenic_tourist_top_by_date',{date:'2018-09-17',top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
@@ -356,7 +356,7 @@
           color:['#006EFF','#29CC85','red']
         })
       },
-      initSimBars(){
+      initSimBars1(){
         let simbars = this.$echarts.init(document.getElementById("simBars"),'macarons')
         simbars.setOption({
           tooltip: {
@@ -416,10 +416,23 @@
           }
           this.initSimBar()
         })
+      },
+      chanchange1(){
+        this.barDatax1=[]
+        this.barDatay1=[]
+        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
+          console.log(resp.data.hits)
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.barDatax1.push(resp.data.hits[i].name)
+            this.barDatay1.push(parseInt(resp.data.hits[i].dau))
+          }
+          this.initSimBars1()
+        })
       }
     },
     watch:{
       chan:'clickchange',
+      chanclick:'chanchange1'
     }
   }
 </script>

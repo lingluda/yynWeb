@@ -17,43 +17,42 @@
       </Select>
       <DatePicker size="small" type="date" v-model="picDate" placeholder="自选时间" style="width: 120px"></DatePicker>
       <Row :gutter="16" style="margin-top: 20px">
-        <Col span="8">
+        <Col span="6">
             <div style="display: flex;border: 1px solid #dcdee2;height: 320px;width: 100%">
-            <div style="width: 15%;height: 320px;display: flex">
+            <div style="width: 10%;height: 320px;display: flex">
               <Icon type="ios-woman" size="32" color="#ff50fe" style="display: flex;align-items: center;margin-left: 60%"/>
             </div>
-            <div id="sex" style="width: 70%;height: 320px;"></div>
-            <div style="width: 15%;height: 320px;display: flex">
+            <div id="sex" style="width: 80%;height: 320px;"></div>
+            <div style="width: 10%;height: 320px;display: flex">
               <Icon type="ios-man" size="32" color="#1ea9ff" style="display: flex;align-items: center;"/>
             </div>
             </div>
         </Col>
-        <Col span="8">
+        <Col span="6">
           <div id="in" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
         </Col>
-        <Col span="8">
+        <Col span="6">
           <div id="os" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
+        </Col>
+        <Col span="6">
+          <div id="ios" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
         </Col>
       </Row>
       <Row :gutter="16" style="margin-top: 20px">
-        <Col span="8">
+        <Col span="12">
           <div id="age" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
         </Col>
-        <Col span="8">
+        <Col span="12">
           <div id="edu" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
         </Col>
-        <Col span="8">
-          <div id="client" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
-        </Col>
+
       </Row>
       <Row :gutter="16" style="margin-top: 20px;margin-bottom: 40px">
-        <Col span="8">
-          <div id="industry" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
-        </Col>
-        <Col span="8">
+
+        <Col span="12">
           <div id="city" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
         </Col>
-        <Col span="8">
+        <Col span="12">
           <div id="province" style="width: 100%;height: 320px;border: 1px solid #dcdee2"></div>
         </Col>
       </Row>
@@ -135,16 +134,20 @@
         tabname:'in',
         sexData:[],
         inData:[],
+        inDatax:[],
         osData:[],
+        ageData:[],
         ageDatax:[],
         ageDatay:[],
+        eduData:[],
         eduDatax:[],
         eduDatay:[],
         cliData:[],
         ddData:[],
         cityData:[],
         proData:[],
-        picDate:'',
+        picDate:'2018-09-14',
+        cpicDate:'',
         columns1: [
           {
             title:'排名',
@@ -182,65 +185,14 @@
         data1: [],
         cashData:[],
         cashDataX:[],
-
       }
     },
     mounted() {
-      this.init()
-      this.initClient()
-      this.initIndu()
       this.initCity()
       this.initPro()
-
       this.initMap()
     },
     methods: {
-      init(){
-        var date = new Date().format(
-          "yyyy-MM-dd"
-        )
-        this.picDate = date;
-        http.get('bi/get_portrait_base_by_date',{date:'2018-09-14'}).then(resp=>{
-          this.sexData =resp.data.hist.gender;
-          this.inData =resp.data.hist.consumpting;
-          for (var i=0;i<resp.data.hist.edu.length;i++){
-            this.eduDatax.push(resp.data.hist.edu[i].name)
-            this.eduDatay.push(resp.data.hist.edu[i].value)
-          }
-          this.osData =resp.data.hist.mobile;
-          for (var i=0;i<resp.data.hist.age.length;i++){
-            this.ageDatax.push(resp.data.hist.age[i].name)
-            this.ageDatay.push(resp.data.hist.age[i].value)
-          }
-          this.carData =resp.data.hist.car;
-          this.initSex();
-          this.initOS();
-          this.initIn();
-          this.initEdu();
-          this.initAge();
-          http.get('bi/get_portrait_origin_by_date',{date:'2018-09-14',type:'city',scenic:'',city_id:''}).then(resp=>{
-            console.log('city',resp)
-          })
-          http.get('bi/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
-            this.data1 = resp.data.hits;
-          })
-          http.get('bi/get_consume_by_date',{date:'2018-08-01',city_id:392}).then(resp=>{
-            this.vagprice = resp.data.hist.avg_amount;
-              this.middle= resp.data.hist.median_amount;
-          })
-          http.get('bi/get_consume_type_by_mon',{startTime:'2018-07',endTime:'2018-09'}).then(resp=>{
-            console.log('get_consume_type_by_mon',resp.data.hits)
-            this.cashData=resp.data.hits;
-            for (var i=0;i<resp.data.hits.length;i++) {
-              this.cashDataX.push(resp.data.hits[i].name)
-            }
-            console.log('this.cashData',this.cashData)
-            console.log('this.cashData',this.cashDataX)
-            this.initCash()
-          })
-        })
-
-      },
       initMap(){
         var center = new qq.maps.LatLng(26.90923, 108.397428);
         var map = new qq.maps.Map(document.getElementById('moveMap'),{
@@ -319,7 +271,7 @@
         let Sin = this.$echarts.init(document.getElementById("in"))
         Sin.setOption({
           title : {
-            text: '消费占比(%)',
+            text: '年龄占比(%)',
             textStyle:{
               fontSize:14,
             },
@@ -338,11 +290,11 @@
             bottom:3,
             x: 'center',
             icon:'circle',
-            data: ['低消费', '较低消费', '中消费','较高消费','高消费']
+            data: this.ageDatax
           },
           series: [
             {
-              name: '收入占比',
+              name: '年龄占比',
               type: 'pie',
               radius: ['50%', '70%'],
               avoidLabelOverlap: false,
@@ -365,7 +317,7 @@
                   show: false
                 }
               },
-              data: this.inData
+              data: this.ageData
             }
           ]
         })
@@ -374,7 +326,7 @@
         let os = this.$echarts.init(document.getElementById("os"))
         os.setOption({
           title : {
-            text: '操作系统(%)',
+            text: '学历占比(%)',
             textStyle:{
               fontSize:14,
             },
@@ -393,11 +345,11 @@
             bottom:10,
             x: 'center',
             icon:'circle',
-            data: ['Android',  'IOS']
+            data: this.eduDatax
           },
           series: [
             {
-              name: '操作系统',
+              name: '学历占比',
               type: 'pie',
               radius: ['50%', '70%'],
               avoidLabelOverlap: false,
@@ -414,13 +366,63 @@
                   }
                 }
               },
-              color: ['#006EFF','#29CC85'],
+              color: ['#006EFF','#29CC85','#ffbb00','#ff584c','#9741d9','#1fc0cc','#7ff936','#ff9c19','#e63984','#655ce6','#47cc50','#fb0b6'],
               labelLine: {
                 normal: {
                   show: false
                 }
               },
-              data: this.osData
+              data: this.eduData
+            }
+          ]
+        })
+      },
+      initIOS(){
+        let ios = this.$echarts.init(document.getElementById("ios"))
+        ios.setOption({
+          title : {
+            text: '消费能力(%)',
+            textStyle:{
+              fontSize:14,
+            },
+            x:'center'
+          },
+          color: ['#006EFF','#29CC85','#ffbb00','#ff584c','#9741d9','#1fc0cc','#7ff936','#ff9c19','#e63984','#655ce6','#47cc50','#fb0b6'],
+          tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+          },
+          legend: {
+            bottom:10,
+            x: 'center',
+            icon:'circle',
+            data:this.inDatax
+          },
+          series: [
+            {
+              name:'消费能力',
+              type:'pie',
+              radius: ['50%', '70%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '30',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data:this.inData
             }
           ]
         })
@@ -577,108 +579,6 @@
           color:['#006EFF'],
         })
       },
-      initClient(){
-        let client = this.$echarts.init(document.getElementById("client"),)
-        client.setOption({
-          title: {
-            text: '终端类型(%)',
-            textStyle:{
-              fontSize:14,
-            },
-            x:'center'
-          },
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            },
-            backgroundColor:'#323232'
-          },
-
-          grid: {
-            left: '1%',
-            right: '10%',
-            bottom: '4%',
-            containLabel: true
-          },
-          xAxis: {
-            type: 'value',
-
-            boundaryGap: [0, 0.1]
-          },
-          yAxis: {
-            type: 'category',
-            data: ['其他','三星','HTC','小米','华为','苹果']
-          },
-
-          series: [
-            {
-              name: '2011年',
-              type: 'bar',
-              data: [34.12, 29, 12, 21, 12,32],
-              barWidth:'50%',
-              label: {
-                normal: {
-                  show: true,
-                  position: 'right'
-                }
-              },
-            }
-          ],
-          color:['#006EFF'],
-        })
-      },
-      initIndu(){
-        let indu = this.$echarts.init(document.getElementById("industry"),)
-        indu.setOption({
-          title: {
-            text: '工作行业(%)',
-            textStyle:{
-              fontSize:14,
-            },
-            x:'center'
-          },
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            },
-            backgroundColor:'#323232'
-          },
-
-          grid: {
-            left: '1%',
-            right: '10%',
-            bottom: '4%',
-            containLabel: true
-          },
-          xAxis: {
-            type: 'value',
-
-            boundaryGap: [0, 0.1]
-          },
-          yAxis: {
-            type: 'category',
-            data: ['教育','金融','服务','外包','自媒体','房地产']
-          },
-
-          series: [
-            {
-              name: '2011年',
-              type: 'bar',
-              data: [34.12, 29, 12, 21, 12,32],
-              barWidth:'50%',
-              label: {
-                normal: {
-                  show: true,
-                  position: 'right'
-                }
-              },
-            }
-          ],
-          color:['#006EFF'],
-        })
-      },
       initCity(){
         let city = this.$echarts.init(document.getElementById("city"),)
         city.setOption({
@@ -788,33 +688,44 @@
         })
       },
       dateChange(){
+        this.eduData=[];
         this.eduDatax=[];
         this.eduDatay=[];
         this.cashDataX=[];
+        this.ageData=[];
         this.ageDatax=[];
         this.ageDatay=[];
+        this.inDatax=[];
         var date = new Date(this.picDate).format(
           "yyyy-MM-dd"
         )
-        this.picDate = date;
-        http.get('bi/get_portrait_base_by_date',{date:this.picDate}).then(resp=>{
-          this.sexData =resp.data.hist.gender;
-          this.inData =resp.data.hist.consumpting;
-          for (var i=0;i<resp.data.hist.edu.length;i++){
+        this.cpicDate = date;
+        http.get('bi/get_portrait_base_by_date',{date:this.cpicDate}).then(resp=> {
+          this.sexData = resp.data.hist.gender;
+          this.inData = resp.data.hist.consumpting;
+          for (var i = 0; i < resp.data.hist.consumpting.length; i++) {
+            this.inDatax.push(resp.data.hist.consumpting[i].name)
+          }
+          this.eduData = resp.data.hist.edu
+          for (var i = 0; i < resp.data.hist.edu.length; i++) {
             this.eduDatax.push(resp.data.hist.edu[i].name)
             this.eduDatay.push(resp.data.hist.edu[i].value)
           }
-          this.osData =resp.data.hist.mobile;
-          for (var i=0;i<resp.data.hist.age.length;i++){
+          this.osData = resp.data.hist.mobile;
+          console.log('resp.data.hist.age',resp.data.hist.age)
+          this.ageData=resp.data.hist.age;
+          for (var i = 0; i < resp.data.hist.age.length; i++) {
             this.ageDatax.push(resp.data.hist.age[i].name)
             this.ageDatay.push(resp.data.hist.age[i].value)
           }
           this.carData =resp.data.hist.car;
           this.initSex();
           this.initOS();
+          this.initIOS();
           this.initIn();
           this.initEdu();
           this.initAge();
+        })
           http.get('bi/get_portrait_origin_by_date',{date:'2018-09-14',type:'city',scenic:'',city_id:''}).then(resp=>{
             console.log('city',resp)
           })
@@ -835,7 +746,7 @@
             console.log('this.cashData',this.cashDataX)
             this.initCash()
           })
-        })
+
       }
     },
     watch:{
