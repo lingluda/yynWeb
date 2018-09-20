@@ -129,6 +129,14 @@
   export default {
     data() {
       return {
+        provx:[],
+        provy:[],
+        cityx:[],
+        cityy:[],
+        mobilex:[],
+        mobiley:[],
+        carDatax:[],
+        carDatay:[],
         vagprice:'',
         middle:'',
         tabname:'in',
@@ -188,8 +196,6 @@
       }
     },
     mounted() {
-      this.initCity()
-      this.initPro()
       this.initMap()
     },
     methods: {
@@ -390,7 +396,12 @@
           color: ['#006EFF','#29CC85','#ffbb00','#ff584c','#9741d9','#1fc0cc','#7ff936','#ff9c19','#e63984','#655ce6','#47cc50','#fb0b6'],
           tooltip: {
             trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)"
+            formatter: "{a} <br/>{b}: {c} ({d}%)",
+            axisPointer: {
+              type: 'shadow'
+            },
+            backgroundColor:'#323232'
+
           },
           legend: {
             bottom:10,
@@ -481,7 +492,7 @@
         let age = this.$echarts.init(document.getElementById("age"),)
         age.setOption({
           title: {
-            text: '年龄占比(%)',
+            text: '有车情况(%)',
             textStyle:{
               fontSize:14,
             },
@@ -508,14 +519,14 @@
           },
           yAxis: {
             type: 'category',
-            data: this.ageDatax
+            data: this.carDatax
           },
 
           series: [
             {
-              name: '2011年',
+              name: '占比',
               type: 'bar',
-              data: this.ageDatay,
+              data: this.carDatay,
               barWidth:'50%',
               label: {
                 normal: {
@@ -532,7 +543,7 @@
         let edu = this.$echarts.init(document.getElementById("edu"),)
         edu.setOption({
           title: {
-            text: '学历占比(%)',
+            text: '终端类型(%)',
             textStyle:{
               fontSize:14,
             },
@@ -559,14 +570,14 @@
           },
           yAxis: {
             type: 'category',
-            data: this.eduDatax
+            data: this.mobilex
           },
 
           series: [
             {
-              name: '2011年',
+              name: '占比',
               type: 'bar',
-              data: this.eduDatay,
+              data: this.mobiley,
               barWidth:'50%',
               label: {
                 normal: {
@@ -610,14 +621,14 @@
           },
           yAxis: {
             type: 'category',
-            data: ['成都','武汉','北京','丽江','云南','普洱']
+            data: this.cityx
           },
 
           series: [
             {
-              name: '2011年',
+              name: '占比',
               type: 'bar',
-              data: [34.12, 29, 12, 21, 12,32],
+              data: this.cityy,
               barWidth:'50%',
               label: {
                 normal: {
@@ -661,14 +672,14 @@
           },
           yAxis: {
             type: 'category',
-            data: ['广西','广东','福建','山西','云南','新疆']
+            data: this.provx
           },
 
           series: [
             {
-              name: '2011年',
+              name: '占比',
               type: 'bar',
-              data: [34.12, 29, 12, 21, 12,32],
+              data: this.provy,
               barWidth:'50%',
               label: {
                 normal: {
@@ -688,6 +699,10 @@
         })
       },
       dateChange(){
+        this.provx=[];
+        this.provy=[];
+        this.cityx=[];
+        this.cityy=[];
         this.eduData=[];
         this.eduDatax=[];
         this.eduDatay=[];
@@ -696,6 +711,10 @@
         this.ageDatax=[];
         this.ageDatay=[];
         this.inDatax=[];
+        this.carDatax=[];
+        this.carDatay=[];
+        this.mobilex=[];
+        this.mobiley=[];
         var date = new Date(this.picDate).format(
           "yyyy-MM-dd"
         )
@@ -709,16 +728,23 @@
           this.eduData = resp.data.hist.edu
           for (var i = 0; i < resp.data.hist.edu.length; i++) {
             this.eduDatax.push(resp.data.hist.edu[i].name)
-            this.eduDatay.push(resp.data.hist.edu[i].value)
+            this.eduDatay.push(resp.data.hist.edu[i].value*100)
           }
           this.osData = resp.data.hist.mobile;
           console.log('resp.data.hist.age',resp.data.hist.age)
           this.ageData=resp.data.hist.age;
           for (var i = 0; i < resp.data.hist.age.length; i++) {
             this.ageDatax.push(resp.data.hist.age[i].name)
-            this.ageDatay.push(resp.data.hist.age[i].value)
+            this.ageDatay.push(resp.data.hist.age[i].value*100)
           }
-          this.carData =resp.data.hist.car;
+          for (var i = 0; i < resp.data.hist.mobile.length; i++) {
+            this.mobilex.push(resp.data.hist.mobile[i].name)
+            this.mobiley.push(resp.data.hist.mobile[i].value*100)
+          }
+          for (var i = 0; i < resp.data.hist.car.length; i++) {
+            this.carDatax.push(resp.data.hist.car[i].name)
+            this.carDatay.push(resp.data.hist.car[i].value*100)
+          }
           this.initSex();
           this.initOS();
           this.initIOS();
@@ -726,9 +752,22 @@
           this.initEdu();
           this.initAge();
         })
-          http.get('bi/get_portrait_origin_by_date',{date:'2018-09-14',type:'city',scenic:'',city_id:''}).then(resp=>{
-            console.log('city',resp)
+          http.get('bi/get_portrait_origin_by_date',{date:this.cpicDate,type:'city',scenic:'',city_id:''}).then(resp=>{
+            console.log('city',resp.data.hist)
+                for (var i=0;i<resp.data.hist.length;i++){
+                  this.cityx.push(resp.data.hist[i].origin_city)
+                  this.cityy.push(resp.data.hist[i].origin_percent*100)
+                }
+            this.initCity()
           })
+        http.get('bi/get_portrait_origin_by_date',{date:this.cpicDate,type:'prov',scenic:'',city_id:''}).then(resp=>{
+          console.log('city',resp.data.hist)
+          for (var i=0;i<resp.data.hist.length;i++){
+            this.provx.push(resp.data.hist[i].origin_province)
+            this.provy.push(resp.data.hist[i].origin_percent*100)
+          }
+          this.initPro()
+        })
           http.get('bi/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
             this.data1 = resp.data.hits;
           })
@@ -746,7 +785,6 @@
             console.log('this.cashData',this.cashDataX)
             this.initCash()
           })
-
       }
     },
     watch:{
