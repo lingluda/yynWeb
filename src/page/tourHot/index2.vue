@@ -297,8 +297,13 @@
         "yyyy-MM-dd"
       )
       console.log('日期其：：：：啊啊啊',date)
-      this.date1=val;
-      http.get('bi/get_tourism_trend_by_timespan',{startTime:this.date1[0],endTime:this.date1[1]}).then(resp=>{
+      this.start=date;
+      var dateq = new Date(this.date1[1]).format(
+        "yyyy-MM-dd"
+      )
+      console.log('日期其：：：：啊啊啊',dateq)
+      this.end=date;
+      http.get('bi/get_tourism_trend_by_timespan',{startTime:this.start,endTime:this.end}).then(resp=>{
         console.log(resp.data)
         this.totalP = resp.data.hits.total;
         for(var i=0;i<resp.data.hits.list.length;i++){

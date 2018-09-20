@@ -790,6 +790,51 @@
           this.data1 = resp.data.hits;
           console.log('this.data1',this.data1)
         })
+      },
+      dateChange(){
+        var date = new Date(this.picDate).format(
+          "yyyy-MM-dd"
+        )
+        this.picDate = date;
+        http.get('bi/get_portrait_base_by_date',{date:this.picDate}).then(resp=>{
+          this.sexData =resp.data.hist.gender;
+          this.inData =resp.data.hist.consumpting;
+          for (var i=0;i<resp.data.hist.edu.length;i++){
+            this.eduDatax.push(resp.data.hist.edu[i].name)
+            this.eduDatay.push(resp.data.hist.edu[i].value)
+          }
+          this.osData =resp.data.hist.mobile;
+          for (var i=0;i<resp.data.hist.age.length;i++){
+            this.ageDatax.push(resp.data.hist.age[i].name)
+            this.ageDatay.push(resp.data.hist.age[i].value)
+          }
+          this.carData =resp.data.hist.car;
+          this.initSex();
+          this.initOS();
+          this.initIn();
+          this.initEdu();
+          this.initAge();
+          http.get('bi/get_portrait_origin_by_date',{date:'2018-09-14',type:'city',scenic:'',city_id:''}).then(resp=>{
+            console.log('city',resp)
+          })
+          http.get('bi/get_migrate_by_date',{date:'2018-08-25',city_name:'大理',top:10,io:this.tabname}).then(resp=>{
+            this.data1 = resp.data.hits;
+          })
+          http.get('bi/get_consume_by_date',{date:'2018-08-01',city_id:392}).then(resp=>{
+            this.vagprice = resp.data.hist.avg_amount;
+            this.middle= resp.data.hist.median_amount;
+          })
+          http.get('bi/get_consume_type_by_mon',{startTime:'2018-07',endTime:'2018-09'}).then(resp=>{
+            console.log('get_consume_type_by_mon',resp.data.hits)
+            this.cashData=resp.data.hits;
+            for (var i=0;i<resp.data.hits.length;i++) {
+              this.cashDataX.push(resp.data.hits[i].name)
+            }
+            console.log('this.cashData',this.cashData)
+            console.log('this.cashData',this.cashDataX)
+            this.initCash()
+          })
+        })
       }
     },
     watch:{
