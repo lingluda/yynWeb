@@ -67,14 +67,14 @@ export default new Router({
           }
         },
         {
-          path: '/index',
+          path: '/index2',
           name: 'Index',
           component: resolve => {
-            require(['../page/tourHot/index2.vue'], resolve)
+            require(['../page/tourHot/index.vue'], resolve)
           }
         },
         {
-          path: '/index2',
+          path: '/index',
           name: 'Index',
           component: resolve => {
             require(['../page/tourHot/index2.vue'], resolve)
