@@ -231,7 +231,26 @@
           series: [{
             data: this.barDatay,
             type: 'bar',
-            barWidth:'50%'
+            barWidth:'50%',
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true,
+                  position: 'top',
+                  formatter: '{c}'
+                },
+                color: function (params) {
+                  // build a color map as your need.
+                  var colorList = [
+                    '#ff9b33', '#ff9b33', '#ff9b33', '#006EFF', '#006EFF',
+                    '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF',
+                    '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF'
+                  ];
+                  return colorList[params.dataIndex]
+                },
+
+              }
+            }
           }]
         })
       },
@@ -268,6 +287,10 @@
             }
           },
           yAxis: {
+       /*     show:true,
+            axisLine: {show:false},
+            axisTick: {show:false},
+            splitLine:{show:false},*/
             type: 'category',
             data: this.max1y,
             axisLine:{
@@ -282,13 +305,37 @@
               name: '峰值',
               type: 'bar',
               data: this.max1n,
-              barWidth:'50%'
+              barWidth:'50%',
+              itemStyle: {
+                normal: {
+                  label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{c}'
+                  },
+                  color: function (params) {
+                    // build a color map as your need.
+                    var colorList = [
+                      '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF',
+                      '#006EFF', '#006EFF', '#ff9b33', '#ff9b33', '#ff9b33',
+                      '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF'
+                    ];
+                    return colorList[params.dataIndex]
+                  },
+
+                }
+              }
             },
             {
               name: '景区历史游客峰值',
               type: 'line',
               data: this.max1his,
-              barWidth:'50%'
+              barWidth:'50%',
+              itemStyle: {
+                normal: {
+                  color: 'red',
+                }
+              }
             }
           ],
           color: ['#006EFF','orange']
@@ -352,6 +399,7 @@
               type: 'line',
               data: this.max2his
             }
+
           ],
           color:['#006EFF','#29CC85','red']
         })
@@ -376,6 +424,7 @@
               }
             }
           },
+
           grid: {
             left: '3%',
             right: '4%',
@@ -394,7 +443,26 @@
           series: [{
             data: this.barDatay,
             type: 'bar',
-            barWidth:'50%'
+            barWidth:'50%',
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true,
+                  position: 'top',
+                  formatter: '{c}'
+                },
+                color: function (params) {
+                  // build a color map as your need.
+                  var colorList = [
+                    '#ff9b33', '#ff9b33', '#ff9b33', '#006EFF', '#006EFF',
+                    '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF',
+                    '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF'
+                  ];
+                  return colorList[params.dataIndex]
+                },
+
+              }
+            }
           }],
           color:['#006EFF'],
         })

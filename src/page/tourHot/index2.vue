@@ -15,9 +15,9 @@
                       <Radio label="today">今日</Radio>
                       <Radio label="yesterday">昨日</Radio>
                   </RadioGroup>
-                  <DatePicker :value="value1" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:150px"></DatePicker>
-                  <Select v-model="model1" style="width:200px;margin-left:15px">
-                      <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                  <DatePicker :value="value1" v-model="date" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:150px"></DatePicker>
+                  <Select v-model="city" clearable style="width:200px;margin-left:15px">
+                    <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                   </Select>
                 </div>
               </div>
@@ -32,7 +32,7 @@
                               <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                             </div>
                             <div>
-                              <span class="lyrd_index_today_num">210760</span>
+                              <span class="lyrd_index_today_num">{{total}}</span>
                               <span class="lyrd_index_today_dw">人次</span>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                               <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                             </div>
                             <div>
-                              <span class="lyrd_index_today_num">6.2</span>
+                              <span class="lyrd_index_today_num">{{ratio}}</span>
                               <span class="lyrd_index_today_dw">%</span>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                               <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                             </div>
                             <div>
-                              <span class="lyrd_index_today_num">0.9</span>
+                              <span class="lyrd_index_today_num">{{link}}</span>
                               <span class="lyrd_index_today_dw">%</span>
                             </div>
                         </div>
@@ -92,9 +92,9 @@
                         <Radio label="today">最近7天</Radio>
                         <Radio label="yesterday">最近30天</Radio>
                     </RadioGroup>
-                    <DatePicker :value="value1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:200px"></DatePicker>
-                    <Select v-model="model1" style="width:200px;margin-left:15px">
-                        <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    <DatePicker :value="value1" v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:200px"></DatePicker>
+                    <Select v-model="city1" clearable style="width:200px;margin-left:15px">
+                      <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                     </Select>
                   </div>
               </div>
@@ -107,14 +107,14 @@
                             <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                           </div>
                           <div>
-                            <span class="lyrd_index_today_num">230012</span>
+                            <span class="lyrd_index_today_num">{{totalP}}</span>
                             <span class="lyrd_index_today_dw">人次</span>
                           </div>
                       </div>
 
                   </div>
                   <div class="lyrd_index_kltj_chart_right">
-                      <div id="table1" style="height:300px;min-width: 400px;"></div>
+                      <div id="myline" style="height:300px;min-width: 400px;"></div>
                   </div>
               </div>
             </div>
@@ -129,8 +129,214 @@
     </Tabs>
   </div>
 </template>
+<script>
+  import http from '@/http.js'
+  import '../../dateFormate.js'
+  import city from '@/components/select/city.vue'
+  export default {
+    data() {
+      return {
+        totalP:'',
+        lineDatax:[],
+        lineDatay:[],
+        date: '2018-09-16',
+        cdate: '',
+        date1: ['2018-09-14','2018-09-16'],
+        cityData:[],
+        city:'',
+        city1:'',
+        start:'',
+        end:'',
+        pieData:[],
+        total:'',
+        ratio:'',
+        link:'',
+        options2: {
+          shortcuts: [
+            {
+              text: '最近7天',
+              value () {
+                const end = new Date();
+                const start = new Date();
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                return [start, end];
+              },
+              onClick:(picker)=>{
+                console.log('日期：：：',picker)
+              }
+            },
+            {
+              text: '最近30天',
+              value () {
+                const end = new Date();
+                const start = new Date();
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                return [start, end];
+              }
+            }
+          ]
+        }
+      }
+    },
+    mounted() {
+      this.initLine()
+      this.getCity()
+      //this.init()
+    },
+    methods: {
+      getCity(){
+        http.get('bi/get_all_city',{}).then(resp=>{
+          this.cityData = resp.data.hits;
+        })
+      },
+      initBar() {
+        let mybar = this.$echarts.init(document.getElementById("mybar"),'macarons')
+        mybar.setOption({
+          tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)",
+            backgroundColor:'#323232'
+          },
+          legend: {
+            x : '65%',
+            y : '35%',
+            icon:'circle',
+            orient: 'horizontal',
+            right: 10,
+            top: 20,
+            bottom: 20,
+            data: this.pieData
+          },
+          series: [
+            {
+              name:'今日接待',
+              type:'pie',
+              center:['30%','50%'],
+              radius: ['0%', '100%'],
+              avoidLabelOverlap: false,
+              data:this.pieData,
+              itemStyle: {
+                normal: {
+                  label: {
+                    show: false,
+                    formatter: '{b} : {c} \n ({d}%)'
+                  },
+                  labelLine: {
+                    show: false
+                  }
+                }
+              }
+            }
+          ],
+          color: ['#006EFF','#29CC85','#ffbb00','#ff584c','#9741d9','#1fc0cc','#7ff936','#ff9c19','#e63984','#655ce6','#47cc50','#fb0b6']
+        })
+      },
+      initLine(){
+        let myline = this.$echarts.init(document.getElementById("myline"),'macarons')
+        myline.setOption({
+          title : {
+            text: '客流趋势分析（人次：万）',
+            textStyle:{
+              fontSize:14,
+              color:'black'
+            },
+            x:'left'
+          },
+          tooltip: {
+            trigger: 'axis',
+            backgroundColor:'#323232'
+          },
+          xAxis: {
+            type: 'category',
+            data: this.lineDatax,
+            axisLine:{
+              lineStyle:{
+                color:'#888888',
+                width:2
+              }
+            }
+          },
+          yAxis: {
+            type: 'value',
+            axisLine:{
+              lineStyle:{
+                color:'#888888',
+                width:2
+              }
+            }
+          },
+          lineStyle:{
+            color:'#006EFF',
 
+          },
+          itemStyle : {
+            normal : {
+              color:'#00FF00'
+            }
+          },
+          series: [{
+            data: this.lineDatay,
+            type: 'line'
+          }]
+        })
+      },
+      click(val){
+        this.$router.push(val)
+      },
+      form1change(){
+        var datea = new Date(this.date).format(
+          "yyyy-MM-dd"
+        )
+        console.log('当前时间：',datea)
+        this.cdate = datea
+        console.log('this.date::',this.date)
+        http.get('bi/get_tourism_dist_by_date',{date:this.cdate,city_id:this.city}).then(resp=>{
+          this.pieData = resp.data.hits;
+          console.log(this.pieData)
+          this.initBar()
+        })
+        http.get('bi/get_tourism_qty_by_date',{date:this.cdate,city_id:this.city}).then(resp=>{
+          console.log('qq1qqq',resp.data.hits.total)
+          this.link = resp.data.hits.link;
+          this.ratio = resp.data.hits.ratio;
+          this.total = resp.data.hits.total;
+        })
+      },
+      form1change1(){
+        this.totalP=''
+        this.lineDatax=[]
+        this.lineDatay=[]
+        var date = new Date(this.date1[0]).format(
+          "yyyy-MM-dd"
+        )
+        this.start=date;
+        var dateq = new Date(this.date1[1]).format(
+          "yyyy-MM-dd"
+        )
+        this.end=dateq;
+        console.log(1111111111111111111111)
+        http.get('bi/get_tourism_trend_by_timespan',{startTime:this.start,endTime:this.end,city_id:this.city1}).then(resp=>{
+          console.log(resp.data)
+          this.totalP = resp.data.hits.total;
+          for(var i=0;i<resp.data.hits.list.length;i++){
+            this.lineDatax.push(resp.data.hits.list[i].date)
+            this.lineDatay.push(resp.data.hits.list[i].value/10000)
+          }
+          console.log(this.lineDatax)
+          console.log(this.lineDatay)
+          this.initLine()
+        })
+      },
+    },
 
+    watch:{
+      date:'form1change',
+      city:'form1change',
+      date1:'form1change1',
+      city1:'form1change1',
+    }
+  }
+</script>
 <style lang="less" scoped>
 .ti {
   color: #000;
@@ -271,142 +477,6 @@
   margin-right: 20px;
 }
 </style>
-<script>
-import http from "@/http.js";
-import "../../dateFormate.js";
-import city from "@/components/select/city.vue";
-export default {
-  comments: {
-    city_select: city
-  },
-  data() {
-    return {
-      model1: "",
-      value1: "",
-      dateChoice: "today",
-      cityList: [
-        {
-          value: "New York",
-          label: "New York"
-        },
-        {
-          value: "London",
-          label: "London"
-        },
-        {
-          value: "Sydney",
-          label: "Sydney"
-        },
-        {
-          value: "Ottawa",
-          label: "Ottawa"
-        },
-        {
-          value: "Paris",
-          label: "Paris"
-        },
-        {
-          value: "Canberra",
-          label: "Canberra"
-        }
-      ]
-    };
-  },
-  mounted() {
-    this.chartLine();
-    this.initBar();
-  },
-  methods: {
-    click(val) {
-      this.$router.push(val);
-    },
-    initBar() {
-      var mybar = this.$echarts.init(document.getElementById("mybar"));
-      var opt = {
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-          orient: "vertical",
-          left: "left",
-          data: ["直接访问", "邮件营销", "联盟广告", "视频广告", "搜索引擎"],
-          x:'right'
-        },
-        series: [
-          {
-            name: "访问来源",
-            type: "pie",
-            radius: "55%",
-            center: ["50%", "60%"],
-            data: [
-              { value: 335, name: "直接访问" },
-              { value: 310, name: "邮件营销" },
-              { value: 234, name: "联盟广告" },
-              { value: 135, name: "视频广告" },
-              { value: 1548, name: "搜索引擎" }
-            ],
-            itemStyle: {
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 0, 0, 0.5)"
-              }
-            },
-            label: {
-              show: false
-            },
-            labelLine: {
-              normal: {
-                show: false
-              }
-            }
-          }
-        ]
-      };
 
-      mybar.setOption(opt);
-    },
-    chartLine() {
-      var myChart = this.$echarts.init(document.getElementById("table1"));
-      var option = {
-        title: {
-          text: "客流趋势分析"
-        },
-        tooltip: {
-          trigger: "axis"
-        },
-        legend: {
-          data: []
-        },
-        calculable: true,
-        xAxis: [
-          {
-            type: "category",
-            boundaryGap: false,
-            data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-          }
-        ],
-        yAxis: [
-          {
-            type: "value",
-            axisLabel: {
-              formatter: "{value}"
-            }
-          }
-        ],
-        series: [
-          {
-            name: "最高气温",
-            type: "line",
-            data: [11, 11, 15, 13, 12, 13, 10]
-          }
-        ]
-      };
-      myChart.setOption(option);
-    }
-  }
-};
-</script>
 
 
