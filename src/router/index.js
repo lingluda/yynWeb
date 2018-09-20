@@ -77,7 +77,7 @@ export default new Router({
           path: '/index',
           name: 'Index',
           component: resolve => {
-            require(['../page/tourHot/index3.vue'], resolve)
+            require(['../page/tourHot/index2.vue'], resolve)
           }
         },
         {
