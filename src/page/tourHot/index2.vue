@@ -287,34 +287,33 @@
           this.ratio = resp.data.hits.ratio;
           this.total = resp.data.hits.total;
         })
-      }
+      },
+      form1change1(){
+        this.totalP=''
+        this.lineDatax=[]
+        this.lineDatay=[]
+        var date = new Date(this.date1[0]).format(
+          "yyyy-MM-dd"
+        )
+        this.start=date;
+        var dateq = new Date(this.date1[1]).format(
+          "yyyy-MM-dd"
+        )
+        this.end=dateq;
+        http.get('bi/get_tourism_trend_by_timespan',{startTime:this.start,endTime:this.end,city_id:this.city1}).then(resp=>{
+          console.log(resp.data)
+          this.totalP = resp.data.hits.total;
+          for(var i=0;i<resp.data.hits.list.length;i++){
+            this.lineDatax.push(resp.data.hits.list[i].date)
+            this.lineDatay.push(resp.data.hits.list[i].value)
+          }
+          console.log(this.lineDatax)
+          console.log(this.lineDatay)
+          this.initLine()
+        })
+      },
     },
-    form1change1(){
-      this.totalP=''
-      this.lineDatax=[]
-      this.lineDatay=[]
-      var date = new Date(this.date1[0]).format(
-        "yyyy-MM-dd"
-      )
-      console.log('日期其：：：：啊啊啊',date)
-      this.start=date;
-      var dateq = new Date(this.date1[1]).format(
-        "yyyy-MM-dd"
-      )
-      console.log('日期其：：：：啊啊啊',dateq)
-      this.end=date;
-      http.get('bi/get_tourism_trend_by_timespan',{startTime:this.start,endTime:this.end}).then(resp=>{
-        console.log(resp.data)
-        this.totalP = resp.data.hits.total;
-        for(var i=0;i<resp.data.hits.list.length;i++){
-          this.lineDatax.push(resp.data.hits.list[i].date)
-          this.lineDatay.push(resp.data.hits.list[i].value)
-        }
-        console.log(this.lineDatax)
-        console.log(this.lineDatay)
-        this.initLine()
-      })
-    },
+
     watch:{
       date:'form1change',
       city:'form1change',

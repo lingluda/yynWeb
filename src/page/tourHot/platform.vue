@@ -135,7 +135,7 @@
             trigger:'axis'
           },
           grid:{
-            left:'5%',
+            left:'6%',
             right:'6%',
             bottom:'15%',
           },

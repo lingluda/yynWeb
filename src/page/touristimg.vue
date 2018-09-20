@@ -9,14 +9,10 @@
         <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
         </Tooltip>
       </div>
-      <RadioGroup type="button" size="small">
-        <Radio label="large">全省</Radio>
-        <Radio label="default">州市/景区</Radio>
-      </RadioGroup>
-      <Select size="small" style="width: 120px" placeholder="清选择">
+      <Select size="small" style="width: 120px" placeholder="城市">
         <Option>城市</Option>
       </Select>
-      <Select size="small" style="width: 120px" placeholder="清选择">
+      <Select size="small" style="width: 120px" placeholder="区域">
         <Option>区域</Option>
       </Select>
       <DatePicker size="small" type="date" v-model="picDate" placeholder="自选时间" style="width: 120px"></DatePicker>
@@ -792,6 +788,11 @@
         })
       },
       dateChange(){
+        this.eduDatax=[];
+        this.eduDatay=[];
+        this.cashDataX=[];
+        this.ageDatax=[];
+        this.ageDatay=[];
         var date = new Date(this.picDate).format(
           "yyyy-MM-dd"
         )
