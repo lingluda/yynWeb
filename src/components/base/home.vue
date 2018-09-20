@@ -51,7 +51,7 @@
                                                             style="margin-left: 60px;"/></span>
         <!--<sidebar></sidebar>-->
       </Sider>
-      <Content style="width:100%;max-width: 1360px">
+      <Content style="width:100%;">
         <router-view style="padding:20px;"></router-view>
       </Content>
       <!-- <Footer><router-link to="tobaccobase">aaqa</router-link></Footer> -->
