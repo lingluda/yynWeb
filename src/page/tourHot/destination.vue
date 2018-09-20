@@ -82,14 +82,14 @@
         var date = new Date().format(
           "yyyy-MM-dd"
         )
-        http.get('bi/bi/get_hot_desc_vist_qty_by_date',{chan:'app',date:'2018-09-01',top:10}).then(resp=>{
+        http.get('bi/get_hot_desc_vist_qty_by_date',{chan:'app',date:'2018-09-01',top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)
             this.barDatay.push(parseInt(resp.data.hits[i].dau))
           }
           this.initSimBar()
         })
-        http.get('bi/bi/get_hot_line_by_date',{date:'2018-08-22',top:10}).then(resp=>{
+        http.get('bi/get_hot_line_by_date',{date:'2018-08-22',top:10}).then(resp=>{
           console.log(resp.data.hits)
           this.fdata = resp.data.hits;
         })
@@ -147,7 +147,7 @@
         var date = new Date().format(
           "yyyy-MM-dd"
         )
-        http.get('bi/bi/get_hot_desc_vist_qty_by_date',{chan:this.chan,date:'2018-09-01',top:10}).then(resp=>{
+        http.get('bi/get_hot_desc_vist_qty_by_date',{chan:this.chan,date:'2018-09-01',top:10}).then(resp=>{
           console.log('sb',resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)

@@ -82,7 +82,7 @@
     },
     methods:{
       init(){
-        http.get('bi/bi/get_complaint_by_date',{date:'2018-08-03'}).then(resp=>{
+        http.get('bi/get_complaint_by_date',{date:'2018-08-03'}).then(resp=>{
           console.log('游客体验：：',resp.data.hits)
           this.add=resp.data.hits.total;
           this.close=resp.data.hits.closed;

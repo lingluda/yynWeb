@@ -102,12 +102,12 @@
     },
     methods:{
       init(){
-        http.get('bi/bi/get_ops_qty_by_date',{date:'2018-08-03'}).then(resp=>{
+        http.get('bi/get_ops_qty_by_date',{date:'2018-08-03'}).then(resp=>{
           console.log(resp.data.hits)
           this.addData = resp.data.hits[0]
           this.aduData = resp.data.hits[1]
         })
-        http.get('bi/bi/get_ops_trend_date',{startTime:'2018-07',endTime:'2018-09',type:'m'}).then(resp=>{
+        http.get('bi/get_ops_trend_date',{startTime:'2018-07',endTime:'2018-09',type:'m'}).then(resp=>{
           console.log('get_ops_trend_date',resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++){
             this.lineDatax1.push(resp.data.hits[i].mau)

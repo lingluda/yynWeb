@@ -97,7 +97,7 @@
     },
     methods: {
       init(){
-        http.get('bi/bi/get_scenic_tourist_heat_dist',{date:'2018-09-01',scenic:'9df331f4-5ef7-497c-7042-ae6c1e12342c',min:60}).then(resp=>{
+        http.get('bi/get_scenic_tourist_heat_dist',{date:'2018-09-01',scenic:'9df331f4-5ef7-497c-7042-ae6c1e12342c',min:60}).then(resp=>{
             console.log('地图：：',resp.data.hits)
           this.initMap(resp.data.hits[0].points)
         })

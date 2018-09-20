@@ -127,7 +127,7 @@
     },
     methods: {
       init(){
-        http.get('bi/bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
+        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
           console.log(resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)
@@ -135,7 +135,7 @@
           }
           this.initSimBars()
         })
-        http.get('bi/bi/get_scenic_tourist_top_by_date',{date:'2018-09-17',top:10}).then(resp=>{
+        http.get('bi/get_scenic_tourist_top_by_date',{date:'2018-09-17',top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.max1his.push(resp.data.hits[i].his)
             this.max1n.push(resp.data.hits[i].n)
@@ -143,7 +143,7 @@
           }
           this.initMax1()
         })
-        http.get('bi/bi/get_scenic_tourist_ince_by_date',{date:'2018-09-16',top:10}).then(resp=>{
+        http.get('bi/get_scenic_tourist_ince_by_date',{date:'2018-09-16',top:10}).then(resp=>{
           console.log('top',resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.max2his.push(resp.data.hits[i].ince)
@@ -324,7 +324,7 @@
       chanchange(){
         this.barDatax=[]
         this.barDatay=[]
-        http.get('bi/bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
+        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
           console.log(resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)

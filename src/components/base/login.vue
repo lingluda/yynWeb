@@ -59,7 +59,7 @@
       login(val){
         this.$refs[val].validate((valid)=>{
           if(valid){
-            http.get('/bi/bi/login',{user_name:this.formInline.user,pwd:this.formInline.password}).then(resp=>{
+            http.get('bi/login',{user_name:this.formInline.user,pwd:this.formInline.password}).then(resp=>{
               if(resp.data.errcode===0){
                 this.$router.push('index')
               }
