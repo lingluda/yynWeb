@@ -32,11 +32,10 @@
           </div>
         </card>
       </TabPane  >
-      <TabPane label="热门目的地" name="destination" >
+      <TabPane label="热门排行" name="destination" >
       </TabPane>
-      <TabPane label="热门景区" name="scenic">
-      </TabPane>
-      <TabPane label="景区客流热力发布" name="hotmap">
+
+      <TabPane label="景区客流热力" name="hotmap">
       </TabPane>
       <TabPane label="平台运营" name="platform">
       </TabPane>

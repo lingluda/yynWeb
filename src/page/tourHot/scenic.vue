@@ -69,7 +69,7 @@
           </div>
         </card>
       </TabPane>
-      <TabPane label="景区客流热力发布" name="hotmap">
+      <TabPane label="景区客流热力" name="hotmap">
       </TabPane>
       <TabPane label="平台运营" name="platform">
       </TabPane>
@@ -83,8 +83,8 @@
     name: "tourhot",
     data() {
       return {
-        barDatax:[],
-        barDatay:[],
+        barDatax1:[],
+        barDatay1:[],
         chanclick:'app',
         columns: [
           {
@@ -130,8 +130,8 @@
         http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
           console.log(resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
-            this.barDatax.push(resp.data.hits[i].name)
-            this.barDatay.push(parseInt(resp.data.hits[i].dau))
+            this.barDatax1.push(resp.data.hits[i].name)
+            this.barDatay1.push(parseInt(resp.data.hits[i].dau))
           }
           this.initSimBars()
         })
@@ -287,7 +287,7 @@
           },
           xAxis: {
             type: 'category',
-            data: this.barDatax,
+            data: this.barDatax1,
             axisLine:{
               lineStyle:{
                 color:'#888888',
@@ -322,13 +322,13 @@
         this.$router.push(val)
       },
       chanchange(){
-        this.barDatax=[]
-        this.barDatay=[]
+        this.barDatax1=[]
+        this.barDatay1=[]
         http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
           console.log(resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
-            this.barDatax.push(resp.data.hits[i].name)
-            this.barDatay.push(parseInt(resp.data.hits[i].dau))
+            this.barDatax1.push(resp.data.hits[i].name)
+            this.barDatay1.push(parseInt(resp.data.hits[i].dau))
           }
           this.initSimBars()
         })
