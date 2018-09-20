@@ -61,10 +61,10 @@
                   <Tooltip content="客流统计" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                   </Tooltip>
                 </div>
-                <DatePicker size="small" v-model="date1" :options="options2" type="daterange" placeholder="自选时间" @on-change="change4"
+                <DatePicker size="small" v-model="date1" :options="options2" type="daterange" placeholder="自选时间"
                             style="width: 200px;"></DatePicker>
 
-                <Select size="small" v-model="city1" clearable style="width: 150px" @on-change="change5">
+                <Select size="small" v-model="city1" clearable style="width: 150px" >
                   <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                 </Select>
 
@@ -156,7 +156,7 @@
     mounted() {
       this.initLine()
       this.getCity()
-      this.init()
+      //this.init()
     },
     methods: {
       init(){
@@ -188,28 +188,6 @@
         })
       },
 
-      change4(val){
-        this.totalP=''
-        this.lineDatax=[]
-        this.lineDatay=[]
-        var date = new Date().format(
-          "yyyy-MM-dd"
-        )
-        console.log('日期其：：：：啊啊啊',val)
-        this.date1=val;
-        http.get('bi/get_tourism_trend_by_timespan',{startTime:this.date1[0],endTime:this.date1[1]}).then(resp=>{
-          console.log(resp.data)
-          this.totalP = resp.data.hits.total;
-          for(var i=0;i<resp.data.hits.list.length;i++){
-            this.lineDatax.push(resp.data.hits.list[i].date)
-            this.lineDatay.push(resp.data.hits.list[i].value)
-          }
-          console.log(this.lineDatax)
-          console.log(this.lineDatay)
-          this.initLine()
-        })
-      },
-      change5(val){},
       getCity(){
         http.get('bi/get_all_city',{}).then(resp=>{
           this.cityData = resp.data.hits;
@@ -311,9 +289,32 @@
         })
       }
     },
+    form1change1(){
+      this.totalP=''
+      this.lineDatax=[]
+      this.lineDatay=[]
+      var date = new Date(this.date1[0]).format(
+        "yyyy-MM-dd"
+      )
+      console.log('日期其：：：：啊啊啊',date)
+      this.date1=val;
+      http.get('bi/get_tourism_trend_by_timespan',{startTime:this.date1[0],endTime:this.date1[1]}).then(resp=>{
+        console.log(resp.data)
+        this.totalP = resp.data.hits.total;
+        for(var i=0;i<resp.data.hits.list.length;i++){
+          this.lineDatax.push(resp.data.hits.list[i].date)
+          this.lineDatay.push(resp.data.hits.list[i].value)
+        }
+        console.log(this.lineDatax)
+        console.log(this.lineDatay)
+        this.initLine()
+      })
+    },
     watch:{
       date:'form1change',
       city:'form1change',
+      date1:'form1change1',
+      city1:'form1change1',
     }
   }
 </script>
