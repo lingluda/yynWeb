@@ -23,5 +23,5 @@ export default {
     height: 45px;
   }
   .ivu-tabs-bar{margin-bottom: 0px}
-  .ivu-card-body{padding: 25px;}
+  .ivu-card-body{padding: 16px 25px;}
 </style>

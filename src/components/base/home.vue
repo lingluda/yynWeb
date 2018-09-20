@@ -52,7 +52,7 @@
         <!--<sidebar></sidebar>-->
       </Sider>
       <Content style="width:100%;">
-        <router-view style="padding:20px;"></router-view>
+        <router-view></router-view>
       </Content>
       <!-- <Footer><router-link to="tobaccobase">aaqa</router-link></Footer> -->
     </Layout>
