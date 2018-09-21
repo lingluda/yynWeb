@@ -103,7 +103,7 @@
             <div style="height: 80px; padding: 20px;">
               <div style="border-bottom: 1px solid red">
             <Col span="6" style="margin-top: 20px">
-              <img src="../assets/imgs/exp4.png"/>
+              <img src="../assets/imgs/exp5.png"/>
             </Col>
             <Col span="18" style="margin-top: 20px">
               <div>
