@@ -8,14 +8,16 @@
           <div class="lyrd_sy_ykrs">
               <div class="lyrd_index_search">
                 <div class="lyrd_index_search_left">
-                  <span class="lyrd_index_search_title">游客人数</span><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                  <span class="lyrd_index_search_title">游客人数</span>
+                  <Tooltip content="游客人数" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                  </Tooltip>
                 </div>
                 <div class="lyrd_index_search_right">
-                  <RadioGroup v-model="dateChoice" type="button">
-                      <Radio label="today">今日</Radio>
-                      <Radio label="yesterday">昨日</Radio>
+                  <RadioGroup v-model="dateChoice" type="button" @on-change="picDate1">
+                      <Radio label="1" >今日</Radio>
+                      <Radio label="2" >昨日</Radio>
                   </RadioGroup>
-                  <DatePicker :value="value1" v-model="date" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:150px"></DatePicker>
+                  <DatePicker v-model="date" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:150px"></DatePicker>
                   <Select v-model="city" clearable style="width:200px;margin-left:15px">
                     <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                   </Select>
@@ -29,7 +31,8 @@
                         <div class="lyrd_index_count_num">
                             <div>
                               <span class="lyrd_index_today_visit">今日总接待游客量</span>
-                              <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                              <Tooltip content="今日总接待游客量" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                              </Tooltip>
                             </div>
                             <div>
                               <span class="lyrd_index_today_num">{{total}}</span>
@@ -44,7 +47,8 @@
                         <div class="lyrd_index_count_num">
                             <div>
                               <span class="lyrd_index_today_visit">与昨日环比</span>
-                              <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                              <Tooltip content="与昨日环比" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                              </Tooltip>
                             </div>
                             <div>
                               <span class="lyrd_index_today_num">{{ratio}}</span>
@@ -59,7 +63,8 @@
                         <div class="lyrd_index_count_num">
                             <div>
                               <span class="lyrd_index_today_visit">与上月同比</span>
-                              <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                              <Tooltip content="与上月同比" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                              </Tooltip>
                             </div>
                             <div>
                               <span class="lyrd_index_today_num">{{link}}</span>
@@ -73,7 +78,9 @@
 
               <div class="lyrd_index_jryk">
                 <div class="lyrd_index_jryk_title">
-                  <span class="lyrd_index_search_title">今日游客各州市所占比例</span><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                  <span class="lyrd_index_search_title">今日游客各州市所占比例</span>
+                  <Tooltip content="今日游客各州市所占比例" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                  </Tooltip>
                 </div>
                 <div>
                   <div id="mybar" style="height:200px;min-width: 400px;"></div>
@@ -85,14 +92,16 @@
             <div class="lyrd_index_kltj">
                <div class="lyrd_index_search">
                   <div class="lyrd_index_search_left">
-                    <span class="lyrd_index_search_title">客流统计</span><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                    <span class="lyrd_index_search_title">客流统计</span>
+                    <Tooltip content="客流统计" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                    </Tooltip>
                   </div>
                   <div class="lyrd_index_search_right">
-                    <RadioGroup v-model="dateChoice" type="button">
-                        <Radio label="today">最近7天</Radio>
-                        <Radio label="yesterday">最近30天</Radio>
+                    <RadioGroup v-model="dateChoice1" type="button" @on-change="picDate1">
+                        <Radio label="3" >最近7天</Radio>
+                        <Radio label="4" >最近30天</Radio>
                     </RadioGroup>
-                    <DatePicker :value="value1" v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:200px"></DatePicker>
+                    <DatePicker  v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:200px"></DatePicker>
                     <Select v-model="city1" clearable style="width:200px;margin-left:15px">
                       <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                     </Select>
@@ -104,7 +113,8 @@
                       <div class="lyrd_index_kltj_chart_num">
                          <div>
                             <span class="lyrd_index_today_visit">累积游客接待量</span>
-                            <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                           <Tooltip content="累积游客接待量" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                           </Tooltip>
                           </div>
                           <div>
                             <span class="lyrd_index_today_num">{{totalP}}</span>
@@ -136,12 +146,14 @@
   export default {
     data() {
       return {
+        dateChoice:'',
+        dateChoice1:'',
         totalP:'',
         lineDatax:[],
         lineDatay:[],
         date: '2018-09-16',
         cdate: '',
-        date1: ['2018-09-14','2018-09-16'],
+        date1: [],
         cityData:[],
         city:'',
         city1:'',
@@ -188,6 +200,8 @@
         http.get('bi/get_all_city',{}).then(resp=>{
           this.cityData = resp.data.hits;
         })
+        this.date1[0]=http.getWeekAgo()
+        this.date1[1]=http.getToday()
       },
       initBar() {
         let mybar = this.$echarts.init(document.getElementById("mybar"),'macarons')
@@ -306,16 +320,7 @@
         this.totalP=''
         this.lineDatax=[]
         this.lineDatay=[]
-        var date = new Date(this.date1[0]).format(
-          "yyyy-MM-dd"
-        )
-        this.start=date;
-        var dateq = new Date(this.date1[1]).format(
-          "yyyy-MM-dd"
-        )
-        this.end=dateq;
-        console.log(1111111111111111111111)
-        http.get('bi/get_tourism_trend_by_timespan',{startTime:this.start,endTime:this.end,city_id:this.city1}).then(resp=>{
+        http.get('bi/get_tourism_trend_by_timespan',{startTime:this.date1[0],endTime:this.date1[1],city_id:this.city1}).then(resp=>{
           console.log(resp.data)
           this.totalP = resp.data.hits.total;
           for(var i=0;i<resp.data.hits.list.length;i++){
@@ -327,6 +332,24 @@
           this.initLine()
         })
       },
+      picDate1(val){
+        if (val==1){
+          this.date = http.getToday()
+        }
+        if (val==2){
+          this.date = http.getYesterDay()
+        }
+        if (val==3){
+          this.date1[0] = http.getWeekAgo()
+          this.date1[1] = http.getToday()
+          console.log(this.date1)
+        }
+        if (val==4){
+          this.date1[0] = http.getMonthAgo()
+          this.date1[1] = http.getToday()
+          console.log(this.date1)
+        }
+      }
     },
 
     watch:{
@@ -334,6 +357,7 @@
       city:'form1change',
       date1:'form1change1',
       city1:'form1change1',
+
     }
   }
 </script>

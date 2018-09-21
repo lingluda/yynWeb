@@ -49,9 +49,11 @@
             <div class="hotmap_kljd">
                <Row>
                     <Col span="10">
-                      <div>
-                        sssssssss
+                      <div style="margin-top: 20px;margin-left: 80px">
+                       <img src="../../assets/imgs/sqty.png"/>
                       </div>
+                      <span>11111111111</span>
+                      <span>11111111111</span>
                     </Col>
                     <Col span="7">
                       <div class="hotmap_tb">

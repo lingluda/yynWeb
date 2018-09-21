@@ -20,6 +20,78 @@ http.get = function (url, data) {
     }
     return axios.get(url + '?' + encodeUrl(data))
 }
+http.getToday =function () {
+  var data = new Date();
+  var year = data.getUTCFullYear();
+  var month = data.getMonth() + 1;
+  var day = data.getDate();
+  var currentData = data.toLocaleDateString();
+  if (month < 10) {
+    var currentMonth = '0' + month;
+  } else {
+    currentMonth = month.toString();
+  }
+  if (day < 10) {
+    var currentDay = '0' + day;
+  } else {
+    currentDay = day.toString();
+  }
+  return year + '-' + currentMonth + '-' + currentDay;
+}
+http.getYesterDay = function (){
+  var data = new Date();
+  var year = data.getUTCFullYear();
+  var month = data.getMonth() + 1;
+  var day = data.getDate() - 1;
+  var currentData = data.toLocaleDateString();
+  if (month < 10) {
+    var currentMonth = '0' + month;
+  } else {
+    currentMonth = month.toString();
+  }
+  if (day < 10) {
+    var currentDay = '0' + day;
+  } else {
+    currentDay = day.toString();
+  }
+  return year + '-' + currentMonth + '-' + currentDay;
+}
+http.getWeekAgo = function () {
+  var data = new Date();
+  var year = data.getUTCFullYear();
+  var month = data.getMonth() + 1;
+  var day = data.getDate() - 7;
+  var currentData = data.toLocaleDateString();
+  if (month < 10) {
+    var currentMonth = '0' + month;
+  } else {
+    currentMonth = month.toString();
+  }
+  if (day < 10) {
+    var currentDay = '0' + day;
+  } else {
+    currentDay = day.toString();
+  }
+  return year + '-' + currentMonth + '-' + currentDay;
+}
+http.getMonthAgo = function () {
+  var data = new Date();
+  var year = data.getUTCFullYear();
+  var month = data.getMonth();
+  var day = data.getDate();
+  var currentData = data.toLocaleDateString();
+  if (month < 10) {
+    var currentMonth = '0' + month;
+  } else {
+    currentMonth = month.toString();
+  }
+  if (day < 10) {
+    var currentDay = '0' + day;
+  } else {
+    currentDay = day.toString();
+  }
+  return year + '-' + currentMonth + '-' + currentDay;
+}
 function encodeUrl(obj) {
 
   let url = '';
