@@ -71,7 +71,7 @@
           <div id="complain" style="height: 400px;border: 1px solid #dcdee2;"></div>
         </Col>
         <Col span="16">
-          <div id="process" style="height: 400px;border: 1px solid #dcdee2;"></div>
+
         </Col>
       </Row>
     </card>
@@ -85,7 +85,7 @@
       <Row :gutter="16">
         <Col span="12" style="height: 200px;">
           <Row style="border:1px solid yellow;height: 100%;">
-            <div style="height: 80px; padding: 20px;margin-bottom: 20px;border-bottom: 1px solid red">
+            <div style="height: 80px; padding: 20px;">
             <Col span="6" style="">
               <img src="../assets/imgs/exp4.png"/>
             </Col>
@@ -97,12 +97,15 @@
               </div>
               <span style="font-size: 28px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
             </Col>
+
           </div>
+
             <div style="height: 80px; padding: 20px;">
-            <Col span="6" >
+              <div style="border-bottom: 1px solid red">
+            <Col span="6" style="margin-top: 20px">
               <img src="../assets/imgs/exp4.png"/>
             </Col>
-            <Col span="18" >
+            <Col span="18" style="margin-top: 20px">
               <div>
                 <span style="font-weight: bold;color: #000000">日新增投诉量</span>
                 <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
@@ -110,6 +113,7 @@
               </div>
               <span style="font-size: 28px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
             </Col>
+              </div>
           </div>
           </Row>
         </Col>
@@ -117,6 +121,24 @@
           <div style="border:1px solid yellow;height: 100%"></div>
         </Col>
       </Row>
+    </card>
+    <card>
+      <div style="margin-bottom: 20px;">
+        <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
+        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+        </Tooltip>
+        <DatePicker size="small" v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+      </div>
+      <div id="process" style="height: 400px;border: 1px solid #dcdee2;"></div>
+    </card>
+    <card>
+      <div style="margin-bottom: 20px;">
+        <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
+        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+        </Tooltip>
+        <DatePicker size="small" v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+      </div>
+      <div id="myline" style="height: 400px;border: 1px solid #dcdee2;"></div>
     </card>
   </div>
 </template>
@@ -140,9 +162,8 @@
       }
     },
     mounted(){
-
-
       this.init()
+      this.initLine()
     },
     methods:{
       init(){
@@ -240,6 +261,22 @@
               type: 'bar',
             },
           ]
+        })
+      },
+      initLine(){
+        let myline= this.$echarts.init(document.getElementById("myline"))
+        myline.setOption({
+          xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+          }]
         })
       }
     }
