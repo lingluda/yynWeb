@@ -83,10 +83,10 @@
         <DatePicker size="small" v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
       </div>
       <Row :gutter="16">
-        <Col span="12" style="height: 200px;border:1px solid yellow;">
-          <Row>
-            <div style="height: 80px; padding: 20px;margin-bottom: 20px">
-            <Col span="6">
+        <Col span="12" style="height: 200px;">
+          <Row style="border:1px solid yellow;height: 100%;">
+            <div style="height: 80px; padding: 20px;margin-bottom: 20px;border-bottom: 1px solid red">
+            <Col span="6" style="">
               <img src="../assets/imgs/exp4.png"/>
             </Col>
             <Col span="18">
@@ -98,11 +98,11 @@
               <span style="font-size: 28px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
             </Col>
           </div>
-            <div style="height: 80px; padding: 20px;border-top: 1px solid yellow">
-            <Col span="6">
+            <div style="height: 80px; padding: 20px;">
+            <Col span="6" >
               <img src="../assets/imgs/exp4.png"/>
             </Col>
-            <Col span="18">
+            <Col span="18" >
               <div>
                 <span style="font-weight: bold;color: #000000">日新增投诉量</span>
                 <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
@@ -113,7 +113,9 @@
           </div>
           </Row>
         </Col>
-        <Col span="12" style="height: 200px;border:1px solid yellow;"></Col>
+        <Col span="12" style="height: 200px;">
+          <div style="border:1px solid yellow;height: 100%"></div>
+        </Col>
       </Row>
     </card>
   </div>
