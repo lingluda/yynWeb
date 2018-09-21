@@ -3,60 +3,63 @@
     <div class="ti">
       <span >旅游热度</span>
     </div>
+    <div>
     <Tabs value="destination" @on-click="pic">
       <TabPane label="首页" name="index">
       </TabPane  >
-      <TabPane label="热度排行" name="destination">
+      <TabPane label="热度排行" name="destination"  class="tabpane_content">
         <card>
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">热门目的地网络热度TOP10</span>
-            <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+            <Tooltip content="热门目的地网络热度TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
           </div>
-          <RadioGroup type="button" v-model="chan" size="small">
+          <RadioGroup type="button" v-model="chan">
             <Radio label="app">APP访问</Radio>
             <Radio label="search">搜索引擎</Radio>
             <Radio label="website">网站报道</Radio>
           </RadioGroup>
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
-            <div style="padding-bottom: 20px;padding: 20px;">
-              <span style="font-weight: bold;color: #000000">一机游用户DAU (单位：万次)</span>
-              <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-              </Tooltip>
-              <DatePicker size="small" v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
-
+            <div class="tabpane_content_title">
+              <div style="padding-left:60px">
+                <span style="color: #000;font-size:16px;">一机游今日搜索各目的地方访问用户数据 </span>
+                <Tooltip content="一机游今日搜索各目的地方访问用户数据" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 5px" type="ios-help-circle-outline" /></Tooltip>
+                <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
+              </div>
+              <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
             </div>
-            <div id="simBar" style="width: 100%;height: 300px;"></div>
+            <div id="simBar" style="width: 100%;height: 285px;top:-35px"></div>
           </div>
         </card>
         <card style="margin-top: 20px">
           <div style="margin-bottom: 20px;">
             <span style="font-weight: bold;color: #000000">热门景区网络热度TOP10</span>
-            <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+            <Tooltip content="热门景区网络热度TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
           </div>
-          <RadioGroup type="button" v-model="chanclick" size="small">
+          <RadioGroup type="button" v-model="chanclick">
             <Radio label="app">APP访问</Radio>
             <Radio label="search">搜索引擎</Radio>
             <Radio label="website">网站报道</Radio>
           </RadioGroup>
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
-            <div style="padding-bottom: unset;padding: 20px;">
-              <span style="font-weight: bold;color: #000000">一机游用户DAU (单位：万次)</span>
-              <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-              </Tooltip>
-              <DatePicker size="small" v-model="picDate2" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
-
+            <div class="tabpane_content_title">
+               <div style="padding-left:60px">
+                 <span style="color: #000;font-size:16px;">一机游今日搜索各目的地方访问用户数据 </span>
+                  <Tooltip content="一机游今日搜索各目的地方访问用户数据" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 5px" type="ios-help-circle-outline" /></Tooltip>
+                  <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
+                </div>
+              <DatePicker  v-model="picDate2" type="date" placeholder="Select date" style="width:150px;float: right"></DatePicker>
             </div>
-            <div id="simBars" style="width: 100%;height: 300px;"></div>
+            <div id="simBars" style="width: 100%;height: 300px;top:-30px"></div>
           </div>
         </card>
         <card style="margin-top: 20px">
           <div style="margin-bottom: 20px;">
             <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
-            <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+            <Tooltip content="热门路线TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
-            <DatePicker size="small" v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+            <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
           </div>
           <div>
             <Table border :columns="columns" :data="fdata"></Table>
@@ -68,33 +71,27 @@
               <Col span="12">
                 <div style="border: 1px solid #dcdee2">
                   <div style="padding: 20px">
-                    <span style="font-weight: bold;color: #000000">景区客流TOP10 (单位：万人)</span>
-                    <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-                    </Tooltip>
+                    <span style="font-weight: bold;color: #000000">景区客流TOP10</span>
+                    <Tooltip content="景区客流TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" /></Tooltip>
+                    <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
-                  <RadioGroup type="button" size="small" style="margin-left: 15px">
-                    <Radio label="large">当日</Radio>
-                    <Radio label="default">当月</Radio>
-                    <Radio label="small">当年</Radio>
-                  </RadioGroup>
-                  <DatePicker size="small" type="date" placeholder="Select date" style="width: 120px"></DatePicker>
-                  <div id="max1" style="width: 80%;height: 600px;"></div>
+                  <DatePicker type="date" placeholder="Select date" style="width: 120px;margin-left:15px;"></DatePicker>
+                  <div id="max1" style="width: 100%;height: 550px;top:-40px"></div>
                 </div>
               </Col>
-
               <Col span="12">
                 <div style="border: 1px solid #dcdee2">
                   <div style="padding: 20px">
-                    <span style="font-weight: bold;color: #000000">景区客流TOP10 (单位：万人)</span>
-                    <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-                    </Tooltip>
+                    <span style="font-weight: bold;color: #000000">景区客流变化TOP10</span>
+                    <Tooltip content="景区客流变化TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" /></Tooltip>
+                    <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
-                  <RadioGroup type="button" size="small" style="margin-left: 15px">
+                  <RadioGroup type="button" style="margin-left: 15px">
                     <Radio label="large">增量</Radio>
                     <Radio label="default">增长量</Radio>
                   </RadioGroup>
-                  <DatePicker size="small" type="date" placeholder="Select date" style="width: 120px"></DatePicker>
-                  <div id="max2" style="width: 80%;height: 600px;"></div>
+                  <DatePicker type="date" placeholder="Select date" style="width: 120px"></DatePicker>
+                  <div id="max2" style="width: 100%;height: 550px;top:-40px"></div>
                 </div>
               </Col>
             </Row>
@@ -107,9 +104,28 @@
       <TabPane label="平台运营" name="platform">
       </TabPane>
     </Tabs>
+    </div>
   </div>
 </template>
-
+<style lang="less" scoped>
+.ti {
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 52px;
+  padding-left: 20px;
+  height: 45px;
+}
+  .ivu-card-body {
+    padding: 20px;
+    background: #f2f2f2;
+  }
+  .tabpane_content {
+  padding: 20px;
+  background: #f2f2f2;
+}
+.tabpane_content_title{padding: 20px 20px 0px;font-size:15px;display:flex;justify-content: space-between}
+</style>
 <script>
   import http from '@/http.js'
   import '@/dateFormate'
@@ -132,11 +148,11 @@
             title: '购买次数',
             key: 'order',
           },{
-            title: '热门路线DAU量(次)',
+            title: '热门路线访问量(次)',
             key: 'dau',
           },
           {
-            title: '价格(元)',
+            title: '购买平均价格(元)',
             key: 'price',
           }
         ],
@@ -236,7 +252,7 @@
           series: [{
             data: this.barDatay,
             type: 'bar',
-            barWidth:'50%',
+            barWidth:'25%',
             itemStyle: {
               normal: {
                 label: {
@@ -448,7 +464,7 @@
           series: [{
             data: this.barDatay,
             type: 'bar',
-            barWidth:'50%',
+            barWidth:'25%',
             itemStyle: {
               normal: {
                 label: {
@@ -510,9 +526,3 @@
   }
 </script>
 
-<style scoped>
-  .ivu-card-body {
-    padding: 20px;
-    background: #f2f2f2;
-  }
-</style>

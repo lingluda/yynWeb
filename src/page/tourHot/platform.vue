@@ -4,20 +4,16 @@
       <span >旅游热度</span>
     </div>
     <Tabs value="platform" @on-click="pic">
-      <TabPane label="首页" name="index">
-      </TabPane  >
-      <TabPane label="热门排行" name="destination">
-      </TabPane>
-
-      <TabPane label="景区客流热力" name="hotmap">
-      </TabPane>
-      <TabPane label="平台运营" name="platform">
-        <card>
+      <TabPane label="首页" name="index"></TabPane>
+      <TabPane label="热门排行" name="destination"></TabPane>
+      <TabPane label="景区客流热力" name="hotmap"></TabPane>
+      <TabPane label="平台运营" name="platform" class="tabpane_content">
+      <card>
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">平台近日运营数据</span>
             <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
-            <DatePicker size="small" v-model="picDate" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+            <DatePicker v-model="picDate" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
           </div>
           <Row :gutter="16">
             <Col span="12">
@@ -73,7 +69,7 @@
             <span style="font-weight: bold;color: #000000">用户趋势分析</span>
             <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
-            <DatePicker size="small" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+            <DatePicker type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
           </div>
           <div id="trend" style="border: 1px solid #dcdee2;height: 400px;width: 100%"></div>
         </card>
@@ -81,6 +77,13 @@
     </Tabs>
   </div>
 </template>
+<style lang="less" scoped>
+.tabpane_content {
+  padding: 20px;
+  background: #f2f2f2;
+}
+</style>
+
 <script>
   import http from '@/http.js'
   export default {

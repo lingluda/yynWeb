@@ -5,7 +5,7 @@
     </div>
     <Tabs value="index" @on-click="click">
       <TabPane label="首页" name="index" class="lyrd_sy_content">
-          <div class="lyrd_sy_ykrs">
+          <card class="lyrd_sy_ykrs">
               <div class="lyrd_index_search">
                 <div class="lyrd_index_search_left">
                   <span class="lyrd_index_search_title">游客人数</span>
@@ -75,7 +75,6 @@
                     </Col>
                 </Row>
               </div>
-
               <div class="lyrd_index_jryk">
                 <div class="lyrd_index_jryk_title">
                   <span class="lyrd_index_search_title">今日游客各州市所占比例</span>
@@ -84,12 +83,12 @@
                 </div>
                 <div>
                   <div id="mybar" style="height:200px;min-width: 400px;"></div>
-                  <!-- <div>ssssss</div> -->
                 </div>
               </div>
-          </div>
+          </card>
+
           <!-- 客流统计开始 -->
-            <div class="lyrd_index_kltj">
+            <card class="lyrd_index_kltj">
                <div class="lyrd_index_search">
                   <div class="lyrd_index_search_left">
                     <span class="lyrd_index_search_title">客流统计</span>
@@ -127,7 +126,7 @@
                       <div id="myline" style="height:300px;min-width: 400px;"></div>
                   </div>
               </div>
-            </div>
+            </card>
             <!-- 客流统计结束 -->
       </TabPane  >
       <TabPane label="热度排行" name="destination" >
@@ -378,7 +377,7 @@
 }
 .lyrd_sy_content {
   background: #f2f2f2;
-  padding: 16px 20px;
+  padding: 20px;
 }
 .lyrd_sy_ykrs {
   width: 100%;
