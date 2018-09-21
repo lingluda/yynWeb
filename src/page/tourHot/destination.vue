@@ -26,7 +26,7 @@
                 <Tooltip content="一机游今日搜索各目的地方访问用户数据" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 5px" type="ios-help-circle-outline" /></Tooltip>
                 <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
               </div>
-              <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
+              <DatePicker v-model="picDate1" type="date" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
             </div>
             <div id="simBar" style="width: 100%;height: 285px;top:-35px"></div>
           </div>
@@ -75,7 +75,7 @@
                     <Tooltip content="景区客流TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" /></Tooltip>
                     <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
-                  <DatePicker type="date" placeholder="Select date" style="width: 120px;margin-left:15px;"></DatePicker>
+                  <DatePicker type="date" v-model="picDate4" placeholder="Select date" style="width: 120px;margin-left:15px;"></DatePicker>
                   <div id="max1" style="width: 100%;height: 550px;top:-40px"></div>
                 </div>
               </Col>
@@ -90,7 +90,7 @@
                     <Radio label="large">增量</Radio>
                     <Radio label="default">增长量</Radio>
                   </RadioGroup>
-                  <DatePicker type="date" placeholder="Select date" style="width: 120px"></DatePicker>
+                  <DatePicker type="date" v-model="picDate5" placeholder="Select date" style="width: 120px"></DatePicker>
                   <div id="max2" style="width: 100%;height: 550px;top:-40px"></div>
                 </div>
               </Col>
@@ -133,6 +133,11 @@
     name: "tourhot",
     data() {
       return {
+        picDate1:'2018-09-01',
+        picDate2:'2018-09-01',
+        picDate3:'',
+        picDate4:'2018-09-17',
+        picDate5:'2018-09-17',
         chan:'app',
         barDatax:[],
         barDatay:[],
@@ -167,51 +172,22 @@
       }
     },
     mounted() {
-
       this.init()
     },
     methods: {
       init(){
+
         var date = new Date().format(
           "yyyy-MM-dd"
         )
-        http.get('bi/get_hot_desc_vist_qty_by_date',{chan:'app',date:'2018-09-01',top:10}).then(resp=>{
-          for (var i=0;i<resp.data.hits.length;i++) {
-            this.barDatax.push(resp.data.hits[i].name)
-            this.barDatay.push(parseInt(resp.data.hits[i].dau))
-          }
-          this.initSimBar()
-        })
+
         http.get('bi/get_hot_line_by_date',{date:'2018-08-22',top:10}).then(resp=>{
           console.log(resp.data.hits)
           this.fdata = resp.data.hits;
         })
-        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
-          console.log(resp.data.hits)
-          for (var i=0;i<resp.data.hits.length;i++) {
-            this.barDatax1.push(resp.data.hits[i].name)
-            this.barDatay1.push(parseInt(resp.data.hits[i].dau))
-          }
-          this.initSimBars1()
-        })
-        http.get('bi/get_scenic_tourist_top_by_date',{date:'2018-09-17',top:10}).then(resp=>{
-          for (var i=0;i<resp.data.hits.length;i++) {
-            this.max1his.push(resp.data.hits[i].his)
-            this.max1n.push(resp.data.hits[i].n)
-            this.max1y.push(resp.data.hits[i].city)
-          }
-          this.initMax1()
-        })
-        http.get('bi/get_scenic_tourist_ince_by_date',{date:'2018-09-16',top:10}).then(resp=>{
-          console.log('top',resp.data.hits)
-          for (var i=0;i<resp.data.hits.length;i++) {
-            this.max2his.push(resp.data.hits[i].ince)
-            this.max2n.push(resp.data.hits[i].n)
-            this.max2y.push(resp.data.hits[i].pre)
-            this.max2name.push(resp.data.hits[i].city)
-          }
-          this.initMax2()
-        })
+
+
+
       },
       initSimBar(){
         let simbar = this.$echarts.init(document.getElementById("simBar"),'macarons')
@@ -462,7 +438,7 @@
             }
           },
           series: [{
-            data: this.barDatay,
+            data: this.barDatay1,
             type: 'bar',
             barWidth:'25%',
             itemStyle: {
@@ -501,7 +477,7 @@
           console.log('sb',resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)
-            this.barDatay.push(parseInt(resp.data.hits[i].dau))
+            this.barDatay.push(parseInt(resp.data.hits[i].dau)/10000)
           }
           this.initSimBar()
         })
@@ -513,15 +489,74 @@
           console.log(resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax1.push(resp.data.hits[i].name)
-            this.barDatay1.push(parseInt(resp.data.hits[i].dau))
+            this.barDatay1.push(parseInt(resp.data.hits[i].dau)/10000)
           }
           this.initSimBars1()
         })
-      }
+      },
+      click1(){
+        this.barDatax=[]
+        this.barDatay=[]
+        console.log(http.gmt2str(this.picDate1))
+        http.get('bi/get_hot_desc_vist_qty_by_date',{chan:'app',date:http.gmt2str(this.picDate1),top:10}).then(resp=>{
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.barDatax.push(resp.data.hits[i].name)
+            this.barDatay.push(parseInt(resp.data.hits[i].dau)/10000)
+          }
+          this.initSimBar()
+        })
+      },
+      click2(){
+        this.barDatax1=[]
+        this.barDatay1=[]
+        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:http.gmt2str(this.picDate2),top:10}).then(resp=>{
+          console.log(resp.data.hits)
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.barDatax1.push(resp.data.hits[i].name)
+            this.barDatay1.push(parseInt(resp.data.hits[i].dau)/10000)
+          }
+          this.initSimBars1()
+        })
+      },
+      click3(){},
+      click4(){
+        this.max1his=[]
+        this.max1n=[]
+        this.max1y=[]
+        http.get('bi/get_scenic_tourist_top_by_date',{date:http.gmt2str(this.picDate4),top:10}).then(resp=>{
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.max1his.push(resp.data.hits[i].his)
+            this.max1n.push(resp.data.hits[i].n)
+            this.max1y.push(resp.data.hits[i].city)
+          }
+          this.initMax1()
+        })
+      },
+      click5(){
+        this.max2n=[]
+        this.max2y=[]
+        this.max2name=[]
+        this.max2his=[]
+        http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
+          console.log('top',resp.data.hits)
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.max2his.push(resp.data.hits[i].ince)
+            this.max2n.push(resp.data.hits[i].n)
+            this.max2y.push(resp.data.hits[i].pre)
+            this.max2name.push(resp.data.hits[i].city)
+          }
+          this.initMax2()
+        })
+      },
     },
     watch:{
       chan:'clickchange',
-      chanclick:'chanchange1'
+      chanclick:'chanchange1',
+      picDate1:'click1',
+      picDate2:'click2',
+      picDate3:'click3',
+      picDate4:'click4',
+      picDate5:'click5',
     }
   }
 </script>

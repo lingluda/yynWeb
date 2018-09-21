@@ -92,6 +92,23 @@ http.getMonthAgo = function () {
   }
   return year + '-' + currentMonth + '-' + currentDay;
 }
+http.gmt2str = function (time) {
+    let date = new Date(time);
+    var YY = date.getMonth()+1;
+    if (YY < 10) {
+      var MM = '0' + YY;
+    } else {
+      MM = YY.toString();
+    }
+    if (date.getDate() < 10) {
+      var DD = '0' + date.getDate();
+    } else {
+      DD = date.getDate().toString();
+    }
+    let Str = date.getFullYear() + '-' +
+      MM + '-' + DD;
+    return Str;
+}
 function encodeUrl(obj) {
 
   let url = '';
