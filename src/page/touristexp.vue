@@ -18,30 +18,51 @@
         <Option>全省</Option>
       </Select>
       <div style="border: 1px solid #dcdee2;width: 100%;height: 150px;margin-bottom: 20px;margin-top: 20px">
-        <Row style="padding: 40px">
-          <Col span="8">
-            <div style="margin-bottom: 20px">
-              <span style="font-weight: bold;color: #000000">日新增投诉量</span>
-              <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-              </Tooltip>
-            </div>
-            <span style="font-size: 20px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
+        <Row :gutter="16" style="padding: 40px">
+          <Col span="8" style="border-right: 1px solid #dcdee2">
+            <Row>
+              <Col span="6">
+                <img src="../assets/imgs/exp1.png"/>
+              </Col>
+              <Col span="18">
+                <div >
+                  <span style="font-weight: bold;color: #000000">日新增投诉量</span>
+                  <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                  </Tooltip>
+                </div>
+                <span style="font-size: 28px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
+              </Col>
+            </Row>
+          </Col>
+          <Col span="8" style="border-right: 1px solid #dcdee2">
+            <Row>
+              <Col span="6">
+                <img src="../assets/imgs/exp2.png"/>
+              </Col>
+              <Col span="18">
+                <div>
+                  <span style="font-weight: bold;color: #000000">日新增投诉量同比</span>
+                  <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                  </Tooltip>
+                </div>
+                <span style="font-size: 28px">{{link}}</span><span>(上升百分比)</span>
+              </Col>
+            </Row>
           </Col>
           <Col span="8">
-            <div style="margin-bottom: 20px">
-              <span style="font-weight: bold;color: #000000">日新增投诉量同比</span>
-              <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-              </Tooltip>
-            </div>
-            <span style="font-size: 20px">{{link}}</span><span>(上升百分比)</span>
-          </Col>
-          <Col span="8">
-            <div style="margin-bottom: 20px">
-              <span style="font-weight: bold;color: #000000">日新增投诉量环比</span>
-              <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-              </Tooltip>
-            </div>
-            <span style="font-size: 20px">{{ratio}}</span><span>(下降百分比)</span>
+            <Row>
+              <Col span="6">
+                <img src="../assets/imgs/exp3.png"/>
+              </Col>
+              <Col span="18">
+                <div>
+                  <span style="font-weight: bold;color: #000000">日新增投诉量环比</span>
+                  <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                  </Tooltip>
+                </div>
+                <span style="font-size: 28px">{{ratio}}</span><span>(下降百分比)</span>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </div>
@@ -52,6 +73,47 @@
         <Col span="16">
           <div id="process" style="height: 400px;border: 1px solid #dcdee2;"></div>
         </Col>
+      </Row>
+    </card>
+    <card>
+      <div style="margin-bottom: 20px;">
+        <span style="font-weight: bold;color: #000000">投诉时长分析</span>
+        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+        </Tooltip>
+        <DatePicker size="small" v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+      </div>
+      <Row :gutter="16">
+        <Col span="12" style="height: 200px;border:1px solid yellow;">
+          <Row>
+            <div style="height: 80px; padding: 20px;margin-bottom: 20px">
+            <Col span="6">
+              <img src="../assets/imgs/exp4.png"/>
+            </Col>
+            <Col span="18">
+              <div>
+                <span style="font-weight: bold;color: #000000">日新增投诉量</span>
+                <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                </Tooltip>
+              </div>
+              <span style="font-size: 28px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
+            </Col>
+          </div>
+            <div style="height: 80px; padding: 20px;border-top: 1px solid yellow">
+            <Col span="6">
+              <img src="../assets/imgs/exp4.png"/>
+            </Col>
+            <Col span="18">
+              <div>
+                <span style="font-weight: bold;color: #000000">日新增投诉量</span>
+                <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                </Tooltip>
+              </div>
+              <span style="font-size: 28px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
+            </Col>
+          </div>
+          </Row>
+        </Col>
+        <Col span="12" style="height: 200px;border:1px solid yellow;"></Col>
       </Row>
     </card>
   </div>

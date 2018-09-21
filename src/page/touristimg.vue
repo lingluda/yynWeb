@@ -104,7 +104,29 @@
       <DatePicker size="small" type="date" placeholder="自选时间" style="width: 120px"></DatePicker>
       <Row :gutter="16" style="margin-top: 20px;margin-bottom: 40px">
         <Col span="12">
-          <div style="height: 300px;border: 1px solid #dcdee2">
+          <Row style="height: 363.67px;border: 1px solid #dcdee2;padding: 20px;">
+            <div style="height: 50%;border-bottom: 1px solid #dcdee2">
+              <DatePicker size="small" v-model="picDate3" type="date" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
+
+              <Col span="4">
+                <img src="../assets/imgs/cash1.png" style="margin-top: 20px"/>
+              </Col>
+              <Col span="20">
+                <p style="font-weight: bold">用户平均消费金额</p>
+                <span style="font-size: 32px">{{vagprice}}</span>元
+              </Col>
+            </div>
+            <div style="height: 50%;margin-top: 20px">
+              <Col span="4">
+                <img src="../assets/imgs/cash1.png"/>
+              </Col>
+              <Col span="20">
+                <p style="font-weight: bold">中位点用户消费金额</p>
+                <span style="font-size: 32px">{{middle}}</span>元
+              </Col>
+            </div>
+          </Row>
+        <!--  <div style="height: 300px;border: 1px solid #dcdee2">
             <div style="margin-left: 20px;margin-top: 20px">
             <p style="font-weight: bold">用户平均消费金额</p>
             <span style="font-size: 32px">{{vagprice}}</span>元
@@ -114,10 +136,16 @@
             <p style="font-weight: bold">中位点用户消费金额</p>
             <span style="font-size: 32px">{{middle}}</span>元
             </div>
-          </div>
+          </div>-->
         </Col>
-        <Col span="12">
-          <div id="cash" style="border: 1px solid #dcdee2;height:300px;width:100%"></div>
+        <Col span="12" style="border: 1px solid #dcdee2;">
+          <div style="padding-bottom: 20px;padding: 20px">
+            <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
+            <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+            </Tooltip>
+            <DatePicker size="small" v-model="picDate3" type="date" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
+          </div>
+          <div id="cash" style="height:300px;width:100%"></div>
         </Col>
       </Row>
     </card>

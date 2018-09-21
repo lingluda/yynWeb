@@ -19,10 +19,12 @@
             <Radio label="website">网站报道</Radio>
           </RadioGroup>
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
-            <div style="margin-bottom: 20px">
+            <div style="padding-bottom: 20px;padding: 20px;">
               <span style="font-weight: bold;color: #000000">一机游用户DAU (单位：万次)</span>
               <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
+              <DatePicker size="small" v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+
             </div>
             <div id="simBar" style="width: 100%;height: 300px;"></div>
           </div>
@@ -39,10 +41,12 @@
             <Radio label="website">网站报道</Radio>
           </RadioGroup>
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
-            <div style="margin-bottom: 20px">
+            <div style="padding-bottom: unset;padding: 20px;">
               <span style="font-weight: bold;color: #000000">一机游用户DAU (单位：万次)</span>
               <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
+              <DatePicker size="small" v-model="picDate2" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+
             </div>
             <div id="simBars" style="width: 100%;height: 300px;"></div>
           </div>
@@ -52,6 +56,7 @@
             <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
             <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
+            <DatePicker size="small" v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
           </div>
           <div>
             <Table border :columns="columns" :data="fdata"></Table>
@@ -62,7 +67,7 @@
             <Row :gutter="16">
               <Col span="12">
                 <div style="border: 1px solid #dcdee2">
-                  <div style="margin-bottom: 20px">
+                  <div style="padding: 20px">
                     <span style="font-weight: bold;color: #000000">景区客流TOP10 (单位：万人)</span>
                     <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                     </Tooltip>
@@ -79,7 +84,7 @@
 
               <Col span="12">
                 <div style="border: 1px solid #dcdee2">
-                  <div style="margin-bottom: 20px">
+                  <div style="padding: 20px">
                     <span style="font-weight: bold;color: #000000">景区客流TOP10 (单位：万人)</span>
                     <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                     </Tooltip>
@@ -506,5 +511,8 @@
 </script>
 
 <style scoped>
-
+  .ivu-card-body {
+    padding: 20px;
+    background: #f2f2f2;
+  }
 </style>

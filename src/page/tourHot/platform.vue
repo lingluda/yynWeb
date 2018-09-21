@@ -20,55 +20,48 @@
             <DatePicker size="small" v-model="picDate" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
           </div>
           <Row :gutter="16">
-            <Col span="2" style="height: 100%;">
-              <div>
-                <img src="../../assets/imgs/plat.png" style="width:62px;height: 62px;"/>
-              </div>
-            </Col>
-            <Col span="11">
+            <Col span="12">
               <div style="border: 1px solid #dcdee2;height:120px;padding: 20px">
                 <Row>
-                  <Col span="12">
-                    <div style="margin-bottom: 20px;width: 50%;">
+                  <Col span="4" style="height: 100%;">
+                    <div>
+                      <img src="../../assets/imgs/plat.png" style="width:62px;height: 62px;"/>
+                    </div>
+                  </Col>
+                  <Col span="10">
+                    <div style="margin-bottom: 10px;width: 50%;">
                       <span style="font-weight: bold;color: #000000">新增用户量</span>
                       <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                       </Tooltip>
                     </div>
-                  </Col>
-                  <Col span="12">
-                    <span style="background-color: azure">&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;{{addData.link}}%&nbsp;&nbsp;</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span="14">
-                    <span style="font-size: 28px;color: blue">{{addData.total}}人</span>
+                    <p style="font-size: 28px;color: blue">{{addData.total}}人</p>
                   </Col>
                   <Col span="10">
-                    <span style="background-color: azure">&nbsp;&nbsp;与上月同比&nbsp;&nbsp;{{addData.ratio}}%&nbsp;&nbsp;</span>
+                    <p style="background-color: #f6f8fa;padding: 5px">&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp;{{addData.link}}%&nbsp;&nbsp;</p>
+                    <p style="background-color: #f6f8fa;margin-top: 10px;padding: 5px">&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp;{{addData.ratio}}%&nbsp;&nbsp;</p>
                   </Col>
                 </Row>
               </div>
             </Col>
-            <Col span="11">
+            <Col span="12">
               <div style="border: 1px solid #dcdee2;height:120px;padding: 20px">
                 <Row>
-                  <Col span="14">
-                <div style="margin-bottom: 20px;width: 50%">
-                  <span style="font-weight: bold;color: #000000">活跃用户数</span>
-                  <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-                  </Tooltip>
-                </div>
+                  <Col span="4" style="height: 100%;">
+                    <div>
+                      <img src="../../assets/imgs/plat1.png" style="width:62px;height: 62px;"/>
+                    </div>
                   </Col>
                   <Col span="10">
-                    <span style="background-color: azure">&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;{{aduData.link}}%&nbsp;&nbsp;</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span="14">
-                    <span style="font-size: 28px;color: blue;">{{aduData.total}}人</span>
+                    <div style="margin-bottom: 10px;width: 50%;">
+                      <span style="font-weight: bold;color: #000000">活跃用户数</span>
+                      <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                      </Tooltip>
+                    </div>
+                    <p style="font-size: 28px;color: blue">{{aduData.total}}人</p>
                   </Col>
                   <Col span="10">
-                <span style="background-color: azure">&nbsp;&nbsp;与上月同比&nbsp;&nbsp;{{aduData.ratio}}%&nbsp;&nbsp;</span>
+                    <p style="background-color: #f6f8fa;padding: 5px">&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp;{{addData.link}}%&nbsp;&nbsp;</p>
+                    <p style="background-color: #f6f8fa;margin-top: 10px;padding: 5px">&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp;{{aduData.ratio}}%&nbsp;&nbsp;</p>
                   </Col>
                 </Row>
               </div>
