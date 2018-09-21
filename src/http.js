@@ -1,4 +1,6 @@
 import axios from 'axios';
+import $ from 'jquery'
+
 // import $ from 'jquery'
 // axios.create({
 //     baseURL: "",
@@ -109,6 +111,18 @@ http.gmt2str = function (time) {
       MM + '-' + DD;
     return Str;
 }
+http.addr2lnglat = function (addr) {
+  var url = 'http://api.map.baidu.com/geocoder?address='+addr+'&output=json&key=37492c0ee6f924cb5e934fa08c6b1676';
+  $.ajax({
+    url: 'http://api.map.baidu.com/geocoder?address='+addr+'&output=json&key=37492c0ee6f924cb5e934fa08c6b1676',
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+      return result = JSON.stringify(data);
+    }
+  })
+  return result;
+}
 function encodeUrl(obj) {
 
   let url = '';
@@ -132,10 +146,4 @@ function encodeUrl(obj) {
 
 export default http;
 
-function addresstolatlag(address) {
-  var url = 'http://api.map.baidu.com/geocoder/v2/?address='+address+'&output=json&ak=PPmicK2C744fFQt2QtIOmpZ9Cqwu2DhR';
-  var result ='';
-  if (result = file_get_contents(url)) {
-    return result;
-  }
-}
+
