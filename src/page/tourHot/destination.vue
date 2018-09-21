@@ -14,11 +14,6 @@
             <Tooltip content="热门目的地网络热度TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
           </div>
-          <RadioGroup type="button" v-model="chan">
-            <Radio label="app">APP访问</Radio>
-            <Radio label="search">搜索引擎</Radio>
-            <Radio label="website">网站报道</Radio>
-          </RadioGroup>
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div class="tabpane_content_title">
               <div style="padding-left:60px">
@@ -37,11 +32,7 @@
             <Tooltip content="热门景区网络热度TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
           </div>
-          <RadioGroup type="button" v-model="chanclick">
-            <Radio label="app">APP访问</Radio>
-            <Radio label="search">搜索引擎</Radio>
-            <Radio label="website">网站报道</Radio>
-          </RadioGroup>
+
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div class="tabpane_content_title">
                <div style="padding-left:60px">
@@ -135,7 +126,7 @@
       return {
         picDate1:'2018-09-01',
         picDate2:'2018-09-01',
-        picDate3:'',
+        picDate3:'2018-08-22',
         picDate4:'2018-09-17',
         picDate5:'2018-09-17',
         chan:'app',
@@ -172,23 +163,8 @@
       }
     },
     mounted() {
-      this.init()
     },
     methods: {
-      init(){
-
-        var date = new Date().format(
-          "yyyy-MM-dd"
-        )
-
-        http.get('bi/get_hot_line_by_date',{date:'2018-08-22',top:10}).then(resp=>{
-          console.log(resp.data.hits)
-          this.fdata = resp.data.hits;
-        })
-
-
-
-      },
       initSimBar(){
         let simbar = this.$echarts.init(document.getElementById("simBar"),'macarons')
         simbar.setOption({
@@ -509,7 +485,7 @@
       click2(){
         this.barDatax1=[]
         this.barDatay1=[]
-        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:http.gmt2str(this.picDate2),top:10}).then(resp=>{
+        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:'app',date:http.gmt2str(this.picDate2),top:10}).then(resp=>{
           console.log(resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax1.push(resp.data.hits[i].name)
@@ -518,7 +494,12 @@
           this.initSimBars1()
         })
       },
-      click3(){},
+      click3(){
+        http.get('bi/get_hot_line_by_date',{date:http.gmt2str(this.picDate3),top:10}).then(resp=>{
+          console.log(resp.data.hits)
+          this.fdata = resp.data.hits;
+        })
+      },
       click4(){
         this.max1his=[]
         this.max1n=[]
