@@ -5,7 +5,7 @@
       <card>
         <div class="card_title">
           <span style="font-weight: bold;color: #000000">基本属性分析</span>
-          <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200">
+          <Tooltip content="消费能力-腾讯数据统计的用户消费指数" placement="right" max-width="200">
             <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
           </Tooltip>
         </div>
@@ -61,9 +61,7 @@
       <card style="margin-top: 20px">
         <div class="card_title">
           <span style="font-weight: bold;color: #000000">人口迁移分析</span>
-          <Tooltip content="人口迁移分析" placement="right" max-width="200">
-            <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-          </Tooltip>
+
         </div>
         <RadioGroup type="button" @on-change="hotlinepic">
           <Radio label="all">全部</Radio>
@@ -97,9 +95,7 @@
       <card style="margin-top: 20px">
         <div class="card_title">
           <span style="font-weight: bold;color: #000000">一机游用户消费维度分析</span>
-          <Tooltip content="一机游用户消费维度分析" placement="right" max-width="200">
-            <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-          </Tooltip>
+
         </div>
         <div style="height:350px">
           <Row :gutter="16" style="padding: 0 30px 0 8px;display:flex;height:100%">
@@ -127,11 +123,9 @@
             </Col>
             <Col span="14" style="border: 1px solid #dcdee2;height:100%">
               <div style="padding-bottom: 20px;padding: 20px">
-                <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
-                <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200">
-                  <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-                </Tooltip>
-                <DatePicker v-model="picDate3" type="date" placeholder="Select date"
+                <span style="font-weight: bold;color: #000000">消费类型占比</span>
+
+                <DatePicker v-model="picDate4" type="daterange" placeholder="Select date"
                             style="width: 150px;float: right"></DatePicker>
               </div>
               <div id="cash" style="height:300px;width:100%"></div>
@@ -219,6 +213,8 @@
         cityData: [],
         proData: [],
         picDate: "2018-09-14",
+        picDate3: "2018-08-01",
+        picDate4: ["2018-09-14","2018-09-14"],
         cpicDate: "",
         columns1: [
           {
@@ -940,16 +936,23 @@
           .then(resp => {
             this.data1 = resp.data.hits;
           });
+
+
+      },
+      dateChange3(){
         http
-          .get("bi/get_consume_by_date", {date: "2018-08-01", city_id: 392})
+          .get("bi/get_consume_by_date", {date: http.gmt2str(this.picDate3), city_id: 392})
           .then(resp => {
             this.vagprice = resp.data.hist.avg_amount;
             this.middle = resp.data.hist.median_amount;
           });
+      },
+      dateChange4(){
+        this.cashDataX = []
         http
           .get("bi/get_consume_type_by_mon", {
-            startTime: "2018-07",
-            endTime: "2018-09"
+            startTime: http.gmt2str(this.picDate4[0]),
+            endTime: http.gmt2str(this.picDate4[1])
           })
           .then(resp => {
             console.log("get_consume_type_by_mon", resp.data.hits);
@@ -965,6 +968,8 @@
     },
     watch: {
       picDate: "dateChange",
+      picDate3: "dateChange3",
+      picDate4: "dateChange4",
       tabname: "clicktab",
       hotlineDate:'hotlinedp'
     }

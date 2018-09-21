@@ -9,7 +9,7 @@
           <div class="lyrd_index_search">
             <div class="lyrd_index_search_left">
               <span class="lyrd_index_search_title">游客人数</span>
-              <Tooltip content="游客人数" placement="right" max-width="200">
+              <Tooltip content="去除常驻人口游客数量的计算" placement="right" max-width="200">
                 <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
               </Tooltip>
             </div>
@@ -33,9 +33,7 @@
                   <div class="lyrd_index_count_num">
                     <div>
                       <span class="lyrd_index_today_visit">今日总接待游客量</span>
-                      <Tooltip content="今日总接待游客量" placement="right" max-width="200">
-                        <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-                      </Tooltip>
+
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{total}}</span>
@@ -50,9 +48,7 @@
                   <div class="lyrd_index_count_num">
                     <div>
                       <span class="lyrd_index_today_visit">与昨日环比</span>
-                      <Tooltip content="与昨日环比" placement="right" max-width="200">
-                        <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-                      </Tooltip>
+
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{ratio}}</span>
@@ -67,9 +63,7 @@
                   <div class="lyrd_index_count_num">
                     <div>
                       <span class="lyrd_index_today_visit">与上月同比</span>
-                      <Tooltip content="与上月同比" placement="right" max-width="200">
-                        <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-                      </Tooltip>
+
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{link}}</span>
@@ -83,9 +77,7 @@
           <div class="lyrd_index_jryk">
             <div class="lyrd_index_jryk_title">
               <span class="lyrd_index_search_title">今日游客各州市所占比例</span>
-              <Tooltip content="今日游客各州市所占比例" placement="right" max-width="200">
-                <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-              </Tooltip>
+
             </div>
             <div>
               <div id="mybar" style="height:200px;min-width: 400px;"></div>
@@ -98,9 +90,7 @@
           <div class="lyrd_index_search">
             <div class="lyrd_index_search_left">
               <span class="lyrd_index_search_title">客流统计</span>
-              <Tooltip content="客流统计" placement="right" max-width="200">
-                <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-              </Tooltip>
+
             </div>
             <div class="lyrd_index_search_right">
               <RadioGroup v-model="dateChoice1" type="button" @on-change="picDate1">
@@ -120,9 +110,7 @@
               <div class="lyrd_index_kltj_chart_num">
                 <div>
                   <span class="lyrd_index_today_visit">累积游客接待量</span>
-                  <Tooltip content="累积游客接待量" placement="right" max-width="200">
-                    <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-                  </Tooltip>
+
                 </div>
                 <div>
                   <span class="lyrd_index_today_num">{{totalP}}</span>

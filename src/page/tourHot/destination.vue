@@ -11,14 +11,12 @@
         <card>
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">热门目的地网络热度TOP10</span>
-            <Tooltip content="热门目的地网络热度TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-            </Tooltip>
+
           </div>
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div class="tabpane_content_title">
               <div style="padding-left:60px">
                 <span style="color: #000;font-size:16px;">一机游今日搜索各目的地方访问用户数据 </span>
-                <Tooltip content="一机游今日搜索各目的地方访问用户数据" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 5px" type="ios-help-circle-outline" /></Tooltip>
                 <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
               </div>
               <DatePicker v-model="picDate1" type="date" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
@@ -29,15 +27,12 @@
         <card style="margin-top: 20px">
           <div style="margin-bottom: 20px;">
             <span style="font-weight: bold;color: #000000">热门景区网络热度TOP10</span>
-            <Tooltip content="热门景区网络热度TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-            </Tooltip>
           </div>
 
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div class="tabpane_content_title">
                <div style="padding-left:60px">
                  <span style="color: #000;font-size:16px;">一机游今日搜索各目的地方访问用户数据 </span>
-                  <Tooltip content="一机游今日搜索各目的地方访问用户数据" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 5px" type="ios-help-circle-outline" /></Tooltip>
                   <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
                 </div>
               <DatePicker  v-model="picDate2" type="date" placeholder="Select date" style="width:150px;float: right"></DatePicker>
@@ -48,12 +43,12 @@
         <card style="margin-top: 20px">
           <div style="margin-bottom: 20px;">
             <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
-            <Tooltip content="热门路线TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+            <Tooltip content="一机游app对各线路页面访问量排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
             <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
           </div>
           <div>
-            <Table border :columns="columns" :data="fdata"></Table>
+            <Table :columns="columns" :data="fdata"></Table>
           </div>
         </card>
         <card style="margin-top: 20px">
@@ -63,7 +58,6 @@
                 <div style="border: 1px solid #dcdee2">
                   <div style="padding: 20px">
                     <span style="font-weight: bold;color: #000000">景区客流TOP10</span>
-                    <Tooltip content="景区客流TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" /></Tooltip>
                     <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
                   <DatePicker type="date" v-model="picDate4" placeholder="Select date" style="width: 120px;margin-left:15px;"></DatePicker>
@@ -74,7 +68,6 @@
                 <div style="border: 1px solid #dcdee2">
                   <div style="padding: 20px">
                     <span style="font-weight: bold;color: #000000">景区客流变化TOP10</span>
-                    <Tooltip content="景区客流变化TOP10" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" /></Tooltip>
                     <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
                   <RadioGroup type="button" style="margin-left: 15px">
@@ -153,6 +146,7 @@
                       'hide-info':'true'
                     }
                   }),
+                  h('span',params.row.order)
                 ]);
               }
 

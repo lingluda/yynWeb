@@ -1,8 +1,7 @@
 <template>
   <div class="progressContainer">
     <div class="progress" :style="{width:progreess+'%'}">
-      <b>{{progreess}}%</b>
-    </div>
+    </div> <span>{{progreess}}</span>
   </div>
 </template>
 <script>
@@ -17,6 +16,7 @@
 
 <style scoped>
   div.progressContainer{
+    display: flex;
     height: 20px;
     width: 96%;
     border-radius: 10px;
@@ -27,11 +27,6 @@
     height:20px;
     line-height: 20px;
   }
-  b{
-    font-weight: 100;
-    font-size: 12px;
-    position:absolute;
-    left:40%;
-  }
+
 
 </style>

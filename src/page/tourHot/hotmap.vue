@@ -11,9 +11,7 @@
               <div class="tabpane_content_title">
                 <div>
                   <span style="font-weight: bold;color: #000000">景区客流热力分布图</span>
-                  <Tooltip content="景区客流热力分布图" placement="right" max-width="200">
-                    <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-                  </Tooltip>
+
                 </div>
               </div>
               <Select style="width: 150px">
@@ -37,9 +35,7 @@
               <div class="tabpane_content_title">
                 <div>
                   <span style="font-weight: bold;color: #000000">景区接待客流数</span>
-                  <Tooltip content="景区接待客流数" placement="right" max-width="200">
-                    <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-                  </Tooltip>
+
                 </div>
                 <div>
                   <Select style="width: 150px" v-model="piccity">
@@ -96,9 +92,7 @@
               <div class="tabpane_content_title">
                 <div>
                   <span style="font-weight: bold;color: #000000">区域人数变化趋势</span>
-                  <Tooltip content="区域人数变化趋势" placement="right" max-width="200">
-                    <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-                  </Tooltip>
+
                 </div>
               </div>
               <div>

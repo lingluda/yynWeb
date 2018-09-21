@@ -11,9 +11,7 @@
         <card>
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">平台近日运营数据</span>
-            <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200">
-              <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-            </Tooltip>
+
             <DatePicker v-model="picDate" type="date" placeholder="Select date"
                         style="width: 200px;float: right"></DatePicker>
           </div>
@@ -29,9 +27,7 @@
                   <Col span="10">
                     <div style="margin-bottom: 10px;width: 50%;">
                       <span style="font-weight: bold;color: #000000">新增用户量</span>
-                      <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200">
-                        <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-                      </Tooltip>
+
                     </div>
                     <p style="font-size: 28px;color: blue">{{addData.total}}人</p>
                   </Col>
@@ -53,9 +49,7 @@
                   <Col span="10">
                     <div style="margin-bottom: 10px;width: 50%;">
                       <span style="font-weight: bold;color: #000000">活跃用户数</span>
-                      <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200">
-                        <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-                      </Tooltip>
+
                     </div>
                     <p style="font-size: 28px;color: blue">{{aduData.total}}人</p>
                   </Col>
@@ -71,9 +65,7 @@
         <card style="margin-top: 20px">
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">用户趋势分析</span>
-            <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200">
-              <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
-            </Tooltip>
+
             <DatePicker type="daterange" format="yyyy-MM" v-model="picMonth" @on-change="change1" placeholder="自选时间"
                         style="width: 200px;float: right"></DatePicker>
           </div>
