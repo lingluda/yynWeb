@@ -95,7 +95,6 @@
       <card style="margin-top: 20px">
         <div class="card_title">
           <span style="font-weight: bold;color: #000000">一机游用户消费维度分析</span>
-
         </div>
         <div style="height:350px">
           <Row :gutter="16" style="padding: 0 30px 0 8px;display:flex;height:100%">
@@ -124,9 +123,7 @@
             <Col span="14" style="border: 1px solid #dcdee2;height:100%">
               <div style="padding-bottom: 20px;padding: 20px">
                 <span style="font-weight: bold;color: #000000">消费类型占比</span>
-
-                <DatePicker v-model="picDate4" type="daterange" placeholder="Select date"
-                            style="width: 150px;float: right"></DatePicker>
+                <DatePicker v-model="picDate4" type="daterange" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
               </div>
               <div id="cash" style="height:300px;width:100%"></div>
             </Col>
