@@ -228,7 +228,6 @@
                   ];
                   return colorList[params.dataIndex]
                 },
-
               }
             }
           }]

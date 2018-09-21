@@ -68,62 +68,50 @@
         </Row>
       </div>
     </card>
-    <card class="card_margin">
-      <div style="margin-bottom: 20px;">
-        <span style="font-weight: bold;color: #000000">投诉时长分析</span>
 
-          <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
-      </div>
-      <Row :gutter="16">
-        <Col span="12" style="height: 250px;">
-          <Row style="border:1px solid #dcdee2;height: 100%;">
-            <div style="height: 80px; padding: 20px;">
-            <Col span="4" style="">
-              <img src="../assets/imgs/exp4.png"/>
-            </Col>
-            <Col span="18">
-              <div>
-                <span style="font-weight: bold;color: #000000">日新增投诉量</span>
-
+      <card style="margin-top: 20px">
+        <div class="card_title">
+          <span style="font-weight: bold;color: #000000">投诉时长分析</span>
+        </div>
+        <div style="height:300px">
+          <Row :gutter="16" style="padding: 0 30px 0 8px;display:flex;height:100%">
+            <Col span="10" style="border: 1px solid #dcdee2;margin-right:20px;height:100%;padding:0 30px">
+              <div style="padding:20px 0;height:50%;border-bottom:1px solid #dcdee2">
+                <div style="margin-top:40px;display:flex">
+                  <img src="../assets/imgs/exp5.png" style="margin-right:20px;width:60px;height:60px"/>
+                  <div>
+                    <div style="color:#000;font-size:16px">平台累计已处理投诉量</div>
+                    <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">5454</span>件</div>
+                  </div>
+                </div>
               </div>
-              <span style="font-size: 28px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
-            </Col>
-
-          </div>
-            <div style="height: 80px; padding: 20px;">
-              <div style="border-bottom: 1px solid #dcdee2">
-            <Col span="6" style="margin-top: 20px">
-              <img src="../assets/imgs/exp5.png"/>
-            </Col>
-            <Col span="18" style="margin-top: 20px">
-              <div>
-                <span style="font-weight: bold;color: #000000">日新增投诉量</span>
-
+              <div style="padding:20px 0;height:50%;">
+                <div style="margin-top:25px;display:flex">
+                  <img src="../assets/imgs/exp4.png" style="margin-right:20px;width:60px;height:60px"/>
+                  <div>
+                    <div style="color:#000;font-size:16px">平台累计未处理投诉量</div>
+                    <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">23232</span>件</div>
+                  </div>
+                </div>
               </div>
-              <span style="font-size: 28px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
             </Col>
+            <Col span="14" style="border: 1px solid #dcdee2;height:100%">
+              <div style="padding-bottom: 20px;padding: 20px">
+                <span style="font-weight: bold;color: #000000">已关闭投诉处理时长</span>
               </div>
-          </div>
+              <div id="closeComplaint" style="height:400px;width:100%"></div>
+            </Col>
           </Row>
-        </Col>
-        <Col span="12" style="height: 200px;">
-          <div style="border:1px solid #dcdee2;height: 100%"></div>
-        </Col>
-      </Row>
-    </card>
+        </div>
+        <!-- 关闭投诉各阶段处理时长 -->
+          <div style="border:1px solid #dcdee2;margin-top:30px;height:400px">
+              <div id="closeComplaint2" style="height:400px;width:100%"></div>
+          </div>
+      </card>
     <card class="card_margin">
       <div style="margin-bottom: 20px;">
-        <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
-
-        <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
-      </div>
-      <div id="process" style="height: 400px;border: 1px solid #dcdee2;"></div>
-    </card>
-    <card>
-      <div style="margin-bottom: 20px;">
-        <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
-
-        <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+        <span style="font-weight: bold;color: #000000">月投诉量趋势分析</span>
+        <DatePicker v-model="picDate3" type="daterange" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
       </div>
       <div id="myline" style="height: 400px;border: 1px solid #dcdee2;"></div>
     </card>
@@ -230,6 +218,7 @@ export default {
   mounted() {
     this.init();
     this.initLine();
+    this.closeComplaint();
   },
   methods: {
     init() {
@@ -345,6 +334,13 @@ export default {
         yAxis: {
           type: "value"
         },
+        grid: {
+          top: 50,
+          width: "98%",
+          bottom: "10%",
+          left: 10,
+          containLabel: true
+        },
         series: [
           {
             data: [820, 932, 901, 934, 1290, 1330, 1320],
@@ -352,6 +348,179 @@ export default {
           }
         ]
       });
+    },
+    closeComplaint() {
+      let complaint = this.$echarts.init(
+        document.getElementById("closeComplaint")
+      );
+      let complaint2 = this.$echarts.init(
+        document.getElementById("closeComplaint2")
+      );
+      var builderJson = {
+        charts: {
+          最小时长: 232,
+          最大时长: 2164,
+          平均时长: 1230
+        }
+      };
+      var option = {
+        tooltip: {},
+        title: {
+          text: "单位(小时)",
+          textStyle: {
+            fontSize: 14
+          },
+          x: "15",
+          y: "15"
+        },
+        grid: {
+          top: 50,
+          width: "80%",
+          bottom: "45%",
+          left: 10,
+          containLabel: true
+        },
+        xAxis: {
+          type: "value",
+          max: builderJson.all,
+          splitLine: {
+            show: false
+          }
+        },
+        yAxis: {
+          type: "category",
+          data: Object.keys(builderJson.charts),
+          splitLine: {
+            show: false
+          }
+        },
+        series: {
+          type: "bar",
+          stack: "chart",
+          z: 3,
+          label: {
+            normal: {
+              position: "right",
+              show: true
+            }
+          },
+          data: Object.keys(builderJson.charts).map(function(key) {
+            return builderJson.charts[key];
+          }),
+          itemStyle: {
+            normal: {
+              color: function(params) {
+                var colorList = ["#ffbb00", "#29cc85", "#006EFF"];
+                return colorList[params.dataIndex];
+              }
+            }
+          }
+        }
+      };
+      complaint.setOption(option);
+      var option2 = {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross",
+            crossStyle: {
+              color: "#999"
+            }
+          }
+        },
+        legend: {
+          data: ["平均时长", "最大时长", "最小时长"],
+          bottom: 10,
+          icon: "circle",
+          itemWidth: 10,
+          itemHeight: 12
+        },
+        grid: {
+          top: '15%',
+          width: "95%",
+          bottom: "10%",
+          left: 30,
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            data: ["投诉受理", "投诉反馈", "二次授理", "二次反馈", "巡回法庭"],
+            axisPointer: {
+              type: "shadow"
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: "value",
+            name: "单位(小时)"
+          }
+        ],
+        series: [
+          {
+            name: "平均时长",
+            type: "bar",
+            data: [3, 3, 3, 3, 4],
+            label: {
+              normal: {
+                position: "top",
+                show: true
+              }
+            },
+            barWidth: "15%",
+            itemStyle: {
+              normal: {
+                color: function(params) {
+                  var colorList = ["#006EFF", "#006EFF", "#006EFF"];
+                  return colorList[params.dataIndex];
+                }
+              }
+            }
+          },
+          {
+            name: "最大时长",
+            type: "bar",
+            data: [8, 10, 23, 43, 21],
+            label: {
+              normal: {
+                position: "top",
+                show: true
+              }
+            },
+            barWidth: "15%",
+            itemStyle: {
+              normal: {
+                color: function(params) {
+                  var colorList = ["#29cc85", "#29cc85", "#29cc85"];
+                  return colorList[params.dataIndex];
+                }
+              }
+            }
+          },
+          {
+            name: "最小时长",
+            type: "bar",
+            data: [2, 5, 3, 5, 1],
+            label: {
+              normal: {
+                position: "top",
+                show: true
+              }
+            },
+            barWidth: "15%",
+            itemStyle: {
+              normal: {
+                color: function(params) {
+                  var colorList = ["#ffbb00", "#ffbb00", "#ffbb00"];
+                  return colorList[params.dataIndex];
+                }
+              }
+            }
+          }
+        ]
+      };
+      complaint2.setOption(option2);
     }
   }
 };
