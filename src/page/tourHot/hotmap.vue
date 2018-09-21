@@ -17,15 +17,15 @@
                 </div>
               </div>
               <Select style="width: 150px">
-                <Option value="城市">城市</Option>
+                <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
               <Select style="width: 150px">
-                <Option value="城市">城市</Option>
+                <Option value="城市">景区XXX</Option>
               </Select>
               <DatePicker type="date" placeholder="自选时间" style="width: 150px"></DatePicker>
-              <Select style="width: 150px">
+           <!--   <Select style="width: 150px">
                 <Option value="城市">城市</Option>
-              </Select>
+              </Select>-->
               <Select style="width: 150px">
                 <Option value="刻度">刻度</Option>
               </Select>
@@ -378,20 +378,19 @@
           },
           series: [
             {
-              name: this.lineDatayn1,
-              type: "line",
-              stack: "总量",
-              data: this.lineDatay1
-            },
-            {
               name: this.lineDatayn2,
               type: "line",
               stack: "总量",
               data: this.lineDatay2
+            },
+            {
+              name: this.lineDatayn1,
+              type: "line",
+              stack: "总量",
+              data: this.lineDatay1
             }
           ]
         };
-
         mybar.setOption(option);
       },
       pic1() {

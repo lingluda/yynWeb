@@ -143,6 +143,9 @@
           {
             title: '购买次数',
             key: 'order',
+            render(){
+              return ' <div class="progressContainer"><div class="progress" :style="{width:progreess+\'%\'}"><b>6%</b></div></div>'
+            }
           },{
             title: '热门路线访问量(次)',
             key: 'dau',
