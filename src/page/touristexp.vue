@@ -6,7 +6,6 @@
       <div style="display:flex;justify-content: space-between;">
         <div class="card_title">
           <span style="font-weight: bold;color: #000000">投诉分析</span>
-          <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" /> </Tooltip>
         </div>
         <div>
           <RadioGroup type="button">
@@ -27,8 +26,7 @@
                 <div class="lyrd_index_count_num">
                     <div>
                       <span class="lyrd_index_today_visit">日新增投诉量</span>
-                      <Tooltip content="日新增投诉量" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-                      </Tooltip>
+
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{add}}</span>
@@ -44,8 +42,7 @@
                 <div class="lyrd_index_count_num">
                     <div>
                       <span class="lyrd_index_today_visit">日新增投诉量同比</span>
-                      <Tooltip content="日新增投诉量同比" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-                      </Tooltip>
+
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{link}}</span>
@@ -60,8 +57,6 @@
                 <div class="lyrd_index_count_num">
                     <div>
                       <span class="lyrd_index_today_visit">日新增投诉量环比</span>
-                      <Tooltip content="日新增投诉量环比" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-                      </Tooltip>
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{ratio}}</span>
@@ -76,8 +71,7 @@
     <card class="card_margin">
       <div style="margin-bottom: 20px;">
         <span style="font-weight: bold;color: #000000">投诉时长分析</span>
-        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-        </Tooltip>
+
           <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
       </div>
       <Row :gutter="16">
@@ -90,8 +84,7 @@
             <Col span="18">
               <div>
                 <span style="font-weight: bold;color: #000000">日新增投诉量</span>
-                <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-                </Tooltip>
+
               </div>
               <span style="font-size: 28px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
             </Col>
@@ -105,8 +98,7 @@
             <Col span="18" style="margin-top: 20px">
               <div>
                 <span style="font-weight: bold;color: #000000">日新增投诉量</span>
-                <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-                </Tooltip>
+
               </div>
               <span style="font-size: 28px">{{add}}</span><span>个(新关闭{{close}}，未关闭{{unclose}})</span>
             </Col>
@@ -122,8 +114,7 @@
     <card class="card_margin">
       <div style="margin-bottom: 20px;">
         <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
-        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-        </Tooltip>
+
         <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
       </div>
       <div id="process" style="height: 400px;border: 1px solid #dcdee2;"></div>
@@ -131,8 +122,7 @@
     <card>
       <div style="margin-bottom: 20px;">
         <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
-        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-        </Tooltip>
+
         <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
       </div>
       <div id="myline" style="height: 400px;border: 1px solid #dcdee2;"></div>

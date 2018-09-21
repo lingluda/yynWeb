@@ -7,14 +7,12 @@
     <card>
       <div style="margin-bottom: 20px">
         <span style="font-weight: bold;color: #000000">舆情总体指标</span>
-        <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-        </Tooltip>
+
       </div>
       <Row style="width: 100%;height: 300px;border: 1px solid #dcdee2">
         <div style="margin-bottom: 20px">
           <span style="font-weight: bold;color: #000000">云南省舆情正负面情绪分析</span>
-          <Tooltip content="云南省舆情正负面情绪分析text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-          </Tooltip>
+
         </div>
         <Col span="12">
           <div id="health" style="width: 100%;height: 235px"></div>
@@ -30,7 +28,7 @@
           <card>
             <div style="margin-bottom: 20px">
               <span style="font-weight: bold;color: #000000">全省网络热词TOP10</span>
-              <Tooltip content="云南省舆情正负面情绪分析text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+              <Tooltip content="与全省相关网络热词排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
             </div>
             <Table :columns="columns1" :data="data1"></Table>
@@ -41,7 +39,7 @@
             <div >
               <div style="margin-bottom: 20px">
                 <span style="font-weight: bold;color: #000000">州市网络热词TOP10</span>
-                <Tooltip content="云南省舆情正负面情绪分析text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                <Tooltip content="与州市相关的网络热词排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
                 </Tooltip>
                 <Select style="width: 120px;float: right">
                   <Option>丽江市</Option>
