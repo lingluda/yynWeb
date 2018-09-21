@@ -143,9 +143,19 @@
           {
             title: '购买次数',
             key: 'order',
-            render(){
-              return ' <div class="progressContainer"><div class="progress" :style="{width:progreess+\'%\'}"><b>6%</b></div></div>'
-            }
+            render: (h, params) => {
+                return h('div', [
+                  h('Progress', {
+                    props: {
+                      type: 'person',
+                      percent: params.row.order,
+                      status:'active',
+                      'hide-info':'true'
+                    }
+                  }),
+                ]);
+              }
+
           },{
             title: '热门路线访问量(次)',
             key: 'dau',
