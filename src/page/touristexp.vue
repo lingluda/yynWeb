@@ -12,7 +12,7 @@
             <Radio label="all">全部</Radio>
             <Radio label="default">飞机</Radio>
           </RadioGroup>
-          <DatePicker type="date" placeholder="自选时间" style="width: 120px"></DatePicker>
+          <DatePicker type="date" v-model="picdate1" placeholder="自选时间" style="width: 120px"></DatePicker>
           <Select style="width: 120px">
             <Option>全省</Option>
           </Select>
@@ -26,7 +26,6 @@
                 <div class="lyrd_index_count_num">
                     <div>
                       <span class="lyrd_index_today_visit">日新增投诉量</span>
-
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{add}}</span>
@@ -70,8 +69,16 @@
     </card>
 
       <card style="margin-top: 20px">
-        <div class="card_title">
-          <span style="font-weight: bold;color: #000000">投诉时长分析</span>
+        <div style="display:flex;justify-content: space-between;">
+          <div class="card_title">
+            <span style="font-weight: bold;color: #000000">投诉时长分析</span>
+          </div>
+          <div>
+            <RadioGroup type="button" >
+              <Radio label="default" style="border-radius: 0px">近7天</Radio>
+            </RadioGroup>
+            <DatePicker type="date" v-model="picdate2" placeholder="自选时间" style="width: 120px"></DatePicker>
+          </div>
         </div>
         <div style="height:300px">
           <Row :gutter="16" style="padding: 0 30px 0 8px;display:flex;height:100%">
@@ -111,7 +118,7 @@
     <card class="card_margin">
       <div style="margin-bottom: 20px;">
         <span style="font-weight: bold;color: #000000">月投诉量趋势分析</span>
-        <DatePicker v-model="picDate3" type="daterange" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+        <DatePicker v-model="picdate3" type="daterange" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
       </div>
       <div id="myline" style="height: 400px;border: 1px solid #dcdee2;"></div>
     </card>
@@ -201,6 +208,9 @@ import http from "@/http.js";
 export default {
   data() {
     return {
+      picdate1:'2018-08-03',
+      picdate2:'2018-08-03',
+      picdate3:'2018-08-03',
       add: "",
       link: "",
       ratio: "",
@@ -222,27 +232,7 @@ export default {
   },
   methods: {
     init() {
-      http
-        .get("bi/get_complaint_by_date", { date: "2018-08-03" })
-        .then(resp => {
-          console.log("游客体验：：", resp.data.hits);
-          this.add = resp.data.hits.total;
-          this.close = resp.data.hits.closed;
-          this.unclose = resp.data.hits.unclosed;
-          this.link = resp.data.hits.link;
-          this.ratio = resp.data.hits.ratio;
-          this.timeX.push(parseInt(resp.data.hits.avg_proc));
-          this.timeX.push(parseInt(resp.data.hits.max_proc));
-          this.timeX.push(parseInt(resp.data.hits.min_proc));
-          this.initComplain();
-          for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
-            this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg));
-            this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max));
-            this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
-            this.procY1.push(resp.data.hits.proc_stat[i].name);
-          }
-          this.initProcess();
-        });
+
     },
     initComplain() {
       let complain = this.$echarts.init(document.getElementById("complain"));
@@ -521,7 +511,64 @@ export default {
         ]
       };
       complaint2.setOption(option2);
-    }
+    },
+    pic1(){
+      http
+        .get("bi/get_complaint_by_date", { date: http.gmt2str(this.picdate1) })
+        .then(resp => {
+          this.add = resp.data.hits.total;
+          this.close = resp.data.hits.closed;
+          this.unclose = resp.data.hits.unclosed;
+          this.link = resp.data.hits.link;
+          this.ratio = resp.data.hits.ratio;
+        });
+    },
+    pic2(){
+      http
+        .get("bi/get_complaint_by_date", { date: http.gmt2str(this.picdate2) })
+        .then(resp => {
+          console.log("游客体验：：", resp.data.hits);
+          this.timeX.push(parseInt(resp.data.hits.avg_proc));
+          this.timeX.push(parseInt(resp.data.hits.max_proc));
+          this.timeX.push(parseInt(resp.data.hits.min_proc));
+          this.initComplain();
+          for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
+            this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg));
+            this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max));
+            this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
+            this.procY1.push(resp.data.hits.proc_stat[i].name);
+          }
+          this.initProcess();
+        });
+    },
+    pic3(){
+      http
+        .get("bi/get_complaint_by_date", { date: "2018-08-03" })
+        .then(resp => {
+          console.log("游客体验：：", resp.data.hits);
+          this.add = resp.data.hits.total;
+          this.close = resp.data.hits.closed;
+          this.unclose = resp.data.hits.unclosed;
+          this.link = resp.data.hits.link;
+          this.ratio = resp.data.hits.ratio;
+          this.timeX.push(parseInt(resp.data.hits.avg_proc));
+          this.timeX.push(parseInt(resp.data.hits.max_proc));
+          this.timeX.push(parseInt(resp.data.hits.min_proc));
+          this.initComplain();
+          for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
+            this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg));
+            this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max));
+            this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
+            this.procY1.push(resp.data.hits.proc_stat[i].name);
+          }
+          this.initProcess();
+        });
+    },
+  },
+  watch:{
+    picdate1:'pic1',
+    picdate2:'pic2',
+    picdate3:'pic3',
   }
 };
 </script>
