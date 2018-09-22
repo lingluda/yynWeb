@@ -8,9 +8,9 @@
           <span style="font-weight: bold;color: #000000">投诉分析</span>
         </div>
         <div>
-          <RadioGroup type="button">
-            <Radio label="all">全部</Radio>
-            <Radio label="default">飞机</Radio>
+          <RadioGroup type="button" v-model="picTo" @on-change="picToC">
+            <Radio label="1">今日</Radio>
+            <Radio label="2">昨日</Radio>
           </RadioGroup>
           <DatePicker type="date" v-model="picdate1" placeholder="自选时间" style="width: 120px"></DatePicker>
           <Select style="width: 120px">
@@ -77,7 +77,7 @@
             <RadioGroup type="button" >
               <Radio label="default" style="border-radius: 0px">近7天</Radio>
             </RadioGroup>
-            <DatePicker type="date" v-model="picdate2" placeholder="自选时间" style="width: 120px"></DatePicker>
+            <DatePicker type="month" v-model="picdate2" placeholder="自选时间" style="width: 120px"></DatePicker>
           </div>
         </div>
         <div style="height:300px">
@@ -88,7 +88,7 @@
                   <img src="../assets/imgs/exp5.png" style="margin-right:20px;width:60px;height:60px"/>
                   <div>
                     <div style="color:#000;font-size:16px">平台累计已处理投诉量</div>
-                    <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">5454</span>件</div>
+                    <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">{{close1}}</span>件</div>
                   </div>
                 </div>
               </div>
@@ -97,7 +97,7 @@
                   <img src="../assets/imgs/exp4.png" style="margin-right:20px;width:60px;height:60px"/>
                   <div>
                     <div style="color:#000;font-size:16px">平台累计未处理投诉量</div>
-                    <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">23232</span>件</div>
+                    <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">{{unclose1}}</span>件</div>
                   </div>
                 </div>
               </div>
@@ -208,7 +208,8 @@ import http from "@/http.js";
 export default {
   data() {
     return {
-      picdate1:'2018-08-03',
+      picTo:'1',
+      picdate1:'',
       picdate2:'2018-08-03',
       picdate3:'2018-08-03',
       add: "",
@@ -216,6 +217,8 @@ export default {
       ratio: "",
       close: "",
       unclose: "",
+      close1: "",
+      unclose1: "",
       timeX: [],
       timeY: [],
       procX1: [],
@@ -228,11 +231,11 @@ export default {
   mounted() {
     this.init();
     this.initLine();
-    this.closeComplaint();
+
   },
   methods: {
     init() {
-
+      this.picdate1 = http.getToday()
     },
     initComplain() {
       let complain = this.$echarts.init(document.getElementById("complain"));
@@ -346,13 +349,6 @@ export default {
       let complaint2 = this.$echarts.init(
         document.getElementById("closeComplaint2")
       );
-      var builderJson = {
-        charts: {
-          最小时长: 232,
-          最大时长: 2164,
-          平均时长: 1230
-        }
-      };
       var option = {
         tooltip: {},
         title: {
@@ -372,14 +368,13 @@ export default {
         },
         xAxis: {
           type: "value",
-          max: builderJson.all,
           splitLine: {
             show: false
           }
         },
         yAxis: {
           type: "category",
-          data: Object.keys(builderJson.charts),
+          data: ['最小时长','最大时长','平均时长'],
           splitLine: {
             show: false
           }
@@ -394,9 +389,7 @@ export default {
               show: true
             }
           },
-          data: Object.keys(builderJson.charts).map(function(key) {
-            return builderJson.charts[key];
-          }),
+          data:this.timeX,
           itemStyle: {
             normal: {
               color: function(params) {
@@ -435,7 +428,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: ["投诉受理", "投诉反馈", "二次授理", "二次反馈", "巡回法庭"],
+            data: this.procY1,
             axisPointer: {
               type: "shadow"
             }
@@ -451,7 +444,7 @@ export default {
           {
             name: "平均时长",
             type: "bar",
-            data: [3, 3, 3, 3, 4],
+            data: this.procX1,
             label: {
               normal: {
                 position: "top",
@@ -471,7 +464,7 @@ export default {
           {
             name: "最大时长",
             type: "bar",
-            data: [8, 10, 23, 43, 21],
+            data: this.procX2,
             label: {
               normal: {
                 position: "top",
@@ -491,7 +484,7 @@ export default {
           {
             name: "最小时长",
             type: "bar",
-            data: [2, 5, 3, 5, 1],
+            data: this.procX3,
             label: {
               normal: {
                 position: "top",
@@ -524,46 +517,50 @@ export default {
         });
     },
     pic2(){
+      this.procX1=[];
+      this.procX2=[];
+      this.procX3=[];
+      this.procY1=[];
+      this.timeX=[];
       http
-        .get("bi/get_complaint_by_date", { date: http.gmt2str(this.picdate2) })
+        .get("bi/get_complaint_by_mon", { date: http.gmt2strm(this.picdate2) })
         .then(resp => {
           console.log("游客体验：：", resp.data.hits);
+          this.close1=resp.data.hits.closed;
+          this.unclose1=resp.data.hits.unclosed;
           this.timeX.push(parseInt(resp.data.hits.avg_proc));
           this.timeX.push(parseInt(resp.data.hits.max_proc));
           this.timeX.push(parseInt(resp.data.hits.min_proc));
-          this.initComplain();
+
           for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
             this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg));
             this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max));
             this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
             this.procY1.push(resp.data.hits.proc_stat[i].name);
           }
-          this.initProcess();
+          console.log(this.procX1)
+          console.log(this.procX2)
+          console.log(this.procX3)
+          console.log(this.procY1)
+          this.closeComplaint();
         });
     },
     pic3(){
       http
-        .get("bi/get_complaint_by_date", { date: "2018-08-03" })
+        .get("bi/get_complaint_trend_by_monspan", { date: "2018-08-03" })
         .then(resp => {
           console.log("游客体验：：", resp.data.hits);
-          this.add = resp.data.hits.total;
-          this.close = resp.data.hits.closed;
-          this.unclose = resp.data.hits.unclosed;
-          this.link = resp.data.hits.link;
-          this.ratio = resp.data.hits.ratio;
-          this.timeX.push(parseInt(resp.data.hits.avg_proc));
-          this.timeX.push(parseInt(resp.data.hits.max_proc));
-          this.timeX.push(parseInt(resp.data.hits.min_proc));
-          this.initComplain();
-          for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
-            this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg));
-            this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max));
-            this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
-            this.procY1.push(resp.data.hits.proc_stat[i].name);
-          }
-          this.initProcess();
+
         });
     },
+    picToC(va22){
+      if (va22==1){
+        this.picdate1 = http.getToday()
+      }
+      if (va22==2){
+        this.picdate1 = http.getYesterDay()
+      }
+    }
   },
   watch:{
     picdate1:'pic1',

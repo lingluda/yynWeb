@@ -29,6 +29,7 @@
               </Select>
             </div>
             <div id="hotmap" style="width: 100%;height: 400px;" class="heatmap"></div>
+            <div id="timeline" style="width: 100%;height: 60px;"></div>
           </card>
           <card class="card_margin">
             <div style="margin-bottom: 20px">
@@ -38,7 +39,7 @@
 
                 </div>
                 <div>
-                  <DatePicker v-model="picDate6" type="date" placeholder="Select date" style="width: 150px;"></DatePicker>
+                  <DatePicker v-model="picDate6" type="date" placeholder="Select date" style="width: 150px;">全省</DatePicker>
 
                   <Select style="width: 150px" v-model="piccity">
                     <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
@@ -224,6 +225,9 @@
   export default {
     data() {
       return {
+        dataIndex:'',
+        x:0,
+        timelines:[],
         lineDatax: [],
         lineDatay1: [],
         lineDatayn1:'',
@@ -243,7 +247,6 @@
       };
     },
     mounted() {
-      // this.initGauge();
       this.init();
     },
     methods: {
@@ -255,8 +258,12 @@
           min: 60
         }).then(resp => {
           this.initMap(resp.data.hits[0].points);
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.timelines.push(resp.data.hits[i].time)
+          }
+          this.initTimeline();
         });
-        http.get('bi/get_all_city', {}).then(resp => {
+        http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
         })
         http.get('bi/get_scenic_tourist_compare_by_date', {
@@ -391,6 +398,7 @@
         mybar.setOption(option);
       },
       pic1() {
+        console.log('get_scenic_tourist_by_date',this.dataIndex)
         http.get('bi/get_scenic_tourist_by_date', {
           date: http.gmt2str(this.picDate6),
           scenic: '83cf6fb7-61f0-4ede-4f9b-956d25cf2234'
@@ -401,12 +409,58 @@
           this.currentTime = resp.data.hits.total;
           this.touristc = resp.data.hits.link;
         })
+      },
+      initTimeline(){
+        let self = this
+        let timeline = this.$echarts.init(document.getElementById("timeline"))
+        timeline.setOption({
+          timeline: {   // 时间轴样式
+            axisType: 'category',
+            data: this.timelines,
+            playInterval: 1000,
+            bottom: '0',
+            symbolSize: 5,
+            autoPlay: false,
+            currentIndex:this.x,
+            //loop: true,
+            x:100,
+
+            realtime: true,
+            lineStyle: {
+              color: '#466872',
+              width: 4,
+            },
+            label: {
+              color: '#5cc5da',
+              fontSize: 14,
+            },
+
+          },
+        });
+        timeline.on('click',function (d) {
+          self.dataIndex = d.data;
+        })
+
+      },
+      x1(){
+        console.log(this.x)
+      },
+      dataChange1(){
+        http.get("bi/get_scenic_tourist_heat_dist", {
+          date: "2018-09-01",
+          scenic: "9df331f4-5ef7-497c-7042-ae6c1e12342c",
+          min: 60
+        }).then(resp => {
+          this.initMap(resp.data.hits[this.dataIndex].points);
+        });
       }
     },
     watch: {
       piccity: 'pic1',
       today: 'pic1',
-      picDate6:'pic1'
+      picDate6:'pic1',
+      x:'x1',
+      dataIndex:'dataChange1'
     }
   };
 </script>

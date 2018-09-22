@@ -152,8 +152,8 @@
         cdate: '',
         date1: [],
         cityData: [],
-        city: '',
-        city1: '',
+        city: '0',
+        city1: '0',
         start: '',
         end: '',
         pieData: [],
@@ -194,7 +194,7 @@
     },
     methods: {
       getCity() {
-        http.get('bi/get_all_city', {}).then(resp => {
+        http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
         })
         this.date1[0] = http.getWeekAgo()

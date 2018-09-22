@@ -159,7 +159,7 @@
     },
     methods: {
       getCity(){
-        http.get('bi/get_all_city',{}).then(resp=>{
+        http.get('bi/get_all_city_prov',{}).then(resp=>{
           this.cityData = resp.data.hits;
         })
       },

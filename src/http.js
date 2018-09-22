@@ -111,16 +111,32 @@ http.gmt2str = function (time) {
       MM + '-' + DD;
     return Str;
 }
+http.gmt2strm = function (time) {
+  let date = new Date(time);
+  var YY = date.getMonth()+1;
+  if (YY < 10) {
+    var MM = '0' + YY;
+  } else {
+    MM = YY.toString();
+  }
+  if (date.getDate() < 10) {
+    var DD = '0' + date.getDate();
+  } else {
+    DD = date.getDate().toString();
+  }
+  let Str = date.getFullYear() + '-' +
+    MM;
+  return Str;
+}
 http.addr2lnglat = function (addr) {
-  var url = 'http://api.map.baidu.com/geocoder?address='+addr+'&output=json&key=37492c0ee6f924cb5e934fa08c6b1676';
-  $.ajax({
-    url: 'http://api.map.baidu.com/geocoder?address='+addr+'&output=json&key=37492c0ee6f924cb5e934fa08c6b1676',
-    type: "GET",
-    dataType: "json",
-    success: function (data) {
-      return result = JSON.stringify(data);
-    }
-  })
+/*  $.getJSON("../assets/data/citylnglat.txt",function (data) {
+      console.log(data)
+  })*/
+  var reader = new FileReader();//这里是核心！！！读取操作就是由它完成的。
+  reader.readAsText("../assets/data/citylnglat.txt");
+  reader.onload = function(){
+    console.log(this.result);//当读取完成之后会回调这个函数，然后此时文件的内容存储到了result中。直接操作即可。
+  };
   return result;
 }
 function encodeUrl(obj) {

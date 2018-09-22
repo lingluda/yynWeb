@@ -180,6 +180,7 @@
   import http from "@/http.js";
   import "@/dateFormate.js";
 
+
   export default {
     data() {
       return {
@@ -258,7 +259,6 @@
     },
     methods: {
       hotlinedp(){
-        console.log(http.gmt2str(this.hotlineDate))
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
           city_name: "大理",
@@ -266,14 +266,13 @@
           io: this.tabname
         }).then(resp => {
           this.data1 = resp.data.hits;
-          console.log("this.data1", this.data1);
         });
       },
       hotlinepic(val11) {
-        console.log(val11)
+        console.log(http.addr2lnglat())
       },
       init() {
-        http.get('bi/get_all_city', {}).then(resp => {
+        http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
         })
       },
