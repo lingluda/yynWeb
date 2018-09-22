@@ -38,6 +38,8 @@
 
                 </div>
                 <div>
+                  <DatePicker v-model="picDate6" type="date" placeholder="Select date" style="width: 150px;"></DatePicker>
+
                   <Select style="width: 150px" v-model="piccity">
                     <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                   </Select>
@@ -233,6 +235,7 @@
         single: true,
         cityData: [],
         link: '',
+        picDate6:'2018-09-03',
         ratio: '',
         daymount: '',
         currentTime: '',
@@ -389,7 +392,7 @@
       },
       pic1() {
         http.get('bi/get_scenic_tourist_by_date', {
-          date: this.today,
+          date: http.gmt2str(this.picDate6),
           scenic: '83cf6fb7-61f0-4ede-4f9b-956d25cf2234'
         }).then(resp => {
           this.link = resp.data.hits.link;
@@ -403,6 +406,7 @@
     watch: {
       piccity: 'pic1',
       today: 'pic1',
+      picDate6:'pic1'
     }
   };
 </script>

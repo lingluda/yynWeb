@@ -123,7 +123,7 @@
             <Col span="14" style="border: 1px solid #dcdee2;height:100%">
               <div style="padding-bottom: 20px;padding: 20px">
                 <span style="font-weight: bold;color: #000000">消费类型占比</span>
-                <DatePicker v-model="picDate4" type="daterange" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
+                <DatePicker v-model="picDate4" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
               </div>
               <div id="cash" style="height:300px;width:100%"></div>
             </Col>
@@ -211,7 +211,7 @@
         proData: [],
         picDate: "2018-09-14",
         picDate3: "2018-08-01",
-        picDate4: ["2018-09-14","2018-09-14"],
+        picDate4: ["2018-07-01","2018-09-14"],
         cpicDate: "",
         columns1: [
           {
