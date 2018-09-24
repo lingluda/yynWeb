@@ -19,7 +19,7 @@
                 <span style="color: #000;font-size:16px;">一机游今日搜索各目的地方访问用户数据 </span>
                 <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
               </div>
-              <DatePicker v-model="picDate1" type="date" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
+              <DatePicker v-model="picDate1" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
             </div>
             <div id="simBar" style="width: 100%;height: 285px;top:-35px"></div>
           </div>
@@ -35,7 +35,7 @@
                  <span style="color: #000;font-size:16px;">一机游今日搜索各目的地方访问用户数据 </span>
                   <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
                 </div>
-              <DatePicker  v-model="picDate2" type="date" placeholder="Select date" style="width:150px;float: right"></DatePicker>
+              <DatePicker  v-model="picDate2" type="date" placeholder="Select date" style="width:120px;float: right"></DatePicker>
             </div>
             <div id="simBars" style="width: 100%;height: 300px;top:-30px"></div>
           </div>
@@ -43,12 +43,27 @@
         <card style="margin-top: 20px">
           <div style="margin-bottom: 20px;">
             <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
+            <!--<pers-st :pers="21"></pers-st>-->
             <Tooltip content="一机游app对各线路页面访问量排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
-            <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
+            <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
           </div>
           <div>
-            <Table :columns="columns" :data="fdata"></Table>
+            <!--<Table :columns="columns" :data="fdata"></Table>-->
+            <table style="border: 1px solid rgb(220, 222, 226);width: 100%;text-align: center;border-collapse:collapse">
+              <tr>
+                <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门线路购买量（次）</td>
+                <td style="width: 40%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa"></td>
+                <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门路线访问量(次)</td>
+                <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">购买平均价格(元)</td>
+              </tr>
+              <tr v-for="item in fdata">
+                <td style="padding: 10px;border-bottom: 1px dashed rgb(206,226,225)">{{item.name}}</td>
+                <td style="border-bottom: 1px dashed rgb(206,226,225)"> <pers-st :pers=item.order></pers-st></td>
+                <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.dau}}</td>
+                <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.price}}</td>
+              </tr>
+            </table>
           </div>
         </card>
         <card style="margin-top: 20px">
@@ -113,13 +128,17 @@
 <script>
   import http from '@/http.js'
   import '@/dateFormate'
+  import pers_st from '../analysisform'
   export default {
+    components:{
+      "pers-st":pers_st
+    },
     name: "tourhot",
     data() {
       return {
         picDate1:'2018-09-01',
         picDate2:'2018-09-01',
-        picDate3:'2018-08-22',
+        picDate3:'2018-08-17',
         picDate4:'2018-09-17',
         picDate5:'2018-09-17',
         chan:'app',
@@ -138,12 +157,9 @@
             key: 'order',
             render: (h, params) => {
                 return h('div', [
-                  h('Progress', {
+                  h('pers-st', {
                     props: {
-                      type: 'person',
-                      percent: params.row.order,
-                      status:'active',
-                      'hide-info':'true'
+                      pers:params.row.order,
                     }
                   }),
                   h('span',params.row.order)
@@ -502,7 +518,7 @@
       },
       click3(){
         http.get('bi/get_hot_line_by_date',{date:http.gmt2str(this.picDate3),top:10}).then(resp=>{
-          console.log(resp.data.hits)
+          console.log('this.fdata',resp.data.hits)
           this.fdata = resp.data.hits;
         })
       },

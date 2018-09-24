@@ -12,10 +12,10 @@
           <span style="font-weight: bold;color: #000000">云南省舆情正负面情绪分析</span>
         </div>
         <div>
-          <Select style="width: 120px">
-            <Option>全省</Option>
+          <Select style="width: 120px" v-model="city1">
+            <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
           </Select>
-           <DatePicker type="date" placeholder="自选时间" style="width: 120px"></DatePicker>
+           <DatePicker type="date" v-model="date1" placeholder="自选时间" style="width: 120px"></DatePicker>
         </div>
       </div>
         <Col span="8" style="padding:0 80px">
@@ -29,7 +29,7 @@
     </card>
       <Row :gutter="16" style="margin-top: 20px;">
         <Col span="12" style="height: 865px">
-          <card style="height:100%"> 
+          <card style="height:100%">
             <div style="line-height:40px;height:50px">
               <span style="font-weight: bold;color: #000000">全省网络热词TOP10</span>
               <Tooltip content="与全省相关网络热词排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
@@ -165,10 +165,10 @@
               <Tooltip content="与全省相关网络热词排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
               <Select style="width: 150px;float:right">
-                  <Option>全省</Option>
+                <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                </Select>
             </div>
-        
+
             <div>
               <Row style="line-height:40px;background:#f6f8fa;color:#000;font-size:14px">
                 <Col span="16" style="padding-left:50px">热词</Col>
@@ -366,9 +366,16 @@
 </style>
 
 <script>
+  import http from "@/http.js";
 export default {
   data() {
     return {
+      pien:[],
+      pie1:[],
+      pie2:[],
+      cityData:[],
+      city1:'0',
+      date1:'',
       columns1: [
         {
           title: "Name",
@@ -412,12 +419,18 @@ export default {
     };
   },
   mounted() {
-    this.initHealth();
-    this.initUNHealth();
+    this.init();
+
     this.initHealth1();
     this.initUNHealth1();
   },
   methods: {
+    init() {
+      this.date1 = http.getToday()
+      http.get('bi/get_all_city_prov', {}).then(resp => {
+        this.cityData = resp.data.hits;
+      })
+    },
     initHealth() {
       let health = this.$echarts.init(document.getElementById("health"));
       health.setOption({
@@ -439,7 +452,7 @@ export default {
           bottom: 0,
           left: "center",
           icon: "circle",
-          data: ["媒体正面情绪", "媒体中面情绪", "媒体负面情绪"]
+          data: this.pien
         },
         series: [
           {
@@ -466,11 +479,7 @@ export default {
                 show: false
               }
             },
-            data: [
-              { value: 335, name: "媒体正面情绪" },
-              { value: 310, name: "媒体中面情绪" },
-              { value: 234, name: "媒体负面情绪" }
-            ],
+            data: this.pie1,
             itemStyle: {
               normal: {
                 label: {
@@ -521,7 +530,7 @@ export default {
           bottom: 0,
           left: "center",
           icon: "circle",
-          data: ["媒体正面情绪", "媒体中面情绪", "媒体负面情绪"]
+          data: this.pien
         },
         series: [
           {
@@ -548,11 +557,7 @@ export default {
                 show: false
               }
             },
-            data: [
-              { value: 335, name: "媒体正面情绪" },
-              { value: 310, name: "媒体中面情绪" },
-              { value: 234, name: "媒体负面情绪" }
-            ],
+            data: this.pie1,
             itemStyle: {
               normal: {
                 label: {
@@ -727,7 +732,24 @@ export default {
           "#fb0b6"
         ]
       });
+    },
+    pic1(){
+      this.pien=[]
+      this.pie1=[]
+      this.pie2=[]
+      http.get('bi/get_pom_by_date',{date:'2018-08-28',area_code:530600}).then(resp=>{
+        console.log('玉琴：：：',resp.data.hits)
+        this.pie1=resp.data.hits;
+        for (var i=0;i<resp.data.hits.length;i++) {
+          this.pien.push(resp.data.hits.name)
+        }
+        this.initHealth();
+        this.initUNHealth();
+      })
     }
+  },
+  watch:{
+    date1:'pic1'
   }
 };
 </script>

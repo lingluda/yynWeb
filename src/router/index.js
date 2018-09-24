@@ -28,7 +28,8 @@ export default new Router({
           path: '/analysisform',
           name: 'analysisform',
           component: resolve => {
-            require(['../page/analysisform.vue'], resolve)
+
+            require(['@/components/map/echartMap.vue'], resolve)
           }
         },
         {

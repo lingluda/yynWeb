@@ -19,8 +19,8 @@
                 <Radio label="2">昨日</Radio>
               </RadioGroup>
               <DatePicker v-model="date" format="yyyy-MM-dd" type="date" placeholder="请选择日期"
-                          style="width:150px"></DatePicker>
-              <Select v-model="city" clearable style="width:200px;margin-left:15px">
+                          style="width:120px"></DatePicker>
+              <Select v-model="city" clearable style="width:120px;margin-left:15px">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
             </div>
@@ -98,8 +98,8 @@
                 <Radio label="4">最近30天</Radio>
               </RadioGroup>
               <DatePicker v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期"
-                          style="width:200px"></DatePicker>
-              <Select v-model="city1" clearable style="width:200px;margin-left:15px">
+                          style="width:180px"></DatePicker>
+              <Select v-model="city1" clearable style="width:120px;margin-left:15px">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
             </div>

@@ -11,21 +11,20 @@
               <div class="tabpane_content_title">
                 <div>
                   <span style="font-weight: bold;color: #000000">景区客流热力分布图</span>
-
                 </div>
               </div>
-              <Select style="width: 150px">
+              <Select style="width: 120px" v-model="city11">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
-              <Select style="width: 150px">
+              <Select style="width: 120px">
                 <Option value="城市">景区XXX</Option>
               </Select>
-              <DatePicker type="date" placeholder="自选时间" style="width: 150px"></DatePicker>
-           <!--   <Select style="width: 150px">
-                <Option value="城市">城市</Option>
-              </Select>-->
-              <Select style="width: 150px">
-                <Option value="刻度">刻度</Option>
+              <DatePicker type="date" v-model="date11" placeholder="自选时间" style="width: 120px"></DatePicker>
+              <!--   <Select style="width: 150px">
+                   <Option value="城市">城市</Option>
+                 </Select>-->
+              <Select style="width: 120px" v-model="power">
+                <Option value="60">60分钟</Option>
               </Select>
             </div>
             <div id="hotmap" style="width: 100%;height: 400px;" class="heatmap"></div>
@@ -39,12 +38,13 @@
 
                 </div>
                 <div>
-                  <DatePicker v-model="picDate6" type="date" placeholder="Select date" style="width: 150px;">全省</DatePicker>
+                  <DatePicker v-model="picDate6" type="date" placeholder="Select date"
+                              style="width: 120px;"></DatePicker>
 
-                  <Select style="width: 150px" v-model="piccity">
+                  <Select style="width: 120px" v-model="piccity">
                     <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                   </Select>
-                  <Select style="width: 150px">
+                  <Select style="width: 120px">
                     <Option value="XXX景区">XXX景区</Option>
                   </Select>
                 </div>
@@ -55,12 +55,22 @@
                     <div style="margin-top: 20px;margin-left: 80px">
                       <img src="../../assets/imgs/tkhot.png"/>
                     </div>
-                    <span>客流量（单位：人）</span>
-                    <span>{{currentTime}}</span>
-                    <span>日峰值</span>
-                    <span>{{daymount}}</span>
-                    <span>当前实时客流人数</span>
-                    <span>{{currentTime}}</span>
+                    <div style="position: absolute;   top: 75px;   left: 130px; text-align: center">
+                      <span style=" font-size: 16px;  font-weight: bold">客流量</span>
+                      <p style="font-size: 12px">(单位：人)</p>
+                    </div>
+                    <div>
+
+                    </div>
+                    <div style="position: absolute;  top: 17px;  left: 180px;  font-size: 12px;">
+                      <span>日峰值：</span>
+                      <span style="font-weight: bold">{{daymount}}</span>
+                    </div>
+
+                    <div style="position: absolute;  top: 37px;  left: 180px;  font-size: 12px">
+                      <span>当前实时客流人数：</span>
+                      <span style="font-weight: bold">{{currentTime}}</span>
+                    </div>
                   </Col>
                   <Col span="7">
                     <div class="hotmap_tb">
@@ -99,18 +109,18 @@
                 </div>
               </div>
               <div>
-                <Select style="width: 150px">
+                <Select style="width: 120px" v-model="modelcity">
                   <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                 </Select>
-                <DatePicker type="daterange" show-week-numbers placement="bottom-end" placeholder="Select date"
-                            style="width: 200px;"></DatePicker>
-                <Select style="width: 150px">
-                  <Option value="粒度60分钟">粒度60分钟</Option>
+                <DatePicker v-model="da1" type="daterange" show-week-numbers  placeholder="Select date"
+                            style="width: 180px;"></DatePicker>
+                <Select style="width: 120px" v-model="power1">
+                  <Option value="60">60分钟</Option>
                 </Select>
               </div>
-              <div style="margin:15px 154px ;">
-                <DatePicker type="daterange" show-week-numbers placement="bottom-end" placeholder="Select date"
-                            style="width: 200px;"></DatePicker>
+              <div style="margin:15px 124px ;">
+                <DatePicker v-model="da2" type="daterange" show-week-numbers  placeholder="Select date"
+                            style="width: 180px;"></DatePicker>
                 <Checkbox v-model="single">选择对比日期</Checkbox>
               </div>
               <div class="hotmap_klqs">
@@ -225,21 +235,31 @@
   export default {
     data() {
       return {
-        dataIndex:'',
-        x:0,
-        timelines:[],
+        playState:false,
+        centerx:[],
+        mapx:[],
+        da1:['2018-09-01','2018-09-07'],
+        da2:['2018-09-01','2018-09-07'],
+        modelcity:'0',
+        power:'60',
+        power1:'60',
+        city11:'0',
+        date11:'',
+        dataIndex:0,
+        x: 0,
+        timelines: [],
         lineDatax: [],
         lineDatay1: [],
-        lineDatayn1:'',
+        lineDatayn1: '',
         lineDatay2: [],
         lineDatayn2: '',
         today: '',
-        piccity: '',
+        piccity: '0',
         mapData: [],
         single: true,
         cityData: [],
         link: '',
-        picDate6:'2018-09-03',
+        picDate6: '2018-09-03',
         ratio: '',
         daymount: '',
         currentTime: '',
@@ -252,15 +272,22 @@
     methods: {
       init() {
         this.today = http.getToday()
+        this.date11 = http.getToday()
         http.get("bi/get_scenic_tourist_heat_dist", {
           date: "2018-09-01",
           scenic: "9df331f4-5ef7-497c-7042-ae6c1e12342c",
           min: 60
         }).then(resp => {
-          this.initMap(resp.data.hits[0].points);
-          for (var i=0;i<resp.data.hits.length;i++) {
+
+          this.centerx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
+          console.log('this.centerx:11111:',resp.data.hits[0].points[0].lng)
+          console.log('this.centerx:11111:',resp.data.hits[0].points[0].lat)
+          console.log('this.centerx::',this.centerx[0])
+          console.log('this.centerx::',this.centerx[1])
+          for (var i = 0; i < resp.data.hits.length; i++) {
             this.timelines.push(resp.data.hits[i].time)
           }
+          this.initMap(resp.data.hits[0].points);
           this.initTimeline();
         });
         http.get('bi/get_all_city_prov', {}).then(resp => {
@@ -275,25 +302,25 @@
           min: '60'
         }).then(resp => {
           this.lineDatayn1 = resp.data.hits.cprdate;
-          console.log('lineDatayn1',this.lineDatayn1)
+          console.log('lineDatayn1', this.lineDatayn1)
           for (var i = 0; i < resp.data.hits.cprlist.length; i++) {
             this.lineDatay1.push(parseInt(resp.data.hits.cprlist[i].n))
           }
           this.lineDatayn2 = resp.data.hits.curdate;
-          console.log('lineDatayn2',this.lineDatayn2)
-          console.log('resp.data.hits.curlist',resp.data.hits.curlist)
+          console.log('lineDatayn2', this.lineDatayn2)
+          console.log('resp.data.hits.curlist', resp.data.hits.curlist)
           for (var i = 0; i < resp.data.hits.curlist.length; i++) {
             this.lineDatax.push(resp.data.hits.curlist[i].time)
             this.lineDatay2.push(parseInt(resp.data.hits.curlist[i].n))
           }
-          console.log('lineDatax',this.lineDatax)
+          console.log('lineDatax', this.lineDatax)
           this.initline();
         })
       },
-      initMap: function (x) {
+      initMap: function (fffx) {
         map = new qq.maps.Map(document.getElementById("hotmap"), {
           zoom: 16,
-          center: new qq.maps.LatLng(x[0].lat, x[0].lng)
+          center: new qq.maps.LatLng(this.centerx[1], this.centerx[0])
         });
 
         //地图异步加载，在idle或者tilesloaded后初始化
@@ -312,7 +339,7 @@
 
             testData = {
               max: 100,
-              data: x
+              data: fffx
             };
             //绘制热力图
             heatmap.setData(testData);
@@ -398,7 +425,7 @@
         mybar.setOption(option);
       },
       pic1() {
-        console.log('get_scenic_tourist_by_date',this.dataIndex)
+        console.log('get_scenic_tourist_by_date', this.dataIndex)
         http.get('bi/get_scenic_tourist_by_date', {
           date: http.gmt2str(this.picDate6),
           scenic: '83cf6fb7-61f0-4ede-4f9b-956d25cf2234'
@@ -410,20 +437,20 @@
           this.touristc = resp.data.hits.link;
         })
       },
-      initTimeline(){
+      initTimeline() {
         let self = this
         let timeline = this.$echarts.init(document.getElementById("timeline"))
         timeline.setOption({
           timeline: {   // 时间轴样式
             axisType: 'category',
             data: this.timelines,
-            playInterval: 1000,
+            playInterval: 5000,
             bottom: '0',
             symbolSize: 5,
             autoPlay: false,
-            currentIndex:this.x,
+            currentIndex: this.x,
             //loop: true,
-            x:100,
+            x: 100,
 
             realtime: true,
             lineStyle: {
@@ -437,15 +464,18 @@
 
           },
         });
-        timeline.on('click',function (d) {
-          self.dataIndex = d.data;
+        timeline.on('timelinechanged', function (d) {
+          self.dataIndex = parseInt(d.currentIndex);
+        })
+        timeline.on('timelineplaychanged',function(d){
+          self.playState = d.playState;
         })
 
       },
-      x1(){
+      x1() {
         console.log(this.x)
       },
-      dataChange1(){
+      dataChange1() {
         http.get("bi/get_scenic_tourist_heat_dist", {
           date: "2018-09-01",
           scenic: "9df331f4-5ef7-497c-7042-ae6c1e12342c",
@@ -453,14 +483,31 @@
         }).then(resp => {
           this.initMap(resp.data.hits[this.dataIndex].points);
         });
+      },
+      play(){
+        if (this.playState==true) {
+          console.log('timelineplaychanged1111',this.playState)
+          http.get("bi/get_scenic_tourist_heat_dist", {
+            date: "2018-09-01",
+            scenic: "9df331f4-5ef7-497c-7042-ae6c1e12342c",
+            min: 60
+          }).then(resp => {
+            this.initMap(resp.data.hits[this.dataIndex].points);
+          });
+        }
+        if (this.playState==false) {
+          console.log('timelineplaychanged1111',this.dataIndex)
+        }
+
       }
     },
     watch: {
       piccity: 'pic1',
       today: 'pic1',
-      picDate6:'pic1',
-      x:'x1',
-      dataIndex:'dataChange1'
+      picDate6: 'pic1',
+      x: 'x1',
+      dataIndex: 'dataChange1',
+      playState:'play'
     }
   };
 </script>

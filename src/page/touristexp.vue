@@ -13,8 +13,8 @@
             <Radio label="2">昨日</Radio>
           </RadioGroup>
           <DatePicker type="date" v-model="picdate1" placeholder="自选时间" style="width: 120px"></DatePicker>
-          <Select style="width: 120px">
-            <Option>全省</Option>
+          <Select style="width: 120px" v-model="p11">
+            <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
           </Select>
         </div>
       </div>
@@ -118,7 +118,7 @@
     <card class="card_margin">
       <div style="margin-bottom: 20px;">
         <span style="font-weight: bold;color: #000000">月投诉量趋势分析</span>
-        <DatePicker v-model="picdate3" type="daterange" placeholder="Select date" style="width: 200px;float: right"></DatePicker>
+        <DatePicker v-model="picdate3" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 140px;float: right"></DatePicker>
       </div>
       <div id="myline" style="height: 400px;border: 1px solid #dcdee2;"></div>
     </card>
@@ -208,10 +208,13 @@ import http from "@/http.js";
 export default {
   data() {
     return {
+      linex:[],
+      liney:[],
+      p11:'0',
       picTo:'1',
       picdate1:'',
       picdate2:'2018-08-03',
-      picdate3:'2018-08-03',
+      picdate3:['2018-07-03','2018-09-03'],
       add: "",
       link: "",
       ratio: "",
@@ -230,12 +233,15 @@ export default {
   },
   mounted() {
     this.init();
-    this.initLine();
+
 
   },
   methods: {
     init() {
       this.picdate1 = http.getToday()
+      http.get('bi/get_all_city_prov', {}).then(resp => {
+        this.cityData = resp.data.hits;
+      })
     },
     initComplain() {
       let complain = this.$echarts.init(document.getElementById("complain"));
@@ -322,7 +328,7 @@ export default {
       myline.setOption({
         xAxis: {
           type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+          data: this.linex
         },
         yAxis: {
           type: "value"
@@ -334,9 +340,10 @@ export default {
           left: 10,
           containLabel: true
         },
+        color: ['#006EFF', '#29CC85'],
         series: [
           {
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: this.liney,
             type: "line"
           }
         ]
@@ -546,11 +553,17 @@ export default {
         });
     },
     pic3(){
+      this.linex=[]
+      this.liney=[]
       http
-        .get("bi/get_complaint_trend_by_monspan", { date: "2018-08-03" })
+        .get("bi/get_complaint_trend_by_monspan", {startTime:http.gmt2str(this.picdate3[0]),endTime:http.gmt2str(this.picdate3[1])})
         .then(resp => {
           console.log("游客体验：：", resp.data.hits);
-
+              for (var i=0;i<resp.data.hits.length;i++){
+                this.linex.push(resp.data.hits[i].date)
+                this.liney.push(resp.data.hits[i].open)
+              }
+          this.initLine();
         });
     },
     picToC(va22){
