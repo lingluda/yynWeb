@@ -93,7 +93,7 @@
 
             </div>
             <div class="lyrd_index_search_right">
-              <RadioGroup v-model="dateChoice1" type="button" @on-change="picDate1">
+              <RadioGroup v-model="dateChoice1" type="button">
                 <Radio label="3">最近7天</Radio>
                 <Radio label="4">最近30天</Radio>
               </RadioGroup>
@@ -350,6 +350,54 @@
           this.date1[1] = http.getToday()
           console.log(this.date1)
         }
+      },
+      p1(){
+        if (this.dateChoice1==3) {
+          console.log(111111111)
+          console.log(this.dateChoice1)
+          this.dateChoice1=[http.getWeekAgo(),http.getToday()]
+          this.totalP = ''
+          this.lineDatax = []
+          this.lineDatay = []
+          http.get('bi/get_tourism_trend_by_timespan', {
+            startTime:http.getWeekAgo(),
+            endTime:http.getToday(),
+            city_id: this.city1
+          }).then(resp => {
+            console.log(resp.data)
+            this.totalP = resp.data.hits.total;
+            for (var i = 0; i < resp.data.hits.list.length; i++) {
+              this.lineDatax.push(resp.data.hits.list[i].date)
+              this.lineDatay.push(resp.data.hits.list[i].value / 10000)
+            }
+            console.log(this.lineDatax)
+            console.log(this.lineDatay)
+            this.initLine()
+          })
+        }
+        if (this.dateChoice1==4) {
+          console.log(2222222)
+          console.log(this.dateChoice1)
+          this.dateChoice1=[http.getToday(),http.getMonthAgo()]
+          this.totalP = ''
+          this.lineDatax = []
+          this.lineDatay = []
+          http.get('bi/get_tourism_trend_by_timespan', {
+            startTime: http.getMonthAgo(),
+            endTime: http.getToday(),
+            city_id: this.city1
+          }).then(resp => {
+            console.log(resp.data)
+            this.totalP = resp.data.hits.total;
+            for (var i = 0; i < resp.data.hits.list.length; i++) {
+              this.lineDatax.push(resp.data.hits.list[i].date)
+              this.lineDatay.push(resp.data.hits.list[i].value / 10000)
+            }
+            console.log(this.lineDatax)
+            console.log(this.lineDatay)
+            this.initLine()
+          })
+        }
       }
     },
 
@@ -358,7 +406,7 @@
       city: 'form1change',
       date1: 'form1change1',
       city1: 'form1change1',
-
+      dateChoice1:'p1',
     }
   }
 </script>
