@@ -9,7 +9,7 @@
             <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
           </Tooltip>
         </div>
-        <Select style="width: 120px" placeholder="城市">
+        <Select style="width: 120px" placeholder="城市" v-model="ccc">
           <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
         </Select>
         <Select style="width: 120px" placeholder="区域">
@@ -123,7 +123,7 @@
             <Col span="14" style="border: 1px solid #dcdee2;height:100%">
               <div style="padding-bottom: 20px;padding: 20px">
                 <span style="font-weight: bold;color: #000000">消费类型占比</span>
-                <DatePicker v-model="picDate4" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
+                <DatePicker v-model="picDate4" placement="bottom-end" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
               </div>
               <div id="cash" style="height:300px;width:100%"></div>
             </Col>
@@ -184,6 +184,7 @@
   export default {
     data() {
       return {
+        ccc:'0',
         hotlineDate:'2018-08-25',
         provx: [],
         provy: [],
@@ -858,7 +859,7 @@
         var date = new Date(this.picDate).format("yyyy-MM-dd");
         this.cpicDate = date;
         http
-          .get("bi/get_portrait_base_by_date", {date: this.cpicDate})
+          .get("bi/get_portrait_base_by_date", {date: this.cpicDate,city_id:this.ccc})
           .then(resp => {
             this.sexData = resp.data.hist.gender;
             this.inData = resp.data.hist.consumpting;
@@ -897,7 +898,7 @@
             date: this.cpicDate,
             type: "city",
             scenic: "",
-            city_id: ""
+            city_id: this.ccc
           })
           .then(resp => {
             console.log("city", resp.data.hist);
@@ -912,7 +913,7 @@
             date: this.cpicDate,
             type: "prov",
             scenic: "",
-            city_id: ""
+            city_id: this.ccc
           })
           .then(resp => {
             console.log("city", resp.data.hist);
@@ -960,6 +961,104 @@
             console.log("this.cashData", this.cashDataX);
             this.initCash();
           });
+      },
+      ccc1(){
+        console.log(this.ccc)
+
+        this.provx = [];
+        this.provy = [];
+        this.cityx = [];
+        this.cityy = [];
+        this.eduData = [];
+        this.eduDatax = [];
+        this.eduDatay = [];
+        this.cashDataX = [];
+        this.ageData = [];
+        this.ageDatax = [];
+        this.ageDatay = [];
+        this.inDatax = [];
+        this.carDatax = [];
+        this.carDatay = [];
+        this.mobilex = [];
+        this.mobiley = [];
+        var date = new Date(this.picDate).format("yyyy-MM-dd");
+        this.cpicDate = date;
+        http
+          .get("bi/get_portrait_base_by_date", {date: this.cpicDate,city_id:this.ccc})
+          .then(resp => {
+            this.sexData = resp.data.hist.gender;
+            this.inData = resp.data.hist.consumpting;
+            for (var i = 0; i < resp.data.hist.consumpting.length; i++) {
+              this.inDatax.push(resp.data.hist.consumpting[i].name);
+            }
+            this.eduData = resp.data.hist.edu;
+            for (var i = 0; i < resp.data.hist.edu.length; i++) {
+              this.eduDatax.push(resp.data.hist.edu[i].name);
+              this.eduDatay.push(resp.data.hist.edu[i].value * 100);
+            }
+            this.osData = resp.data.hist.mobile;
+            console.log("resp.data.hist.age", resp.data.hist.age);
+            this.ageData = resp.data.hist.age;
+            for (var i = 0; i < resp.data.hist.age.length; i++) {
+              this.ageDatax.push(resp.data.hist.age[i].name);
+              this.ageDatay.push(resp.data.hist.age[i].value * 100);
+            }
+            for (var i = 0; i < resp.data.hist.mobile.length; i++) {
+              this.mobilex.push(resp.data.hist.mobile[i].name);
+              this.mobiley.push(resp.data.hist.mobile[i].value * 100);
+            }
+            for (var i = 0; i < resp.data.hist.car.length; i++) {
+              this.carDatax.push(resp.data.hist.car[i].name);
+              this.carDatay.push(resp.data.hist.car[i].value * 100);
+            }
+            this.initSex();
+            this.initOS();
+            this.initIOS();
+            this.initIn();
+            this.initEdu();
+            this.initAge();
+          });
+        http
+          .get("bi/get_portrait_origin_by_date", {
+            date: this.cpicDate,
+            type: "city",
+            scenic: "",
+            city_id: this.ccc
+          })
+          .then(resp => {
+            console.log("city", resp.data.hist);
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.cityx.push(resp.data.hist[i].origin_city);
+              this.cityy.push(resp.data.hist[i].origin_percent * 100);
+            }
+            this.initCity();
+          });
+        http
+          .get("bi/get_portrait_origin_by_date", {
+            date: this.cpicDate,
+            type: "prov",
+            scenic: "",
+            city_id: this.ccc
+          })
+          .then(resp => {
+            console.log("city", resp.data.hist);
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.provx.push(resp.data.hist[i].origin_province);
+              this.provy.push(resp.data.hist[i].origin_percent * 100);
+            }
+            this.initPro();
+          });
+        http
+          .get("bi/get_migrate_by_date", {
+            date: "2018-08-25",
+            city_name: "大理",
+            top: 10,
+            io: this.tabname
+          })
+          .then(resp => {
+            this.data1 = resp.data.hits;
+          });
+
       }
     },
     watch: {
@@ -967,7 +1066,8 @@
       picDate3: "dateChange3",
       picDate4: "dateChange4",
       tabname: "clicktab",
-      hotlineDate:'hotlinedp'
+      hotlineDate:'hotlinedp',
+      ccc:'ccc1'
     }
   };
 </script>

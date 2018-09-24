@@ -599,7 +599,7 @@ export default {
           bottom: 0,
           icon: "circle",
           left: "center",
-          data: ["媒体正面情绪", "媒体中面情绪", "媒体负面情绪"]
+          data: this.pien
         },
         series: [
           {
@@ -626,11 +626,7 @@ export default {
                 show: false
               }
             },
-            data: [
-              { value: 335, name: "媒体正面情绪" },
-              { value: 310, name: "媒体中面情绪" },
-              { value: 234, name: "媒体负面情绪" }
-            ],
+            data: this.pie1,
             itemStyle: {
               normal: {
                 label: {
@@ -673,7 +669,7 @@ export default {
           bottom: 0,
           icon: "circle",
           left: "center",
-          data: ["媒体正面情绪", "媒体中面情绪", "媒体负面情绪"]
+          data: this.pien
         },
         series: [
           {
@@ -700,11 +696,7 @@ export default {
                 show: false
               }
             },
-            data: [
-              { value: 335, name: "媒体正面情绪" },
-              { value: 310, name: "媒体中面情绪" },
-              { value: 234, name: "媒体负面情绪" }
-            ],
+            data: this.pie1,
             itemStyle: {
               normal: {
                 label: {

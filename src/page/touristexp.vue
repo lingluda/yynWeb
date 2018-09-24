@@ -74,9 +74,9 @@
             <span style="font-weight: bold;color: #000000">投诉时长分析</span>
           </div>
           <div>
-            <RadioGroup type="button" >
-              <Radio label="default" style="border-radius: 0px">近7天</Radio>
-            </RadioGroup>
+           <!-- <RadioGroup type="button" v-model="pic7" @on-change="change7">
+              <Radio label="7" style="border-radius: 0px">近7天</Radio>
+            </RadioGroup>-->
             <DatePicker type="month" v-model="picdate2" placeholder="自选时间" style="width: 120px"></DatePicker>
           </div>
         </div>
@@ -208,6 +208,7 @@ import http from "@/http.js";
 export default {
   data() {
     return {
+      pic7:'',
       linex:[],
       liney:[],
       p11:'0',
@@ -237,6 +238,10 @@ export default {
 
   },
   methods: {
+    change7(){
+      console.log(this.pic7)
+      //this.picdate2
+    },
     init() {
       this.picdate1 = http.getToday()
       http.get('bi/get_all_city_prov', {}).then(resp => {
@@ -326,6 +331,15 @@ export default {
     initLine() {
       let myline = this.$echarts.init(document.getElementById("myline"));
       myline.setOption({
+        tooltip : {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
         xAxis: {
           type: "category",
           data: this.linex
@@ -573,12 +587,24 @@ export default {
       if (va22==2){
         this.picdate1 = http.getYesterDay()
       }
+    },
+    ppp(){
+      http
+        .get("bi/get_complaint_by_date", { date: http.gmt2str(this.picdate1),city_id:this.p11 })
+        .then(resp => {
+          this.add = resp.data.hits.total;
+          this.close = resp.data.hits.closed;
+          this.unclose = resp.data.hits.unclosed;
+          this.link = resp.data.hits.link;
+          this.ratio = resp.data.hits.ratio;
+        });
     }
   },
   watch:{
     picdate1:'pic1',
     picdate2:'pic2',
     picdate3:'pic3',
+    p11:'ppp'
   }
 };
 </script>

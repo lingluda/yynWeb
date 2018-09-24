@@ -355,7 +355,7 @@
         if (this.dateChoice1==3) {
           console.log(111111111)
           console.log(this.dateChoice1)
-          this.dateChoice1=[http.getWeekAgo(),http.getToday()]
+          this.date1=[http.getWeekAgo(),http.getToday()]
           this.totalP = ''
           this.lineDatax = []
           this.lineDatay = []
@@ -377,8 +377,8 @@
         }
         if (this.dateChoice1==4) {
           console.log(2222222)
-          console.log(this.dateChoice1)
-          this.dateChoice1=[http.getToday(),http.getMonthAgo()]
+          this.date1=[http.getToday(),http.getMonthAgo()]
+          console.log('this.dateChoice1::::::',this.dateChoice1)
           this.totalP = ''
           this.lineDatax = []
           this.lineDatay = []

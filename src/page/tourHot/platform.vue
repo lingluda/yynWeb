@@ -191,31 +191,31 @@
           console.log(this.addData.link)
           console.log(this.aduData.link)
           if (Number(this.addData.link)>=0){
-            this.color1='green'
+            this.color1='red'
             this.is1=1
           } else {
-            this.color1='red'
+            this.color1='green'
             this.is1=2
           }
           if (Number(this.addData.ratio)>=0){
-            this.color2='green'
+            this.color2='red'
             this.is2=1
           } else {
-            this.color2='red'
+            this.color2='green'
             this.is2=2
           }
           if (Number(this.aduData.link)>=0){
-            this.color3='green'
+            this.color3='red'
             this.is3=1
           } else {
-            this.color3='red'
+            this.color3='green'
             this.is3=2
           }
           if (Number(this.aduData.ratio)>=0){
-            this.color4='green'
+            this.color4='red'
             this.is4=1
           } else {
-            this.color4='red'
+            this.color4='green'
             this.is4=2
           }
           console.log('this.color1',this.color1)
