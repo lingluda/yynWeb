@@ -13,15 +13,15 @@
         </div>
         <div>
           <Select style="width: 120px" v-model="city1">
-            <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+            <Option v-for="item in cityData" :value="item.code">{{item.name}}</Option>
           </Select>
            <DatePicker type="date" v-model="date1" placeholder="自选时间" style="width: 120px"></DatePicker>
         </div>
       </div>
-        <Col span="8" style="padding:0 80px">
+        <Col span="12" style="padding:0 80px">
           <div id="health" style="width: 100%;height: 235px"></div>
         </Col>
-        <Col span="8" style="padding:0 50px">
+        <Col span="12" style="padding:0 50px">
           <div id="unhealth" style="width: 100%;height: 235px"></div>
         </Col>
       </Row>
@@ -165,7 +165,7 @@
               <Tooltip content="与全省相关网络热词排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
               <Select style="width: 150px;float:right">
-                <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+                <Option v-for="item in cityData" :value="item.code">{{item.name}}</Option>
                </Select>
             </div>
 
@@ -374,8 +374,8 @@ export default {
       pie1:[],
       pie2:[],
       cityData:[],
-      city1:'0',
-      date1:'',
+      city1:'530000',
+      date1:'2018-08-28',
       columns1: [
         {
           title: "Name",
@@ -429,6 +429,7 @@ export default {
       this.date1 = http.getToday()
       http.get('bi/get_all_city_prov', {}).then(resp => {
         this.cityData = resp.data.hits;
+        console.log('this.cityData:',this.cityData)
       })
     },
     initHealth() {
@@ -729,11 +730,11 @@ export default {
       this.pien=[]
       this.pie1=[]
       this.pie2=[]
-      http.get('bi/get_pom_by_date',{date:'2018-08-28',area_code:530600}).then(resp=>{
+      http.get('bi/get_pom_by_date',{date:http.gmt2str(this.date1),area_code:this.city1}).then(resp=>{
         console.log('玉琴：：：',resp.data.hits)
         this.pie1=resp.data.hits;
         for (var i=0;i<resp.data.hits.length;i++) {
-          this.pien.push(resp.data.hits.name)
+          this.pien.push(resp.data.hits[i].name)
         }
         this.initHealth();
         this.initUNHealth();
@@ -741,7 +742,8 @@ export default {
     }
   },
   watch:{
-    date1:'pic1'
+    date1:'pic1',
+    city1:'pic1',
   }
 };
 </script>

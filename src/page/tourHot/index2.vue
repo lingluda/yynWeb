@@ -143,8 +143,8 @@
   export default {
     data() {
       return {
-        dateChoice: '',
-        dateChoice1: '',
+        dateChoice: '1',
+        dateChoice1: '3',
         totalP: '',
         lineDatax: [],
         lineDatay: [],
@@ -194,6 +194,7 @@
     },
     methods: {
       getCity() {
+        this.date = http.getToday()
         http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
         })
@@ -318,8 +319,8 @@
         this.lineDatax = []
         this.lineDatay = []
         http.get('bi/get_tourism_trend_by_timespan', {
-          startTime: this.date1[0],
-          endTime: this.date1[1],
+          startTime: http.gmt2str(this.date1[0]),
+          endTime: http.gmt2str(this.date1[1]),
           city_id: this.city1
         }).then(resp => {
           console.log(resp.data)
@@ -355,7 +356,7 @@
         if (this.dateChoice1==3) {
           console.log(111111111)
           console.log(this.dateChoice1)
-          this.date1=[http.getWeekAgo(),http.getToday()]
+          // this.date1=[http.getWeekAgo(),http.getToday()]
           this.totalP = ''
           this.lineDatax = []
           this.lineDatay = []
@@ -377,7 +378,7 @@
         }
         if (this.dateChoice1==4) {
           console.log(2222222)
-          this.date1=[http.getToday(),http.getMonthAgo()]
+          // this.date1=[http.getToday(),http.getMonthAgo()]
           console.log('this.dateChoice1::::::',this.dateChoice1)
           this.totalP = ''
           this.lineDatax = []

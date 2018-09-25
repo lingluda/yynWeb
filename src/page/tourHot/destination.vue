@@ -19,9 +19,9 @@
                 <span style="color: #000;font-size:16px;">一机游今日搜索各目的地方访问用户数据 </span>
                 <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
               </div>
-              <DatePicker v-model="picDate1" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
+              <DatePicker v-model="picDate1" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
             </div>
-            <div id="simBar" style="width: 100%;height: 285px;top:-35px"></div>
+            <div id="simBar" style="width: 100%;height: 285px;"></div>
           </div>
         </card>
         <card style="margin-top: 20px">
@@ -35,9 +35,9 @@
                  <span style="color: #000;font-size:16px;">一机游今日搜索各目的地方访问用户数据 </span>
                   <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
                 </div>
-              <DatePicker  v-model="picDate2" type="date" placeholder="Select date" style="width:120px;float: right"></DatePicker>
+              <DatePicker  placement="bottom-end" v-model="picDate2" type="date" placeholder="Select date" style="width:120px;float: right"></DatePicker>
             </div>
-            <div id="simBars" style="width: 100%;height: 300px;top:-30px"></div>
+            <div id="simBars" style="width: 100%;height: 300px;"></div>
           </div>
         </card>
         <card style="margin-top: 20px">
@@ -46,7 +46,7 @@
             <!--<pers-st :pers="21"></pers-st>-->
             <Tooltip content="一机游app对各线路页面访问量排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
-            <DatePicker v-model="picDate3" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
+            <DatePicker v-model="picDate3" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
           </div>
           <div>
             <!--<Table :columns="columns" :data="fdata"></Table>-->
@@ -76,7 +76,7 @@
                     <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
                   <DatePicker type="date" v-model="picDate4" placeholder="Select date" style="width: 120px;margin-left:15px;"></DatePicker>
-                  <div id="max1" style="width: 100%;height: 550px;top:-40px"></div>
+                  <div id="max1" style="width: 100%;height: 550px;"></div>
                 </div>
               </Col>
               <Col span="12">
@@ -85,12 +85,12 @@
                     <span style="font-weight: bold;color: #000000">景区客流变化TOP10</span>
                     <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
-                  <RadioGroup type="button" style="margin-left: 15px">
-                    <Radio label="large">增量</Radio>
-                    <Radio label="default">增长量</Radio>
+                  <RadioGroup type="button" style="margin-left: 15px" v-model="addling">
+                    <Radio label="1">增长量</Radio>
+                    <Radio label="2">增长率</Radio>
                   </RadioGroup>
                   <DatePicker type="date" v-model="picDate5" placeholder="Select date" style="width: 120px"></DatePicker>
-                  <div id="max2" style="width: 100%;height: 550px;top:-40px"></div>
+                  <div id="max2" style="width: 100%;height: 550px;"></div>
                 </div>
               </Col>
             </Row>
@@ -136,6 +136,7 @@
     name: "tourhot",
     data() {
       return {
+        addling:'1',
         picDate1:'2018-09-01',
         picDate2:'2018-09-01',
         picDate3:'2018-08-17',
@@ -213,6 +214,7 @@
             left: '3%',
             right: '5%',
             bottom: '3%',
+            top:'3%',
             containLabel: true
           },
           yAxis: {
@@ -269,6 +271,7 @@
             left: '3%',
             right: '4%',
             bottom: '7%',
+            top:'3%',
             containLabel: true
           },
           xAxis: {
@@ -356,6 +359,7 @@
             left: '3%',
             right: '4%',
             bottom: '7%',
+            top:'3%',
             containLabel: true
           },
           xAxis: {
@@ -424,6 +428,7 @@
             left: '3%',
             right: '4%',
             bottom: '3%',
+            top:'3%',
             containLabel: true
           },
           yAxis: {
@@ -530,7 +535,7 @@
           for (var i=0;i<resp.data.hits.length;i++) {
             this.max1his.push(resp.data.hits[i].his)
             this.max1n.push(resp.data.hits[i].n)
-            this.max1y.push(resp.data.hits[i].city)
+            this.max1y.push(resp.data.hits[i].name)
           }
           this.initMax1()
         })
@@ -546,11 +551,46 @@
             this.max2his.push(resp.data.hits[i].ince)
             this.max2n.push(resp.data.hits[i].n)
             this.max2y.push(resp.data.hits[i].pre)
-            this.max2name.push(resp.data.hits[i].city)
+            this.max2name.push(resp.data.hits[i].name)
           }
           this.initMax2()
         })
       },
+      addliang(){
+        console.log(this.addling)
+        if (this.addling==1) {
+          this.max2n=[]
+          this.max2y=[]
+          this.max2name=[]
+          this.max2his=[]
+          http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
+            console.log('top',resp.data.hits)
+            for (var i=0;i<resp.data.hits.length;i++) {
+              this.max2his.push(resp.data.hits[i].ince)
+              this.max2n.push(resp.data.hits[i].n)
+              this.max2y.push(resp.data.hits[i].pre)
+              this.max2name.push(resp.data.hits[i].name)
+            }
+            this.initMax2()
+          })
+        }
+        if (this.addling==2){
+          this.max2n=[]
+          this.max2y=[]
+          this.max2name=[]
+          this.max2his=[]
+          http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
+            console.log('top',resp.data.hits)
+            for (var i=0;i<resp.data.hits.length;i++) {
+              this.max2his.push(resp.data.hits[i].rate)
+              this.max2n.push(resp.data.hits[i].n)
+              this.max2y.push(resp.data.hits[i].pre)
+              this.max2name.push(resp.data.hits[i].name)
+            }
+            this.initMax2()
+          })
+        }
+      }
     },
     watch:{
       chan:'clickchange',
@@ -560,6 +600,7 @@
       picDate3:'click3',
       picDate4:'click4',
       picDate5:'click5',
+      addling:'addliang',
     }
   }
 </script>

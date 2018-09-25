@@ -227,7 +227,7 @@
 
 <script>
   import http from "@/http.js";
-  import AMap from "AMap";
+  // import AMap from "AMap";
 
   var map;
   var heatmap;

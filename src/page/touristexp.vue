@@ -74,10 +74,8 @@
             <span style="font-weight: bold;color: #000000">投诉时长分析</span>
           </div>
           <div>
-           <!-- <RadioGroup type="button" v-model="pic7" @on-change="change7">
-              <Radio label="7" style="border-radius: 0px">近7天</Radio>
-            </RadioGroup>-->
-            <DatePicker type="month" v-model="picdate2" placeholder="自选时间" style="width: 120px"></DatePicker>
+            <Button label="7" style="border-radius: 0px" @click="change7">近7天</Button>
+            <DatePicker type="month" placement="bottom-end" v-model="picdate2" placeholder="自选时间" style="width: 120px"></DatePicker>
           </div>
         </div>
         <div style="height:300px">
@@ -118,7 +116,7 @@
     <card class="card_margin">
       <div style="margin-bottom: 20px;">
         <span style="font-weight: bold;color: #000000">月投诉量趋势分析</span>
-        <DatePicker v-model="picdate3" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 140px;float: right"></DatePicker>
+        <DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 140px;float: right"></DatePicker>
       </div>
       <div id="myline" style="height: 400px;border: 1px solid #dcdee2;"></div>
     </card>
@@ -239,8 +237,34 @@ export default {
   },
   methods: {
     change7(){
-      console.log(this.pic7)
+      this.procX1=[]
+      this.procX2=[]
+      this.procX3=[]
+      this.procY1=[]
+      this.timeX=[]
+      console.log(121211)
       //this.picdate2
+      http.get('bi/get_complaint_by_date',{date:http.getToday()}).then(resp=>{
+        console.log(resp)
+        console.log("游客体验：：", resp.data.hits);
+        this.close1=resp.data.hits.closed;
+        this.unclose1=resp.data.hits.unclosed;
+        this.timeX.push(parseInt(resp.data.hits.avg_proc));
+        this.timeX.push(parseInt(resp.data.hits.max_proc));
+        this.timeX.push(parseInt(resp.data.hits.min_proc));
+
+        for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
+          this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg));
+          this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max));
+          this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
+          this.procY1.push(resp.data.hits.proc_stat[i].name);
+        }
+        console.log(this.procX1)
+        console.log(this.procX2)
+        console.log(this.procX3)
+        console.log(this.procY1)
+        this.closeComplaint();
+      })
     },
     init() {
       this.picdate1 = http.getToday()

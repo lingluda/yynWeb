@@ -70,7 +70,7 @@
           <Radio label="car">汽车</Radio>
         </RadioGroup>
         <DatePicker type="date" v-model="hotlineDate" placeholder="自选时间" style="width: 120px"></DatePicker>
-        <Select style="width: 120px" placeholder="清选择">
+        <Select style="width: 120px" placeholder="清选择" v-model="ccti">
           <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
         </Select>
         <Row :gutter="16" style="margin-top: 20px;margin-bottom: 10px">
@@ -88,7 +88,8 @@
             </div>
           </Col>
           <Col span="14">
-            <div id="moveMap" style="border: 1px solid #dcdee2;height: 557px"></div>
+            <iframe src="http://cnmrz.cn/dist/index.html" style="border: 1px solid #dcdee2;height: 557px;width: 100%"></iframe>
+            <!--<div id="moveMap" style="border: 1px solid #dcdee2;height: 557px"></div>-->
           </Col>
         </Row>
       </card>
@@ -184,6 +185,7 @@
   export default {
     data() {
       return {
+        ccti:'381',
         ccc:'0',
         hotlineDate:'2018-08-25',
         provx: [],
@@ -569,7 +571,7 @@
         cash.setOption({
           tooltip: {
             trigger: "item",
-            formatter: "{a} <br/>{b}: {c} ({d}%)",
+            formatter: "{a} <br/>{b}:{d}%",
             axisPointer: {
               type: "shadow"
             },
