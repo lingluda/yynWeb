@@ -8,6 +8,7 @@ import echarts from 'echarts'
 import 'iview/dist/styles/iview.css';
 import "babel-polyfill"
 import macarons from 'echarts/theme/macarons'
+import  '../src/assets/js/iframeResizer.contentWindow.js'
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.use(iView);
