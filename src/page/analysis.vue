@@ -1,5 +1,5 @@
 <template>
-  <div style="background:#f2f2f2;">
+  <div style="background:#f2f2f2;height: 100vh;">
   <div class="tits">舆情分析</div>
     <div  style="margin:20px;">
     <card>
@@ -19,10 +19,12 @@
         </div>
       </div>
         <Col span="12" style="padding:0 80px">
-          <div id="health" style="width: 100%;height: 235px"></div>
+          <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">媒体情绪</div>
+          <div id="health" style="width: 100%;height: 235px;margin-top: -20px"></div>
         </Col>
         <Col span="12" style="padding:0 50px">
-          <div id="unhealth" style="width: 100%;height: 235px"></div>
+          <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">一机游情绪</div>
+          <div id="unhealth" style="width: 100%;height: 235px;margin-top: -20px"></div>
         </Col>
       </Row>
 
@@ -370,6 +372,8 @@
 export default {
   data() {
     return {
+      title1:'',
+      color1:'',
       pien:[],
       pie1:[],
       pie2:[],
@@ -420,7 +424,6 @@ export default {
   },
   mounted() {
     this.init();
-
     this.initHealth1();
     this.initUNHealth1();
   },
@@ -436,11 +439,12 @@ export default {
       let health = this.$echarts.init(document.getElementById("health"));
       health.setOption({
         title: {
-          text: "媒体情绪",
+          text: this.title1,
           x: "center",
+          y: "center",
           textStyle: {
-            fontSize: 16,
-            color: "#333"
+            fontSize: 18,
+            color: this.color1
           }
         },
         tooltip: {
@@ -463,13 +467,13 @@ export default {
             avoidLabelOverlap: false,
             label: {
               normal: {
-                show: false,
-                position: "center"
+                show: true,
+                position: "inner"
               },
               emphasis: {
                 show: true,
                 textStyle: {
-                  fontSize: "15",
+                  fontSize: "12",
                   fontWeight: "bold",
                   color: "#000000"
                 }
@@ -514,11 +518,12 @@ export default {
       let unhealth = this.$echarts.init(document.getElementById("unhealth"));
       unhealth.setOption({
         title: {
-          text: "一机游情绪",
+          text: this.title1,
           x: "center",
+          y: "center",
           textStyle: {
             fontSize: 16,
-            color: "#333"
+            color: this.color1,
           }
         },
         tooltip: {
@@ -541,13 +546,13 @@ export default {
             avoidLabelOverlap: false,
             label: {
               normal: {
-                show: false,
-                position: "center"
+                show: true,
+                position: "inner"
               },
               emphasis: {
                 show: true,
                 textStyle: {
-                  fontSize: "15",
+                  fontSize: "12",
                   fontWeight: "bold",
                   color: "#000000"
                 }
@@ -731,8 +736,15 @@ export default {
       this.pie1=[]
       this.pie2=[]
       http.get('bi/get_pom_by_date',{date:http.gmt2str(this.date1),area_code:this.city1}).then(resp=>{
-        console.log('玉琴：：：',resp.data.hits)
+        console.log('玉琴：：：',resp.data.hits[2])
         this.pie1=resp.data.hits;
+        if (this.pie1[2].proportion>20){
+          this.title1='不健康'
+          this.color1='red'
+        } else {
+          this.title1='健康'
+          this.color1='green'
+        }
         for (var i=0;i<resp.data.hits.length;i++) {
           this.pien.push(resp.data.hits[i].name)
         }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100vh">
     <div class="ti">
       <span>旅游热度</span>
     </div>
@@ -14,11 +14,11 @@
               </Tooltip>
             </div>
             <div class="lyrd_index_search_right">
-              <RadioGroup v-model="dateChoice" type="button" @on-change="picDate1">
+              <RadioGroup v-model="dateChoice1" type="button">
                 <Radio label="1">今日</Radio>
                 <Radio label="2">昨日</Radio>
               </RadioGroup>
-              <DatePicker v-model="date" format="yyyy-MM-dd" type="date" placeholder="请选择日期"
+              <DatePicker v-model="datefff" format="yyyy-MM-dd" type="date" placeholder="请选择日期"
                           style="width:120px"></DatePicker>
               <Select v-model="city" clearable style="width:120px;margin-left:15px">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
@@ -53,6 +53,8 @@
                     <div>
                       <span class="lyrd_index_today_num">{{ratio}}</span>
                       <span class="lyrd_index_today_dw">%</span>
+                      <span v-if="showud1==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
+                      <span v-if="showud1!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                     </div>
                   </div>
                 </div>
@@ -68,6 +70,8 @@
                     <div>
                       <span class="lyrd_index_today_num">{{link}}</span>
                       <span class="lyrd_index_today_dw">%</span>
+                      <span v-if="showud2==1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
+                      <span v-if="showud2!=1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
                     </div>
                   </div>
                 </div>
@@ -93,7 +97,7 @@
 
             </div>
             <div class="lyrd_index_search_right">
-              <RadioGroup v-model="dateChoice1" type="button">
+              <RadioGroup v-model="dateChoice2" type="button">
                 <Radio label="3">最近7天</Radio>
                 <Radio label="4">最近30天</Radio>
               </RadioGroup>
@@ -143,20 +147,28 @@
   export default {
     data() {
       return {
-        dateChoice: '1',
-        dateChoice1: '3',
+        showud1:1,
+        showud2:2,
+        color1:'red',
+        color2:'green',
+        dateChoice1: '1',
+        dateChoice2: '3',
         totalP: '',
         lineDatax: [],
         lineDatay: [],
-        date: '2018-09-16',
+        datefff: http.getToday(),
         cdate: '',
-        date1: [],
+        date1: [http.getWeekAgo(),http.getToday()],
         cityData: [],
         city: '0',
         city1: '0',
         start: '',
         end: '',
         pieData: [],
+        pieData1: [{
+          name:'',
+          value:''
+        }],
         total: '',
         ratio: '',
         link: '',
@@ -194,19 +206,16 @@
     },
     methods: {
       getCity() {
-        this.date = http.getToday()
         http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
         })
-        this.date1[0] = http.getWeekAgo()
-        this.date1[1] = http.getToday()
       },
       initBar() {
         let mybar = this.$echarts.init(document.getElementById("mybar"), 'macarons')
         mybar.setOption({
           tooltip: {
             trigger: 'item',
-            formatter: "{a} <br/>{b}: {c} ({d}%)",
+            formatter: "{b} ",
             backgroundColor: '#323232'
           },
           legend: {
@@ -217,7 +226,7 @@
             right: 10,
             top: 20,
             bottom: 20,
-            data: this.pieData
+            data: this.pieData1
           },
           series: [
             {
@@ -226,7 +235,7 @@
               center: ['30%', '50%'],
               radius: ['0%', '100%'],
               avoidLabelOverlap: false,
-              data: this.pieData,
+              data: this.pieData1,
               itemStyle: {
                 normal: {
                   label: {
@@ -296,22 +305,34 @@
         this.$router.push(val)
       },
       form1change() {
-        var datea = new Date(this.date).format(
-          "yyyy-MM-dd"
-        )
-        console.log('当前时间：', datea)
-        this.cdate = datea
-        console.log('this.date::', this.date)
-        http.get('bi/get_tourism_dist_by_date', {date: this.cdate, city_id: this.city}).then(resp => {
-          this.pieData = resp.data.hits;
+        this.pieData1=[]
+        http.get('bi/get_tourism_dist_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
+          //this.pieData = resp.data.hits;
           console.log(this.pieData)
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.pieData1.push({name:resp.data.hits[i].name +' '+ resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
+          }
+          console.log('this.pieData1::',this.pieData1)
           this.initBar()
         })
-        http.get('bi/get_tourism_qty_by_date', {date: this.cdate, city_id: this.city}).then(resp => {
+        http.get('bi/get_tourism_qty_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
           console.log('qq1qqq', resp.data.hits.total)
-          this.link = resp.data.hits.link;
-          this.ratio = resp.data.hits.ratio;
           this.total = resp.data.hits.total;
+
+          if (resp.data.hits.ratio<0){
+            this.ratio =-resp.data.hits.ratio;
+            this.showud1=1
+          }else {
+            this.ratio = resp.data.hits.ratio;
+            this.showud1=2
+          }
+          if (resp.data.hits.link<0){
+            this.link = -resp.data.hits.link;
+            this.showud2=2
+          } else {
+            this.link = resp.data.hits.link;
+            this.showud2=1
+          }
         })
       },
       form1change1() {
@@ -334,29 +355,9 @@
           this.initLine()
         })
       },
-      picDate1(val) {
-        if (val == 1) {
-          this.date = http.getToday()
-        }
-        if (val == 2) {
-          this.date = http.getYesterDay()
-        }
-        if (val == 3) {
-          this.date1[0] = http.getWeekAgo()
-          this.date1[1] = http.getToday()
-          console.log(this.date1)
-        }
-        if (val == 4) {
-          this.date1[0] = http.getMonthAgo()
-          this.date1[1] = http.getToday()
-          console.log(this.date1)
-        }
-      },
-      p1(){
-        if (this.dateChoice1==3) {
+      p2(){
+        if (this.dateChoice2==3) {
           console.log(111111111)
-          console.log(this.dateChoice1)
-          // this.date1=[http.getWeekAgo(),http.getToday()]
           this.totalP = ''
           this.lineDatax = []
           this.lineDatay = []
@@ -376,9 +377,7 @@
             this.initLine()
           })
         }
-        if (this.dateChoice1==4) {
-          console.log(2222222)
-          // this.date1=[http.getToday(),http.getMonthAgo()]
+        if (this.dateChoice2==4) {
           console.log('this.dateChoice1::::::',this.dateChoice1)
           this.totalP = ''
           this.lineDatax = []
@@ -399,15 +398,80 @@
             this.initLine()
           })
         }
+      },
+      p1(){
+        if (this.dateChoice1==1) {
+          this.pieData1=[]
+          http.get('bi/get_tourism_dist_by_date', {date: http.getToday(), city_id: this.city}).then(resp => {
+            //this.pieData = resp.data.hits;
+            console.log(this.pieData)
+            for (var i=0;i<resp.data.hits.length;i++){
+              this.pieData1.push({name:resp.data.hits[i].name+resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
+            }
+            console.log('this.pieData1::',this.pieData1)
+            this.initBar()
+          })
+          http.get('bi/get_tourism_qty_by_date', {date: http.getToday(), city_id: this.city}).then(resp => {
+            console.log('qq1qqq', resp.data.hits.total)
+            this.total = resp.data.hits.total;
+
+            if (resp.data.hits.ratio<0){
+              this.ratio =-resp.data.hits.ratio;
+              this.showud1=1
+            }else {
+              this.ratio = resp.data.hits.ratio;
+              this.showud1=2
+            }
+            if (resp.data.hits.link<0){
+              this.link = -resp.data.hits.link;
+              this.showud2=2
+            } else {
+              this.link = resp.data.hits.link;
+              this.showud2=1
+            }
+          })
+        }
+        if (this.dateChoice1==2) {
+          this.pieData1=[]
+          http.get('bi/get_tourism_dist_by_date', {date: http.getYesterDay(), city_id: this.city}).then(resp => {
+            //this.pieData = resp.data.hits;
+            console.log(this.pieData)
+            for (var i=0;i<resp.data.hits.length;i++){
+              this.pieData1.push({name:resp.data.hits[i].name+resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
+            }
+            console.log('this.pieData1::',this.pieData1)
+            this.initBar()
+          })
+          http.get('bi/get_tourism_qty_by_date', {date: http.getYesterDay(), city_id: this.city}).then(resp => {
+            console.log('qq1qqq', resp.data.hits.total)
+            this.total = resp.data.hits.total;
+
+            if (resp.data.hits.ratio<0){
+              this.ratio =-resp.data.hits.ratio;
+              this.showud1=1
+            }else {
+              this.ratio = resp.data.hits.ratio;
+              this.showud1=2
+            }
+            if (resp.data.hits.link<0){
+              this.link = -resp.data.hits.link;
+              this.showud2=2
+            } else {
+              this.link = resp.data.hits.link;
+              this.showud2=1
+            }
+          })
+        }
       }
     },
 
     watch: {
-      date: 'form1change',
+      datefff: 'form1change',
       city: 'form1change',
       date1: 'form1change1',
       city1: 'form1change1',
       dateChoice1:'p1',
+      dateChoice2:'p2',
     }
   }
 </script>

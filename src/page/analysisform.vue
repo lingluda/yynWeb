@@ -1,13 +1,15 @@
 <template>
   <div class="progressContainer">
     <div class="progress" :style="{width:pers+'%'}">
-    </div> <span style="margin-left: 5px">{{pers}}</span>
+
+    </div><span style="margin-left: 5px;margin-top: -5px">{{persn}}</span>
   </div>
 </template>
 <script>
   export default {
     props:{
       pers:Number,
+      persn:Number,
     },
   }
 </script>
@@ -15,14 +17,14 @@
 <style scoped>
   div.progressContainer{
     display: flex;
-    height: 20px;
+    height: 10px;
     width: 96%;
     border-radius: 10px;
     margin-left: 2%;
   }
   div.progress{
     background-color: #006EFF;
-    height:20px;
+    height:10px;
     line-height: 20px;
   }
 </style>

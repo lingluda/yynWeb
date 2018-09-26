@@ -1,5 +1,5 @@
 <template>
-  <div style="background:#f2f2f2;">
+  <div style="background:#f2f2f2;height: 100vh">
     <div class="tits">游客画像</div>
     <div style="margin:20px;">
       <card>
@@ -12,8 +12,8 @@
         <Select style="width: 120px" placeholder="城市" v-model="ccc">
           <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
         </Select>
-        <Select style="width: 120px" placeholder="区域">
-          <Option>区域</Option>
+        <Select style="width: 120px" placeholder="区域" v-model="ccc1">
+          <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
         </Select>
         <DatePicker type="date" v-model="picDate" placeholder="自选时间" style="width: 120px"></DatePicker>
         <Row :gutter="16" style="margin-top: 20px">
@@ -63,15 +63,15 @@
           <span style="font-weight: bold;color: #000000">人口迁移分析</span>
 
         </div>
-        <RadioGroup type="button" @on-change="hotlinepic">
-          <Radio label="all">全部</Radio>
-          <Radio label="default">飞机</Radio>
-          <Radio label="small">火车</Radio>
-          <Radio label="car">汽车</Radio>
+        <RadioGroup type="button" @on-change="hotlinepic" v-model="trfcty">
+          <Radio label="1">全部</Radio>
+          <Radio label="2">飞机</Radio>
+          <Radio label="3">火车</Radio>
+          <Radio label="4">汽车</Radio>
         </RadioGroup>
         <DatePicker type="date" v-model="hotlineDate" placeholder="自选时间" style="width: 120px"></DatePicker>
         <Select style="width: 120px" placeholder="清选择" v-model="ccti">
-          <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+          <Option v-for="item in cityData" :value="item.name">{{item.name}}</Option>
         </Select>
         <Row :gutter="16" style="margin-top: 20px;margin-bottom: 10px">
           <Col span="10">
@@ -88,7 +88,8 @@
             </div>
           </Col>
           <Col span="14">
-            <iframe src="http://cnmrz.cn/dist/index.html" style="border: 1px solid #dcdee2;height: 557px;width: 100%"></iframe>
+            <aaamap style="border: 1px solid #dcdee2;height: 557px;width: 100%"></aaamap>
+            <!--<iframe src="http://cnmrz.cn/dist/index.html" style="border: 1px solid #dcdee2;height: 557px;width: 100%"></iframe>-->
             <!--<div id="moveMap" style="border: 1px solid #dcdee2;height: 557px"></div>-->
           </Col>
         </Row>
@@ -124,7 +125,9 @@
             <Col span="14" style="border: 1px solid #dcdee2;height:100%">
               <div style="padding-bottom: 20px;padding: 20px">
                 <span style="font-weight: bold;color: #000000">消费类型占比</span>
-                <DatePicker v-model="picDate4" placement="bottom-end" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 150px;float: right"></DatePicker>
+                <DatePicker v-model="d11" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
+                <span style="float: right;padding:5px 5px 0px 5px">-</span>
+                <DatePicker v-model="d22" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
               </div>
               <div id="cash" style="height:300px;width:100%"></div>
             </Col>
@@ -180,13 +183,21 @@
 <script>
   import http from "@/http.js";
   import "@/dateFormate.js";
-
-
+  import gomap from '../components/map/echartMap'
   export default {
+    components:{
+      "aaamap":gomap,
+    },
     data() {
       return {
-        ccti:'381',
+        d11:http.getToday(),
+        d22:'2018-01',
+        trfcty:'all',
+        senicData:[],
+        ccti:'保山市',
         ccc:'0',
+        ccc1:'',
+        cccM:'',
         hotlineDate:'2018-08-25',
         provx: [],
         provy: [],
@@ -213,9 +224,9 @@
         ddData: [],
         cityData: [],
         proData: [],
-        picDate: "2018-09-14",
-        picDate3: "2018-08-01",
-        picDate4: ["2018-07-01","2018-09-14"],
+        picDate: http.getToday(),
+        picDate3: http.getToday(),
+        picDate4: [this.d22,this.d11],
         cpicDate: "",
         columns1: [
           {
@@ -264,7 +275,7 @@
       hotlinedp(){
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
-          city_name: "大理",
+          city_name: this.ccti,
           top: 10,
           io: this.tabname
         }).then(resp => {
@@ -272,11 +283,138 @@
         });
       },
       hotlinepic(val11) {
-        console.log(http.addr2lnglat())
+        if (val11==='1'){
+          this.columns1=[
+            {
+              title: "排名",
+              type: "index",
+              width: 60,
+              align: "center"
+            },
+            {
+              title: "起始站",
+              key: "from",
+              width: 80
+            },
+            {
+              title: "终点站",
+              key: "to",
+              width: 80
+            },
+            {
+              title: "热度",
+              key: "n"
+            },
+            {
+              title: "汽车",
+              key: "car"
+            },
+            {
+              title: "火车",
+              key: "train"
+            },
+            {
+              title: "飞机",
+              key: "plane"
+            }
+          ]
+        }
+        if (val11==='2'){
+          this.columns1=[
+            {
+              title: "排名",
+              type: "index",
+              width: 60,
+              align: "center"
+            },
+            {
+              title: "起始站",
+              key: "from",
+              width: 80
+            },
+            {
+              title: "终点站",
+              key: "to",
+              width: 80
+            },
+            {
+              title: "热度",
+              key: "n"
+            },
+            {
+              title: "飞机",
+              key: "plane"
+            }
+          ]
+        }
+        if (val11==='3'){
+          this.columns1=[
+            {
+              title: "排名",
+              type: "index",
+              width: 60,
+              align: "center"
+            },
+            {
+              title: "起始站",
+              key: "from",
+              width: 80
+            },
+            {
+              title: "终点站",
+              key: "to",
+              width: 80
+            },
+            {
+              title: "热度",
+              key: "n"
+            },
+
+            {
+              title: "火车",
+              key: "train"
+            },
+
+          ]
+        }
+        if (val11==='4'){
+          this.columns1=[
+            {
+              title: "排名",
+              type: "index",
+              width: 60,
+              align: "center"
+            },
+            {
+              title: "起始站",
+              key: "from",
+              width: 80
+            },
+            {
+              title: "终点站",
+              key: "to",
+              width: 80
+            },
+            {
+              title: "热度",
+              key: "n"
+            },
+            {
+              title: "汽车",
+              key: "car"
+            },
+
+          ]
+        }
+
+
       },
       init() {
         http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
+        })
+        http.get('bi/get_scenic_by_city',{city_id:379}).then(resp=>{
+          this.senicData=resp.data.hits
         })
       },
       initMap() {
@@ -833,7 +971,7 @@
       clicktab() {
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
-          city_name: "大理",
+          city_name: this.ccti,
           top: 10,
           io: this.tabname
         }).then(resp => {
@@ -928,7 +1066,7 @@
         http
           .get("bi/get_migrate_by_date", {
             date: "2018-08-25",
-            city_name: "大理",
+            city_name: this.ccti,
             top: 10,
             io: this.tabname
           })
@@ -964,7 +1102,7 @@
             this.initCash();
           });
       },
-      ccc1(){
+      _ccc(){
         console.log(this.ccc)
 
         this.provx = [];
@@ -983,10 +1121,14 @@
         this.carDatay = [];
         this.mobilex = [];
         this.mobiley = [];
-        var date = new Date(this.picDate).format("yyyy-MM-dd");
-        this.cpicDate = date;
+
+        http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
+          console.log(resp.data.hits)
+          this.senicData=resp.data.hits
+          this.ccc1='';
+        })
         http
-          .get("bi/get_portrait_base_by_date", {date: this.cpicDate,city_id:this.ccc})
+          .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:this.ccc})
           .then(resp => {
             this.sexData = resp.data.hist.gender;
             this.inData = resp.data.hist.consumpting;
@@ -1022,7 +1164,7 @@
           });
         http
           .get("bi/get_portrait_origin_by_date", {
-            date: this.cpicDate,
+            date: http.gmt2str(this.cpicDate),
             type: "city",
             scenic: "",
             city_id: this.ccc
@@ -1043,24 +1185,137 @@
             city_id: this.ccc
           })
           .then(resp => {
-            console.log("city", resp.data.hist);
             for (var i = 0; i < resp.data.hist.length; i++) {
               this.provx.push(resp.data.hist[i].origin_province);
               this.provy.push(resp.data.hist[i].origin_percent * 100);
             }
             this.initPro();
           });
+      },
+      _ccc1(){
+        if (this.ccc1==''||this.ccc1=="undefined"||this.ccc1==null){
+          console.log('ccc1::',this.ccc1)
+        }
+        else {
+          this.cccM=this.ccc1
+          console.log('cccM',this.ccc1)
+        }
+      },
+      _cccM(){
+        console.log(this.cccM)
+
+        this.provx = [];
+        this.provy = [];
+        this.cityx = [];
+        this.cityy = [];
+        this.eduData = [];
+        this.eduDatax = [];
+        this.eduDatay = [];
+        this.cashDataX = [];
+        this.ageData = [];
+        this.ageDatax = [];
+        this.ageDatay = [];
+        this.inDatax = [];
+        this.carDatax = [];
+        this.carDatay = [];
+        this.mobilex = [];
+        this.mobiley = [];
         http
-          .get("bi/get_migrate_by_date", {
-            date: "2018-08-25",
-            city_name: "大理",
-            top: 10,
-            io: this.tabname
+          .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.picDate),city_id:this.ccc,scenic:this.cccM})
+          .then(resp => {
+            this.sexData = resp.data.hist.gender;
+            this.inData = resp.data.hist.consumpting;
+            for (var i = 0; i < resp.data.hist.consumpting.length; i++) {
+              this.inDatax.push(resp.data.hist.consumpting[i].name);
+            }
+            this.eduData = resp.data.hist.edu;
+            for (var i = 0; i < resp.data.hist.edu.length; i++) {
+              this.eduDatax.push(resp.data.hist.edu[i].name);
+              this.eduDatay.push(resp.data.hist.edu[i].value * 100);
+            }
+            this.osData = resp.data.hist.mobile;
+            console.log("resp.data.hist.age", resp.data.hist.age);
+            this.ageData = resp.data.hist.age;
+            for (var i = 0; i < resp.data.hist.age.length; i++) {
+              this.ageDatax.push(resp.data.hist.age[i].name);
+              this.ageDatay.push(resp.data.hist.age[i].value * 100);
+            }
+            for (var i = 0; i < resp.data.hist.mobile.length; i++) {
+              this.mobilex.push(resp.data.hist.mobile[i].name);
+              this.mobiley.push(resp.data.hist.mobile[i].value * 100);
+            }
+            for (var i = 0; i < resp.data.hist.car.length; i++) {
+              this.carDatax.push(resp.data.hist.car[i].name);
+              this.carDatay.push(resp.data.hist.car[i].value * 100);
+            }
+            this.initSex();
+            this.initOS();
+            this.initIOS();
+            this.initIn();
+            this.initEdu();
+            this.initAge();
+          });
+        http
+          .get("bi/get_portrait_origin_by_date", {
+            date: http.gmt2str(this.cpicDate),
+            type: "city",
+            scenic: this.cccM,
+            city_id: this.ccc
           })
           .then(resp => {
-            this.data1 = resp.data.hits;
+            console.log("city", resp.data.hist);
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.cityx.push(resp.data.hist[i].origin_city);
+              this.cityy.push(resp.data.hist[i].origin_percent * 100);
+            }
+            this.initCity();
           });
-
+        http
+          .get("bi/get_portrait_origin_by_date", {
+            date: http.gmt2str(this.cpicDate),
+            type: "prov",
+            scenic: this.cccM,
+            city_id: this.ccc
+          })
+          .then(resp => {
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.provx.push(resp.data.hist[i].origin_province);
+              this.provy.push(resp.data.hist[i].origin_percent * 100);
+            }
+            this.initPro();
+          });
+      },
+      _ccti(){
+        http.get("bi/get_migrate_by_date", {
+          date: http.gmt2str(this.hotlineDate),
+          city_name: this.ccti,
+          top: 10,
+          io: this.tabname
+        }).then(resp => {
+          this.data1 = resp.data.hits;
+        });
+      },
+      _d11(){
+        console.log('picDate4323232')
+        this.picDate4[0]=this.d22;
+        this.picDate4[1]=this.d11;
+        console.log(this.picDate4)
+        this.cashDataX = []
+        http
+          .get("bi/get_consume_type_by_mon", {
+            startTime: http.gmt2str(this.picDate4[0]),
+            endTime: http.gmt2str(this.picDate4[1])
+          })
+          .then(resp => {
+            console.log("get_consume_type_by_mon", resp.data.hits);
+            this.cashData = resp.data.hits;
+            for (var i = 0; i < resp.data.hits.length; i++) {
+              this.cashDataX.push(resp.data.hits[i].name);
+            }
+            console.log("this.cashData", this.cashData);
+            console.log("this.cashData", this.cashDataX);
+            this.initCash();
+          });
       }
     },
     watch: {
@@ -1069,7 +1324,11 @@
       picDate4: "dateChange4",
       tabname: "clicktab",
       hotlineDate:'hotlinedp',
-      ccc:'ccc1'
+      ccc:'_ccc',
+      ccc1:'_ccc1',
+      cccM:'_cccM',
+      ccti:'_ccti',
+      d11:'_d11'
     }
   };
 </script>

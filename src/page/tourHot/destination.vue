@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100vh">
     <div class="ti">
       <span >旅游热度</span>
     </div>
@@ -15,9 +15,9 @@
           </div>
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div class="tabpane_content_title">
-              <div style="padding-left:60px">
-                <span style="color: #000;font-size:16px;">一机游今日搜索各目的地方访问用户数据 </span>
-                <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
+              <div>
+                <span style="color: #000;font-size:14px;font-weight: bold">一机游今日搜索各目的地访问用户数据 </span>
+                <span style="color: #a5a5a5;font-size:12px;">(单位：万次)</span>
               </div>
               <DatePicker v-model="picDate1" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
             </div>
@@ -31,9 +31,9 @@
 
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div class="tabpane_content_title">
-               <div style="padding-left:60px">
-                 <span style="color: #000;font-size:16px;">一机游今日搜索各目的地方访问用户数据 </span>
-                  <span style="color: #a5a5a5;font-size:14px;">(单位：万次)</span>
+               <div >
+                 <span style="color: #000;font-weight:bold;font-size:14px;">一机游今日搜索各目的地访问用户数据 </span>
+                  <span style="color: #a5a5a5;font-size:12px;">(单位：万次)</span>
                 </div>
               <DatePicker  placement="bottom-end" v-model="picDate2" type="date" placeholder="Select date" style="width:120px;float: right"></DatePicker>
             </div>
@@ -58,8 +58,8 @@
                 <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">购买平均价格(元)</td>
               </tr>
               <tr v-for="item in fdata">
-                <td style="padding: 10px;border-bottom: 1px dashed rgb(206,226,225)">{{item.name}}</td>
-                <td style="border-bottom: 1px dashed rgb(206,226,225)"> <pers-st :pers=item.order></pers-st></td>
+                <td style="padding: 10px;border-bottom: 1px dashed rgb(206,226,225);font-size: 12px">{{item.name}}</td>
+                <td style="border-bottom: 1px dashed rgb(206,226,225)"> <pers-st :pers=item.tpers :persn=item.order></pers-st></td>
                 <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.dau}}</td>
                 <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.price}}</td>
               </tr>
@@ -137,11 +137,11 @@
     data() {
       return {
         addling:'1',
-        picDate1:'2018-09-01',
-        picDate2:'2018-09-01',
-        picDate3:'2018-08-17',
-        picDate4:'2018-09-17',
-        picDate5:'2018-09-17',
+        picDate1:http.getToday(),
+        picDate2:http.getToday(),
+        picDate3:http.getToday(),
+        picDate4:http.getToday(),
+        picDate5:http.getToday(),
         chan:'app',
         barDatax:[],
         barDatay:[],
@@ -187,6 +187,7 @@
       }
     },
     mounted() {
+
     },
     methods: {
       initSimBar(){
@@ -523,8 +524,12 @@
       },
       click3(){
         http.get('bi/get_hot_line_by_date',{date:http.gmt2str(this.picDate3),top:10}).then(resp=>{
-          console.log('this.fdata',resp.data.hits)
+          console.log('this.fdata',resp.data.hits[0].an='sss')
+          console.log('this.fdata',resp.data.hits[0])
           this.fdata = resp.data.hits;
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.fdata[i].tpers=this.fdata[i].order/(this.fdata[0].order*1.3)*100
+          }
         })
       },
       click4(){

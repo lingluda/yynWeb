@@ -1,5 +1,5 @@
 <template>
-  <div style="background:#f2f2f2;">
+  <div style="background:#f2f2f2;height: 100vh;">
     <div class="tits">游客体验</div>
     <div style="margin:20px;">
     <card>
@@ -8,7 +8,7 @@
           <span style="font-weight: bold;color: #000000">投诉分析</span>
         </div>
         <div>
-          <RadioGroup type="button" v-model="picTo" @on-change="picToC">
+          <RadioGroup type="button" v-model="picTo">
             <Radio label="1">今日</Radio>
             <Radio label="2">昨日</Radio>
           </RadioGroup>
@@ -45,7 +45,8 @@
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{link}}</span>
-                      <span class="lyrd_index_today_dw">(上升百分比)</span>
+                      <span v-if="showud1==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
+                      <span v-if="showud1!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                     </div>
                 </div>
               </div>
@@ -59,7 +60,8 @@
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{ratio}}</span>
-                      <span class="lyrd_index_today_dw">(下降百分比)</span>
+                      <span v-if="showud2==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
+                      <span v-if="showud2!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                     </div>
                 </div>
               </div>
@@ -116,7 +118,11 @@
     <card class="card_margin">
       <div style="margin-bottom: 20px;">
         <span style="font-weight: bold;color: #000000">月投诉量趋势分析</span>
-        <DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 140px;float: right"></DatePicker>
+        <!--<DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 140px;float: right"></DatePicker>-->
+        <DatePicker v-model="dd1" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
+        <span style="float: right;padding:5px 5px 0px 5px">-</span>
+        <DatePicker v-model="dd2" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
+
       </div>
       <div id="myline" style="height: 400px;border: 1px solid #dcdee2;"></div>
     </card>
@@ -206,12 +212,18 @@ import http from "@/http.js";
 export default {
   data() {
     return {
+      dd1:http.getToday(),
+      dd2:'2018-01',
+      showud1:2,
+      showud2:2,
+      color1:'red',
+      color2:'green',
       pic7:'',
       linex:[],
       liney:[],
       p11:'0',
       picTo:'1',
-      picdate1:'',
+      picdate1:http.getToday(),
       picdate2:'2018-08-03',
       picdate3:['2018-07-03','2018-09-03'],
       add: "",
@@ -249,9 +261,9 @@ export default {
         console.log("游客体验：：", resp.data.hits);
         this.close1=resp.data.hits.closed;
         this.unclose1=resp.data.hits.unclosed;
-        this.timeX.push(parseInt(resp.data.hits.avg_proc));
-        this.timeX.push(parseInt(resp.data.hits.max_proc));
         this.timeX.push(parseInt(resp.data.hits.min_proc));
+        this.timeX.push(parseInt(resp.data.hits.max_proc));
+        this.timeX.push(parseInt(resp.data.hits.avg_proc));
 
         for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
           this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg));
@@ -259,15 +271,14 @@ export default {
           this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
           this.procY1.push(resp.data.hits.proc_stat[i].name);
         }
-        console.log(this.procX1)
-        console.log(this.procX2)
+        console.log('this.timeX',this.timeX)
+        console.log('procX2',this.procX2)
         console.log(this.procX3)
         console.log(this.procY1)
         this.closeComplaint();
       })
     },
     init() {
-      this.picdate1 = http.getToday()
       http.get('bi/get_all_city_prov', {}).then(resp => {
         this.cityData = resp.data.hits;
       })
@@ -399,7 +410,8 @@ export default {
         title: {
           text: "单位(小时)",
           textStyle: {
-            fontSize: 14
+            fontSize: 12,
+            fontWeight: 'unset'
           },
           x: "15",
           y: "15"
@@ -557,8 +569,20 @@ export default {
           this.add = resp.data.hits.total;
           this.close = resp.data.hits.closed;
           this.unclose = resp.data.hits.unclosed;
-          this.link = resp.data.hits.link;
-          this.ratio = resp.data.hits.ratio;
+          if (resp.data.hits.link<0){
+            this.link = -resp.data.hits.link;
+            this.showud1=1
+          } else {
+            this.link = resp.data.hits.link;
+            this.showud1=2
+          }
+          if (resp.data.hits.ratio<0){
+            this.ratio = -resp.data.hits.ratio;
+            this.showud2=1
+          } else {
+            this.ratio = resp.data.hits.ratio;
+            this.showud2=2
+          }
         });
     },
     pic2(){
@@ -573,9 +597,9 @@ export default {
           console.log("游客体验：：", resp.data.hits);
           this.close1=resp.data.hits.closed;
           this.unclose1=resp.data.hits.unclosed;
-          this.timeX.push(parseInt(resp.data.hits.avg_proc));
-          this.timeX.push(parseInt(resp.data.hits.max_proc));
           this.timeX.push(parseInt(resp.data.hits.min_proc));
+          this.timeX.push(parseInt(resp.data.hits.max_proc));
+          this.timeX.push(parseInt(resp.data.hits.avg_proc));
 
           for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
             this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg));
@@ -604,14 +628,7 @@ export default {
           this.initLine();
         });
     },
-    picToC(va22){
-      if (va22==1){
-        this.picdate1 = http.getToday()
-      }
-      if (va22==2){
-        this.picdate1 = http.getYesterDay()
-      }
-    },
+
     ppp(){
       http
         .get("bi/get_complaint_by_date", { date: http.gmt2str(this.picdate1),city_id:this.p11 })
@@ -622,13 +639,37 @@ export default {
           this.link = resp.data.hits.link;
           this.ratio = resp.data.hits.ratio;
         });
+    },
+    ptt(){
+      if (this.picTo==1){
+        this.picdate1=http.getToday()
+      }
+      if (this.picTo==2) {
+        this.picdate1=http.getYesterDay()
+      }
+    },
+    _dd2(){
+      this.linex=[]
+      this.liney=[]
+      http
+        .get("bi/get_complaint_trend_by_monspan", {startTime:http.gmt2str(this.dd2),endTime:http.gmt2str(this.dd1)})
+        .then(resp => {
+          console.log("游客体验：：", resp.data.hits);
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.linex.push(resp.data.hits[i].date)
+            this.liney.push(resp.data.hits[i].open)
+          }
+          this.initLine();
+        });
     }
   },
   watch:{
     picdate1:'pic1',
     picdate2:'pic2',
     picdate3:'pic3',
-    p11:'ppp'
+    p11:'ppp',
+    picTo:'ptt',
+    dd1:'_dd2'
   }
 };
 </script>
