@@ -5,7 +5,7 @@
     </div>
     <Tabs value="platform" @on-click="pic">
       <TabPane label="首页" name="index"></TabPane>
-      <TabPane label="热门排行" name="destination"></TabPane>
+      <TabPane label="热度排行" name="destination"></TabPane>
       <TabPane label="景区客流热力" name="hotmap"></TabPane>
       <TabPane label="平台运营" name="platform" class="tabpane_content">
         <card>

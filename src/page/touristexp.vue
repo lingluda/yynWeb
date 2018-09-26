@@ -40,11 +40,11 @@
                 <div class="lyrd_index_count_bg2"></div>
                 <div class="lyrd_index_count_num">
                     <div>
-                      <span class="lyrd_index_today_visit">日新增投诉量同比</span>
+                      <span class="lyrd_index_today_visit">与昨日环比</span>
 
                     </div>
                     <div>
-                      <span class="lyrd_index_today_num">{{link}}</span>
+                      <span class="lyrd_index_today_num">{{ratio}}</span><span style="color: #006eff;">%</span>
                       <span v-if="showud1==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
                       <span v-if="showud1!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                     </div>
@@ -56,10 +56,10 @@
                 <div class="lyrd_index_count_bg3"></div>
                 <div class="lyrd_index_count_num">
                     <div>
-                      <span class="lyrd_index_today_visit">日新增投诉量环比</span>
+                      <span class="lyrd_index_today_visit">与上月同比</span>
                     </div>
                     <div>
-                      <span class="lyrd_index_today_num">{{ratio}}</span>
+                      <span class="lyrd_index_today_num">{{link}}</span> <span style="color: #006eff;">%</span>
                       <span v-if="showud2==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
                       <span v-if="showud2!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                     </div>

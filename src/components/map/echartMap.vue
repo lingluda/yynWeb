@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="myMap" ref="myMap" style="width: 85%; height: 100%;"></div>
+    <div id="myMap" ref="myMap" style="width: 100%; height: 100%;"></div>
   </div>
 </template>
 
@@ -11,6 +11,12 @@
 
   // 获取地图上每个模块点的坐标
   var geoCoordMap = {
+    红河:[103.3756,23.364219999999992],
+    玉溪:[102.54714000000001,24.35180000000003],
+    昭通:[103.7168,27.338169999999995],
+    大理:[100.26763999999999,25.60648000000001],
+    曲靖:[103.79625000000003,25.49002000000002],
+    昆明:[102.83322, 24.87966],
     上海: [121.4648, 31.2891],
     东莞: [113.8953, 22.901],
     东营: [118.7073, 37.5513],
@@ -48,6 +54,7 @@
     宿迁: [118.5535, 33.7775],
     常州: [119.4543, 31.5582],
     广州: [113.5107, 23.2196],
+    广州市: [113.5107, 23.2196],
     廊坊: [116.521, 39.0509],
     延安: [109.1052, 36.4252],
     张家口: [115.1477, 40.8527],
@@ -66,6 +73,7 @@
     柳州: [109.3799, 24.9774],
     株洲: [113.5327, 27.0319],
     武汉: [114.3896, 30.6628],
+    武汉市: [114.3896, 30.6628],
     汕头: [117.1692, 23.3405],
     江门: [112.6318, 22.1484],
     沈阳: [123.1238, 42.1216],
@@ -80,6 +88,7 @@
     淄博: [118.0371, 36.6064],
     淮安: [118.927, 33.4039],
     深圳: [114.5435, 22.5439],
+    深圳市: [114.5435, 22.5439],
     清远: [112.9175, 24.3292],
     温州: [120.498, 27.8119],
     渭南: [109.7864, 35.0299],
@@ -127,7 +136,7 @@
     韶关: [113.7964, 24.7028]
   }
   // 出发点和迁徙点的对应关系数组,颜色通过value对应到visualMap中的颜色值调整
-  var HZData = [
+  /*var HZData = [
     [
       {
         name: "上海",
@@ -209,11 +218,15 @@
         name: "昆明"
       }
     ]
-  ]
+  ]*/
   var mapFontSize = [25, 23, 23, 22, 22, 21, 20, 20, 18, 20]
   export default {
+    props:{
+      d2d:Array,
+    },
     data() {
       return {
+        HZData:this.d2d,
         series: [] // 图表的series项
       }
     },
@@ -237,7 +250,33 @@
         this.chart = echarts.init(this.$refs.myMap)
         this.getSeries()
         console.log(this.opt)
-        this.chart.setOption(this.opt)
+        this.chart.setOption({
+          backgroundColor: '#0055b3',
+          color: ['#00f03f','#00d6d8','lime'],		//线条颜色
+          hoverable: false,
+          geo: {
+            map: "china",
+            roam: true,
+            label: {
+              emphasis: {
+                show: true
+              }
+            },
+            // aspectScale: 0.5,
+            // zoom: 1.5,
+            layoutCenter: ["50%", "53%"],
+            layoutSize: "100%",
+            itemStyle: {
+              normal: {
+                borderColor:'rgba(100,149,237,1)',
+                color:'#0055b3',
+                borderWidth:0.5,
+                areaStyle:{color: '#1b1b1b' }
+              }
+            }
+          },
+          series: this.series
+        })
       },
       convertData(data) {
         var res = []
@@ -264,7 +303,7 @@
 
         var series = []
 
-        ;[["杭州", HZData]].forEach(function(item, i) {
+        ;[["杭州", this.d2d]].forEach(function(item, i) {
           series.push(
             {
               type: "lines",
@@ -406,8 +445,11 @@
             }
           )
         })
-
         this.series = series
+
+      },
+      ppp(){
+        console.log(11111)
       }
     },
     computed: {
@@ -447,6 +489,9 @@
         }
         return obj
       }
+    },
+    watch: {
+      d2d: 'initChart'
     }
   }
 </script>

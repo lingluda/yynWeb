@@ -468,14 +468,12 @@ export default {
             label: {
               normal: {
                 show: true,
-                position: "inner"
+                position: "inside",
               },
               emphasis: {
                 show: true,
                 textStyle: {
                   fontSize: "12",
-                  fontWeight: "bold",
-                  color: "#000000"
                 }
               }
             },
@@ -500,7 +498,6 @@ export default {
         ],
         color: [
           "#006EFF",
-          "#29CC85",
           "#ffbb00",
           "#ff584c",
           "#9741d9",
@@ -547,14 +544,12 @@ export default {
             label: {
               normal: {
                 show: true,
-                position: "inner"
+                position: "inside"
               },
               emphasis: {
                 show: true,
                 textStyle: {
                   fontSize: "12",
-                  fontWeight: "bold",
-                  color: "#000000"
                 }
               }
             },
@@ -578,7 +573,7 @@ export default {
           }
         ],
         color: [
-          "#29CC85",
+          "#006EFF",
           "#ffbb00",
           "#ff584c",
           "#9741d9",

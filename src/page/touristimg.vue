@@ -74,21 +74,21 @@
           <Option v-for="item in cityData" :value="item.name">{{item.name}}</Option>
         </Select>
         <Row :gutter="16" style="margin-top: 20px;margin-bottom: 10px">
-          <Col span="10">
+          <Col span="12">
             <div>
               <Tabs v-model="tabname"
                     style="border-top: 1px solid #dcdee2;border-left: 1px solid #dcdee2;height: 557px">
                 <TabPane label="迁入" name="in">
-                  <Table height="550" :columns="columns1" :data="data1"></Table>
+                  <Table height="550" :columns="columns1" :data="data3"></Table>
                 </TabPane>
                 <TabPane label="迁出" name="out">
-                  <Table height="550" :columns="columns1" :data="data1"></Table>
+                  <Table height="550" :columns="columns1" :data="data3"></Table>
                 </TabPane>
               </Tabs>
             </div>
           </Col>
-          <Col span="14">
-            <aaamap style="border: 1px solid #dcdee2;height: 557px;width: 100%"></aaamap>
+          <Col span="12">
+            <aaamap :d2d="this.data2" style="border: 1px solid #dcdee2;height: 557px;width: 100%"></aaamap>
             <!--<iframe src="http://cnmrz.cn/dist/index.html" style="border: 1px solid #dcdee2;height: 557px;width: 100%"></iframe>-->
             <!--<div id="moveMap" style="border: 1px solid #dcdee2;height: 557px"></div>-->
           </Col>
@@ -192,7 +192,7 @@
       return {
         d11:http.getToday(),
         d22:'2018-01',
-        trfcty:'all',
+        trfcty:'1',
         senicData:[],
         ccti:'保山市',
         ccc:'0',
@@ -236,33 +236,30 @@
             align: "center"
           },
           {
-            title: "起始站",
-            key: "from",
-            width: 80
+            title: "线路",
+            key: "moveline",
           },
-          {
-            title: "终点站",
-            key: "to",
-            width: 80
-          },
+
           {
             title: "热度",
             key: "n"
           },
           {
             title: "汽车",
-            key: "car"
+            key: "carx"
           },
           {
             title: "火车",
-            key: "train"
+            key: "trainx"
           },
           {
             title: "飞机",
-            key: "plane"
+            key: "planex"
           }
         ],
         data1: [],
+        data2: [],
+        data3: [],
         cashData: [],
         cashDataX: []
       };
@@ -273,6 +270,7 @@
     },
     methods: {
       hotlinedp(){
+        this.data2=[]
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
           city_name: this.ccti,
@@ -280,6 +278,17 @@
           io: this.tabname
         }).then(resp => {
           this.data1 = resp.data.hits;
+          this.data3 = resp.data.hits;
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.data2.push([{name:resp.data.hits[i].to},{name:resp.data.hits[i].from}])
+          }
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.data3[i].moveline=resp.data.hits[i].from+'-'+resp.data.hits[i].to
+            this.data3[i].carx=parseInt(resp.data.hits[i].car*10000)/100+'%'
+            this.data3[i].trainx=parseInt(resp.data.hits[i].train*10000)/100+'%'
+            this.data3[i].planex=parseInt(resp.data.hits[i].plane*10000)/100+'%'
+          }
+          console.log(this.data3)
         });
       },
       hotlinepic(val11) {
@@ -292,30 +301,25 @@
               align: "center"
             },
             {
-              title: "起始站",
-              key: "from",
-              width: 80
+              title: "线路",
+              key: "moveline",
             },
-            {
-              title: "终点站",
-              key: "to",
-              width: 80
-            },
+
             {
               title: "热度",
               key: "n"
             },
             {
               title: "汽车",
-              key: "car"
+              key: "carx"
             },
             {
               title: "火车",
-              key: "train"
+              key: "trainx"
             },
             {
               title: "飞机",
-              key: "plane"
+              key: "planex"
             }
           ]
         }
@@ -328,22 +332,17 @@
               align: "center"
             },
             {
-              title: "起始站",
-              key: "from",
-              width: 80
+              title: "线路",
+              key: "moveline",
             },
-            {
-              title: "终点站",
-              key: "to",
-              width: 80
-            },
+
             {
               title: "热度",
               key: "n"
             },
             {
               title: "飞机",
-              key: "plane"
+              key: "planex"
             }
           ]
         }
@@ -356,15 +355,10 @@
               align: "center"
             },
             {
-              title: "起始站",
-              key: "from",
-              width: 80
+              title: "线路",
+              key: "moveline",
             },
-            {
-              title: "终点站",
-              key: "to",
-              width: 80
-            },
+
             {
               title: "热度",
               key: "n"
@@ -372,7 +366,7 @@
 
             {
               title: "火车",
-              key: "train"
+              key: "trainx"
             },
 
           ]
@@ -386,22 +380,17 @@
               align: "center"
             },
             {
-              title: "起始站",
-              key: "from",
-              width: 80
+              title: "线路",
+              key: "moveline",
             },
-            {
-              title: "终点站",
-              key: "to",
-              width: 80
-            },
+
             {
               title: "热度",
               key: "n"
             },
             {
               title: "汽车",
-              key: "car"
+              key: "carx"
             },
 
           ]
@@ -969,6 +958,7 @@
         });
       },
       clicktab() {
+        this.data2=[]
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
           city_name: this.ccti,
@@ -976,7 +966,17 @@
           io: this.tabname
         }).then(resp => {
           this.data1 = resp.data.hits;
-          console.log("this.data1", this.data1);
+          this.data3 = resp.data.hits;
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.data2.push([{name:resp.data.hits[i].to},{name:resp.data.hits[i].from}])
+          }
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.data3[i].moveline=resp.data.hits[i].from+'-'+resp.data.hits[i].to
+            this.data3[i].carx=parseInt(resp.data.hits[i].car*10000)/100+'%'
+            this.data3[i].trainx=parseInt(resp.data.hits[i].train*10000)/100+'%'
+            this.data3[i].planex=parseInt(resp.data.hits[i].plane*10000)/100+'%'
+          }
+          console.log('this.data3333',this.data3)
         });
       },
       dateChange() {
@@ -1063,16 +1063,7 @@
             }
             this.initPro();
           });
-        http
-          .get("bi/get_migrate_by_date", {
-            date: "2018-08-25",
-            city_name: this.ccti,
-            top: 10,
-            io: this.tabname
-          })
-          .then(resp => {
-            this.data1 = resp.data.hits;
-          });
+
 
 
       },
@@ -1286,6 +1277,7 @@
           });
       },
       _ccti(){
+        this.data2=[]
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
           city_name: this.ccti,
@@ -1293,6 +1285,16 @@
           io: this.tabname
         }).then(resp => {
           this.data1 = resp.data.hits;
+          this.data3 = resp.data.hits;
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.data2.push([{name:resp.data.hits[i].to},{name:resp.data.hits[i].from}])
+          }
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.data3[i].moveline=resp.data.hits[i].from+'-'+resp.data.hits[i].to
+            this.data3[i].carx=parseInt(resp.data.hits[i].car*10000)/100+'%'
+            this.data3[i].trainx=parseInt(resp.data.hits[i].train*10000)/100+'%'
+            this.data3[i].planex=parseInt(resp.data.hits[i].plane*10000)/100+'%'
+          }
         });
       },
       _d11(){

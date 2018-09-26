@@ -219,8 +219,8 @@
             backgroundColor: '#323232'
           },
           legend: {
-            x: '65%',
-            y: '35%',
+            x: '50%',
+            y: '30%',
             icon: 'circle',
             orient: 'horizontal',
             right: 10,
