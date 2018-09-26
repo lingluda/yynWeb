@@ -256,7 +256,7 @@ export default {
       this.timeX=[]
       console.log(121211)
       //this.picdate2
-      http.get('bi/get_complaint_by_date',{date:http.getToday()}).then(resp=>{
+      http.get('bi/get_complaint_by_date',{date:http.getYesterDay()}).then(resp=>{
         console.log(resp)
         console.log("游客体验：：", resp.data.hits);
         this.close1=resp.data.hits.closed;

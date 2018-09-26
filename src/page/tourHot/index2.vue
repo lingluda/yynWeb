@@ -124,7 +124,11 @@
 
             </div>
             <div class="lyrd_index_kltj_chart_right">
-              <div id="myline" style="height:300px;min-width: 400px;"></div>
+              <div >
+                <span style="color: #000;font-weight:bold;font-size:14px;padding: 20px">客流趋势分析 </span>
+                <span style="color: #a5a5a5;font-size:12px;">(人次：万)</span>
+              </div>
+              <div id="myline" style="height:300px;min-width: 400px;margin-top: -20px"></div>
             </div>
           </div>
         </card>
@@ -256,6 +260,7 @@
         let myline = this.$echarts.init(document.getElementById("myline"), 'macarons')
         myline.setOption({
           title: {
+            show:false,
             text: '客流趋势分析（人次：万）',
             textStyle: {
               fontSize: 14,

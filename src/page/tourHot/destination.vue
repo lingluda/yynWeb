@@ -137,9 +137,9 @@
     data() {
       return {
         addling:'1',
-        picDate1:http.getToday(),
-        picDate2:http.getToday(),
-        picDate3:http.getToday(),
+        picDate1:http.getYesterDay(),
+        picDate2:http.getYesterDay(),
+        picDate3:http.getYesterDay(),
         picDate4:http.getToday(),
         picDate5:http.getToday(),
         chan:'app',

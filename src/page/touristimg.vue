@@ -238,6 +238,8 @@
           {
             title: "线路",
             key: "moveline",
+            width:100,
+            color:"red"
           },
 
           {
@@ -303,8 +305,8 @@
             {
               title: "线路",
               key: "moveline",
+              width:100,
             },
-
             {
               title: "热度",
               key: "n"
@@ -334,6 +336,8 @@
             {
               title: "线路",
               key: "moveline",
+              width:100,
+              color:"red"
             },
 
             {
@@ -357,6 +361,8 @@
             {
               title: "线路",
               key: "moveline",
+              width:100,
+              color:"red"
             },
 
             {
@@ -382,6 +388,8 @@
             {
               title: "线路",
               key: "moveline",
+              width:100,
+              color:"red"
             },
 
             {
@@ -793,7 +801,8 @@
               label: {
                 normal: {
                   show: true,
-                  position: "right"
+                  position: "right",
+                  formatter:'{c}%'
                 }
               }
             }
@@ -845,7 +854,8 @@
               label: {
                 normal: {
                   show: true,
-                  position: "right"
+                  position: "right",
+                  formatter:'{c}%'
                 }
               }
             }
@@ -897,7 +907,8 @@
               label: {
                 normal: {
                   show: true,
-                  position: "right"
+                  position: "right",
+                  formatter:'{c}%'
                 }
               }
             }
@@ -949,7 +960,8 @@
               label: {
                 normal: {
                   show: true,
-                  position: "right"
+                  position: "right",
+                  formatter:'{c}%'
                 }
               }
             }
@@ -1044,7 +1056,7 @@
             console.log("city", resp.data.hist);
             for (var i = 0; i < resp.data.hist.length; i++) {
               this.cityx.push(resp.data.hist[i].origin_city);
-              this.cityy.push(resp.data.hist[i].origin_percent * 100);
+              this.cityy.push(parseInt(resp.data.hist[i].origin_percent* 10000)/100);
             }
             this.initCity();
           });
@@ -1059,7 +1071,7 @@
             console.log("city", resp.data.hist);
             for (var i = 0; i < resp.data.hist.length; i++) {
               this.provx.push(resp.data.hist[i].origin_province);
-              this.provy.push(resp.data.hist[i].origin_percent * 100);
+              this.provy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
             }
             this.initPro();
           });
@@ -1164,7 +1176,7 @@
             console.log("city", resp.data.hist);
             for (var i = 0; i < resp.data.hist.length; i++) {
               this.cityx.push(resp.data.hist[i].origin_city);
-              this.cityy.push(resp.data.hist[i].origin_percent * 100);
+              this.cityy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
             }
             this.initCity();
           });
@@ -1178,7 +1190,7 @@
           .then(resp => {
             for (var i = 0; i < resp.data.hist.length; i++) {
               this.provx.push(resp.data.hist[i].origin_province);
-              this.provy.push(resp.data.hist[i].origin_percent * 100);
+              this.provy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
             }
             this.initPro();
           });
@@ -1257,7 +1269,7 @@
             console.log("city", resp.data.hist);
             for (var i = 0; i < resp.data.hist.length; i++) {
               this.cityx.push(resp.data.hist[i].origin_city);
-              this.cityy.push(resp.data.hist[i].origin_percent * 100);
+              this.cityy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
             }
             this.initCity();
           });
@@ -1271,7 +1283,7 @@
           .then(resp => {
             for (var i = 0; i < resp.data.hist.length; i++) {
               this.provx.push(resp.data.hist[i].origin_province);
-              this.provy.push(resp.data.hist[i].origin_percent * 100);
+              this.provy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
             }
             this.initPro();
           });

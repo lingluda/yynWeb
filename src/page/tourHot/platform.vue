@@ -116,7 +116,7 @@
         color3:'',
         color4:'',
         picMonth: ['2018-07', '2018-09'],
-        picDate: http.getToday(),
+        picDate: http.getYesterDay(),
         addData: '',
         aduData: '',
         lineDatax1: [],
