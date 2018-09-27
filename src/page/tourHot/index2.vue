@@ -18,8 +18,7 @@
                 <Radio label="1">今日</Radio>
                 <Radio label="2">昨日</Radio>
               </RadioGroup>
-              <DatePicker v-model="datefff" format="yyyy-MM-dd" type="date" placeholder="请选择日期"
-                          style="width:120px"></DatePicker>
+              <DatePicker v-model="datefff" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
               <Select v-model="city" clearable style="width:120px;margin-left:15px">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
@@ -467,6 +466,10 @@
             }
           })
         }
+      },
+      handleChange(date){
+        this.datefff = date;
+        console.log("date:::"+date)
       }
     },
 
