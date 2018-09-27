@@ -212,6 +212,36 @@
         http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
         })
+        this.datefff=http.getToday()
+        this.pieData1=[]
+        http.get('bi/get_tourism_dist_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
+          //this.pieData = resp.data.hits;
+          console.log(this.pieData)
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.pieData1.push({name:resp.data.hits[i].name +' '+ resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
+          }
+          console.log('this.pieData1::',this.pieData1)
+          this.initBar()
+        })
+        http.get('bi/get_tourism_qty_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
+          console.log('qq1qqq', resp.data.hits.total)
+          this.total = resp.data.hits.total;
+
+          if (resp.data.hits.ratio<0){
+            this.ratio =-resp.data.hits.ratio;
+            this.showud1=1
+          }else {
+            this.ratio = resp.data.hits.ratio;
+            this.showud1=2
+          }
+          if (resp.data.hits.link<0){
+            this.link = -resp.data.hits.link;
+            this.showud2=2
+          } else {
+            this.link = resp.data.hits.link;
+            this.showud2=1
+          }
+        })
       },
       initBar() {
         let mybar = this.$echarts.init(document.getElementById("mybar"), 'macarons')
@@ -405,17 +435,18 @@
       },
       p1(){
         if (this.dateChoice1==1) {
+            this.datefff=http.getToday()
           this.pieData1=[]
-          http.get('bi/get_tourism_dist_by_date', {date: http.getToday(), city_id: this.city}).then(resp => {
+          http.get('bi/get_tourism_dist_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
             //this.pieData = resp.data.hits;
             console.log(this.pieData)
             for (var i=0;i<resp.data.hits.length;i++){
-              this.pieData1.push({name:resp.data.hits[i].name+resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
+              this.pieData1.push({name:resp.data.hits[i].name +' '+ resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
             }
             console.log('this.pieData1::',this.pieData1)
             this.initBar()
           })
-          http.get('bi/get_tourism_qty_by_date', {date: http.getToday(), city_id: this.city}).then(resp => {
+          http.get('bi/get_tourism_qty_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
             console.log('qq1qqq', resp.data.hits.total)
             this.total = resp.data.hits.total;
 
@@ -436,17 +467,18 @@
           })
         }
         if (this.dateChoice1==2) {
+          this.datefff=http.getYesterDay()
           this.pieData1=[]
-          http.get('bi/get_tourism_dist_by_date', {date: http.getYesterDay(), city_id: this.city}).then(resp => {
+          http.get('bi/get_tourism_dist_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
             //this.pieData = resp.data.hits;
             console.log(this.pieData)
             for (var i=0;i<resp.data.hits.length;i++){
-              this.pieData1.push({name:resp.data.hits[i].name+resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
+              this.pieData1.push({name:resp.data.hits[i].name +' '+ resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
             }
             console.log('this.pieData1::',this.pieData1)
             this.initBar()
           })
-          http.get('bi/get_tourism_qty_by_date', {date: http.getYesterDay(), city_id: this.city}).then(resp => {
+          http.get('bi/get_tourism_qty_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
             console.log('qq1qqq', resp.data.hits.total)
             this.total = resp.data.hits.total;
 
@@ -468,13 +500,46 @@
         }
       },
       handleChange(date){
-        this.datefff = date;
-        console.log("date:::"+date)
+        if (date == http.getToday()){
+          this.dateChoice1==1
+        }
+        if (date == http.getYesterDay()){
+          this.dateChoice1==2
+        }
+        this.datefff=date
+        this.pieData1=[]
+        http.get('bi/get_tourism_dist_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
+          //this.pieData = resp.data.hits;
+          console.log(this.pieData)
+          for (var i=0;i<resp.data.hits.length;i++){
+            this.pieData1.push({name:resp.data.hits[i].name +' '+ resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
+          }
+          console.log('this.pieData1::',this.pieData1)
+          this.initBar()
+        })
+        http.get('bi/get_tourism_qty_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
+          console.log('qq1qqq', resp.data.hits.total)
+          this.total = resp.data.hits.total;
+
+          if (resp.data.hits.ratio<0){
+            this.ratio =-resp.data.hits.ratio;
+            this.showud1=1
+          }else {
+            this.ratio = resp.data.hits.ratio;
+            this.showud1=2
+          }
+          if (resp.data.hits.link<0){
+            this.link = -resp.data.hits.link;
+            this.showud2=2
+          } else {
+            this.link = resp.data.hits.link;
+            this.showud2=1
+          }
+        })
       }
     },
 
     watch: {
-      datefff: 'form1change',
       city: 'form1change',
       date1: 'form1change1',
       city1: 'form1change1',
