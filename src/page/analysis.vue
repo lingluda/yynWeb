@@ -487,7 +487,8 @@ export default {
               normal: {
                 label: {
                   show: true,
-                  formatter: "{b} : {c} \n ({d}%)"
+                  formatter: "{d}%",
+                  color:"#000",
                 },
                 labelLine: {
                   show: true
@@ -563,7 +564,8 @@ export default {
               normal: {
                 label: {
                   show: true,
-                  formatter: "{b} : {c} \n ({d}%)"
+                  formatter: "{d}%",
+                  color:"#000",
                 },
                 labelLine: {
                   show: true

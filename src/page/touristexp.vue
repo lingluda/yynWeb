@@ -221,7 +221,7 @@ export default {
       pic7:'',
       linex:[],
       liney:[],
-      p11:'0',
+      p11:'',
       picTo:'1',
       picdate1:http.getToday(),
       picdate2:'2018-08-03',
@@ -281,6 +281,7 @@ export default {
     init() {
       http.get('bi/get_all_city_prov', {}).then(resp => {
         this.cityData = resp.data.hits;
+        this.p11 = resp.data.hits[0].id
       })
     },
     initComplain() {

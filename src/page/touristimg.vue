@@ -71,7 +71,7 @@
         </RadioGroup>
         <DatePicker type="date" v-model="hotlineDate" placeholder="自选时间" style="width: 120px"></DatePicker>
         <Select style="width: 120px" placeholder="清选择" v-model="ccti">
-          <Option v-for="item in cityData" :value="item.name">{{item.name}}</Option>
+          <Option v-for="item in cityData1" :value="item.name">{{item.name}}</Option>
         </Select>
         <Row :gutter="16" style="margin-top: 20px;margin-bottom: 10px">
           <Col span="12">
@@ -194,8 +194,8 @@
         d22:'2018-01',
         trfcty:'1',
         senicData:[],
-        ccti:'保山市',
-        ccc:'0',
+        ccti:'',
+        ccc:'',
         ccc1:'',
         cccM:'',
         hotlineDate:'2018-08-25',
@@ -223,6 +223,7 @@
         cliData: [],
         ddData: [],
         cityData: [],
+        cityData1: [],
         proData: [],
         picDate: http.getToday(),
         picDate3: http.getToday(),
@@ -244,7 +245,7 @@
 
           {
             title: "热度",
-            key: "n"
+            key: "score"
           },
           {
             title: "汽车",
@@ -309,7 +310,7 @@
             },
             {
               title: "热度",
-              key: "n"
+              key: "score"
             },
             {
               title: "汽车",
@@ -342,7 +343,7 @@
 
             {
               title: "热度",
-              key: "n"
+              key: "score"
             },
             {
               title: "飞机",
@@ -367,7 +368,7 @@
 
             {
               title: "热度",
-              key: "n"
+              key: "score"
             },
 
             {
@@ -394,7 +395,7 @@
 
             {
               title: "热度",
-              key: "n"
+              key: "score"
             },
             {
               title: "汽车",
@@ -409,6 +410,11 @@
       init() {
         http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
+          this.ccc = resp.data.hits[0].id
+        })
+        http.get('bi/get_all_city', {}).then(resp => {
+          this.cityData1 = resp.data.hits;
+          this.ccti = resp.data.hits[0].name
         })
         http.get('bi/get_scenic_by_city',{city_id:379}).then(resp=>{
           this.senicData=resp.data.hits
@@ -1032,11 +1038,11 @@
             }
             for (var i = 0; i < resp.data.hist.mobile.length; i++) {
               this.mobilex.push(resp.data.hist.mobile[i].name);
-              this.mobiley.push(resp.data.hist.mobile[i].value * 100);
+              this.mobiley.push(parseInt(resp.data.hist.mobile[i].value * 10000)/100);
             }
             for (var i = 0; i < resp.data.hist.car.length; i++) {
               this.carDatax.push(resp.data.hist.car[i].name);
-              this.carDatay.push(resp.data.hist.car[i].value * 100);
+              this.carDatay.push(parseInt(resp.data.hist.car[i].value * 10000)/100);
             }
             this.initSex();
             this.initOS();
@@ -1152,11 +1158,11 @@
             }
             for (var i = 0; i < resp.data.hist.mobile.length; i++) {
               this.mobilex.push(resp.data.hist.mobile[i].name);
-              this.mobiley.push(resp.data.hist.mobile[i].value * 100);
+              this.mobiley.push(parseInt(resp.data.hist.mobile[i].value * 10000)/100);
             }
             for (var i = 0; i < resp.data.hist.car.length; i++) {
               this.carDatax.push(resp.data.hist.car[i].name);
-              this.carDatay.push(resp.data.hist.car[i].value * 100);
+              this.carDatay.push(parseInt(resp.data.hist.car[i].value * 10000)/100);
             }
             this.initSex();
             this.initOS();
@@ -1245,11 +1251,11 @@
             }
             for (var i = 0; i < resp.data.hist.mobile.length; i++) {
               this.mobilex.push(resp.data.hist.mobile[i].name);
-              this.mobiley.push(resp.data.hist.mobile[i].value * 100);
+              this.mobiley.push(parseInt(resp.data.hist.mobile[i].value * 10000)/100);
             }
             for (var i = 0; i < resp.data.hist.car.length; i++) {
               this.carDatax.push(resp.data.hist.car[i].name);
-              this.carDatay.push(resp.data.hist.car[i].value * 100);
+              this.carDatay.push(parseInt(resp.data.hist.car[i].value * 10000)/100);
             }
             this.initSex();
             this.initOS();

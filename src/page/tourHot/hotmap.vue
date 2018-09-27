@@ -274,6 +274,7 @@
   export default {
     data() {
       return {
+        initMapData:[],
         senic_id:'80ace0e1-ae1f-4c6f-5f59-813ef365bd6b',
         senic_id5:'80ace0e1-ae1f-4c6f-5f59-813ef365bd6b',
         senicData:[],
@@ -284,13 +285,13 @@
         playState:false,
         centerx:[],
         mapx:[],
-        da1:[http.getWeekAgo(),http.getToday()],
-        da2:[http.getWeekAgo(),http.getToday()],
-        modelcity:'379',
+        da1:[http.getToday(),http.getToday()],
+        da2:[http.getYesterDay(),http.getYesterDay()],
+        modelcity:'',
         modelsenic:'80ace0e1-ae1f-4c6f-5f59-813ef365bd6b',
         power:'60',
         power1:'60',
-        city11:'379',
+        city11:'',
         date11:http.getToday(),
         dataIndex:0,
         x: 0,
@@ -301,7 +302,7 @@
         lineDatay2: [],
         lineDatayn2: '',
         today: http.getToday(),
-        piccity: '379',
+        piccity: '',
         mapData: [],
         single: true,
         cityData: [],
@@ -327,7 +328,7 @@
           scenic: this.senic_id,
           min: this.power
         }).then(resp => {
-
+          this.initMapData=resp.data.hits;
           this.centerx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
           console.log('this.centerx:11111:',resp.data.hits[0].points[0].lng)
           console.log('this.centerx:11111:',resp.data.hits[0].points[0].lat)
@@ -341,6 +342,9 @@
         });
         http.get('bi/get_all_city', {}).then(resp => {
           this.cityData = resp.data.hits;
+          this.modelcity=resp.data.hits[0].id
+          this.city11=resp.data.hits[0].id
+          this.piccity=resp.data.hits[0].id
           console.log('this.cityData',this.cityData)
         })
         http.get('bi/get_scenic_tourist_compare_by_date', {
@@ -538,7 +542,7 @@
             },
 
           },*/
-            playInterval: 5000,
+            playInterval: 2000,
             bottom: '0',
             symbolSize: 15,
             autoPlay: true,
@@ -586,29 +590,15 @@
         console.log(this.x)
       },
       dataChange1() {
-        http.get("bi/get_scenic_tourist_heat_dist", {
-          date: http.gmt2str(this.date11),
-          scenic: this.senic_id,
-          min: this.power
-        }).then(resp => {
-          this.initMap(resp.data.hits[this.dataIndex].points);
-        });
+          this.initMap(this.initMapData[this.dataIndex].points);
       },
       play(){
         if (this.playState==true) {
-          console.log('timelineplaychanged1111',this.playState)
-          http.get("bi/get_scenic_tourist_heat_dist", {
-            date: this.date11,
-            scenic: this.senic_id,
-            min: this.power
-          }).then(resp => {
-            this.initMap(resp.data.hits[this.dataIndex].points);
-          });
+            this.initMap(this.initMapData[this.dataIndex].points);
         }
         if (this.playState==false) {
           console.log('timelineplaychanged1111',this.dataIndex)
         }
-
       },
       sinic(){
 
