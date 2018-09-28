@@ -19,7 +19,7 @@
                 <Radio label="2">昨日</Radio>
               </RadioGroup>
               <DatePicker v-model="datefff" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
-              <Select v-model="city" clearable style="width:120px;margin-left:15px">
+              <Select v-model="city" clearable style="width:120px;margin-left:15px" @on-change="form1change">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
             </div>
@@ -79,7 +79,7 @@
           </div>
           <div class="lyrd_index_jryk">
             <div class="lyrd_index_jryk_title">
-              <span class="lyrd_index_search_title">今日游客各州市所占比例</span>
+              <span class="lyrd_index_search_title">今日游客{{btitle}}所占比例</span>
 
             </div>
             <div>
@@ -101,8 +101,8 @@
                 <Radio label="4">最近30天</Radio>
               </RadioGroup>
               <DatePicker v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期"
-                          style="width:180px"></DatePicker>
-              <Select v-model="city1" clearable style="width:120px;margin-left:15px">
+                          style="width:180px" @on-change="form1change1"></DatePicker>
+              <Select v-model="city1" clearable style="width:120px;margin-left:15px" @on-change="form1change1">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
             </div>
@@ -150,6 +150,7 @@
   export default {
     data() {
       return {
+        btitle:'各市州',
         showud1:1,
         showud2:2,
         color1:'red',
@@ -163,8 +164,8 @@
         cdate: '',
         date1: [http.getWeekAgo(),http.getToday()],
         cityData: [],
-        city: '0',
-        city1: '0',
+        city: '',
+        city1: '',
         start: '',
         end: '',
         pieData: [],
@@ -186,7 +187,6 @@
                 return [start, end];
               },
               onClick: (picker) => {
-                console.log('日期：：：', picker)
               }
             },
             {
@@ -211,20 +211,19 @@
       getCity() {
         http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
+          this.city = resp.data.hits[0].id
+          this.city1 = resp.data.hits[0].id
         })
         this.datefff=http.getToday()
         this.pieData1=[]
         http.get('bi/get_tourism_dist_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
           //this.pieData = resp.data.hits;
-          console.log(this.pieData)
           for (var i=0;i<resp.data.hits.length;i++){
             this.pieData1.push({name:resp.data.hits[i].name +' '+ resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
           }
-          console.log('this.pieData1::',this.pieData1)
           this.initBar()
         })
         http.get('bi/get_tourism_qty_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
-          console.log('qq1qqq', resp.data.hits.total)
           this.total = resp.data.hits.total;
 
           if (resp.data.hits.ratio<0){
@@ -299,7 +298,8 @@
           },
           tooltip: {
             trigger: 'axis',
-            backgroundColor: '#323232'
+            backgroundColor: '#323232',
+            formatter:'{c} 万'
           },
           xAxis: {
             type: 'category',
@@ -339,18 +339,20 @@
         this.$router.push(val)
       },
       form1change() {
+        if (this.city==0||this.city=='undefied'||this.city==null){
+          this.btitle='各市州'
+        } else {
+          this.btitle='各景区'
+        }
         this.pieData1=[]
         http.get('bi/get_tourism_dist_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
           //this.pieData = resp.data.hits;
-          console.log(this.pieData)
           for (var i=0;i<resp.data.hits.length;i++){
             this.pieData1.push({name:resp.data.hits[i].name +' '+ resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
           }
-          console.log('this.pieData1::',this.pieData1)
           this.initBar()
         })
         http.get('bi/get_tourism_qty_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
-          console.log('qq1qqq', resp.data.hits.total)
           this.total = resp.data.hits.total;
 
           if (resp.data.hits.ratio<0){
@@ -378,59 +380,37 @@
           endTime: http.gmt2str(this.date1[1]),
           city_id: this.city1
         }).then(resp => {
-          console.log(resp.data)
           this.totalP = resp.data.hits.total;
           for (var i = 0; i < resp.data.hits.list.length; i++) {
             this.lineDatax.push(resp.data.hits.list[i].date)
             this.lineDatay.push(resp.data.hits.list[i].value / 10000)
           }
-          console.log(this.lineDatax)
-          console.log(this.lineDatay)
+          this.initLine()
+        })
+      },
+      form1change2() {
+        this.totalP = ''
+        this.lineDatax = []
+        this.lineDatay = []
+        http.get('bi/get_tourism_trend_by_timespan', {
+          startTime: http.gmt2str(this.date1[0]),
+          endTime: http.gmt2str(this.date1[1]),
+          city_id: this.city1
+        }).then(resp => {
+          this.totalP = resp.data.hits.total;
+          for (var i = 0; i < resp.data.hits.list.length; i++) {
+            this.lineDatax.push(resp.data.hits.list[i].date)
+            this.lineDatay.push(resp.data.hits.list[i].value / 10000)
+          }
           this.initLine()
         })
       },
       p2(){
         if (this.dateChoice2==3) {
-          console.log(111111111)
-          this.totalP = ''
-          this.lineDatax = []
-          this.lineDatay = []
-          http.get('bi/get_tourism_trend_by_timespan', {
-            startTime:http.getWeekAgo(),
-            endTime:http.getToday(),
-            city_id: this.city1
-          }).then(resp => {
-            console.log(resp.data)
-            this.totalP = resp.data.hits.total;
-            for (var i = 0; i < resp.data.hits.list.length; i++) {
-              this.lineDatax.push(resp.data.hits.list[i].date)
-              this.lineDatay.push(resp.data.hits.list[i].value / 10000)
-            }
-            console.log(this.lineDatax)
-            console.log(this.lineDatay)
-            this.initLine()
-          })
+          this.date1=[http.getWeekAgo(),http.getToday()]
         }
         if (this.dateChoice2==4) {
-          console.log('this.dateChoice1::::::',this.dateChoice1)
-          this.totalP = ''
-          this.lineDatax = []
-          this.lineDatay = []
-          http.get('bi/get_tourism_trend_by_timespan', {
-            startTime: http.getMonthAgo(),
-            endTime: http.getToday(),
-            city_id: this.city1
-          }).then(resp => {
-            console.log(resp.data)
-            this.totalP = resp.data.hits.total;
-            for (var i = 0; i < resp.data.hits.list.length; i++) {
-              this.lineDatax.push(resp.data.hits.list[i].date)
-              this.lineDatay.push(resp.data.hits.list[i].value / 10000)
-            }
-            console.log(this.lineDatax)
-            console.log(this.lineDatay)
-            this.initLine()
-          })
+          this.date1=[http.getMonthAgo(),http.getToday()]
         }
       },
       p1(){
@@ -439,15 +419,12 @@
           this.pieData1=[]
           http.get('bi/get_tourism_dist_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
             //this.pieData = resp.data.hits;
-            console.log(this.pieData)
             for (var i=0;i<resp.data.hits.length;i++){
               this.pieData1.push({name:resp.data.hits[i].name +' '+ resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
             }
-            console.log('this.pieData1::',this.pieData1)
             this.initBar()
           })
           http.get('bi/get_tourism_qty_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
-            console.log('qq1qqq', resp.data.hits.total)
             this.total = resp.data.hits.total;
 
             if (resp.data.hits.ratio<0){
@@ -471,15 +448,12 @@
           this.pieData1=[]
           http.get('bi/get_tourism_dist_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
             //this.pieData = resp.data.hits;
-            console.log(this.pieData)
             for (var i=0;i<resp.data.hits.length;i++){
               this.pieData1.push({name:resp.data.hits[i].name +' '+ resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
             }
-            console.log('this.pieData1::',this.pieData1)
             this.initBar()
           })
           http.get('bi/get_tourism_qty_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
-            console.log('qq1qqq', resp.data.hits.total)
             this.total = resp.data.hits.total;
 
             if (resp.data.hits.ratio<0){
@@ -510,15 +484,12 @@
         this.pieData1=[]
         http.get('bi/get_tourism_dist_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
           //this.pieData = resp.data.hits;
-          console.log(this.pieData)
           for (var i=0;i<resp.data.hits.length;i++){
             this.pieData1.push({name:resp.data.hits[i].name +' '+ resp.data.hits[i].proportion+'%',value:resp.data.hits[i].value})
           }
-          console.log('this.pieData1::',this.pieData1)
           this.initBar()
         })
         http.get('bi/get_tourism_qty_by_date', {date: http.gmt2str(this.datefff), city_id: this.city}).then(resp => {
-          console.log('qq1qqq', resp.data.hits.total)
           this.total = resp.data.hits.total;
 
           if (resp.data.hits.ratio<0){
@@ -540,9 +511,9 @@
     },
 
     watch: {
-      city: 'form1change',
+      // city: 'form1change',
       date1: 'form1change1',
-      city1: 'form1change1',
+      // city1: 'form1change1',
       dateChoice1:'p1',
       dateChoice2:'p2',
     }

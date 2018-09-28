@@ -10,7 +10,7 @@
       <TabPane label="平台运营" name="platform" class="tabpane_content">
         <card>
           <div style="margin-bottom: 20px">
-            <span style="font-weight: bold;color: #000000">平台今日运营数据</span>
+            <span style="font-weight: bold;color: #000000">平台运营数据</span>
 
             <DatePicker v-model="picDate" type="date" placeholder="Select date"
                         style="width: 120px;float: right"></DatePicker>
@@ -33,10 +33,10 @@
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
-                    <span >&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color1}"><Icon v-if="is1==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is1!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{flink}}%&nbsp;&nbsp;</span>
+                    <span >&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color1}"><Icon v-if="is1==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is1!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{fratio}}%&nbsp;&nbsp;</span>
                     </div>
                     <div style="background-color: #f6f8fa;margin-top: 10px;padding-top: 2px">
-                    <span >&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color2}"><Icon v-if="is2==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is2!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{fratio}}%&nbsp;&nbsp;</span>
+                    <span >&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color2}"><Icon v-if="is2==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is2!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{flink}}%&nbsp;&nbsp;</span>
                     </div>
                   </Col>
                 </Row>
@@ -59,11 +59,11 @@
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
-                    <span>&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color3}"><Icon v-if="is3==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is3!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{link}}%&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color3}"><Icon v-if="is3==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is3!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{ratio}}%&nbsp;&nbsp;</span>
                     </div>
 
                     <div style="background-color: #f6f8fa;margin-top: 10px;padding-top: 2px">
-                    <span>&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color4}"><Icon v-if="is4==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is4!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{ratio}}%&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color4}"><Icon v-if="is4==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is4!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{link}}%&nbsp;&nbsp;</span>
                     </div>
                   </Col>
                 </Row>
@@ -92,6 +92,14 @@
   .tabpane_content {
     padding: 20px;
     background: #f2f2f2;
+  }
+  .ti{
+      color: #000;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 52px;
+      padding-left: 20px;
+      height: 45px;
   }
 </style>
 
@@ -125,7 +133,6 @@
       }
     },
     mounted() {
-      //this.init()
     },
     methods: {
       init() {
@@ -175,7 +182,6 @@
         this.lineDatax2 = []
         this.lineDatay = []
         http.get('bi/get_ops_trend_date', {startTime: val1[0], endTime: val1[1], type: 'm'}).then(resp => {
-          console.log('get_ops_trend_date', resp.data.hits)
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.lineDatax1.push(resp.data.hits[i].mau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)
@@ -186,7 +192,6 @@
       },
       wp1(){
         http.get('bi/get_ops_qty_by_date', {date: http.gmt2str(this.picDate)}).then(resp => {
-          console.log(resp.data.hits)
           this.addData = resp.data.hits[0]
           this.aduData = resp.data.hits[1]
           if (Number(resp.data.hits[0].link)>=0){
@@ -226,7 +231,6 @@
             this.color4='green'
             this.is4=2
           }
-          console.log('this.color1',this.color1)
         })
       },
       _dd1(){
@@ -235,7 +239,6 @@
         this.lineDatax2 = []
         this.lineDatay = []
         http.get('bi/get_ops_trend_date', {startTime: http.gmt2str(this.dd2), endTime: http.gmt2str(this.dd1), type: 'm'}).then(resp => {
-          console.log('get_ops_trend_date', resp.data.hits)
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.lineDatax1.push(resp.data.hits[i].mau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)

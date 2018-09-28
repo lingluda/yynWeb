@@ -236,10 +236,9 @@
                 label: {
                   show: true,
                   position: 'top',
-                  formatter: '{c}'
+                  formatter: '{c} 万'
                 },
                 color: function (params) {
-                  // build a color map as your need.
                   var colorList = [
                     '#ff9b33', '#ff9b33', '#ff9b33', '#006EFF', '#006EFF',
                     '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF',
@@ -286,10 +285,6 @@
             }
           },
           yAxis: {
-       /*     show:true,
-            axisLine: {show:false},
-            axisTick: {show:false},
-            splitLine:{show:false},*/
             type: 'category',
             data: this.max1y,
             axisLine:{
@@ -310,7 +305,7 @@
                   label: {
                     show: true,
                     position: 'right',
-                    formatter: '{c}'
+                    formatter: '{c} 万'
                   },
                   color: function (params) {
                     // build a color map as your need.
@@ -333,6 +328,11 @@
               itemStyle: {
                 normal: {
                   color: 'red',
+                  label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{c} 万'
+                  },
                 }
               }
             }
@@ -387,17 +387,44 @@
             {
               name: '今日景区客流',
               type: 'bar',
-              data: this.max2n
+              data: this.max2n,
+              itemStyle: {
+                normal: {
+                  label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{c} 万'
+                  },
+                }
+              }
             },
             {
               name: '昨日景区客流',
               type: 'bar',
-              data: this.max2y
+              data: this.max2y,
+              itemStyle: {
+                normal: {
+                  label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{c} 万'
+                  },
+                }
+              }
             },
             {
               name: '客流变化量',
               type: 'line',
-              data: this.max2his
+              data: this.max2his,
+              itemStyle: {
+                normal: {
+                  label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{c} 万'
+                  },
+                }
+              }
             }
 
           ],
@@ -450,7 +477,7 @@
                 label: {
                   show: true,
                   position: 'top',
-                  formatter: '{c}'
+                  formatter: '{c} 万'
                 },
                 color: function (params) {
                   // build a color map as your need.
@@ -478,7 +505,6 @@
           "yyyy-MM-dd"
         )
         http.get('bi/get_hot_desc_vist_qty_by_date',{chan:this.chan,date:'2018-09-01',top:10}).then(resp=>{
-          console.log('sb',resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)
             this.barDatay.push(parseInt(resp.data.hits[i].dau)/10000)
@@ -490,7 +516,6 @@
         this.barDatax1=[]
         this.barDatay1=[]
         http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
-          console.log(resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax1.push(resp.data.hits[i].name)
             this.barDatay1.push(parseInt(resp.data.hits[i].dau)/10000)
@@ -501,7 +526,6 @@
       click1(){
         this.barDatax=[]
         this.barDatay=[]
-        console.log(http.gmt2str(this.picDate1))
         http.get('bi/get_hot_desc_vist_qty_by_date',{chan:'app',date:http.gmt2str(this.picDate1),top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)
@@ -514,7 +538,6 @@
         this.barDatax1=[]
         this.barDatay1=[]
         http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:'app',date:http.gmt2str(this.picDate2),top:10}).then(resp=>{
-          console.log(resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax1.push(resp.data.hits[i].name)
             this.barDatay1.push(parseInt(resp.data.hits[i].dau)/10000)
@@ -524,8 +547,6 @@
       },
       click3(){
         http.get('bi/get_hot_line_by_date',{date:http.gmt2str(this.picDate3),top:10}).then(resp=>{
-          console.log('this.fdata',resp.data.hits[0].an='sss')
-          console.log('this.fdata',resp.data.hits[0])
           this.fdata = resp.data.hits;
           for (var i=0;i<resp.data.hits.length;i++){
             this.fdata[i].tpers=this.fdata[i].order/(this.fdata[0].order*1.3)*100
@@ -538,8 +559,8 @@
         this.max1y=[]
         http.get('bi/get_scenic_tourist_top_by_date',{date:http.gmt2str(this.picDate4),top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
-            this.max1his.push(resp.data.hits[i].his)
-            this.max1n.push(resp.data.hits[i].n)
+            this.max1his.push(resp.data.hits[i].his/10000)
+            this.max1n.push(resp.data.hits[i].n/10000)
             this.max1y.push(resp.data.hits[i].name)
           }
           this.initMax1()
@@ -551,29 +572,26 @@
         this.max2name=[]
         this.max2his=[]
         http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
-          console.log('top',resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
-            this.max2his.push(resp.data.hits[i].ince)
-            this.max2n.push(resp.data.hits[i].n)
-            this.max2y.push(resp.data.hits[i].pre)
+            this.max2his.push(resp.data.hits[i].ince/10000)
+            this.max2n.push(resp.data.hits[i].n/10000)
+            this.max2y.push(resp.data.hits[i].pre/10000)
             this.max2name.push(resp.data.hits[i].name)
           }
           this.initMax2()
         })
       },
       addliang(){
-        console.log(this.addling)
         if (this.addling==1) {
           this.max2n=[]
           this.max2y=[]
           this.max2name=[]
           this.max2his=[]
           http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
-            console.log('top',resp.data.hits)
             for (var i=0;i<resp.data.hits.length;i++) {
-              this.max2his.push(resp.data.hits[i].ince)
-              this.max2n.push(resp.data.hits[i].n)
-              this.max2y.push(resp.data.hits[i].pre)
+              this.max2his.push(resp.data.hits[i].ince/10000)
+              this.max2n.push(resp.data.hits[i].n/10000)
+              this.max2y.push(resp.data.hits[i].pre/10000)
               this.max2name.push(resp.data.hits[i].name)
             }
             this.initMax2()
@@ -585,7 +603,6 @@
           this.max2name=[]
           this.max2his=[]
           http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
-            console.log('top',resp.data.hits)
             for (var i=0;i<resp.data.hits.length;i++) {
               this.max2his.push(resp.data.hits[i].rate)
               this.max2n.push(resp.data.hits[i].n)

@@ -166,7 +166,7 @@
               <span style="font-weight: bold;color: #000000">州市网络热词TOP10</span>
               <Tooltip content="与全省相关网络热词排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
-              <Select style="width: 150px;float:right">
+              <Select style="width: 150px;float:right" v-model="city2">
                 <Option v-for="item in cityData" :value="item.code">{{item.name}}</Option>
                </Select>
             </div>
@@ -378,7 +378,8 @@ export default {
       pie1:[],
       pie2:[],
       cityData:[],
-      city1:'530000',
+      city1:'',
+      city2:'',
       date1:'2018-08-28',
       columns1: [
         {
@@ -432,7 +433,8 @@ export default {
       this.date1 = http.getToday()
       http.get('bi/get_all_city_prov', {}).then(resp => {
         this.cityData = resp.data.hits;
-        console.log('this.cityData:',this.cityData)
+        this.city1=resp.data.hits[0].code;
+        this.city2=resp.data.hits[0].code;
       })
     },
     initHealth() {
@@ -733,7 +735,6 @@ export default {
       this.pie1=[]
       this.pie2=[]
       http.get('bi/get_pom_by_date',{date:http.gmt2str(this.date1),area_code:this.city1}).then(resp=>{
-        console.log('玉琴：：：',resp.data.hits[2])
         this.pie1=resp.data.hits;
         if (this.pie1[2].proportion>20){
           this.title1='不健康'

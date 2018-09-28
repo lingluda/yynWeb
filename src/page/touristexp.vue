@@ -8,10 +8,10 @@
           <span style="font-weight: bold;color: #000000">投诉分析</span>
         </div>
         <div>
-          <RadioGroup type="button" v-model="picTo">
+        <!--  <RadioGroup type="button" v-model="picTo">
             <Radio label="1">今日</Radio>
             <Radio label="2">昨日</Radio>
-          </RadioGroup>
+          </RadioGroup>-->
           <DatePicker type="date" v-model="picdate1" placeholder="自选时间" style="width: 120px"></DatePicker>
           <Select style="width: 120px" v-model="p11">
             <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
@@ -219,6 +219,7 @@ export default {
       color1:'red',
       color2:'green',
       pic7:'',
+      cityData:[],
       linex:[],
       liney:[],
       p11:'',
@@ -244,8 +245,6 @@ export default {
   },
   mounted() {
     this.init();
-
-
   },
   methods: {
     change7(){
@@ -254,11 +253,8 @@ export default {
       this.procX3=[]
       this.procY1=[]
       this.timeX=[]
-      console.log(121211)
       //this.picdate2
       http.get('bi/get_complaint_by_date',{date:http.getYesterDay()}).then(resp=>{
-        console.log(resp)
-        console.log("游客体验：：", resp.data.hits);
         this.close1=resp.data.hits.closed;
         this.unclose1=resp.data.hits.unclosed;
         this.timeX.push(parseInt(resp.data.hits.min_proc));
@@ -271,10 +267,6 @@ export default {
           this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
           this.procY1.push(resp.data.hits.proc_stat[i].name);
         }
-        console.log('this.timeX',this.timeX)
-        console.log('procX2',this.procX2)
-        console.log(this.procX3)
-        console.log(this.procY1)
         this.closeComplaint();
       })
     },
@@ -595,7 +587,6 @@ export default {
       http
         .get("bi/get_complaint_by_mon", { date: http.gmt2strm(this.picdate2) })
         .then(resp => {
-          console.log("游客体验：：", resp.data.hits);
           this.close1=resp.data.hits.closed;
           this.unclose1=resp.data.hits.unclosed;
           this.timeX.push(parseInt(resp.data.hits.min_proc));
@@ -608,10 +599,6 @@ export default {
             this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
             this.procY1.push(resp.data.hits.proc_stat[i].name);
           }
-          console.log(this.procX1)
-          console.log(this.procX2)
-          console.log(this.procX3)
-          console.log(this.procY1)
           this.closeComplaint();
         });
     },
@@ -621,7 +608,6 @@ export default {
       http
         .get("bi/get_complaint_trend_by_monspan", {startTime:http.gmt2str(this.picdate3[0]),endTime:http.gmt2str(this.picdate3[1])})
         .then(resp => {
-          console.log("游客体验：：", resp.data.hits);
               for (var i=0;i<resp.data.hits.length;i++){
                 this.linex.push(resp.data.hits[i].date)
                 this.liney.push(resp.data.hits[i].open)
@@ -629,7 +615,6 @@ export default {
           this.initLine();
         });
     },
-
     ppp(){
       http
         .get("bi/get_complaint_by_date", { date: http.gmt2str(this.picdate1),city_id:this.p11 })
@@ -655,7 +640,6 @@ export default {
       http
         .get("bi/get_complaint_trend_by_monspan", {startTime:http.gmt2str(this.dd2),endTime:http.gmt2str(this.dd1)})
         .then(resp => {
-          console.log("游客体验：：", resp.data.hits);
           for (var i=0;i<resp.data.hits.length;i++){
             this.linex.push(resp.data.hits[i].date)
             this.liney.push(resp.data.hits[i].open)

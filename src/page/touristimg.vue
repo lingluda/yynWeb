@@ -9,13 +9,13 @@
             <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
           </Tooltip>
         </div>
-        <Select style="width: 120px" placeholder="城市" v-model="ccc">
+        <Select style="width: 120px" placeholder="城市" v-model="ccc" @on-change="clisk">
           <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
         </Select>
-        <Select style="width: 120px" placeholder="区域" v-model="ccc1">
+        <Select style="width: 120px" placeholder="区域" v-model="ccc1" @on-change="_ccc1">
           <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
         </Select>
-        <DatePicker type="date" v-model="picDate" placeholder="自选时间" style="width: 120px"></DatePicker>
+        <DatePicker type="date" v-model="picDate" placeholder="自选时间" style="width: 120px" @on-change="dateChange"></DatePicker>
         <Row :gutter="16" style="margin-top: 20px">
           <Col span="6">
             <div style="display: flex;border: 1px solid #dcdee2;height: 400px;width: 100%">
@@ -42,19 +42,19 @@
 
         <Row :gutter="16" style="margin-top: 23px">
           <Col span="12">
-            <div id="age" class="tousimg_zb"></div>
+            <div id="age" class="tousimg_zb1"></div>
           </Col>
           <Col span="12">
-            <div id="edu" class="tousimg_zb"></div>
+            <div id="edu" class="tousimg_zb1"></div>
           </Col>
 
         </Row>
         <Row :gutter="16" style="margin-top: 23px;">
           <Col span="12">
-            <div id="city" class="tousimg_zb"></div>
+            <div id="city" class="tousimg_zb2"></div>
           </Col>
           <Col span="12">
-            <div id="province" class="tousimg_zb"></div>
+            <div id="province" class="tousimg_zb2"></div>
           </Col>
         </Row>
       </card>
@@ -87,10 +87,9 @@
               </Tabs>
             </div>
           </Col>
+
           <Col span="12">
-            <aaamap :d2d="this.data2" style="border: 1px solid #dcdee2;height: 557px;width: 100%"></aaamap>
-            <!--<iframe src="http://cnmrz.cn/dist/index.html" style="border: 1px solid #dcdee2;height: 557px;width: 100%"></iframe>-->
-            <!--<div id="moveMap" style="border: 1px solid #dcdee2;height: 557px"></div>-->
+            <aaamap :d2d="this.data2" :ioindex="this.ioindex" style="border: 1px solid #dcdee2;height: 557px;width: 100%"></aaamap>
           </Col>
         </Row>
       </card>
@@ -168,7 +167,18 @@
     border: 1px solid #dcdee2;
     padding: 0 30px 15px;
   }
-
+  .tousimg_zb1 {
+    width: 100%;
+    height: 200px;
+    border: 1px solid #dcdee2;
+    padding: 0 30px 15px;
+  }
+  .tousimg_zb2 {
+    width: 100%;
+    height: 600px;
+    border: 1px solid #dcdee2;
+    padding: 0 30px 15px;
+  }
   .ivu-col-span-6,
   .ivu-col-span-12 {
     padding-left: 8px !important;
@@ -190,6 +200,7 @@
     },
     data() {
       return {
+        ioindex:1,
         d11:http.getToday(),
         d22:'2018-01',
         trfcty:'1',
@@ -198,7 +209,7 @@
         ccc:'',
         ccc1:'',
         cccM:'',
-        hotlineDate:'2018-08-25',
+        hotlineDate:http.getYesterDay(),
         provx: [],
         provy: [],
         cityx: [],
@@ -226,9 +237,9 @@
         cityData1: [],
         proData: [],
         picDate: http.getToday(),
-        picDate3: http.getToday(),
+        picDate3: http.getYesterDay(),
         picDate4: [this.d22,this.d11],
-        cpicDate: "",
+        cpicDate: "2018-09-01",
         columns1: [
           {
             title: "排名",
@@ -268,10 +279,66 @@
       };
     },
     mounted() {
-      this.initMap();
       this.init();
     },
     methods: {
+      clisk(val){
+        this.provx = [];
+        this.provy = [];
+        this.cityx = [];
+        this.cityy = [];
+        this.eduData = [];
+        this.eduDatax = [];
+        this.eduDatay = [];
+        this.cashDataX = [];
+        this.ageData = [];
+        this.ageDatax = [];
+        this.ageDatay = [];
+        this.inDatax = [];
+        this.carDatax = [];
+        this.carDatay = [];
+        this.mobilex = [];
+        this.mobiley = [];
+
+        http.get('bi/get_scenic_by_city',{city_id:val}).then(resp=>{
+          this.senicData=resp.data.hits
+          this.ccc1='';
+        })
+        http
+          .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:val})
+          .then(resp => {
+            this.sexData = resp.data.hist.gender;
+            this.inData = resp.data.hist.consumpting;
+            for (var i = 0; i < resp.data.hist.consumpting.length; i++) {
+              this.inDatax.push(resp.data.hist.consumpting[i].name);
+            }
+            this.eduData = resp.data.hist.edu;
+            for (var i = 0; i < resp.data.hist.edu.length; i++) {
+              this.eduDatax.push(resp.data.hist.edu[i].name);
+              this.eduDatay.push(resp.data.hist.edu[i].value * 100);
+            }
+            this.osData = resp.data.hist.mobile;
+            this.ageData = resp.data.hist.age;
+            for (var i = 0; i < resp.data.hist.age.length; i++) {
+              this.ageDatax.push(resp.data.hist.age[i].name);
+              this.ageDatay.push(resp.data.hist.age[i].value * 100);
+            }
+            for (var i = 0; i < resp.data.hist.mobile.length; i++) {
+              this.mobilex.push(resp.data.hist.mobile[i].name);
+              this.mobiley.push(parseInt(resp.data.hist.mobile[i].value * 10000)/100);
+            }
+            for (var i = 0; i < resp.data.hist.car.length; i++) {
+              this.carDatax.push(resp.data.hist.car[i].name);
+              this.carDatay.push(parseInt(resp.data.hist.car[i].value * 10000)/100);
+            }
+            this.initSex();
+            this.initOS();
+            this.initIOS();
+            this.initIn();
+            this.initEdu();
+            this.initAge();
+          });
+      },
       hotlinedp(){
         this.data2=[]
         http.get("bi/get_migrate_by_date", {
@@ -291,7 +358,6 @@
             this.data3[i].trainx=parseInt(resp.data.hits[i].train*10000)/100+'%'
             this.data3[i].planex=parseInt(resp.data.hits[i].plane*10000)/100+'%'
           }
-          console.log(this.data3)
         });
       },
       hotlinepic(val11) {
@@ -416,30 +482,96 @@
           this.cityData1 = resp.data.hits;
           this.ccti = resp.data.hits[0].name
         })
-        http.get('bi/get_scenic_by_city',{city_id:379}).then(resp=>{
+        http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
           this.senicData=resp.data.hits
+          this.ccc1 = resp.data.hits[0].id
         })
-      },
-      initMap() {
-        var center = new qq.maps.LatLng(26.90923, 108.397428);
-        var map = new qq.maps.Map(document.getElementById("moveMap"), {
-          center: center,
-          zoom: 5
-        });
-        var path1 = [
-          new qq.maps.LatLng(24.87966, 102.83322),
-          new qq.maps.LatLng(22.54666503349262, 114.05956000000003)
-        ];
-        var polyline = new qq.maps.Polyline({
-          path: path1,
-          strokeColor: "#0ef94a",
-          strokeWeight: 2,
-          editable: false,
-          map: map
-        });
+
+        this.provx = [];
+        this.provy = [];
+        this.cityx = [];
+        this.cityy = [];
+        this.eduData = [];
+        this.eduDatax = [];
+        this.eduDatay = [];
+        this.cashDataX = [];
+        this.ageData = [];
+        this.ageDatax = [];
+        this.ageDatay = [];
+        this.inDatax = [];
+        this.carDatax = [];
+        this.carDatay = [];
+        this.mobilex = [];
+        this.mobiley = [];
+
+        http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
+          this.senicData=resp.data.hits
+          this.ccc1='';
+        })
+        http
+          .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:this.ccc})
+          .then(resp => {
+            this.sexData = resp.data.hist.gender;
+            this.inData = resp.data.hist.consumpting;
+            for (var i = 0; i < resp.data.hist.consumpting.length; i++) {
+              this.inDatax.push(resp.data.hist.consumpting[i].name);
+            }
+            this.eduData = resp.data.hist.edu;
+            for (var i = 0; i < resp.data.hist.edu.length; i++) {
+              this.eduDatax.push(resp.data.hist.edu[i].name);
+              this.eduDatay.push(resp.data.hist.edu[i].value * 100);
+            }
+            this.osData = resp.data.hist.mobile;
+            this.ageData = resp.data.hist.age;
+            for (var i = 0; i < resp.data.hist.age.length; i++) {
+              this.ageDatax.push(resp.data.hist.age[i].name);
+              this.ageDatay.push(resp.data.hist.age[i].value * 100);
+            }
+            for (var i = 0; i < resp.data.hist.mobile.length; i++) {
+              this.mobilex.push(resp.data.hist.mobile[i].name);
+              this.mobiley.push(parseInt(resp.data.hist.mobile[i].value * 10000)/100);
+            }
+            for (var i = 0; i < resp.data.hist.car.length; i++) {
+              this.carDatax.push(resp.data.hist.car[i].name);
+              this.carDatay.push(parseInt(resp.data.hist.car[i].value * 10000)/100);
+            }
+            this.initSex();
+            this.initOS();
+            this.initIOS();
+            this.initIn();
+            this.initEdu();
+            this.initAge();
+          });
+        http
+          .get("bi/get_portrait_origin_by_date", {
+            date: http.gmt2str(this.cpicDate),
+            type: "city",
+            scenic: "",
+            city_id: this.ccc
+          })
+          .then(resp => {
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.cityx.push(resp.data.hist[i].origin_city);
+              this.cityy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
+            }
+            this.initCity();
+          });
+        http
+          .get("bi/get_portrait_origin_by_date", {
+            date: this.cpicDate,
+            type: "prov",
+            scenic: "",
+            city_id: this.ccc
+          })
+          .then(resp => {
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.provx.push(resp.data.hist[i].origin_province);
+              this.provy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
+            }
+            this.initPro();
+          });
       },
       initSex() {
-        console.log("123122222222222", this.sexData);
         let sex = this.$echarts.init(document.getElementById("sex"));
         sex.setOption({
           title: {
@@ -976,6 +1108,12 @@
         });
       },
       clicktab() {
+        if (this.tabname==='in'){
+          this.ioindex=1
+        }
+        if (this.tabname==='out'){
+          this.ioindex=0
+        }
         this.data2=[]
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
@@ -994,7 +1132,6 @@
             this.data3[i].trainx=parseInt(resp.data.hits[i].train*10000)/100+'%'
             this.data3[i].planex=parseInt(resp.data.hits[i].plane*10000)/100+'%'
           }
-          console.log('this.data3333',this.data3)
         });
       },
       dateChange() {
@@ -1030,7 +1167,6 @@
               this.eduDatay.push(resp.data.hist.edu[i].value * 100);
             }
             this.osData = resp.data.hist.mobile;
-            console.log("resp.data.hist.age", resp.data.hist.age);
             this.ageData = resp.data.hist.age;
             for (var i = 0; i < resp.data.hist.age.length; i++) {
               this.ageDatax.push(resp.data.hist.age[i].name);
@@ -1059,7 +1195,6 @@
             city_id: this.ccc
           })
           .then(resp => {
-            console.log("city", resp.data.hist);
             for (var i = 0; i < resp.data.hist.length; i++) {
               this.cityx.push(resp.data.hist[i].origin_city);
               this.cityy.push(parseInt(resp.data.hist[i].origin_percent* 10000)/100);
@@ -1074,20 +1209,16 @@
             city_id: this.ccc
           })
           .then(resp => {
-            console.log("city", resp.data.hist);
             for (var i = 0; i < resp.data.hist.length; i++) {
               this.provx.push(resp.data.hist[i].origin_province);
               this.provy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
             }
             this.initPro();
           });
-
-
-
       },
       dateChange3(){
         http
-          .get("bi/get_consume_by_date", {date: http.gmt2str(this.picDate3), city_id: 392})
+          .get("bi/get_consume_by_date", {date: http.gmt2str(this.picDate3), city_id:this.ccc})
           .then(resp => {
             this.vagprice = resp.data.hist.avg_amount;
             this.middle = resp.data.hist.median_amount;
@@ -1098,201 +1229,23 @@
         http
           .get("bi/get_consume_type_by_mon", {
             startTime: http.gmt2str(this.picDate4[0]),
-            endTime: http.gmt2str(this.picDate4[1])
+            endTime: http.gmt2str(this.picDate4[1]),
+            city_id:this.ccc
           })
           .then(resp => {
-            console.log("get_consume_type_by_mon", resp.data.hits);
             this.cashData = resp.data.hits;
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.cashDataX.push(resp.data.hits[i].name);
             }
-            console.log("this.cashData", this.cashData);
-            console.log("this.cashData", this.cashDataX);
             this.initCash();
-          });
-      },
-      _ccc(){
-        console.log(this.ccc)
-
-        this.provx = [];
-        this.provy = [];
-        this.cityx = [];
-        this.cityy = [];
-        this.eduData = [];
-        this.eduDatax = [];
-        this.eduDatay = [];
-        this.cashDataX = [];
-        this.ageData = [];
-        this.ageDatax = [];
-        this.ageDatay = [];
-        this.inDatax = [];
-        this.carDatax = [];
-        this.carDatay = [];
-        this.mobilex = [];
-        this.mobiley = [];
-
-        http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
-          console.log(resp.data.hits)
-          this.senicData=resp.data.hits
-          this.ccc1='';
-        })
-        http
-          .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:this.ccc})
-          .then(resp => {
-            this.sexData = resp.data.hist.gender;
-            this.inData = resp.data.hist.consumpting;
-            for (var i = 0; i < resp.data.hist.consumpting.length; i++) {
-              this.inDatax.push(resp.data.hist.consumpting[i].name);
-            }
-            this.eduData = resp.data.hist.edu;
-            for (var i = 0; i < resp.data.hist.edu.length; i++) {
-              this.eduDatax.push(resp.data.hist.edu[i].name);
-              this.eduDatay.push(resp.data.hist.edu[i].value * 100);
-            }
-            this.osData = resp.data.hist.mobile;
-            console.log("resp.data.hist.age", resp.data.hist.age);
-            this.ageData = resp.data.hist.age;
-            for (var i = 0; i < resp.data.hist.age.length; i++) {
-              this.ageDatax.push(resp.data.hist.age[i].name);
-              this.ageDatay.push(resp.data.hist.age[i].value * 100);
-            }
-            for (var i = 0; i < resp.data.hist.mobile.length; i++) {
-              this.mobilex.push(resp.data.hist.mobile[i].name);
-              this.mobiley.push(parseInt(resp.data.hist.mobile[i].value * 10000)/100);
-            }
-            for (var i = 0; i < resp.data.hist.car.length; i++) {
-              this.carDatax.push(resp.data.hist.car[i].name);
-              this.carDatay.push(parseInt(resp.data.hist.car[i].value * 10000)/100);
-            }
-            this.initSex();
-            this.initOS();
-            this.initIOS();
-            this.initIn();
-            this.initEdu();
-            this.initAge();
-          });
-        http
-          .get("bi/get_portrait_origin_by_date", {
-            date: http.gmt2str(this.cpicDate),
-            type: "city",
-            scenic: "",
-            city_id: this.ccc
-          })
-          .then(resp => {
-            console.log("city", resp.data.hist);
-            for (var i = 0; i < resp.data.hist.length; i++) {
-              this.cityx.push(resp.data.hist[i].origin_city);
-              this.cityy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
-            }
-            this.initCity();
-          });
-        http
-          .get("bi/get_portrait_origin_by_date", {
-            date: this.cpicDate,
-            type: "prov",
-            scenic: "",
-            city_id: this.ccc
-          })
-          .then(resp => {
-            for (var i = 0; i < resp.data.hist.length; i++) {
-              this.provx.push(resp.data.hist[i].origin_province);
-              this.provy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
-            }
-            this.initPro();
           });
       },
       _ccc1(){
         if (this.ccc1==''||this.ccc1=="undefined"||this.ccc1==null){
-          console.log('ccc1::',this.ccc1)
         }
         else {
           this.cccM=this.ccc1
-          console.log('cccM',this.ccc1)
         }
-      },
-      _cccM(){
-        console.log(this.cccM)
-
-        this.provx = [];
-        this.provy = [];
-        this.cityx = [];
-        this.cityy = [];
-        this.eduData = [];
-        this.eduDatax = [];
-        this.eduDatay = [];
-        this.cashDataX = [];
-        this.ageData = [];
-        this.ageDatax = [];
-        this.ageDatay = [];
-        this.inDatax = [];
-        this.carDatax = [];
-        this.carDatay = [];
-        this.mobilex = [];
-        this.mobiley = [];
-        http
-          .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.picDate),city_id:this.ccc,scenic:this.cccM})
-          .then(resp => {
-            this.sexData = resp.data.hist.gender;
-            this.inData = resp.data.hist.consumpting;
-            for (var i = 0; i < resp.data.hist.consumpting.length; i++) {
-              this.inDatax.push(resp.data.hist.consumpting[i].name);
-            }
-            this.eduData = resp.data.hist.edu;
-            for (var i = 0; i < resp.data.hist.edu.length; i++) {
-              this.eduDatax.push(resp.data.hist.edu[i].name);
-              this.eduDatay.push(resp.data.hist.edu[i].value * 100);
-            }
-            this.osData = resp.data.hist.mobile;
-            console.log("resp.data.hist.age", resp.data.hist.age);
-            this.ageData = resp.data.hist.age;
-            for (var i = 0; i < resp.data.hist.age.length; i++) {
-              this.ageDatax.push(resp.data.hist.age[i].name);
-              this.ageDatay.push(resp.data.hist.age[i].value * 100);
-            }
-            for (var i = 0; i < resp.data.hist.mobile.length; i++) {
-              this.mobilex.push(resp.data.hist.mobile[i].name);
-              this.mobiley.push(parseInt(resp.data.hist.mobile[i].value * 10000)/100);
-            }
-            for (var i = 0; i < resp.data.hist.car.length; i++) {
-              this.carDatax.push(resp.data.hist.car[i].name);
-              this.carDatay.push(parseInt(resp.data.hist.car[i].value * 10000)/100);
-            }
-            this.initSex();
-            this.initOS();
-            this.initIOS();
-            this.initIn();
-            this.initEdu();
-            this.initAge();
-          });
-        http
-          .get("bi/get_portrait_origin_by_date", {
-            date: http.gmt2str(this.cpicDate),
-            type: "city",
-            scenic: this.cccM,
-            city_id: this.ccc
-          })
-          .then(resp => {
-            console.log("city", resp.data.hist);
-            for (var i = 0; i < resp.data.hist.length; i++) {
-              this.cityx.push(resp.data.hist[i].origin_city);
-              this.cityy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
-            }
-            this.initCity();
-          });
-        http
-          .get("bi/get_portrait_origin_by_date", {
-            date: http.gmt2str(this.cpicDate),
-            type: "prov",
-            scenic: this.cccM,
-            city_id: this.ccc
-          })
-          .then(resp => {
-            for (var i = 0; i < resp.data.hist.length; i++) {
-              this.provx.push(resp.data.hist[i].origin_province);
-              this.provy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
-            }
-            this.initPro();
-          });
       },
       _ccti(){
         this.data2=[]
@@ -1316,37 +1269,29 @@
         });
       },
       _d11(){
-        console.log('picDate4323232')
         this.picDate4[0]=this.d22;
         this.picDate4[1]=this.d11;
-        console.log(this.picDate4)
         this.cashDataX = []
         http
           .get("bi/get_consume_type_by_mon", {
             startTime: http.gmt2str(this.picDate4[0]),
-            endTime: http.gmt2str(this.picDate4[1])
+            endTime: http.gmt2str(this.picDate4[1]),
+            city_id:this.ccc
           })
           .then(resp => {
-            console.log("get_consume_type_by_mon", resp.data.hits);
             this.cashData = resp.data.hits;
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.cashDataX.push(resp.data.hits[i].name);
             }
-            console.log("this.cashData", this.cashData);
-            console.log("this.cashData", this.cashDataX);
             this.initCash();
           });
       }
     },
     watch: {
-      picDate: "dateChange",
       picDate3: "dateChange3",
       picDate4: "dateChange4",
       tabname: "clicktab",
       hotlineDate:'hotlinedp',
-      ccc:'_ccc',
-      ccc1:'_ccc1',
-      cccM:'_cccM',
       ccti:'_ccti',
       d11:'_d11'
     }

@@ -25,11 +25,15 @@
                  </Select>-->
               <Select style="width: 120px" v-model="power">
                 <Option value="60">60分钟</Option>
+                <Option value="30">30分钟</Option>
+                <Option value="15">15分钟</Option>
               </Select>
             </div>
             <div class="mapContainer">
+            <hot_map :x1="this.city11" :x2="senic_id" :x3="this.date11" :x4="this.power" style="width: 100%;height: 400px;" class="heatmap">
 
-            <div id="hotmap" style="width: 100%;height: 400px;" class="heatmap">
+            </hot_map>
+     <!--      <div id="hotmap" style="width: 100%;height: 400px;" class="heatmap">
               <div class="visualmap">
                 <div>
                   <span>颜色对应人口密度</span>
@@ -45,7 +49,7 @@
                 </div>
               </div>
 
-            </div>
+            </div>-->
             </div>
             <div id="timeline" style="width: 100%;height: 60px;"></div>
           </card>
@@ -181,8 +185,7 @@
     font-weight: 700;
     line-height: 52px;
     padding-left: 20px;
-    height: 45px;
-    background: #fff;
+    height: 55px;
   }
 
   .tabpane_content {
@@ -267,11 +270,15 @@
 <script>
   import http from "@/http.js";
   // import AMap from "AMap";
+  import hottk from '../../components/map/hotMap'
 
   var map;
   var heatmap;
   var testData;
   export default {
+    components:{
+      "hot_map":hottk
+    },
     data() {
       return {
         initMapData:[],
@@ -320,32 +327,13 @@
     methods: {
       init() {
         http.get('bi/get_scenic_by_city',{city_id:this.city11}).then(resp=>{
-          console.log(resp.data.hits)
           this.senicData=resp.data.hits
         })
-        http.get("bi/get_scenic_tourist_heat_dist", {
-          date: http.gmt2str(this.date11),
-          scenic: this.senic_id,
-          min: this.power
-        }).then(resp => {
-          this.initMapData=resp.data.hits;
-          this.centerx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
-          console.log('this.centerx:11111:',resp.data.hits[0].points[0].lng)
-          console.log('this.centerx:11111:',resp.data.hits[0].points[0].lat)
-          console.log('this.centerx::',this.centerx[0])
-          console.log('this.centerx::',this.centerx[1])
-          for (var i = 0; i < resp.data.hits.length; i++) {
-            this.timelines.push(resp.data.hits[i].time)
-          }
-          this.initMap(resp.data.hits[0].points);
-          this.initTimeline();
-        });
         http.get('bi/get_all_city', {}).then(resp => {
           this.cityData = resp.data.hits;
           this.modelcity=resp.data.hits[0].id
           this.city11=resp.data.hits[0].id
           this.piccity=resp.data.hits[0].id
-          console.log('this.cityData',this.cityData)
         })
         http.get('bi/get_scenic_tourist_compare_by_date', {
           startTime: http.gmt2str(this.da1[0]),
@@ -356,65 +344,18 @@
           min: this.power1
         }).then(resp => {
           this.lineDatayn1 = resp.data.hits.cprdate;
-          console.log('lineDatayn1', this.lineDatayn1)
           for (var i = 0; i < resp.data.hits.cprlist.length; i++) {
             this.lineDatay1.push(parseInt(resp.data.hits.cprlist[i].n))
           }
           this.lineDatayn2 = resp.data.hits.curdate;
-          console.log('lineDatayn2', this.lineDatayn2)
-          console.log('resp.data.hits.curlist', resp.data.hits.curlist)
           for (var i = 0; i < resp.data.hits.curlist.length; i++) {
             this.lineDatax.push(resp.data.hits.curlist[i].time)
             this.lineDatay2.push(parseInt(resp.data.hits.curlist[i].n))
           }
-          console.log('lineDatax', this.lineDatax)
           this.initline();
         })
       },
-      initMap: function (fffx) {
-        map = new qq.maps.Map(document.getElementById("hotmap"), {
-          zoom: 15,
-          center: new qq.maps.LatLng(this.centerx[1], this.centerx[0]),
-          mapTypeControlOptions: {
-            //设置控件的地图类型ID，ROADMAP显示普通街道地图，SATELLITE显示卫星图像，HYBRID显示卫星图像上的主要街道透明层
-            mapTypeIds: [
-              qq.maps.MapTypeId.ROADMAP,
-              qq.maps.MapTypeId.SATELLITE,
-              qq.maps.MapTypeId.HYBRID
-            ],
-            //设置控件位置相对上方中间位置对齐
-            position: qq.maps.ControlPosition.TOP_LEFT
-          },
-          zoomControl: false, //启用缩放控件
-          panControl: false,
 
-        });
-
-        //地图异步加载，在idle或者tilesloaded后初始化
-        qq.maps.event.addListenerOnce(map, "idle", function () {
-          if (QQMapPlugin.isSupportCanvas) {
-            heatmap = new QQMapPlugin.HeatmapOverlay(map, {
-              //点半径，设置为1即可
-              radius: 1,
-              //热力图最大透明度
-              maxOpacity: 0.8,
-              //是否在每一屏都开启重新计算，如果为true则每一屏都会有一个红点
-              useLocalExtrema: true,
-              //设置大小字段
-              valueField: "count"
-            });
-
-            testData = {
-              max: 100,
-              data: fffx
-            };
-            //绘制热力图
-            heatmap.setData(testData);
-          } else {
-            alert("您的浏览器不支持canvas，无法绘制热力图！！");
-          }
-        });
-      },
       initGauge() {
         let gauge = this.$echarts.init(document.getElementById("gauge"));
         gauge.setOption({
@@ -492,7 +433,6 @@
         mybar.setOption(option);
       },
       pic1() {
-        console.log('get_scenic_tourist_by_date', this.dataIndex)
         http.get('bi/get_scenic_tourist_by_date', {
           date: http.gmt2str(this.picDate6),
           scenic: this.senic_id5
@@ -516,142 +456,14 @@
           this.touristc = resp.data.hits.link;
         })
       },
-      initTimeline() {
-        let self = this
-        let timeline = this.$echarts.init(document.getElementById("timeline"))
-        timeline.setOption({
-          timeline: {   // 时间轴样式
-            axisType: 'category',
-            data: this.timelines,
-            /*playInterval: 5000,
-            bottom: '0',
-            symbolSize: 5,
-            autoPlay: false,
-            currentIndex: this.x,
-            //loop: true,
-            x: 100,
-
-            realtime: true,
-            lineStyle: {
-              color: '#466872',
-              width: 4,
-            },
-            label: {
-              color: '#5cc5da',
-              fontSize: 14,
-            },
-
-          },*/
-            playInterval: 2000,
-            bottom: '0',
-            symbolSize: 15,
-            autoPlay: true,
-            currentIndex: this.x,
-            loop: true,
-            realtime: true,
-            width: '95%',
-            x: '20px',
-            controlPosition: 'right',
-            lineStyle: {
-              color: '#e5e5e5',
-              width: 5,
-            },
-            label: {
-              normal: {
-                color: '#adadad',
-              },
-              fontSize: 12,
-              emphasis: {
-                color: '#0c70f9',
-              },
-            },
-            checkpointStyle: {
-              color: '#0c70f9',
-              borderColor: '#0c70f9'
-            },
-            controlStyle: {
-              normal: {color: '#0c70f9'},
-              emphasis: {color: '#0c70f9'},
-              textStyle: {
-                color: '#0c70f9'
-              },
-            },
-          }
-        });
-        timeline.on('timelinechanged', function (d) {
-          self.dataIndex = parseInt(d.currentIndex);
-        })
-        timeline.on('timelineplaychanged',function(d){
-          self.playState = d.playState;
-        })
-
-      },
-      x1() {
-        console.log(this.x)
-      },
-      dataChange1() {
-          this.initMap(this.initMapData[this.dataIndex].points);
-      },
-      play(){
-        if (this.playState==true) {
-            this.initMap(this.initMapData[this.dataIndex].points);
-        }
-        if (this.playState==false) {
-          console.log('timelineplaychanged1111',this.dataIndex)
-        }
-      },
       sinic(){
-
-        console.log(this.city11)
         http.get('bi/get_scenic_by_city',{city_id:this.city11}).then(resp=>{
-          console.log(resp.data.hits)
           this.senicData=resp.data.hits
           this.senic_id=this.senicData[0].id
         })
       },
-      hmi(){
-        this.timelines=[]
-        http.get("bi/get_scenic_tourist_heat_dist", {
-          date: http.gmt2str(this.date11),
-          scenic: this.senic_id,
-          min: this.power
-        }).then(resp => {
-
-          this.centerx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
-          console.log('this.centerx:11111:',resp.data.hits[0].points[0].lng)
-          console.log('this.centerx:11111:',resp.data.hits[0].points[0].lat)
-          console.log('this.centerx::',this.centerx[0])
-          console.log('this.centerx::',this.centerx[1])
-          for (var i = 0; i < resp.data.hits.length; i++) {
-            this.timelines.push(resp.data.hits[i].time)
-          }
-          this.initMap(resp.data.hits[0].points);
-          this.initTimeline();
-        });
-      },
-      datechange1(){
-        this.timelines=[]
-        http.get("bi/get_scenic_tourist_heat_dist", {
-          date: http.gmt2str(this.date11),
-          scenic: this.senic_id,
-          min: this.power
-        }).then(resp => {
-
-          this.centerx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
-          console.log('this.centerx:11111:',resp.data.hits[0].points[0].lng)
-          console.log('this.centerx:11111:',resp.data.hits[0].points[0].lat)
-          console.log('this.centerx::',this.centerx[0])
-          console.log('this.centerx::',this.centerx[1])
-          for (var i = 0; i < resp.data.hits.length; i++) {
-            this.timelines.push(resp.data.hits[i].time)
-          }
-          this.initMap(resp.data.hits[0].points);
-          this.initTimeline();
-        });
-      },
       picsb(){
         http.get('bi/get_scenic_by_city',{city_id:this.piccity}).then(resp=>{
-          console.log(resp.data.hits)
           this.senicData=resp.data.hits
           this.senic_id5=this.senicData[0].id
         })
@@ -682,13 +494,11 @@
       },
       pspsp(){
         http.get('bi/get_scenic_by_city',{city_id:this.modelcity}).then(resp=>{
-          console.log(resp.data.hits)
           this.senicData=resp.data.hits
           this.modelsenic=this.senicData[0].id
         })
       },
       ssdsadfa(){
-        console.log('modelsenic:::',this.modelsenic)
         this.lineDatay1=[]
         this.lineDatax=[]
         this.lineDatay2=[]
@@ -701,18 +511,14 @@
           min: this.power1
         }).then(resp => {
           this.lineDatayn1 = resp.data.hits.cprdate;
-          console.log('lineDatayn1', this.lineDatayn1)
           for (var i = 0; i < resp.data.hits.cprlist.length; i++) {
             this.lineDatay1.push(parseInt(resp.data.hits.cprlist[i].n))
           }
           this.lineDatayn2 = resp.data.hits.curdate;
-          console.log('lineDatayn2', this.lineDatayn2)
-          console.log('resp.data.hits.curlist', resp.data.hits.curlist)
           for (var i = 0; i < resp.data.hits.curlist.length; i++) {
             this.lineDatax.push(resp.data.hits.curlist[i].time)
             this.lineDatay2.push(parseInt(resp.data.hits.curlist[i].n))
           }
-          console.log('lineDatax', this.lineDatax)
           this.initline();
         })
       }
@@ -721,12 +527,7 @@
       piccity: 'picsb',
       today: 'pic1',
       picDate6: 'pic1',
-      x: 'x1',
-      dataIndex: 'dataChange1',
-      playState:'play',
       city11:'sinic',
-      senic_id:'hmi',
-      date11:'datechange1',
       senic_id5:'pccsscs',
       modelcity:'pspsp',
       modelsenic:'ssdsadfa'
