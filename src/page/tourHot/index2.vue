@@ -86,7 +86,7 @@
               <span class="lyrd_index_search_title">{{(this.datefff).toString().substring(8,10)}}日游客{{btitle}}所占比例</span>
 
             </div>
-            <div style="padding:0 18%">
+            <div>
               <div id="mybar" style="height:220px;min-width: 400px;"></div>
             </div>
           </div>
@@ -276,11 +276,16 @@ export default {
           formatter: "{b} ",
           backgroundColor: "#323232"
         },
+        grid:{
+
+        },
         legend: {
-          x: "50%",
+          top:"22%",
+          right: "20%",
           y: "26%",
           icon: "circle",
           orient: "horizontal",
+          width:"40%",
           // right: 10,
           // top: 20,
           // bottom: 20,
@@ -290,8 +295,8 @@ export default {
           {
             name: "今日接待",
             type: "pie",
-            center: ["10%", "50%"],
-            radius: ["0%", "80%"],
+            center: ["25%", "50%"],
+            radius: "80%",
             avoidLabelOverlap: false,
             data: this.pieData1,
             itemStyle: {
