@@ -25,7 +25,7 @@
                 <div class="lyrd_index_count_bg1"></div>
                 <div class="lyrd_index_count_num">
                     <div>
-                      <span class="lyrd_index_today_visit">日新增投诉量</span>
+                      <span class="lyrd_index_today_visit">{{(this.picdate1).toString().substring(8,10)}}日新增投诉量</span>
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{add}}</span>
@@ -224,7 +224,7 @@ export default {
       liney:[],
       p11:'',
       picTo:'1',
-      picdate1:http.getToday(),
+      picdate1:http.getYesterDay(),
       picdate2:'2018-08-03',
       picdate3:['2018-07-03','2018-09-03'],
       add: "",
@@ -248,6 +248,7 @@ export default {
   },
   methods: {
     change7(){
+      this.picdate2=''
       this.procX1=[]
       this.procX2=[]
       this.procX3=[]

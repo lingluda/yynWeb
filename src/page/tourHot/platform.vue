@@ -26,7 +26,7 @@
                   </Col>
                   <Col span="10">
                     <div style="margin-bottom: 10px;width: 50%;">
-                      <span style="font-weight: bold;color: #000000">{{(this.picDate).toString().substring(8,10)}}日 新增用户量</span>
+                      <span style="font-weight: bold;color: #000000">{{(this.picDate).toString().substring(8,10)}}日新增用户量</span>
 
                     </div>
                     <p style="font-size: 28px;color: blue">{{addData.total}}人</p>
@@ -52,7 +52,7 @@
                   </Col>
                   <Col span="10">
                     <div style="margin-bottom: 10px;width: 50%;">
-                      <span style="font-weight: bold;color: #000000">{{(this.picDate).toString().substring(8,10)}}日 活跃用户数</span>
+                      <span style="font-weight: bold;color: #000000">{{(this.picDate).toString().substring(8,10)}}日活跃用户数</span>
 
                     </div>
                     <p style="font-size: 28px;color: blue">{{aduData.total}}人</p>
@@ -77,6 +77,7 @@
 
             <DatePicker type="daterange"  v-model="picMonth" @on-change="change1" placeholder="自选时间"
                         style="width: 180px;float: right"></DatePicker>
+            <Button style="border-radius: 0px;float: right;height: 32px;" @click="choose7">近7天</Button>
            <!-- <DatePicker v-model="dd1" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
             <span style="float: right;padding:5px 5px 0px 5px">-</span>
             <DatePicker v-model="dd2" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
@@ -123,7 +124,7 @@
         color2:'',
         color3:'',
         color4:'',
-        picMonth: [http.getWeekAgo(), http.getToday()],
+        picMonth: [http.getMonthAgo(), http.getToday()],
         picDate: http.getYesterDay(),
         addData: '',
         aduData: '',
@@ -136,11 +137,25 @@
       this.init()
     },
     methods: {
-      init() {
+      choose7(){
+        this.picMonth=[http.getWeekAgo(), http.getToday()]
         this.lineDatax1 = []
         this.lineDatax2 = []
         this.lineDatay = []
         http.get('bi/get_ops_trend_date', {startTime: http.getWeekAgo(), endTime: http.getToday(), type: 'd'}).then(resp => {
+          for (var i = 0; i < resp.data.hits.length; i++) {
+            this.lineDatax1.push(resp.data.hits[i].dau)
+            this.lineDatax2.push(resp.data.hits[i].incr_num)
+            this.lineDatay.push(resp.data.hits[i].date)
+          }
+          this.initTrend()
+        })
+      },
+      init() {
+        this.lineDatax1 = []
+        this.lineDatax2 = []
+        this.lineDatay = []
+        http.get('bi/get_ops_trend_date', {startTime: http.getMonthAgo(), endTime: http.getToday(), type: 'd'}).then(resp => {
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.lineDatax1.push(resp.data.hits[i].dau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)
