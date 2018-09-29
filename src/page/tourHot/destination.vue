@@ -50,7 +50,7 @@
           </div>
           <div>
             <!--<Table :columns="columns" :data="fdata"></Table>-->
-            <table style="border: 1px solid rgb(220, 222, 226);width: 100%;text-align: center;border-collapse:collapse">
+            <table style="border: 1px solid rgb(220, 222, 226);width: 100%;text-align: left;border-collapse:collapse">
               <tr>
                 <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门线路购买量（次）</td>
                 <td style="width: 40%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa"></td>
@@ -58,7 +58,7 @@
                 <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">购买平均价格(元)</td>
               </tr>
               <tr v-for="item in fdata">
-                <td style="padding: 10px;border-bottom: 1px dashed rgb(206,226,225);font-size: 12px">{{item.name}}</td>
+                <td style="border-bottom: 1px dashed rgb(206,226,225);font-size: 12px">{{item.name}}</td>
                 <td style="border-bottom: 1px dashed rgb(206,226,225)"> <pers-st :pers=item.tpers :persn=item.order></pers-st></td>
                 <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.dau}}</td>
                 <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.price}}</td>
@@ -107,6 +107,12 @@
   </div>
 </template>
 <style lang="less" scoped>
+table{
+  td{
+    padding: 10px;
+  }
+}
+
 .ti {
   color: #000;
   font-size: 16px;
@@ -267,7 +273,15 @@
             bottom: 10,
             left: 'center',
             icon:'circle',
-            data: ['峰值','景区历史游客峰值']
+            data: [
+              {
+                name : "峰值"
+              },
+              {
+                name : "景区历史游客峰值",
+                icon:'line'
+              }
+            ]
           },
           grid: {
             left: '3%',
@@ -307,7 +321,8 @@
                   label: {
                     show: true,
                     position: 'right',
-                    formatter: '{c} 万'
+                    formatter: '{c} 万',
+                    color:"#000"
                   },
                   color: function (params) {
                     // build a color map as your need.
@@ -329,14 +344,15 @@
               barWidth:'50%',
               itemStyle: {
                 normal: {
-                  color: 'red',
+                  color: '#bababa',
                   label: {
-                    show: true,
+                    show: false,
                     position: 'right',
                     formatter: '{c} 万'
                   },
                 }
-              }
+              },
+              smooth:false
             }
           ],
           color: ['#006EFF','orange']
@@ -357,7 +373,14 @@
             bottom: 10,
             left: 'center',
             icon:'circle',
-            data: ['今日景区客流','昨日景区客流','客流变化量']
+            data: [{
+              name: "今日景区客流"
+            },{
+              name : "昨日景区客流"
+            },{
+              name : "客流变化量",
+              icon:"line"
+            }]
           },
           grid: {
             left: '3%',
@@ -396,7 +419,8 @@
                   label: {
                     show: true,
                     position: 'right',
-                    formatter: '{c} 万'
+                    formatter: '{c} 万',
+                    color:"#000"
                   },
                 }
               }
@@ -410,7 +434,8 @@
                   label: {
                     show: true,
                     position: 'right',
-                    formatter: '{c} 万'
+                    formatter: '{c} 万',
+                    color:"#000"
                   },
                 }
               }
@@ -421,13 +446,15 @@
               data: this.max2his,
               itemStyle: {
                 normal: {
+                  color:"#bababa",
                   label: {
-                    show: true,
+                    show: false,
                     position: 'right',
                     formatter: '{c} 万'
                   },
                 }
-              }
+              },
+              smooth:false
             }
 
           ],
