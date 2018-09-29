@@ -82,8 +82,8 @@
               <span class="lyrd_index_search_title">今日游客{{btitle}}所占比例</span>
 
             </div>
-            <div>
-              <div id="mybar" style="height:200px;min-width: 400px;"></div>
+            <div style="padding:0 18%">
+              <div id="mybar" style="height:220px;min-width: 400px;"></div>
             </div>
           </div>
         </card>
@@ -153,7 +153,7 @@
         btitle:'各市州',
         showud1:1,
         showud2:2,
-        color1:'red',
+        color1:'#ffbb00',
         color2:'green',
         dateChoice1: '1',
         dateChoice2: '3',
@@ -252,24 +252,25 @@
           },
           legend: {
             x: '50%',
-            y: '30%',
+            y: '26%',
             icon: 'circle',
             orient: 'horizontal',
-            right: 10,
-            top: 20,
-            bottom: 20,
+            // right: 10,
+            // top: 20,
+            // bottom: 20,
             data: this.pieData1
           },
           series: [
             {
               name: '今日接待',
               type: 'pie',
-              center: ['30%', '50%'],
-              radius: ['0%', '100%'],
+              center: ['10%', '50%'],
+              radius: ['0%', '80%'],
               avoidLabelOverlap: false,
               data: this.pieData1,
               itemStyle: {
                 normal: {
+                  borderColor: "#FFFFFF", borderWidth: 1.5,
                   label: {
                     show: false,
                     formatter: '{b} : {c} \n ({d}%)'
@@ -281,7 +282,7 @@
               }
             }
           ],
-          color: ['#006EFF', '#29CC85', '#ffbb00', '#ff584c', '#9741d9', '#1fc0cc', '#7ff936', '#ff9c19', '#e63984', '#655ce6', '#47cc50', '#fb0b6']
+          color: ['#c731b2', '#00cc89', '#ffba34', '#ff5750', '#216df8', '#00c1cb', '#6bd94c', '#ff9b33', '#ef3882', '#695ee1', '#0ccc5c', '#006eff','#9e43d4','#3dd8a5','#ff5750','00c1cb']
         })
       },
       initLine() {
