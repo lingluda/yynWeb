@@ -31,7 +31,7 @@
                   <div class="lyrd_index_count_bg1"></div>
                   <div class="lyrd_index_count_num">
                     <div>
-                      <span class="lyrd_index_today_visit">今日总接待游客量</span>
+                      <span class="lyrd_index_today_visit">{{(this.datefff).toString().substring(8,10)}}日总接待游客量</span>
 
                     </div>
                     <div>
@@ -79,7 +79,7 @@
           </div>
           <div class="lyrd_index_jryk">
             <div class="lyrd_index_jryk_title">
-              <span class="lyrd_index_search_title">今日游客{{btitle}}所占比例</span>
+              <span class="lyrd_index_search_title">{{(this.datefff).toString().substring(8,10)}}日游客{{btitle}}所占比例</span>
 
             </div>
             <div>

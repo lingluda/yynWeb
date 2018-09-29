@@ -426,7 +426,7 @@
           hoverable: false,
           geo: {
             map: "china",
-            roam: true,
+            //roam: true,
             label: {
               emphasis: {
                 show: true
@@ -518,10 +518,12 @@
               itemStyle: {
                 normal: {
                   show: true,
-                  color: "#fff"
+                  color: "#fff",
+                  fontSize: 8
                 }
               },
               data: item[1].map(function(dataItem, i) {
+                var mapFontSize = [12];
                 var arr = {
                   name: dataItem[_this.ioindex].name,
                   value: geoCoordMap[dataItem[_this.ioindex].name].concat([

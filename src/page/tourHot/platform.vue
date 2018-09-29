@@ -75,12 +75,12 @@
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">用户趋势分析</span>
 
-            <!--<DatePicker type="daterange" format="yyyy-MM" v-model="picMonth" @on-change="change1" placeholder="自选时间"
-                        style="width: 140px;float: right"></DatePicker>-->
-            <DatePicker v-model="dd1" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
+            <DatePicker type="daterange"  v-model="picMonth" @on-change="change1" placeholder="自选时间"
+                        style="width: 180px;float: right"></DatePicker>
+           <!-- <DatePicker v-model="dd1" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
             <span style="float: right;padding:5px 5px 0px 5px">-</span>
             <DatePicker v-model="dd2" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
-
+-->
           </div>
           <div id="trend" style="border: 1px solid #dcdee2;height: 400px;width: 100%"></div>
         </card>
@@ -123,7 +123,7 @@
         color2:'',
         color3:'',
         color4:'',
-        picMonth: ['2018-07', '2018-09'],
+        picMonth: [http.getWeekAgo(), http.getToday()],
         picDate: http.getYesterDay(),
         addData: '',
         aduData: '',
@@ -133,9 +133,21 @@
       }
     },
     mounted() {
+      this.init()
     },
     methods: {
       init() {
+        this.lineDatax1 = []
+        this.lineDatax2 = []
+        this.lineDatay = []
+        http.get('bi/get_ops_trend_date', {startTime: http.getWeekAgo(), endTime: http.getToday(), type: 'd'}).then(resp => {
+          for (var i = 0; i < resp.data.hits.length; i++) {
+            this.lineDatax1.push(resp.data.hits[i].dau)
+            this.lineDatax2.push(resp.data.hits[i].incr_num)
+            this.lineDatay.push(resp.data.hits[i].date)
+          }
+          this.initTrend()
+        })
       },
       pic(val) {
         this.$router.push(val)
@@ -181,9 +193,9 @@
         this.lineDatax1 = []
         this.lineDatax2 = []
         this.lineDatay = []
-        http.get('bi/get_ops_trend_date', {startTime: val1[0], endTime: val1[1], type: 'm'}).then(resp => {
+        http.get('bi/get_ops_trend_date', {startTime: val1[0], endTime: val1[1], type: 'd'}).then(resp => {
           for (var i = 0; i < resp.data.hits.length; i++) {
-            this.lineDatax1.push(resp.data.hits[i].mau)
+            this.lineDatax1.push(resp.data.hits[i].dau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)
             this.lineDatay.push(resp.data.hits[i].date)
           }
@@ -238,7 +250,7 @@
         this.lineDatax1 = []
         this.lineDatax2 = []
         this.lineDatay = []
-        http.get('bi/get_ops_trend_date', {startTime: http.gmt2str(this.dd2), endTime: http.gmt2str(this.dd1), type: 'm'}).then(resp => {
+        http.get('bi/get_ops_trend_date', {startTime: http.gmt2str(this.dd2), endTime: http.gmt2str(this.dd1), type: 'd'}).then(resp => {
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.lineDatax1.push(resp.data.hits[i].mau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)
