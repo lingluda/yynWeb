@@ -6,7 +6,6 @@
 <script>
   import echarts from "echarts"
   import "echarts/map/js/china.js";
-
   // 获取地图上每个模块点的坐标
   var geoCoordMap = {
     怒江:[98.85670000000002,25.817630000000015],

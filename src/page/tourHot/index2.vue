@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="ti">
-      <span>旅游热度</span>
+      <span>首页</span>
     </div>
 
       <div label="首页" name="index" class="lyrd_sy_content">
@@ -81,7 +81,7 @@
               </Col>
             </Row>
           </div>
-          <div class="lyrd_index_jryk">
+          <div class="lyrd_index_jryk"  v-if="isshowmap!=0">
             <div class="lyrd_index_jryk_title">
               <span class="lyrd_index_search_title">{{(this.datefff).toString().substring(8,10)}}日游客{{btitle}}所占比例</span>
 
@@ -89,6 +89,22 @@
             <div>
               <div id="mybar" style="height:220px;min-width: 400px;"></div>
             </div>
+          </div>
+          <div class="lyrd_index_jryk1" v-if="isshowmap==0">
+            <div class="lyrd_index_jryk_title">
+              <span class="lyrd_index_search_title">{{(this.datefff).toString().substring(8,10)}}日游客{{btitle}}所占比例</span>
+            </div>
+            <Row >
+              <Col span="12">
+                <x_map :mapdata="this.pieData" style="width: 100%;height: 500px;"></x_map>
+              </Col>
+              <Col span="12" style="display: flex;justify-items: center;padding: 20px">
+                <ul class="ul">
+                  <li v-for="item in pieData1">{{item.name}}</li>
+                </ul>
+              </Col>
+            </Row>
+
           </div>
         </card>
 
@@ -143,11 +159,14 @@
 <script>
 import http from "@/http.js";
 import "../../dateFormate.js";
-import city from "@/components/select/city.vue";
-
+import indexMap from '../../components/map/indexMap'
 export default {
+  components:{
+    "x_map":indexMap
+  },
   data() {
     return {
+      isshowmap:'',
       btitle: "各市州",
       showud1: 1,
       showud2: 2,
@@ -223,7 +242,7 @@ export default {
           city_id: this.city
         })
         .then(resp => {
-          //this.pieData = resp.data.hits;
+          this.pieData = resp.data.hits;
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.pieData1.push({
               name:
@@ -429,8 +448,10 @@ export default {
     form1change() {
       if (this.city == 0 || this.city == "undefied" || this.city == null) {
         this.btitle = "各市州";
+        this.isshowmap=0
       } else {
         this.btitle = "各景区";
+        this.isshowmap=1
       }
       this.pieData1 = [];
       http
@@ -439,7 +460,7 @@ export default {
           city_id: this.city
         })
         .then(resp => {
-          //this.pieData = resp.data.hits;
+          this.pieData = resp.data.hits;
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.pieData1.push({
               name:
@@ -450,6 +471,7 @@ export default {
               value: resp.data.hits[i].value
             });
           }
+          console.log(this.pieData1)
           this.initBar();
         });
       http
@@ -532,7 +554,7 @@ export default {
             city_id: this.city
           })
           .then(resp => {
-            //this.pieData = resp.data.hits;
+            this.pieData = resp.data.hits;
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.pieData1.push({
                 name:
@@ -543,6 +565,7 @@ export default {
                 value: resp.data.hits[i].value
               });
             }
+            console.log(this.pieData1)
             this.initBar();
           });
         http
@@ -578,7 +601,8 @@ export default {
             city_id: this.city
           })
           .then(resp => {
-            //this.pieData = resp.data.hits;
+            this.pieData = resp.data.hits;
+            console.log(this.pieData)
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.pieData1.push({
                 name:
@@ -589,6 +613,7 @@ export default {
                 value: resp.data.hits[i].value
               });
             }
+            console.log(this.pieData1)
             this.initBar();
           });
         http
@@ -631,7 +656,7 @@ export default {
           city_id: this.city
         })
         .then(resp => {
-          //this.pieData = resp.data.hits;
+          this.pieData = resp.data.hits;
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.pieData1.push({
               name:
@@ -667,11 +692,12 @@ export default {
             this.showud2 = 1;
           }
         });
-    }
+    },
+
   },
 
   watch: {
-    // city: 'form1change',
+     //city: 'citp',
     date1: "form1change1",
     // city1: 'form1change1',
     dateChoice1: "p1",
@@ -680,7 +706,11 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.ti {
+  .ul{
+    list-style: none outside none; margin:0; padding: 0;border-top: 1px solid #dbdbdb;min-width: 550px;margin-top: 120px;
+  }
+  .ul li{ float:left;   width: 25%;  padding: 10px; border-bottom: 1px solid #dbdbdb   }
+  .ti {
   color: #000;
   font-size: 16px;
   font-weight: 700;
@@ -796,7 +826,11 @@ export default {
   border: 1px solid #dcdee2;
   height: 300px;
 }
-
+.lyrd_index_jryk1 {
+  margin: 25px 20px;
+  border: 1px solid #dcdee2;
+  height: 564.4px;
+}
 .lyrd_index_jryk_title {
   line-height: 60px;
   font-size: 14px;

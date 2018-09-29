@@ -29,7 +29,7 @@ export default new Router({
           name: 'analysisform',
           component: resolve => {
 
-            require(['@/components/map/hotMap.vue'], resolve)
+            require(['@/components/map/indexMap.vue'], resolve)
           }
         },
         {
