@@ -21,8 +21,8 @@
 </template>
 
 <script>
-
     import http from '@/http.js'
+    var heatmap;
     export default {
         name: "hotMap",
       props:{
@@ -69,8 +69,6 @@
               panControl: false,
               center: new qq.maps.LatLng(this.centerx[1], this.centerx[0])
             });
-
-            var heatmap;
             //地图异步加载，在idle或者tilesloaded后初始化
             let self1 = this
             qq.maps.event.addListenerOnce(map, "idle", function () {
@@ -88,7 +86,6 @@
                   }
                 );
                 //绘制热力图
-                console.log('this.testData[0].points::',self1.testData[0].points)
                 heatmap.setData({max: 100, data: self1.testData[0].points});
               } else {
                 alert("您的浏览器不支持canvas，无法绘制热力图！！")
@@ -139,32 +136,9 @@
             chart.on('timelinechanged', function (timeLineIndex) {
               // 设置 每个series里的xAxis里的值
               self.arrIndex = parseInt(timeLineIndex.currentIndex);
-              console.log(self.arrIndex)
-              if(self.arrIndex%2==0){
-                heatmap = new QQMapPlugin.HeatmapOverlay(map,
-                  {
-                    //点半径，设置为1即可
-                    "radius": 1,
-                    //热力图最大透明度
-                    "maxOpacity": 0.8,
-                    //是否在每一屏都开启重新计算，如果为true则每一屏都会有一个红点
-                    "useLocalExtrema": true,
-                    //设置大小字段
-                    "valueField": 'count'
-                  }
-                );
-                //绘制热力图
-                heatmap.setData({max: 100, data: self.testData[self.arrIndex].points});
-                console.log('create')
-              } else{
-                heatmap.setData({max: 100, data: self.testData[self.arrIndex].points});
-                heatmap.destroy();
-                console.log('destroy')
-              }
+              heatmap.setData({max: 100, data: self.testData[self.arrIndex].points});
             });
-
           },
-
       },
       watch:{
           x2:'init',
