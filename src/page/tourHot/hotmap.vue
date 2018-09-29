@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh">
+  <div>
     <div class="tit">旅游热度</div>
     <div>
       <Tabs value="hotmap" @on-click="pic">
@@ -57,7 +57,7 @@
             <div style="margin-bottom: 20px">
               <div class="tabpane_content_title">
                 <div>
-                  <span style="font-weight: bold;color: #000000">景区游客人数</span>
+                  <span style="font-weight: bold;color: #000000">景区接待游客人数</span>
 
                 </div>
                 <div>

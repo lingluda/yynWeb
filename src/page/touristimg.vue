@@ -1,5 +1,5 @@
 <template>
-  <div style="background:#f2f2f2;height: 100vh">
+  <div style="background:#f2f2f2;">
     <div class="tits">游客画像</div>
     <div style="margin:20px;">
       <card>
