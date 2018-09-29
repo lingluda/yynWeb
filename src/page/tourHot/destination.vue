@@ -44,7 +44,7 @@
           <div style="margin-bottom: 20px;">
             <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
             <!--<pers-st :pers="21"></pers-st>-->
-            <Tooltip content="一机游app对各线路页面访问量排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+            <Tooltip content="一机游app对各线路页面访问量排行，购买量为下单量" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
             <DatePicker v-model="picDate3" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
           </div>

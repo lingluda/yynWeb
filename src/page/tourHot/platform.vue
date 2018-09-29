@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh">
+  <div>
     <div class="ti">
       <span>旅游热度</span>
     </div>
@@ -10,7 +10,7 @@
       <TabPane label="平台运营" name="platform" class="tabpane_content">
         <card>
           <div style="margin-bottom: 20px">
-            <span style="font-weight: bold;color: #000000">平台昨日运营数据</span>
+            <span style="font-weight: bold;color: #000000">{{(this.picDate).toString().substring(8,10)}}日平台运营数据</span>
 
             <DatePicker v-model="picDate" type="date" placeholder="Select date"
                         style="width: 120px;float: right"></DatePicker>
@@ -26,7 +26,7 @@
                   </Col>
                   <Col span="10">
                     <div style="margin-bottom: 10px;width: 50%;">
-                      <span style="font-weight: bold;color: #000000">{{(this.picDate).toString().substring(8,10)}}日新增用户量</span>
+                      <span style="font-weight: bold;color: #000000">新增用户量</span>
 
                     </div>
                     <p style="font-size: 28px;color: blue">{{addData.total}}人</p>
@@ -52,7 +52,7 @@
                   </Col>
                   <Col span="10">
                     <div style="margin-bottom: 10px;width: 50%;">
-                      <span style="font-weight: bold;color: #000000">{{(this.picDate).toString().substring(8,10)}}日活跃用户数</span>
+                      <span style="font-weight: bold;color: #000000">活跃用户数</span>
 
                     </div>
                     <p style="font-size: 28px;color: blue">{{aduData.total}}人</p>
