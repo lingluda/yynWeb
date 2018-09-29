@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh">
+  <div >
     <div class="ti">
       <span >旅游热度</span>
     </div>

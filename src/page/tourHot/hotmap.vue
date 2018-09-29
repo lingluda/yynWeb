@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh">
+  <div>
     <div class="tit">旅游热度</div>
     <div>
       <Tabs value="hotmap" @on-click="pic">
