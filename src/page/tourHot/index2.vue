@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh">
+  <div>
     <div class="ti">
       <span>旅游热度</span>
     </div>
@@ -123,11 +123,11 @@
 
             </div>
             <div class="lyrd_index_kltj_chart_right">
-              <div >
+              <!-- <div >
                 <span style="color: #000;font-weight:bold;font-size:14px;padding: 20px">客流趋势分析 </span>
                 <span style="color: #a5a5a5;font-size:12px;">(人次：万)</span>
-              </div>
-              <div id="myline" style="height:300px;min-width: 400px;margin-top: -20px"></div>
+              </div> -->
+              <div id="myline" style="width:100%;height:280px;min-width: 400px;"></div>
             </div>
           </div>
         </card>
@@ -203,7 +203,9 @@
       }
     },
     mounted() {
-      this.initLine()
+      setTimeout(()=>{
+        this.initLine()
+      },50)
       this.getCity()
       //this.init()
     },
@@ -313,6 +315,7 @@
             }
           },
           yAxis: {
+            name:"万人",
             type: 'value',
             axisLine: {
               lineStyle: {
@@ -521,6 +524,7 @@
   }
 </script>
 <style lang="less" scoped>
+
   .ti {
     color: #000;
     font-size: 16px;
@@ -549,9 +553,10 @@
   }
 
   .lyrd_index_search {
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
-    line-height: 70px;
+    // line-height: 70px;
     padding: 0 20px;
   }
 
@@ -560,6 +565,8 @@
     font-weight: 700;
     padding-right: 8px;
     color: #000;
+    vertical-align: middle;
+    vertical-align: -webkit-baseline-middle;
   }
 
   .lyrd_index_count {
