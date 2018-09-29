@@ -57,7 +57,7 @@
             <div style="margin-bottom: 20px">
               <div class="tabpane_content_title">
                 <div>
-                  <span style="font-weight: bold;color: #000000">景区接待客流数</span>
+                  <span style="font-weight: bold;color: #000000">景区游客人数</span>
 
                 </div>
                 <div>
@@ -79,7 +79,7 @@
                       <img src="../../assets/imgs/tkhot.png"/>
                     </div>
                     <div style="position: absolute;   top: 75px;   left: 130px; text-align: center">
-                      <span style=" font-size: 16px;  font-weight: bold">客流量</span>
+                      <span style=" font-size: 16px;  font-weight: bold">景区游客人数</span>
                       <p style="font-size: 12px">(单位：人)</p>
                     </div>
                     <div>

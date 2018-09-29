@@ -505,7 +505,7 @@ export default {
             itemStyle: {
               normal: {
                 color: function(params) {
-                  var colorList = ["#006EFF", "#006EFF", "#006EFF"];
+                  var colorList = ["#006EFF", "#006EFF", "#006EFF", "#006EFF"];
                   return colorList[params.dataIndex];
                 }
               }
@@ -525,7 +525,7 @@ export default {
             itemStyle: {
               normal: {
                 color: function(params) {
-                  var colorList = ["#29cc85", "#29cc85", "#29cc85"];
+                  var colorList = ["#29cc85", "#29cc85", "#29cc85", "#29cc85"];
                   return colorList[params.dataIndex];
                 }
               }
@@ -545,7 +545,7 @@ export default {
             itemStyle: {
               normal: {
                 color: function(params) {
-                  var colorList = ["#ffbb00", "#ffbb00", "#ffbb00"];
+                  var colorList = ["#ffbb00", "#ffbb00", "#ffbb00", "#ffbb00"];
                   return colorList[params.dataIndex];
                 }
               }

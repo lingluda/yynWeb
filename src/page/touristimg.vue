@@ -256,19 +256,23 @@
 
           {
             title: "热度",
-            key: "score"
+            key: "score",
+            sortable: true
           },
           {
             title: "汽车",
-            key: "carx"
+            key: "carx",
+            sortable: true
           },
           {
             title: "火车",
-            key: "trainx"
+            key: "trainx",
+            sortable: true
           },
           {
             title: "飞机",
-            key: "planex"
+            key: "planex",
+            sortable: true
           }
         ],
         data1: [],
@@ -376,19 +380,23 @@
             },
             {
               title: "热度",
-              key: "score"
+              key: "score",
+              sortable: true
             },
             {
               title: "汽车",
-              key: "carx"
+              key: "carx",
+              sortable: true
             },
             {
               title: "火车",
-              key: "trainx"
+              key: "trainx",
+              sortable: true
             },
             {
               title: "飞机",
-              key: "planex"
+              key: "planex",
+              sortable: true
             }
           ]
         }
@@ -409,11 +417,13 @@
 
             {
               title: "热度",
-              key: "score"
+              key: "score",
+              sortable: true
             },
             {
               title: "飞机",
-              key: "planex"
+              key: "planex",
+              sortable: true
             }
           ]
         }
@@ -434,12 +444,14 @@
 
             {
               title: "热度",
-              key: "score"
+              key: "score",
+              sortable: true
             },
 
             {
               title: "火车",
-              key: "trainx"
+              key: "trainx",
+              sortable: true
             },
 
           ]
@@ -461,11 +473,13 @@
 
             {
               title: "热度",
-              key: "score"
+              key: "score",
+              sortable: true
             },
             {
               title: "汽车",
-              key: "carx"
+              key: "carx",
+              sortable: true
             },
 
           ]

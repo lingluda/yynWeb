@@ -17,7 +17,7 @@
             <div class="tabpane_content_title">
               <div>
                 <span style="color: #000;font-size:14px;font-weight: bold">一机游今日搜索各目的地访问用户数据 </span>
-                <span style="color: #a5a5a5;font-size:12px;">(单位：万次)</span>
+                <span style="color: #a5a5a5;font-size:12px;">(单位：万人)</span>
               </div>
               <DatePicker v-model="picDate1" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
             </div>
@@ -33,7 +33,7 @@
             <div class="tabpane_content_title">
                <div >
                  <span style="color: #000;font-weight:bold;font-size:14px;">一机游今日搜索各目的地访问用户数据 </span>
-                  <span style="color: #a5a5a5;font-size:12px;">(单位：万次)</span>
+                  <span style="color: #a5a5a5;font-size:12px;">(单位：万人)</span>
                 </div>
               <DatePicker  placement="bottom-end" v-model="picDate2" type="date" placeholder="Select date" style="width:120px;float: right"></DatePicker>
             </div>
@@ -198,7 +198,8 @@
             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
               type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
             },
-            backgroundColor:'#323232'
+            backgroundColor:'#323232',
+            formatter: '{b}<br />{c} 万'
           },
           color:['#006EFF'],
           xAxis: {
@@ -259,7 +260,8 @@
             axisPointer: {
               type: 'shadow'
             },
-            backgroundColor:'#323232'
+            backgroundColor:'#323232',
+            formatter: '{b0}<br />{a0} {c0} 万<br />{a1} {c1} 万'
           },
           legend: {
             bottom: 10,
@@ -348,7 +350,8 @@
             axisPointer: {
               type: 'shadow'
             },
-            backgroundColor:'#323232'
+            backgroundColor:'#323232',
+            formatter: '{b0}<br />{a0} {c0} 万<br />{a1} {c1} 万 <br />{a2} {c2} 万'
           },
           legend: {
             bottom: 10,
@@ -439,7 +442,8 @@
             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
               type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
             },
-            backgroundColor:'#323232'
+            backgroundColor:'#323232',
+            formatter: '{b}<br />{c} 万'
           },
           xAxis: {
             type: 'category',
