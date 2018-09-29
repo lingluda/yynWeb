@@ -39,121 +39,24 @@
             </div>
             <div>
               <Row style="line-height:40px;background:#f6f8fa;color:#000;font-size:14px">
-                <Col span="16" style="padding-left:50px">热词</Col>
+                <Col span="12" style="padding-left:50px">热词</Col>
                 <Col span="4">搜索量</Col>
                 <Col span="4">报道量</Col>
+                <Col span="4">时间</Col>
               </Row>
             </div>
             <div id="qsnet">
               <ul>
-                <li class="qsnet_li">
+                <li class="qsnet_li" v-for="(item,index) in 10" :key="index" v-if="index < 10">
                   <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">1</i>
+                    <Col span="12" class="qsnet_num">
+                      <i class="qsnet_idx">{{index + 1}}</i>
                       <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
+                      <!-- <p class="qsnet_time">2018-05-10</p> -->
                     </Col>
                     <Col span="4" class="qsnet_num">59.5W</Col>
                     <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">2</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">3</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">4</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">5</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">6</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">7</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">8</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">9</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">10</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
+                    <Col span="4" class="qsnet_num">2018-05-10</Col>
                   </Row>
                 </li>
               </ul>
@@ -173,121 +76,24 @@
 
             <div>
               <Row style="line-height:40px;background:#f6f8fa;color:#000;font-size:14px">
-                <Col span="16" style="padding-left:50px">热词</Col>
+                <Col span="12" style="padding-left:50px">热词</Col>
                 <Col span="4">搜索量</Col>
                 <Col span="4">报道量</Col>
+                <Col span="4">时间</Col>
               </Row>
             </div>
             <div id="zsnet">
               <ul>
-                <li class="qsnet_li">
+                <li class="qsnet_li" v-for="(item,index) in 10" :key="index" v-if="index < 10">
                   <Row class="qsnet_row">
-                    <Col span="16">
+                    <Col span="12" class="qsnet_num">
                       <i class="qsnet_idx">1</i>
                       <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
+                      <!-- <p class="qsnet_time">2018-05-10</p> -->
                     </Col>
                     <Col span="4" class="qsnet_num">59.5W</Col>
                     <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">2</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">3</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">4</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">5</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">6</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">7</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">8</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">9</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
-                  </Row>
-                </li>
-                <li class="qsnet_li">
-                  <Row class="qsnet_row">
-                    <Col span="16">
-                      <i class="qsnet_idx">10</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
-                      <p class="qsnet_time">2018-05-10</p>
-                    </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
+                    <Col span="4" class="qsnet_num">2018-05-10</Col>
                   </Row>
                 </li>
               </ul>
@@ -348,9 +154,15 @@
 }
 .qsnet_li {
   line-height: 25px;
-  padding: 15px 0 5px;
+  // padding: 15px 0 5px;
+  padding: 12px 0 5px;
   border-bottom: 1px solid #dcdee2;
 }
+
+// .qsnet_li:last-of-type{
+//   border-bottom: none;
+// }
+
 .qsnet_row {
   color: #000;
   font-size: 14px;

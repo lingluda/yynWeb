@@ -377,7 +377,8 @@ export default {
           type: "value",
           splitLine:{
             lineStyle:{
-              color:"#e5e5e5"
+              color:"#e5e5e5",
+              type:"dotted"
             }
           }
         },
@@ -496,7 +497,8 @@ export default {
             name: "单位(小时)",
             splitLine:{
               lineStyle:{
-                color:"#e5e5e5"
+                color:"#e5e5e5",
+                type:"dotted"
               }
             }
           }
