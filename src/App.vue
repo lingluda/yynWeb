@@ -23,6 +23,7 @@ export default {
     height: 45px;
   }
   .ivu-tabs-bar{margin-bottom: 0px}
-  .ivu-card-body{padding: 16px 25px 30px;}
+  /* .ivu-card-body{padding: 16px 25px 30px;} */
+  .ivu-card-body{padding: 20px 25px 30px;}
   .ivu-card{border-radius: 0}
 </style>
