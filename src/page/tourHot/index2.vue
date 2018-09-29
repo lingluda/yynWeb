@@ -31,7 +31,7 @@
                   <div class="lyrd_index_count_bg1"></div>
                   <div class="lyrd_index_count_num">
                     <div>
-                      <span class="lyrd_index_today_visit">今日总接待游客量</span>
+                      <span class="lyrd_index_today_visit">{{(this.datefff).toString().substring(8,10)}}日总接待游客量</span>
 
                     </div>
                     <div>
@@ -79,7 +79,7 @@
           </div>
           <div class="lyrd_index_jryk">
             <div class="lyrd_index_jryk_title">
-              <span class="lyrd_index_search_title">今日游客{{btitle}}所占比例</span>
+              <span class="lyrd_index_search_title">{{(this.datefff).toString().substring(8,10)}}日游客{{btitle}}所占比例</span>
 
             </div>
             <div style="padding:0 18%">
@@ -282,7 +282,11 @@
               }
             }
           ],
+<<<<<<< HEAD
           color: ['#c731b2', '#00cc89', '#ffba34', '#ff5750', '#216df8', '#00c1cb', '#6bd94c', '#ff9b33', '#ef3882', '#695ee1', '#0ccc5c', '#006eff','#9e43d4','#3dd8a5','#ff5750','00c1cb']
+=======
+          color: ['#006EFF', '#29CC85', '#ffbb00', '#ff584c', '#9741d9', '#1fc0cc', '#7ff936', '#ff9c19', '#e63984', '#655ce6', '#47cc50','#006EFF', '#29CC85', '#ffbb00', '#ff584c', '#9741d9', '#1fc0cc', '#7ff936', '#ff9c19', '#e63984', '#655ce6', '#47cc50', ]
+>>>>>>> 65a36864918498e31982d054a0457a6c6816196e
         })
       },
       initLine() {
