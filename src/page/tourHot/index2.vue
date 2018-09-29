@@ -3,8 +3,8 @@
     <div class="ti">
       <span>旅游热度</span>
     </div>
-    <Tabs value="index" @on-click="click">
-      <TabPane label="首页" name="index" class="lyrd_sy_content">
+
+      <div label="首页" name="index" class="lyrd_sy_content">
         <card class="lyrd_sy_ykrs">
           <div class="lyrd_index_search">
             <div class="lyrd_index_search_left">
@@ -135,14 +135,9 @@
           </div>
         </card>
         <!-- 客流统计结束 -->
-      </TabPane>
-      <TabPane label="热度排行" name="destination">
-      </TabPane>
-      <TabPane label="景区客流热力" name="hotmap">
-      </TabPane>
-      <TabPane label="平台运营" name="platform">
-      </TabPane>
-    </Tabs>
+      </div>
+
+
   </div>
 </template>
 <script>
@@ -689,9 +684,9 @@ export default {
   color: #000;
   font-size: 16px;
   font-weight: 700;
-  line-height: 52px;
+  line-height: 60px;
   padding-left: 20px;
-  height: 45px;
+  height: 60px;
 }
 
 .tis {

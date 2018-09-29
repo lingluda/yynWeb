@@ -200,6 +200,7 @@
     },
     data() {
       return {
+        cashData1:'',
         ioindex:1,
         d11:http.getToday(),
         d22:'2018-01',
@@ -1157,6 +1158,7 @@
         this.eduDatax = [];
         this.eduDatay = [];
         this.cashDataX = [];
+        this.cashDataX2 = [];
         this.ageData = [];
         this.ageDatax = [];
         this.ageDatay = [];
@@ -1247,7 +1249,37 @@
             city_id:this.ccc
           })
           .then(resp => {
+            //循环控制趟数
             this.cashData = resp.data.hits;
+            var s = 0;
+            var s1 = 0;
+            //为什么 isSort = true，不能写在循环外面
+            //因为 交换位置 isSort = false.  isSort的值永远是false 。我们要检测的是某一趟是否交换位置
+            for (var i = 0; i < this.cashData.length - 1; i++) {
+              var isSort = true; //假设排序ok
+              //控制两两比较的次数       1--6      2--5   4 3 2 1
+              for (var j = 0; j < this.cashData.length - 1 - i; j++) {
+                //两两比较   从小到大排序
+
+                //如果交换位置，说明没有排序好，如果不交换位置，说明排序好
+                if (this.cashData[j].total < this.cashData[j + 1].total) {
+                  isSort = false;  //没有排序好呢
+                  //交换位置
+                  var tmp = this.cashData[j];
+                  this.cashData[j] = this.cashData[j + 1];
+                  this.cashData[j + 1] = tmp;
+                }
+
+                s++; //记录内循环的次数
+              }
+              s1++;  //记录外循环的次数
+
+              if(isSort) {
+                //如果排序好了
+                break;
+              }
+            }
+            console.log('this.cashData：：',this.cashData)
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.cashDataX.push(resp.data.hits[i].name);
             }
@@ -1294,6 +1326,35 @@
           })
           .then(resp => {
             this.cashData = resp.data.hits;
+            var s = 0;
+            var s1 = 0;
+            //为什么 isSort = true，不能写在循环外面
+            //因为 交换位置 isSort = false.  isSort的值永远是false 。我们要检测的是某一趟是否交换位置
+            for (var i = 0; i < this.cashData.length - 1; i++) {
+              var isSort = true; //假设排序ok
+              //控制两两比较的次数       1--6      2--5   4 3 2 1
+              for (var j = 0; j < this.cashData.length - 1 - i; j++) {
+                //两两比较   从小到大排序
+
+                //如果交换位置，说明没有排序好，如果不交换位置，说明排序好
+                if (this.cashData[j].total < this.cashData[j + 1].total) {
+                  isSort = false;  //没有排序好呢
+                  //交换位置
+                  var tmp = this.cashData[j];
+                  this.cashData[j] = this.cashData[j + 1];
+                  this.cashData[j + 1] = tmp;
+                }
+
+                s++; //记录内循环的次数
+              }
+              s1++;  //记录外循环的次数
+
+              if(isSort) {
+                //如果排序好了
+                break;
+              }
+            }
+            console.log('this.cashData：：',this.cashData)
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.cashDataX.push(resp.data.hits[i].name);
             }
