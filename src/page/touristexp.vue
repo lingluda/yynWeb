@@ -216,7 +216,7 @@ export default {
       dd2:'2018-01',
       showud1:2,
       showud2:2,
-      color1:'red',
+      color1:'#ffbb00',
       color2:'green',
       pic7:'',
       cityData:[],
@@ -374,13 +374,19 @@ export default {
           data: this.linex
         },
         yAxis: {
-          type: "value"
+          type: "value",
+          splitLine:{
+            lineStyle:{
+              color:"#e5e5e5",
+              type:"dotted"
+            }
+          }
         },
         grid: {
           top: 50,
-          width: "98%",
+          width: "95%",
           bottom: "10%",
-          left: 10,
+          left: 30,
           containLabel: true
         },
         color: ['#006EFF', '#29CC85'],
@@ -488,7 +494,13 @@ export default {
         yAxis: [
           {
             type: "value",
-            name: "单位(小时)"
+            name: "单位(小时)",
+            splitLine:{
+              lineStyle:{
+                color:"#e5e5e5",
+                type:"dotted"
+              }
+            }
           }
         ],
         series: [

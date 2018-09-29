@@ -287,7 +287,7 @@
         senicData:[],
         showud1:2,
         showud2:1,
-        color1:'red',
+        color1:'#ffbb00',
         color2:'green',
         playState:false,
         centerx:[],
