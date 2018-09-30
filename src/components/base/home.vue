@@ -52,7 +52,7 @@
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;" /></span>
 
 
-      </Sider>-->
+      </Sider>
       <Content style="width:100%;height: 100vh;">
         <router-view></router-view>
       </Content>
