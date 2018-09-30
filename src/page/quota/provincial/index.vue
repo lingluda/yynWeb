@@ -1,6 +1,6 @@
 <template>
     <div style="height:100%;">
-        <div class="tits">云南省关键指标</div>
+        <div class="tits">云南省今年关键指标</div>
         <div class="quota_bg">
             <card>
                 <Row>
@@ -133,32 +133,6 @@
                 </Col>
             </Row>
 
-            <!-- 旅游收入 -->
-            <card>
-                <div class="lyrd_index_search">
-                    <div class="lyrd_index_search_left">
-                        <span class="lyrd_index_search_title">旅游收入</span>
-                    </div>
-                    <div class="lyrd_index_search_right">
-                        <Select style="width:120px;margin-left:15px" @on-change="form1change">
-                            <Option v-for="item in tourIncome" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
-                    </div>
-                </div>
-                <Row :gutter="20">
-                    <Col span="12">
-                    <div class="borderBlock">
-                        <tourIncomeA></tourIncomeA>
-                    </div>
-                    </Col>
-                    <Col span="12">
-                    <div class="borderBlock">
-                        <tourIncomeB></tourIncomeB>
-                    </div>
-                    </Col>
-                </Row>
-            </card>
-
             <!-- 口岸入境一日游、海外游客旅游天数 -->
             <Row :gutter="20">
                 <Col span="12">
@@ -187,6 +161,32 @@
                 </card>
                 </Col>
             </Row>
+
+            <!-- 旅游收入 -->
+            <card>
+                <div class="lyrd_index_search">
+                    <div class="lyrd_index_search_left">
+                        <span class="lyrd_index_search_title">旅游收入</span>
+                    </div>
+                    <div class="lyrd_index_search_right">
+                        <Select style="width:120px;margin-left:15px" @on-change="form1change">
+                            <Option v-for="item in tourIncome" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                        </Select>
+                    </div>
+                </div>
+                <Row :gutter="20">
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourIncomeA></tourIncomeA>
+                    </div>
+                    </Col>
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourIncomeB></tourIncomeB>
+                    </div>
+                    </Col>
+                </Row>
+            </card>
         </div>
     </div>
 </template>
