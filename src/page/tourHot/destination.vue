@@ -1,14 +1,10 @@
 <template>
   <div >
     <div class="ti">
-      <span >旅游热度</span>
+      <span >热度排行</span>
     </div>
-    <div>
-    <Tabs value="destination" @on-click="pic">
-      <TabPane label="首页" name="index">
-      </TabPane  >
-      <TabPane label="热度排行" name="destination"  class="tabpane_content">
-        <card>
+    <div class="tabpane_content">
+        <card  class="lyrd_sy_ykrs">
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">热门目的地网络热度TOP10</span>
 
@@ -96,13 +92,6 @@
             </Row>
           </div>
         </card>
-      </TabPane>
-
-      <TabPane label="景区客流热力" name="hotmap">
-      </TabPane>
-      <TabPane label="平台运营" name="platform">
-      </TabPane>
-    </Tabs>
     </div>
   </div>
 </template>
@@ -117,9 +106,9 @@ table{
   color: #000;
   font-size: 16px;
   font-weight: 700;
-  line-height: 52px;
+  line-height: 60px;
   padding-left: 20px;
-  height: 45px;
+  height: 60px;
 }
   .ivu-card-body {
     padding: 20px;

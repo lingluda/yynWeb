@@ -1,13 +1,10 @@
 <template>
   <div>
     <div class="ti">
-      <span>旅游热度</span>
+      <span>平台运营</span>
     </div>
-    <Tabs value="platform" @on-click="pic">
-      <TabPane label="首页" name="index"></TabPane>
-      <TabPane label="热度排行" name="destination"></TabPane>
-      <TabPane label="景区客流热力" name="hotmap"></TabPane>
-      <TabPane label="平台运营" name="platform" class="tabpane_content">
+
+     <div class="tabpane_content">
         <card>
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">{{(this.picDate).toString().substring(8,10)}}日平台运营数据</span>
@@ -85,8 +82,8 @@
           </div>
           <div id="trend" style="border: 1px solid #dcdee2;height: 400px;width: 100%"></div>
         </card>
-      </TabPane>
-    </Tabs>
+     </div>
+
   </div>
 </template>
 <style lang="less" scoped>
@@ -95,12 +92,12 @@
     background: #f2f2f2;
   }
   .ti{
-      color: #000;
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 52px;
-      padding-left: 20px;
-      height: 45px;
+    color: #000;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 60px;
+    padding-left: 20px;
+    height: 60px;
   }
 </style>
 
@@ -223,7 +220,7 @@
           this.aduData = resp.data.hits[1]
           if (Number(resp.data.hits[0].link)>=0){
             this.flink=resp.data.hits[0].link
-            this.color1='red'
+            this.color1='#ffbb00'
             this.is1=1
           } else {
             this.flink=-resp.data.hits[0].link
@@ -232,7 +229,7 @@
           }
           if (Number(resp.data.hits[0].ratio)>=0){
             this.fratio=resp.data.hits[0].ratio
-            this.color2='red'
+            this.color2='#ffbb00'
             this.is2=1
           } else {
             this.fratio=-resp.data.hits[0].ratio
@@ -242,7 +239,7 @@
 
           if (Number(resp.data.hits[1].link)>=0){
             this.link=resp.data.hits[1].link
-            this.color3='red'
+            this.color3='#ffbb00'
             this.is3=1
           } else {
             this.link=-resp.data.hits[1].link
@@ -251,7 +248,7 @@
           }
           if (Number(resp.data.hits[1].ratio)>=0){
             this.ratio=resp.data.hits[1].ratio
-            this.color4='red'
+            this.color4='#ffbb00'
             this.is4=1
           } else {
             this.ratio=-resp.data.hits[1].ratio

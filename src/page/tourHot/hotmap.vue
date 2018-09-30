@@ -1,11 +1,7 @@
 <template>
   <div>
-    <div class="tit">旅游热度</div>
-    <div>
-      <Tabs value="hotmap" @on-click="pic">
-        <TabPane label="首页" name="index"></TabPane>
-        <TabPane label="热度排行" name="destination"></TabPane>
-        <TabPane label="景区客流热力" name="hotmap" class="tabpane_content">
+    <div class="tit">景区客流热力</div>
+    <div class="tabpane_content">
           <card>
             <div style="margin-bottom: 20px">
               <div class="tabpane_content_title">
@@ -158,10 +154,6 @@
               </div>
             </div>
           </card>
-        </TabPane>
-        <TabPane label="平台运营" name="platform">
-        </TabPane>
-      </Tabs>
     </div>
   </div>
 </template>
@@ -183,9 +175,9 @@
     color: #000;
     font-size: 16px;
     font-weight: 700;
-    line-height: 52px;
+    line-height: 60px;
     padding-left: 20px;
-    height: 55px;
+    height: 60px;
   }
 
   .tabpane_content {

@@ -988,7 +988,7 @@
           .then(resp => {
             //循环控制趟数
             this.cashData = resp.data.hits;
-            var s = 0;
+           /* var s = 0;
             var s1 = 0;
             //为什么 isSort = true，不能写在循环外面
             //因为 交换位置 isSort = false.  isSort的值永远是false 。我们要检测的是某一趟是否交换位置
@@ -1019,7 +1019,7 @@
             console.log('this.cashData：：',this.cashData)
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.cashDataX.push(resp.data.hits[i].name);
-            }
+            }*/
             this.initCash();
           });
       },
@@ -1062,7 +1062,7 @@
           })
           .then(resp => {
             this.cashData = resp.data.hits;
-            var s = 0;
+           /* var s = 0;
             var s1 = 0;
             //为什么 isSort = true，不能写在循环外面
             //因为 交换位置 isSort = false.  isSort的值永远是false 。我们要检测的是某一趟是否交换位置
@@ -1093,7 +1093,7 @@
             console.log('this.cashData：：',this.cashData)
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.cashDataX.push(resp.data.hits[i].name);
-            }
+            }*/
             this.initCash();
           });
       }
