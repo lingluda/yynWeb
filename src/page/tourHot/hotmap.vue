@@ -146,7 +146,7 @@
                   <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
                 </Select>
                 <DatePicker v-model="da2" type="daterange" show-week-numbers  placeholder="Select date"
-                            style="width: 180px;"></DatePicker>
+                            style="width: 180px;" @on-change="picd"></DatePicker>
                 <Checkbox v-model="single">选择对比日期</Checkbox>
               </div>
               <div class="hotmap_klqs">
@@ -174,10 +174,12 @@
   .tit {
     color: #000;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 60px;
     padding-left: 20px;
     height: 60px;
+    background-color: #fff;
+    border-bottom: 1px solid #e2e4e6;
   }
 
   .tabpane_content {
@@ -347,7 +349,27 @@
           this.initline();
         })
       },
-
+      picd(){
+        http.get('bi/get_scenic_tourist_compare_by_date', {
+          startTime: http.gmt2str(this.da1[0]),
+          startTime1: http.gmt2str(this.da2[0]),
+          endTime: http.gmt2str(this.da1[1]),
+          endTime1: http.gmt2str(this.da2[1]),
+          scenic: this.modelsenic,
+          min: this.power1
+        }).then(resp => {
+          this.lineDatayn1 = resp.data.hits.cprdate;
+          for (var i = 0; i < resp.data.hits.cprlist.length; i++) {
+            this.lineDatay1.push(parseInt(resp.data.hits.cprlist[i].n))
+          }
+          this.lineDatayn2 = resp.data.hits.curdate;
+          for (var i = 0; i < resp.data.hits.curlist.length; i++) {
+            this.lineDatax.push(resp.data.hits.curlist[i].time)
+            this.lineDatay2.push(parseInt(resp.data.hits.curlist[i].n))
+          }
+          this.initline();
+        })
+      },
       initGauge() {
         let gauge = this.$echarts.init(document.getElementById("gauge"));
         gauge.setOption({

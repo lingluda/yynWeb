@@ -19,7 +19,7 @@
                 <Radio label="2">昨日</Radio>
               </RadioGroup>
               <DatePicker v-model="datefff" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
-              <Select v-model="city" clearable style="width:120px;margin-left:15px" @on-change="form1change">
+              <Select v-model="city" style="width:120px;margin-left:15px" @on-change="form1change">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
             </div>
@@ -731,11 +731,19 @@ export default {
           }
         });
     },
-
+    citp(){
+      if (this.city == 0 || this.city == "undefied" || this.city == null) {
+        this.btitle = "各市州";
+        this.isshowmap=0
+      } else {
+        this.btitle = "各景区";
+        this.isshowmap=1
+      }
+    }
   },
 
   watch: {
-     //city: 'citp',
+     city: 'citp',
     date1: "form1change1",
     // city1: 'form1change1',
     dateChoice1: "p1",
@@ -751,10 +759,12 @@ export default {
   .ti {
   color: #000;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 60px;
   padding-left: 20px;
   height: 60px;
+  background-color: #fff;
+    border-bottom: 1px solid #e2e4e6;
 }
 
 .tis {

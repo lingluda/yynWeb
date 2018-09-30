@@ -105,10 +105,12 @@ table{
 .ti {
   color: #000;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 60px;
   padding-left: 20px;
   height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid #e2e4e6;
 }
   .ivu-card-body {
     padding: 20px;
