@@ -27,12 +27,12 @@
             map.setOption({
               tooltip: {
 
-                    formatter: '{b}\n{c}人',
+                    formatter: '{b}\n{c}%',
 
               },
               visualMap: {
                 min: 0,
-                max: 200000,
+                max: 30,
 
                 text:['高','低'],
                 realtime: false,
@@ -82,7 +82,7 @@
                       textStyle: {
                         color: 'rgba(0,0,0,0.4)'
                       },
-                      formatter: '{b}\n{c}人',
+                      formatter: '{b}\n{c}%',
                       borderWidth:0
                     }
                   },

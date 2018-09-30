@@ -15,7 +15,7 @@
           <Select style="width: 120px" v-model="city1">
             <Option v-for="item in cityData" :value="item.code">{{item.name}}</Option>
           </Select>
-           <DatePicker type="date" v-model="date1" placeholder="自选时间" style="width: 120px"></DatePicker>
+           <DatePicker placement="bottom-end" type="date" v-model="date1" placeholder="自选时间" style="width: 120px"></DatePicker>
         </div>
       </div>
         <Col span="12" style="padding:0 80px">

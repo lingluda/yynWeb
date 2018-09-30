@@ -87,7 +87,7 @@
                 <div style="margin-top:40px;display:flex">
                   <img src="../assets/imgs/exp5.png" style="margin-right:20px;width:60px;height:60px"/>
                   <div>
-                    <div style="color:#000;font-size:16px">平台累计已处理投诉量</div>
+                    <div style="color:#000;font-size:16px">{{titleDate}}平台累计已处理投诉量</div>
                     <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">{{close1}}</span>件</div>
                   </div>
                 </div>
@@ -96,7 +96,7 @@
                 <div style="margin-top:25px;display:flex">
                   <img src="../assets/imgs/exp4.png" style="margin-right:20px;width:60px;height:60px"/>
                   <div>
-                    <div style="color:#000;font-size:16px">平台累计未处理投诉量</div>
+                    <div style="color:#000;font-size:16px">{{titleDate}}平台累计未处理投诉量</div>
                     <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">{{unclose1}}</span>件</div>
                   </div>
                 </div>
@@ -218,6 +218,7 @@ import http from "@/http.js";
 export default {
   data() {
     return {
+      titleDate:'',
       dd1:http.getToday(),
       dd2:'2018-01',
       showud1:2,
@@ -267,7 +268,7 @@ export default {
       this.procX3=[]
       this.procY1=[]
       this.timeX=[]
-      //this.picdate2
+      this.titleDate ='近7天'
       http.get('bi/get_complaint_by_date',{date:http.getYesterDay()}).then(resp=>{
         this.close1=resp.data.hits.closed;
         this.unclose1=resp.data.hits.unclosed;
@@ -610,6 +611,7 @@ export default {
       this.procX3=[];
       this.procY1=[];
       this.timeX=[];
+      this.titleDate = this.picdate2.getMonth()+1+'月'
       http
         .get("bi/get_complaint_by_mon", { date: http.gmt2strm(this.picdate2) })
         .then(resp => {

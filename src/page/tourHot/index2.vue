@@ -96,7 +96,7 @@
             </div>
             <Row >
               <Col span="12">
-                <x_map :mapdata="this.pieData" style="width: 100%;height: 500px;"></x_map>
+                <x_map :mapdata="this.pieData2map" style="width: 100%;height: 500px;"></x_map>
               </Col>
               <Col span="12" style="display: flex;justify-items: center;padding: 20px">
                 <ul class="ul">
@@ -190,7 +190,13 @@ export default {
         {
           name: "",
           value: ""
-        }
+        },
+      ],
+      pieData2map: [
+        {
+          name: "",
+          value: ""
+        },
       ],
       total: "",
       ratio: "",
@@ -236,6 +242,7 @@ export default {
       });
       this.datefff = http.getToday();
       this.pieData1 = [];
+      this.pieData2map = [];
       http
         .get("bi/get_tourism_dist_by_date", {
           date: http.gmt2str(this.datefff),
@@ -251,6 +258,12 @@ export default {
                 resp.data.hits[i].proportion +
                 "%",
               value: resp.data.hits[i].value
+            });
+          }
+          for (var i = 0; i < resp.data.hits.length; i++) {
+            this.pieData2map.push({
+              name:resp.data.hits[i].name,
+              value: resp.data.hits[i].proportion
             });
           }
           this.initBar();
@@ -280,6 +293,7 @@ export default {
         });
     },
     initBar() {
+      let apieData1 = this.pieData1.sort((v1, v2) => v2.value - v1.value);
       let mybar = this.$echarts.init(
         document.getElementById("mybar"),
         "macarons"
@@ -303,7 +317,7 @@ export default {
           // right: 10,
           // top: 20,
           // bottom: 20,
-          data: this.pieData1
+          data: apieData1.map(item => item.name)
         },
         series: [
           {
@@ -312,7 +326,7 @@ export default {
             center: ["25%", "50%"],
             radius: "80%",
             avoidLabelOverlap: false,
-            data: this.pieData1,
+            data: apieData1,
             itemStyle: {
               normal: {
                 borderColor: "#FFFFFF",
@@ -471,6 +485,12 @@ export default {
               value: resp.data.hits[i].value
             });
           }
+          for (var i = 0; i < resp.data.hits.length; i++) {
+            this.pieData2map.push({
+              name: resp.data.hits[i].name,
+              value: resp.data.hits[i].proportion
+            });
+          }
           console.log(this.pieData1)
           this.initBar();
         });
@@ -565,6 +585,12 @@ export default {
                 value: resp.data.hits[i].value
               });
             }
+            for (var i = 0; i < resp.data.hits.length; i++) {
+              this.pieData2map.push({
+                name: resp.data.hits[i].name,
+                value: resp.data.hits[i].proportion
+              });
+            }
             console.log(this.pieData1)
             this.initBar();
           });
@@ -611,6 +637,12 @@ export default {
                   resp.data.hits[i].proportion +
                   "%",
                 value: resp.data.hits[i].value
+              });
+            }
+            for (var i = 0; i < resp.data.hits.length; i++) {
+              this.pieData2map.push({
+                name: resp.data.hits[i].name,
+                value: resp.data.hits[i].proportion
               });
             }
             console.log(this.pieData1)
@@ -665,6 +697,12 @@ export default {
                 resp.data.hits[i].proportion +
                 "%",
               value: resp.data.hits[i].value
+            });
+          }
+          for (var i = 0; i < resp.data.hits.length; i++) {
+            this.pieData2map.push({
+              name: resp.data.hits[i].name,
+              value: resp.data.hits[i].proportion
             });
           }
           this.initBar();

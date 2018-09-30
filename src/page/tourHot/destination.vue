@@ -216,6 +216,7 @@ table{
           },
           yAxis: {
             type: 'value',
+            boundaryGap: [0, 0.1],
             axisLine:{
               lineStyle:{
                 color:'#888888',
@@ -232,7 +233,7 @@ table{
                 label: {
                   show: true,
                   position: 'top',
-                  formatter: '{c} 万'
+                  formatter: '{c}'
                 },
                 color: function (params) {
                   var colorList = [
@@ -481,6 +482,7 @@ table{
           },
           yAxis: {
             type: 'value',
+            boundaryGap: [0, 0.1],
             axisLine:{
               lineStyle:{
                 color:'#888888',
@@ -497,7 +499,7 @@ table{
                 label: {
                   show: true,
                   position: 'top',
-                  formatter: '{c} 万'
+                  formatter: '{c}'
                 },
                 color: function (params) {
                   // build a color map as your need.

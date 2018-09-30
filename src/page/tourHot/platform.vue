@@ -26,7 +26,8 @@
                       <span style="font-weight: bold;color: #000000">新增用户量</span>
 
                     </div>
-                    <p style="font-size: 28px;color: blue">{{addData.total}}人</p>
+                    <span style="font-size: 32px;color: #006eff;font-weight: 600">{{addData.total}}</span>
+                    <span style="color: #006eff">人</span>
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
@@ -52,7 +53,8 @@
                       <span style="font-weight: bold;color: #000000">活跃用户数</span>
 
                     </div>
-                    <p style="font-size: 28px;color: blue">{{aduData.total}}人</p>
+                    <span style="font-size: 32px;color: #006eff;font-weight: 600">{{aduData.total}}</span>
+                    <span style="color: #006eff">人</span>
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
@@ -169,11 +171,16 @@
         trend.setOption({
           xAxis: {
             type: 'category',
-            boundaryGap: false,
             data: this.lineDatay
           },
           yAxis: {
-            type: 'value'
+            type: 'value',
+            boundaryGap: [0, 0.01],
+            splitLine: {
+              lineStyle: {
+                color: '#e8e8e8'
+              }
+            }
           },
           tooltip: {
             trigger: 'axis'
