@@ -9,10 +9,10 @@
                         <div class="lyrd_index_count_bg1"></div>
                         <div class="lyrd_index_count_num">
                             <div>
-                                <span class="lyrd_index_today_visit">日总接待游客量</span>
+                                <span class="lyrd_index_today_visit">全省旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1000,00</span>
+                                <span class="lyrd_index_today_num">1,210,760</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -23,10 +23,10 @@
                         <div class="lyrd_index_count_bg1"></div>
                         <div class="lyrd_index_count_num">
                             <div>
-                                <span class="lyrd_index_today_visit">日总接待游客量</span>
+                                <span class="lyrd_index_today_visit">国内旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1000,00</span>
+                                <span class="lyrd_index_today_num">1,140,000</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                                 <span class="lyrd_index_today_visit">日总接待游客量</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1000,00</span>
+                                <span class="lyrd_index_today_num">70,760</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -56,10 +56,10 @@
                         <div class="lyrd_index_count_bg1"></div>
                         <div class="lyrd_index_count_num">
                             <div>
-                                <span class="lyrd_index_today_visit">日总接待游客量</span>
+                                <span class="lyrd_index_today_visit">全省旅游业总收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1000,00</span>
+                                <span class="lyrd_index_today_num">1,210,760</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -70,10 +70,10 @@
                         <div class="lyrd_index_count_bg1"></div>
                         <div class="lyrd_index_count_num">
                             <div>
-                                <span class="lyrd_index_today_visit">日总接待游客量</span>
+                                <span class="lyrd_index_today_visit">国内旅游收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1000,00</span>
+                                <span class="lyrd_index_today_num">1,140,000</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                         <div class="lyrd_index_count_bg1"></div>
                         <div class="lyrd_index_count_num">
                             <div>
-                                <span class="lyrd_index_today_visit">日总接待游客量</span>
+                                <span class="lyrd_index_today_visit">旅游外汇收入</span>
                             </div>
                             <div>
                                 <span class="lyrd_index_today_num">1000,00</span>
