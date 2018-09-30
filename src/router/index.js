@@ -94,6 +94,13 @@ export default new Router({
           component: resolve => {
             require(['../page/tourHot/destination.vue'], resolve)
           }
+        },
+        {
+          path: '/quota',
+          name: 'quota',
+          component: resolve => {
+            require(['../page/quota/provincial/index.vue'], resolve)
+          }
         }
       ]
     }
