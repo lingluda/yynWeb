@@ -9,7 +9,7 @@
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">{{(this.picDate).toString().substring(8,10)}}日平台运营数据</span>
 
-            <DatePicker v-model="picDate" type="date" placeholder="Select date"
+            <DatePicker placement="bottom-end" v-model="picDate" type="date" placeholder="Select date"
                         style="width: 120px;float: right"></DatePicker>
           </div>
           <Row :gutter="16">
@@ -26,7 +26,8 @@
                       <span style="font-weight: bold;color: #000000">新增用户量</span>
 
                     </div>
-                    <p style="font-size: 28px;color: blue">{{addData.total}}人</p>
+                    <span style="font-size: 32px;color: #006eff;font-weight: 600">{{addData.total}}</span>
+                    <span style="color: #006eff">人</span>
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
@@ -52,7 +53,8 @@
                       <span style="font-weight: bold;color: #000000">活跃用户数</span>
 
                     </div>
-                    <p style="font-size: 28px;color: blue">{{aduData.total}}人</p>
+                    <span style="font-size: 32px;color: #006eff;font-weight: 600">{{aduData.total}}</span>
+                    <span style="color: #006eff">人</span>
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
@@ -72,9 +74,12 @@
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">用户趋势分析</span>
 
-            <DatePicker type="daterange"  v-model="picMonth" @on-change="change1" placeholder="自选时间"
+            <DatePicker placement="bottom-end" type="daterange"  v-model="picMonth" @on-change="change1" placeholder="自选时间"
                         style="width: 180px;float: right"></DatePicker>
-            <Button style="border-radius: 0px;float: right;height: 32px;" @click="choose7">近7天</Button>
+            <RadioGroup v-model="cho7" type="button" style="float: right" @on-change="choose7">
+              <Radio label="1">最近7日</Radio>
+              <Radio label="2">最近30日</Radio>
+            </RadioGroup>
            <!-- <DatePicker v-model="dd1" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
             <span style="float: right;padding:5px 5px 0px 5px">-</span>
             <DatePicker v-model="dd2" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
@@ -92,12 +97,15 @@
     background: #f2f2f2;
   }
   .ti{
+    margin-bottom: unset;
     color: #000;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 60px;
     padding-left: 20px;
     height: 60px;
+    background-color: #fff;
+    border-bottom: 1px solid #e2e4e6;
   }
 </style>
 
@@ -107,6 +115,7 @@
   export default {
     data() {
       return {
+        cho7:'1',
         dd1:http.getToday(),
         dd2:'2018-01',
         fratio:'',
@@ -121,7 +130,7 @@
         color2:'',
         color3:'',
         color4:'',
-        picMonth: [http.getMonthAgo(), http.getToday()],
+        picMonth: [http.getWeekAgo(), http.getToday()],
         picDate: http.getYesterDay(),
         addData: '',
         aduData: '',
@@ -134,7 +143,9 @@
       this.init()
     },
     methods: {
-      choose7(){
+      choose7(val){
+        console.log(val)
+        if (val==1){
         this.picMonth=[http.getWeekAgo(), http.getToday()]
         this.lineDatax1 = []
         this.lineDatax2 = []
@@ -147,12 +158,27 @@
           }
           this.initTrend()
         })
+        }
+        if (val==2){
+          this.picMonth=[http.getMonthAgo(), http.getToday()]
+          this.lineDatax1 = []
+          this.lineDatax2 = []
+          this.lineDatay = []
+          http.get('bi/get_ops_trend_date', {startTime: http.getMonthAgo(), endTime: http.getToday(), type: 'd'}).then(resp => {
+            for (var i = 0; i < resp.data.hits.length; i++) {
+              this.lineDatax1.push(resp.data.hits[i].dau)
+              this.lineDatax2.push(resp.data.hits[i].incr_num)
+              this.lineDatay.push(resp.data.hits[i].date)
+            }
+            this.initTrend()
+          })
+        }
       },
       init() {
         this.lineDatax1 = []
         this.lineDatax2 = []
         this.lineDatay = []
-        http.get('bi/get_ops_trend_date', {startTime: http.getMonthAgo(), endTime: http.getToday(), type: 'd'}).then(resp => {
+        http.get('bi/get_ops_trend_date', {startTime: http.getWeekAgo(), endTime: http.getToday(), type: 'd'}).then(resp => {
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.lineDatax1.push(resp.data.hits[i].dau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)
@@ -169,12 +195,18 @@
         trend.setOption({
           xAxis: {
             type: 'category',
-            boundaryGap: false,
             data: this.lineDatay
           },
           yAxis: {
-            type: 'value'
+            type: 'value',
+            boundaryGap: [0, 0.01],
+            splitLine: {
+              lineStyle: {
+                color: '#e8e8e8'
+              }
+            }
           },
+
           tooltip: {
             trigger: 'axis'
           },
@@ -187,7 +219,7 @@
             bottom: 10,
             data: ['活跃用户数', '新增用户量']
           },
-          color: ['blue', 'red'],
+          color: ['#006EFF', '#29CC85'],
           series: [{
             name: '活跃用户数',
             data: this.lineDatax1,

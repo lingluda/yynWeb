@@ -15,7 +15,7 @@
      </Row>
   </div> -->
   <Layout>
-    <Header style="background: rgb(38, 38, 38);padding: unset;height: 50px">
+  <!--<Header style="background: rgb(38, 38, 38);padding: unset;height: 50px">
       <Row type="flex" justify="center" align="middle" style="height: 50px">
         <Col span="19">
         <div style="display: flex;">
@@ -35,7 +35,7 @@
         </div>
         </Col>
       </Row>
-    </Header>
+    </Header>-->
     <Layout>
       <Sider hide-trigger style="display: flex;height: calc(100vh-50px);background-color: rgb(51, 51, 51)">
         <span class="sidebars" @click="selected('index')"><a v-if="'index'===selecteds">旅游热度</a><span v-if="'index'!=selecteds">旅游热度</span>
@@ -52,7 +52,7 @@
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;" /></span>
 
 
-      </Sider>
+      </Sider>-->
       <Content style="width:100%;height: 100vh;">
         <router-view></router-view>
       </Content>

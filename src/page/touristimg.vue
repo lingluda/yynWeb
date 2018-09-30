@@ -1025,9 +1025,24 @@
       },
       _ccc1(){
         if (this.ccc1==''||this.ccc1=="undefined"||this.ccc1==null){
+          console.log(this.ccc1)
         }
         else {
           this.cccM=this.ccc1
+          this.provx = [];
+          this.provy = [];
+          this.cityx = [];
+          this.cityy = [];
+          this.eduData = [];
+          this.ageData = [];
+          this.carDatax = [];
+          this.carDatay = [];
+          this.mobilex = [];
+          this.mobiley = [];
+
+          http
+            .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:this.ccc,scenic:this.ccc1})
+            .then(this.getPortraitData);
         }
       },
       _ccti(){

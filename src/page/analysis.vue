@@ -9,13 +9,13 @@
       <Row style="width: 100%;height: 350px;border: 1px solid #dcdee2;padding-bottom: 20px;box-sizing: content-box;">
         <div style="display:flex;justify-content: space-between;padding:20px">
         <div class="card_title">
-          <span style="font-weight: bold;color: #000000">云南省舆情正负面情绪分析</span>
+          <span style="font-weight: bold;color: #000000">舆情正负面情绪分析</span>
         </div>
         <div>
           <Select style="width: 120px" v-model="city1">
             <Option v-for="item in cityData" :value="item.code">{{item.name}}</Option>
           </Select>
-           <DatePicker type="date" v-model="date1" placeholder="自选时间" style="width: 120px"></DatePicker>
+           <DatePicker placement="bottom-end" type="date" v-model="date1" placeholder="自选时间" style="width: 120px"></DatePicker>
         </div>
       </div>
         <Col span="12" style="padding:0 80px">

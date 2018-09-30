@@ -103,12 +103,15 @@ table{
 }
 
 .ti {
+  margin-bottom: unset !important;
   color: #000;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 60px;
   padding-left: 20px;
   height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid #e2e4e6;
 }
   .ivu-card-body {
     padding: 20px;
@@ -216,6 +219,7 @@ table{
           },
           yAxis: {
             type: 'value',
+            boundaryGap: [0, 0.1],
             axisLine:{
               lineStyle:{
                 color:'#888888',
@@ -232,7 +236,7 @@ table{
                 label: {
                   show: true,
                   position: 'top',
-                  formatter: '{c} 万'
+                  formatter: '{c}'
                 },
                 color: function (params) {
                   var colorList = [
@@ -481,6 +485,7 @@ table{
           },
           yAxis: {
             type: 'value',
+            boundaryGap: [0, 0.1],
             axisLine:{
               lineStyle:{
                 color:'#888888',
@@ -497,7 +502,7 @@ table{
                 label: {
                   show: true,
                   position: 'top',
-                  formatter: '{c} 万'
+                  formatter: '{c}'
                 },
                 color: function (params) {
                   // build a color map as your need.
