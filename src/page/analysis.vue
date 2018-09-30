@@ -9,7 +9,7 @@
       <Row style="width: 100%;height: 350px;border: 1px solid #dcdee2">
         <div style="display:flex;justify-content: space-between;padding:20px">
         <div class="card_title">
-          <span style="font-weight: bold;color: #000000">云南省舆情正负面情绪分析</span>
+          <span style="font-weight: bold;color: #000000">舆情正负面情绪分析</span>
         </div>
         <div>
           <Select style="width: 120px" v-model="city1">

@@ -172,6 +172,7 @@
     height:10px; border-radius:5px;position:relative; margin:5px 10px 0px 10px; z-index:2;
     background-color:#fff;}
   .tit {
+    margin-bottom: unset !important;
     color: #000;
     font-size: 16px;
     font-weight: 600;

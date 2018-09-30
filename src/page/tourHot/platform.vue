@@ -97,6 +97,7 @@
     background: #f2f2f2;
   }
   .ti{
+    margin-bottom: unset;
     color: #000;
     font-size: 16px;
     font-weight: 600;
@@ -205,6 +206,7 @@
               }
             }
           },
+
           tooltip: {
             trigger: 'axis'
           },
@@ -217,7 +219,7 @@
             bottom: 10,
             data: ['活跃用户数', '新增用户量']
           },
-          color: ['blue', 'red'],
+          color: ['#006EFF', '#29CC85'],
           series: [{
             name: '活跃用户数',
             data: this.lineDatax1,

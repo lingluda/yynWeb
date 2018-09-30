@@ -117,7 +117,7 @@
       </card>
     <card class="card_margin">
       <div style="margin-bottom: 20px;">
-        <span style="font-weight: bold;color: #000000">月投诉量趋势分析</span>
+        <span style="font-weight: bold;color: #000000">投诉量趋势分析</span>
         <!--<DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 140px;float: right"></DatePicker>-->
       <!--  <DatePicker v-model="dd1" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
         <span style="float: right;padding:5px 5px 0px 5px">-</span>
@@ -680,7 +680,7 @@ export default {
   watch:{
     picdate1:'pic1',
     picdate2:'pic2',
-    picdate3:'pic3',
+    //picdate3:'pic3',
     p11:'ppp',
     picTo:'ptt',
     dd1:'_dd2'

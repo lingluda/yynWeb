@@ -120,8 +120,8 @@
                 <Radio label="3">最近7天</Radio>
                 <Radio label="4">最近30天</Radio>
               </RadioGroup>
-              <DatePicker v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:180px" @on-change="form1change1"></DatePicker>
-              <Select v-model="city1" clearable style="width:120px;margin-left:15px" @on-change="form1change1">
+              <DatePicker v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" placement="bottom-end" style="width:180px" @on-change="form1change1"></DatePicker>
+              <Select v-model="city1" style="width:120px;margin-left:15px" @on-change="form1change1">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
             </div>
@@ -744,7 +744,7 @@ export default {
 
   watch: {
      city: 'citp',
-    date1: "form1change1",
+    //date1: "form1change1",
     // city1: 'form1change1',
     dateChoice1: "p1",
     dateChoice2: "p2"
@@ -757,6 +757,7 @@ export default {
   }
   .ul li{ float:left;   width: 25%;  padding: 10px; border-bottom: 1px solid #dbdbdb   }
   .ti {
+    margin-bottom: unset !important;
   color: #000;
   font-size: 16px;
   font-weight: 600;

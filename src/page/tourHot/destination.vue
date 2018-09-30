@@ -103,6 +103,7 @@ table{
 }
 
 .ti {
+  margin-bottom: unset !important;
   color: #000;
   font-size: 16px;
   font-weight: 600;
