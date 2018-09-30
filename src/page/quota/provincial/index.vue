@@ -274,7 +274,7 @@ export default {
 .quota_bg {
     padding: 20px;
     background: rgb(242, 242, 242);
-    height: calc(100% - 60px - 1px);
+    min-height: calc(100% - 60px - 1px);
 }
 
 .lyrd_index_count_content {
@@ -332,7 +332,7 @@ export default {
 }
 
 .borderBlock {
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #dcdee2;
 }
 </style>
