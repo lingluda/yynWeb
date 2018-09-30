@@ -20,13 +20,16 @@
           }
       },
       mounted(){
-        this.initMap()
       },
       methods:{
           initMap(){
             let map = this.$echarts.init(document.getElementById("main"))
             map.setOption({
-              tooltip: {},
+              tooltip: {
+
+                    formatter: '{b}\n{c}人',
+
+              },
               visualMap: {
                 min: 0,
                 max: 200000,
@@ -101,6 +104,9 @@
               ]
             })
           }
+      },
+      watch:{
+        mapdata:'initMap'
       }
     }
 </script>

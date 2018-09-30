@@ -119,10 +119,16 @@
       <div style="margin-bottom: 20px;">
         <span style="font-weight: bold;color: #000000">月投诉量趋势分析</span>
         <!--<DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 140px;float: right"></DatePicker>-->
-        <DatePicker v-model="dd1" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
+      <!--  <DatePicker v-model="dd1" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
         <span style="float: right;padding:5px 5px 0px 5px">-</span>
         <DatePicker v-model="dd2" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
+-->
+        <DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:180px;float: right" @on-change="_dd2"></DatePicker>
 
+        <RadioGroup v-model="dateChoice1" type="button" style="float: right" @on-change="dateChoice11">
+          <Radio label="1">最近7天</Radio>
+          <Radio label="2">最近30天</Radio>
+        </RadioGroup>
       </div>
       <div id="myline" style="height: 400px;border: 1px solid #dcdee2;"></div>
     </card>
@@ -247,6 +253,13 @@ export default {
     this.init();
   },
   methods: {
+    dateChoice11(val){
+      if (val==1){
+        this.picdate3 =[http.getWeekAgo(),http.getToday()]
+      } else {
+        this.picdate3 =[http.getMonthAgo(),http.getToday()]
+      }
+    },
     change7(){
       this.picdate2=''
       this.procX1=[]
@@ -258,14 +271,14 @@ export default {
       http.get('bi/get_complaint_by_date',{date:http.getYesterDay()}).then(resp=>{
         this.close1=resp.data.hits.closed;
         this.unclose1=resp.data.hits.unclosed;
-        this.timeX.push(parseInt(resp.data.hits.min_proc));
-        this.timeX.push(parseInt(resp.data.hits.max_proc));
-        this.timeX.push(parseInt(resp.data.hits.avg_proc));
+        this.timeX.push(parseInt(resp.data.hits.min_proc*10000)/10000);
+        this.timeX.push(parseInt(resp.data.hits.max_proc*10000)/10000);
+        this.timeX.push(parseInt(resp.data.hits.avg_proc*10000)/10000);
 
         for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
-          this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg));
-          this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max));
-          this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
+          this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg*10000)/10000);
+          this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max*10000)/10000);
+          this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min*10000)/10000);
           this.procY1.push(resp.data.hits.proc_stat[i].name);
         }
         this.closeComplaint();
@@ -602,14 +615,14 @@ export default {
         .then(resp => {
           this.close1=resp.data.hits.closed;
           this.unclose1=resp.data.hits.unclosed;
-          this.timeX.push(parseInt(resp.data.hits.min_proc));
-          this.timeX.push(parseInt(resp.data.hits.max_proc));
-          this.timeX.push(parseInt(resp.data.hits.avg_proc));
+          this.timeX.push(parseInt(resp.data.hits.min_proc*10000)/10000);
+          this.timeX.push(parseInt(resp.data.hits.max_proc*10000)/10000);
+          this.timeX.push(parseInt(resp.data.hits.avg_proc*10000)/10000);
 
           for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
-            this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg));
-            this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max));
-            this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min));
+            this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg*10000)/10000);
+            this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max*10000)/10000);
+            this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min*10000)/10000);
             this.procY1.push(resp.data.hits.proc_stat[i].name);
           }
           this.closeComplaint();
@@ -619,7 +632,8 @@ export default {
       this.linex=[]
       this.liney=[]
       http
-        .get("bi/get_complaint_trend_by_monspan", {startTime:http.gmt2str(this.picdate3[0]),endTime:http.gmt2str(this.picdate3[1])})
+        //get_complaint_trend_by_monspan
+        .get("bi/get_complaint_trend_by_timespan", {startTime:http.gmt2str(this.picdate3[0]),endTime:http.gmt2str(this.picdate3[1])})
         .then(resp => {
               for (var i=0;i<resp.data.hits.length;i++){
                 this.linex.push(resp.data.hits[i].date)
@@ -651,7 +665,7 @@ export default {
       this.linex=[]
       this.liney=[]
       http
-        .get("bi/get_complaint_trend_by_monspan", {startTime:http.gmt2str(this.dd2),endTime:http.gmt2str(this.dd1)})
+        .get("bi/get_complaint_trend_by_timespan", {startTime:http.gmt2str(this.dd2),endTime:http.gmt2str(this.dd1)})
         .then(resp => {
           for (var i=0;i<resp.data.hits.length;i++){
             this.linex.push(resp.data.hits[i].date)

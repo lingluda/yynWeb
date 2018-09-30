@@ -86,7 +86,7 @@
 
                     </div>
                     <div style="position: absolute;  top: 17px;  left: 180px;  font-size: 12px;">
-                      <span>日峰值：</span>
+                      <span>当日峰值：</span>
                       <span style="font-weight: bold">{{daymount}}</span>
                     </div>
 
@@ -452,7 +452,7 @@
            this.showud1=2
          }
           this.daymount = resp.data.hits.his;
-          this.currentTime = resp.data.hits.total;
+          this.currentTime = resp.data.hits.real;
           this.touristc = resp.data.hits.link;
         })
       },
@@ -488,7 +488,7 @@
             this.showud1=2
           }
           this.daymount = resp.data.hits.his;
-          this.currentTime = resp.data.hits.total;
+          this.currentTime = resp.data.hits.real;
           this.touristc = resp.data.hits.link;
         })
       },
