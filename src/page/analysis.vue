@@ -6,7 +6,7 @@
       <div class="card_title">
         <span style="font-weight: bold;color: #000000">舆情总体指标</span>
       </div>
-      <Row style="width: 100%;height: 350px;border: 1px solid #dcdee2">
+      <Row style="width: 100%;height: 350px;border: 1px solid #dcdee2;padding-bottom: 20px;box-sizing: content-box;">
         <div style="display:flex;justify-content: space-between;padding:20px">
         <div class="card_title">
           <span style="font-weight: bold;color: #000000">舆情正负面情绪分析</span>
@@ -20,11 +20,11 @@
       </div>
         <Col span="12" style="padding:0 80px">
           <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">媒体情绪</div>
-          <div id="health" style="width: 100%;height: 235px;margin-top: -20px"></div>
+          <div id="health" style="width: 100%;height: 260px;margin-top: -20px"></div>
         </Col>
         <Col span="12" style="padding:0 50px">
           <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">一机游情绪</div>
-          <div id="unhealth" style="width: 100%;height: 235px;margin-top: -20px"></div>
+          <div id="unhealth" style="width: 100%;height: 260px;margin-top: -20px"></div>
         </Col>
       </Row>
 
@@ -51,7 +51,7 @@
                   <Row class="qsnet_row">
                     <Col span="12" class="qsnet_num">
                       <i class="qsnet_idx">{{index + 1}}</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
+                      <span class="qsnet_sp">陈小辉一审被判18年</span>
                       <!-- <p class="qsnet_time">2018-05-10</p> -->
                     </Col>
                     <Col span="4" class="qsnet_num">59.5W</Col>
@@ -88,7 +88,7 @@
                   <Row class="qsnet_row">
                     <Col span="12" class="qsnet_num">
                       <i class="qsnet_idx">1</i>
-                      <span class="qsnet_sp">吴小辉一审被判18年</span>
+                      <span class="qsnet_sp">陈小辉一审被判18年</span>
                       <!-- <p class="qsnet_time">2018-05-10</p> -->
                     </Col>
                     <Col span="4" class="qsnet_num">59.5W</Col>
@@ -277,12 +277,12 @@ export default {
           {
             name: "",
             type: "pie",
-            radius: ["50%", "70%"],
+            radius: ["45%", "65%"],
             avoidLabelOverlap: false,
             label: {
               normal: {
                 show: true,
-                position: "inside",
+                position: "outside",
               },
               emphasis: {
                 show: true,
@@ -293,16 +293,17 @@ export default {
             },
             labelLine: {
               normal: {
-                show: false
+                show: true
               }
             },
             data: this.pie1,
             itemStyle: {
               normal: {
+                borderColor: "#FFFFFF",
+                borderWidth: 1.5,
                 label: {
                   show: true,
-                  formatter: "{d}%",
-                  color:"#000",
+                  formatter: "{b} {d}%"
                 },
                 labelLine: {
                   show: true
@@ -312,17 +313,9 @@ export default {
           }
         ],
         color: [
-          "#006EFF",
+          "#0066ef",
           "#ffbb00",
           "#ff584c",
-          "#9741d9",
-          "#1fc0cc",
-          "#7ff936",
-          "#ff9c19",
-          "#e63984",
-          "#655ce6",
-          "#47cc50",
-          "#fb0b6"
         ]
       });
     },
@@ -354,12 +347,12 @@ export default {
           {
             name: "",
             type: "pie",
-            radius: ["50%", "70%"],
+            radius: ["45%", "65%"],
             avoidLabelOverlap: false,
             label: {
               normal: {
                 show: true,
-                position: "inside"
+                position: "outside",
               },
               emphasis: {
                 show: true,
@@ -370,16 +363,17 @@ export default {
             },
             labelLine: {
               normal: {
-                show: false
+                show: true
               }
             },
             data: this.pie1,
             itemStyle: {
               normal: {
+              borderColor: "#FFFFFF",
+              borderWidth: 1.5,
                 label: {
                   show: true,
-                  formatter: "{d}%",
-                  color:"#000",
+                  formatter: "{b} {d}%"
                 },
                 labelLine: {
                   show: true
@@ -389,17 +383,9 @@ export default {
           }
         ],
         color: [
-          "#006EFF",
+          "#0066ef",
           "#ffbb00",
           "#ff584c",
-          "#9741d9",
-          "#1fc0cc",
-          "#7ff936",
-          "#ff9c19",
-          "#e63984",
-          "#655ce6",
-          "#47cc50",
-          "#fb0b6"
         ]
       });
     },
