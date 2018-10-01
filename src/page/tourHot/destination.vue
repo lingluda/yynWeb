@@ -6,7 +6,7 @@
     <div class="tabpane_content">
         <card  class="lyrd_sy_ykrs">
           <div style="margin-bottom: 20px">
-            <span style="font-weight: bold;color: #000000">热门目的地网络热度TOP10</span>
+            <span style="font-weight: bold;color: #000000">热门目的地网络热度</span>
 
           </div>
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
@@ -22,7 +22,7 @@
         </card>
         <card style="margin-top: 20px">
           <div style="margin-bottom: 20px;">
-            <span style="font-weight: bold;color: #000000">热门景区网络热度TOP10</span>
+            <span style="font-weight: bold;color: #000000">热门景区网络热度</span>
           </div>
 
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
@@ -38,7 +38,7 @@
         </card>
         <card style="margin-top: 20px">
           <div style="margin-bottom: 20px;">
-            <span style="font-weight: bold;color: #000000">热门路线TOP10</span>
+            <span style="font-weight: bold;color: #000000">热门路线</span>
             <!--<pers-st :pers="21"></pers-st>-->
             <Tooltip content="一机游app对各线路页面访问量排行，购买量为下单量" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
@@ -68,7 +68,7 @@
               <Col span="12">
                 <div style="border: 1px solid #dcdee2">
                   <div style="padding: 20px">
-                    <span style="font-weight: bold;color: #000000">景区客流TOP10</span>
+                    <span style="font-weight: bold;color: #000000">景区客流</span>
                     <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
                   <DatePicker type="date" v-model="picDate4" placeholder="Select date" style="width: 120px;margin-left:15px;"></DatePicker>
@@ -78,7 +78,7 @@
               <Col span="12">
                 <div style="border: 1px solid #dcdee2">
                   <div style="padding: 20px">
-                    <span style="font-weight: bold;color: #000000">景区客流变化TOP10</span>
+                    <span style="font-weight: bold;color: #000000">景区客流变化</span>
                     <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
                   <RadioGroup type="button" style="margin-left: 15px" v-model="addling">
@@ -134,12 +134,13 @@ table{
     name: "tourhot",
     data() {
       return {
+        unitD:'',
         addling:'1',
         picDate1:http.getYesterDay(),
         picDate2:http.getYesterDay(),
         picDate3:http.getYesterDay(),
-        picDate4:http.getToday(),
-        picDate5:http.getToday(),
+        picDate4:http.getYesterDay(),
+        picDate5:http.getYesterDay(),
         chan:'app',
         barDatax:[],
         barDatay:[],
@@ -189,6 +190,7 @@ table{
     },
     methods: {
       initSimBar(){
+        this.unitD='万'
         let simbar = this.$echarts.init(document.getElementById("simBar"),'macarons')
         simbar.setOption({
           tooltip: {
@@ -238,14 +240,14 @@ table{
                   position: 'top',
                   formatter: '{c}'
                 },
-                color: function (params) {
+              /*  color: function (params) {
                   var colorList = [
                     '#ff9b33', '#ff9b33', '#ff9b33', '#006EFF', '#006EFF',
                     '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF',
                     '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF'
                   ];
                   return colorList[params.dataIndex]
-                },
+                },*/
               }
             }
           }]
@@ -317,7 +319,7 @@ table{
                     formatter: '{c} 万',
                     color:"#000"
                   },
-                  color: function (params) {
+               /*   color: function (params) {
                     // build a color map as your need.
                     var colorList = [
                       '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF',
@@ -325,7 +327,7 @@ table{
                       '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF'
                     ];
                     return colorList[params.dataIndex]
-                  },
+                  },*/
 
                 }
               }
@@ -360,7 +362,7 @@ table{
               type: 'shadow'
             },
             backgroundColor:'#323232',
-            formatter: '{b0}<br />{a0} {c0} 万<br />{a1} {c1} 万 <br />{a2} {c2} 万'
+            formatter: '{b0}<br />{a0} {c0} 万<br />{a1} {c1} 万 <br />{a2} {c2}'+ this.unitD
           },
           legend: {
             bottom: 10,
@@ -443,7 +445,7 @@ table{
                   label: {
                     show: false,
                     position: 'right',
-                    formatter: '{c} 万'
+                    formatter: '{c}'
                   },
                 }
               },
@@ -504,7 +506,7 @@ table{
                   position: 'top',
                   formatter: '{c}'
                 },
-                color: function (params) {
+               /* color: function (params) {
                   // build a color map as your need.
                   var colorList = [
                     '#ff9b33', '#ff9b33', '#ff9b33', '#006EFF', '#006EFF',
@@ -512,7 +514,7 @@ table{
                     '#006EFF', '#006EFF', '#006EFF', '#006EFF', '#006EFF'
                   ];
                   return colorList[params.dataIndex]
-                },
+                },*/
 
               }
             }
@@ -532,7 +534,7 @@ table{
         http.get('bi/get_hot_desc_vist_qty_by_date',{chan:this.chan,date:'2018-09-01',top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)
-            this.barDatay.push(parseInt(resp.data.hits[i].dau)/10000)
+            this.barDatay.push(parseInt(resp.data.hits[i].dau/100)/100)
           }
           this.initSimBar()
         })
@@ -543,7 +545,7 @@ table{
         http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax1.push(resp.data.hits[i].name)
-            this.barDatay1.push(parseInt(resp.data.hits[i].dau)/10000)
+            this.barDatay1.push(parseInt(resp.data.hits[i].dau/100)/100)
           }
           this.initSimBars1()
         })
@@ -554,7 +556,7 @@ table{
         http.get('bi/get_hot_desc_vist_qty_by_date',{chan:'app',date:http.gmt2str(this.picDate1),top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)
-            this.barDatay.push(parseInt(resp.data.hits[i].dau)/10000)
+            this.barDatay.push(parseInt(resp.data.hits[i].dau/100)/100)
           }
           this.initSimBar()
         })
@@ -565,7 +567,7 @@ table{
         http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:'app',date:http.gmt2str(this.picDate2),top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax1.push(resp.data.hits[i].name)
-            this.barDatay1.push(parseInt(resp.data.hits[i].dau)/10000)
+            this.barDatay1.push(parseInt(resp.data.hits[i].dau/100)/100)
           }
           this.initSimBars1()
         })
@@ -583,10 +585,11 @@ table{
         this.max1n=[]
         this.max1y=[]
         http.get('bi/get_scenic_tourist_top_by_date',{date:http.gmt2str(this.picDate4),top:10}).then(resp=>{
+          let max1data=resp.data.hits.sort((v1, v2) => v1.n - v2.n);
           for (var i=0;i<resp.data.hits.length;i++) {
-            this.max1his.push(resp.data.hits[i].his/10000)
-            this.max1n.push(resp.data.hits[i].n/10000)
-            this.max1y.push(resp.data.hits[i].name)
+            this.max1his.push(parseInt(max1data[i].his/100)/100)
+            this.max1n.push(parseInt(max1data[i].n/100)/100)
+            this.max1y.push(max1data[i].name)
           }
           this.initMax1()
         })
@@ -597,42 +600,49 @@ table{
         this.max2name=[]
         this.max2his=[]
         http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
+          let max2data = resp.data.hits.sort((v1,v2)=> v1.n - v2.n)
           for (var i=0;i<resp.data.hits.length;i++) {
-            this.max2his.push(resp.data.hits[i].ince/10000)
-            this.max2n.push(resp.data.hits[i].n/10000)
-            this.max2y.push(resp.data.hits[i].pre/10000)
-            this.max2name.push(resp.data.hits[i].name)
+            this.max2his.push(parseInt(max2data[i].ince/100)/100)
+            this.max2n.push(parseInt(max2data[i].n/100)/100)
+            this.max2y.push(parseInt(max2data[i].pre/100)/100)
+            this.max2name.push(max2data[i].name)
           }
           this.initMax2()
         })
       },
       addliang(){
         if (this.addling==1) {
+          this.unitD='万'
           this.max2n=[]
           this.max2y=[]
           this.max2name=[]
           this.max2his=[]
+          console.log(this.unitD)
           http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
+            let max2data = resp.data.hits.sort((v1,v2)=> v1.n - v2.n)
             for (var i=0;i<resp.data.hits.length;i++) {
-              this.max2his.push(resp.data.hits[i].ince/10000)
-              this.max2n.push(resp.data.hits[i].n/10000)
-              this.max2y.push(resp.data.hits[i].pre/10000)
-              this.max2name.push(resp.data.hits[i].name)
+              this.max2his.push(parseInt(max2data[i].ince/100)/100)
+              this.max2n.push(parseInt(max2data[i].n/100)/100)
+              this.max2y.push(parseInt(max2data[i].pre/100)/100)
+              this.max2name.push(max2data[i].name)
             }
             this.initMax2()
           })
         }
         if (this.addling==2){
+          this.unitD='%'
           this.max2n=[]
           this.max2y=[]
           this.max2name=[]
           this.max2his=[]
+          console.log(this.unitD)
           http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
+            let max2data = resp.data.hits.sort((v1,v2)=> v1.n - v2.n)
             for (var i=0;i<resp.data.hits.length;i++) {
-              this.max2his.push(resp.data.hits[i].rate)
-              this.max2n.push(resp.data.hits[i].n)
-              this.max2y.push(resp.data.hits[i].pre)
-              this.max2name.push(resp.data.hits[i].name)
+              this.max2his.push(max2data[i].rate)
+              this.max2n.push(parseInt(max2data[i].n/100)/100)
+              this.max2y.push(parseInt(max2data[i].pre/100)/100)
+              this.max2name.push(max2data[i].name)
             }
             this.initMax2()
           })

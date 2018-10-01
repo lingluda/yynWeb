@@ -42,9 +42,10 @@ http.getToday =function () {
 }
 http.getYesterDay = function (){
   var data = new Date();
+  data.setDate(data.getDate()-1)
   var year = data.getUTCFullYear();
   var month = data.getMonth() + 1;
-  var day = data.getDate() - 1;
+  var day = data.getDate();
   var currentData = data.toLocaleDateString();
   if (month < 10) {
     var currentMonth = '0' + month;
@@ -60,9 +61,10 @@ http.getYesterDay = function (){
 }
 http.getWeekAgo = function () {
   var data = new Date();
+  data.setDate(data.getDate()-7)
   var year = data.getUTCFullYear();
   var month = data.getMonth() + 1;
-  var day = data.getDate() - 7;
+  var day = data.getDate();
   var currentData = data.toLocaleDateString();
   if (month < 10) {
     var currentMonth = '0' + month;
@@ -78,8 +80,9 @@ http.getWeekAgo = function () {
 }
 http.getMonthAgo = function () {
   var data = new Date();
+  data.setDate(data.getDate()-30)
   var year = data.getUTCFullYear();
-  var month = data.getMonth();
+  var month = data.getMonth()+1;
   var day = data.getDate();
   var currentData = data.toLocaleDateString();
   if (month < 10) {

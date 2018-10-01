@@ -218,6 +218,7 @@ import http from "@/http.js";
 export default {
   data() {
     return {
+      dateChoice1:'1',
       titleDate:'',
       dd1:http.getToday(),
       dd2:'2018-01',
@@ -233,7 +234,7 @@ export default {
       picTo:'1',
       picdate1:http.getYesterDay(),
       picdate2:'2018-08-03',
-      picdate3:['2018-07-03','2018-09-03'],
+      picdate3:[http.getWeekAgo(),http.getToday()],
       add: "",
       link: "",
       ratio: "",
@@ -257,8 +258,10 @@ export default {
     dateChoice11(val){
       if (val==1){
         this.picdate3 =[http.getWeekAgo(),http.getToday()]
+        this._dd2()
       } else {
         this.picdate3 =[http.getMonthAgo(),http.getToday()]
+        this._dd2()
       }
     },
     change7(){
@@ -290,6 +293,7 @@ export default {
         this.cityData = resp.data.hits;
         this.p11 = resp.data.hits[0].id
       })
+      this._dd2()
     },
     initComplain() {
       let complain = this.$echarts.init(document.getElementById("complain"));
@@ -667,7 +671,7 @@ export default {
       this.linex=[]
       this.liney=[]
       http
-        .get("bi/get_complaint_trend_by_timespan", {startTime:http.gmt2str(this.dd2),endTime:http.gmt2str(this.dd1)})
+        .get("bi/get_complaint_trend_by_timespan", {startTime:http.gmt2str(this.picdate3[0]),endTime:http.gmt2str(this.picdate3[1])})
         .then(resp => {
           for (var i=0;i<resp.data.hits.length;i++){
             this.linex.push(resp.data.hits[i].date)
@@ -683,7 +687,7 @@ export default {
     //picdate3:'pic3',
     p11:'ppp',
     picTo:'ptt',
-    dd1:'_dd2'
+    //dd1:'_dd2'
   }
 };
 </script>
