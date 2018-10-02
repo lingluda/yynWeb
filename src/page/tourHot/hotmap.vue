@@ -75,24 +75,37 @@
               <div class="hotmap_kljd">
                 <Row>
                   <Col span="10">
-                    <div style="margin-top: 20px;margin-left: 80px">
-                      <img src="../../assets/imgs/tkhot.png"/>
+                    <!--<div style="margin-top: 20px;margin-left: 80px">
+                      &lt;!&ndash;<img src="../../assets/imgs/tkhot.png"/>&ndash;&gt;
                     </div>
-                    <div style="position: absolute;   top: 75px;   left: 130px; text-align: center">
+                    <div >
                       <span style=" font-size: 16px;  font-weight: bold">景区游客人数</span>
                       <p style="font-size: 12px">(单位：人)</p>
                     </div>
                     <div>
 
                     </div>
-                    <div style="position: absolute;  top: 17px;  left: 180px;  font-size: 12px;">
+                    <div>
                       <span>当日峰值：</span>
                       <span style="font-weight: bold">{{daymount}}</span>
                     </div>
 
-                    <div style="position: absolute;  top: 37px;  left: 180px;  font-size: 12px">
-                      <span>当前实时客流人数：</span>
+                    <div >
+                      <span>景区实时游客人数：</span>
                       <span style="font-weight: bold">{{currentTime}}</span>
+                    </div>-->
+                    <div class="hotmap_tb1">
+                      <div class="lyrd_hotmap_count_bg1"></div>
+                      <div class="lyrd_hotmap_num">
+                        <span class="lyrd_hotmap_desc">景区实时游客人数：</span>
+                        <span class="lyrd_hotmap_today_num">{{currentTime}}</span>
+                        <span class="lyrd_hotmap_today_dw">人</span>
+                        <div>
+                        <span class="lyrd_hotmap_desc1">当日峰值：</span>
+                        <span class="lyrd_hotmap_today_num">{{daymount}}</span>
+                        <span class="lyrd_hotmap_today_dw">人</span>
+                      </div>
+                      </div>
                     </div>
                   </Col>
                   <Col span="7">
@@ -244,11 +257,22 @@
     color: #000;
     line-height: 25px;
   }
+  .lyrd_hotmap_desc1 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000;
+    line-height: 18px;
+  }
 
   .hotmap_tb {
     margin: 55px 0px 55px 40px;
     padding: 10px 0px 0px 25px;
     border-left: 1px solid #dcdee2;
+    display: flex;
+  }
+  .hotmap_tb1 {
+    margin: 55px 0px 55px 40px;
+    padding: 10px 0px 0px 25px;
     display: flex;
   }
 
@@ -351,6 +375,10 @@
             this.lineDatax.push(resp.data.hits.curlist[i].time)
             this.lineDatay2.push(parseInt(resp.data.hits.curlist[i].n))
           }
+          console.log('名称1：：',this.lineDatayn1)
+          console.log('数据1：：',this.lineDatay1)
+          console.log('名称2：：',this.lineDatayn2)
+          console.log('数据2：：',this.lineDatay2)
           this.initline();
         })
       },
@@ -412,7 +440,8 @@
             padding: [20, 0, 3, 80]
           },
           tooltip: {
-            trigger: "axis"
+            trigger: "axis",
+            formatter: '{b0}<br />{a1} {c1} 人<br />{a0} {c0} 人'
           },
           legend: {
             bottom: 2,
@@ -432,7 +461,13 @@
             data: this.lineDatax
           },
           yAxis: {
-            type: "value"
+            type: 'value',
+            boundaryGap: [0, 0.01],
+            splitLine: {
+              lineStyle: {
+                color: '#e8e8e8'
+              }
+            }
           },
           series: [
             {
@@ -447,6 +482,7 @@
               stack: "总量",
               data: this.lineDatay1
             }
+
           ]
         };
         mybar.setOption(option);
@@ -538,6 +574,11 @@
             this.lineDatax.push(resp.data.hits.curlist[i].time)
             this.lineDatay2.push(parseInt(resp.data.hits.curlist[i].n))
           }
+          console.log('名称1：：',this.lineDatayn1)
+          console.log('数据1：：',this.lineDatay1)
+          console.log('lineDatax：：',this.lineDatax)
+          console.log('名称2：：',this.lineDatayn2)
+          console.log('数据2：：',this.lineDatay2)
           this.initline();
         })
       }

@@ -25,7 +25,8 @@
                 <div class="lyrd_index_count_bg1"></div>
                 <div class="lyrd_index_count_num">
                     <div>
-                      <span class="lyrd_index_today_visit">{{(this.picdate1).toString().substring(8,10)}}日新增投诉量</span>
+                      <span class="lyrd_index_today_visit">日新增投诉量</span>
+                      <!--{{(this.picdate1).toString().substring(8,10)}}日-->
                     </div>
                     <div>
                       <span class="lyrd_index_today_num">{{add}}</span>
@@ -233,7 +234,7 @@ export default {
       p11:'',
       picTo:'1',
       picdate1:http.getYesterDay(),
-      picdate2:'2018-08-03',
+      picdate2:http.getMonthAgo(),
       picdate3:[http.getWeekAgo(),http.getToday()],
       add: "",
       link: "",
@@ -275,14 +276,14 @@ export default {
       http.get('bi/get_complaint_by_date',{date:http.getYesterDay()}).then(resp=>{
         this.close1=resp.data.hits.closed;
         this.unclose1=resp.data.hits.unclosed;
-        this.timeX.push(parseInt(resp.data.hits.min_proc*10000)/10000);
-        this.timeX.push(parseInt(resp.data.hits.max_proc*10000)/10000);
-        this.timeX.push(parseInt(resp.data.hits.avg_proc*10000)/10000);
+        this.timeX.push(parseInt(resp.data.hits.min_proc*100)/100);
+        this.timeX.push(parseInt(resp.data.hits.max_proc*100)/100);
+        this.timeX.push(parseInt(resp.data.hits.avg_proc*100)/100);
 
         for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
-          this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg*10000)/10000);
-          this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max*10000)/10000);
-          this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min*10000)/10000);
+          this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg*100)/100);
+          this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max*100)/100);
+          this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min*100)/100);
           this.procY1.push(resp.data.hits.proc_stat[i].name);
         }
         this.closeComplaint();
@@ -621,14 +622,14 @@ export default {
         .then(resp => {
           this.close1=resp.data.hits.closed;
           this.unclose1=resp.data.hits.unclosed;
-          this.timeX.push(parseInt(resp.data.hits.min_proc*10000)/10000);
-          this.timeX.push(parseInt(resp.data.hits.max_proc*10000)/10000);
-          this.timeX.push(parseInt(resp.data.hits.avg_proc*10000)/10000);
+          this.timeX.push(parseInt(resp.data.hits.min_proc*100)/100);
+          this.timeX.push(parseInt(resp.data.hits.max_proc*100)/100);
+          this.timeX.push(parseInt(resp.data.hits.avg_proc*100)/100);
 
           for (var i = 0; i < resp.data.hits.proc_stat.length; i++) {
-            this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg*10000)/10000);
-            this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max*10000)/10000);
-            this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min*10000)/10000);
+            this.procX1.push(parseInt(resp.data.hits.proc_stat[i].avg*100)/100);
+            this.procX2.push(parseInt(resp.data.hits.proc_stat[i].max*100)/100);
+            this.procX3.push(parseInt(resp.data.hits.proc_stat[i].min*100)/100);
             this.procY1.push(resp.data.hits.proc_stat[i].name);
           }
           this.closeComplaint();
@@ -655,8 +656,20 @@ export default {
           this.add = resp.data.hits.total;
           this.close = resp.data.hits.closed;
           this.unclose = resp.data.hits.unclosed;
-          this.link = resp.data.hits.link;
-          this.ratio = resp.data.hits.ratio;
+          if (resp.data.hits.link<0){
+            this.link = -resp.data.hits.link;
+            this.showud1=1
+          } else {
+            this.link = resp.data.hits.link;
+            this.showud1=2
+          }
+          if (resp.data.hits.ratio<0){
+            this.ratio = -resp.data.hits.ratio;
+            this.showud2=1
+          } else {
+            this.ratio = resp.data.hits.ratio;
+            this.showud2=2
+          }
         });
     },
     ptt(){

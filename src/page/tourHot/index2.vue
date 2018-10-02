@@ -33,11 +33,11 @@
                 <div class="lyrd_index_count_bg1"></div>
                 <div class="lyrd_index_count_num">
                   <div>
-                    <span class="lyrd_index_today_visit">{{(this.datefff).toString().substring(8,10)}}日总接待游客量</span>
-
+                    <span class="lyrd_index_today_visit">总接待游客量</span>
+                    <!--{{(this.datefff).toString().substring(8,10)}}日-->
                   </div>
                   <div>
-                    <span class="lyrd_index_today_num">{{total}}</span>
+                    <span class="lyrd_index_today_num">{{total.toString().substring(0,total.toString().length-3)}}</span>
                     <span class="lyrd_index_today_dw">人次</span>
                   </div>
                 </div>
@@ -94,7 +94,8 @@
           </div>
           <div class="lyrd_index_jryk1" v-if="isshowmap==0">
             <div class="lyrd_index_jryk_title">
-              <span class="lyrd_index_search_title">{{(this.datefff).toString().substring(8,10)}}日游客{{btitle}}所占比例</span>
+              <span class="lyrd_index_search_title">游客{{btitle}}所占比例</span>
+              <!--{{(this.datefff).toString().substring(8,10)}}日-->
             </div>
             <Row >
               <Col span="12">
@@ -137,7 +138,7 @@
 
                 </div>
                 <div>
-                  <span class="lyrd_index_today_num">{{totalP}}</span>
+                  <span class="lyrd_index_today_num">{{totalP.toString().substring(0,totalP.toString().length-3)}}</span>
                   <span class="lyrd_index_today_dw">人次</span>
                 </div>
               </div>
@@ -277,7 +278,7 @@ export default {
           city_id: this.city
         })
         .then(resp => {
-          this.total = resp.data.hits.total;
+          this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 
           if (resp.data.hits.ratio < 0) {
             this.ratio = -resp.data.hits.ratio;
@@ -503,7 +504,7 @@ export default {
           city_id: this.city
         })
         .then(resp => {
-          this.total = resp.data.hits.total;
+          this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 
           if (resp.data.hits.ratio < 0) {
             this.ratio = -resp.data.hits.ratio;
@@ -534,10 +535,10 @@ export default {
           city_id: this.city1
         })
         .then(resp => {
-          this.totalP = resp.data.hits.total;
+          this.totalP = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');//使用正则替换，每隔三个数加一个',';
           for (var i = 0; i < resp.data.hits.list.length; i++) {
             this.lineDatax.push(resp.data.hits.list[i].date);
-            this.lineDatay.push(resp.data.hits.list[i].value / 10000);
+            this.lineDatay.push(parseInt(resp.data.hits.list[i].value/100) / 100);
           }
           this.initLine();
         });
@@ -555,10 +556,10 @@ export default {
           city_id: this.city1
         })
         .then(resp => {
-          this.totalP = resp.data.hits.total;
+          this.totalP = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');//使用正则替换，每隔三个数加一个',';
           for (var i = 0; i < resp.data.hits.list.length; i++) {
             this.lineDatax.push(resp.data.hits.list[i].date);
-            this.lineDatay.push(resp.data.hits.list[i].value / 10000);
+            his.lineDatay.push(parseInt(resp.data.hits.list[i].value/100) / 100);
           }
           this.initLine();
         });
@@ -577,6 +578,7 @@ export default {
       if (this.dateChoice1 == 1) {
         this.datefff = http.getToday();
         this.pieData1 = [];
+        this.pieData2map = [];
         http
           .get("bi/get_tourism_dist_by_date", {
             date: http.gmt2str(this.datefff),
@@ -609,7 +611,7 @@ export default {
             city_id: this.city
           })
           .then(resp => {
-            this.total = resp.data.hits.total;
+            this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 
             if (resp.data.hits.ratio < 0) {
               this.ratio = -resp.data.hits.ratio;
@@ -630,6 +632,7 @@ export default {
       if (this.dateChoice1 == 2) {
         this.datefff = http.getYesterDay();
         this.pieData1 = [];
+        this.pieData2map = [];
         http
           .get("bi/get_tourism_dist_by_date", {
             date: http.gmt2str(this.datefff),
@@ -663,7 +666,7 @@ export default {
             city_id: this.city
           })
           .then(resp => {
-            this.total = resp.data.hits.total;
+            this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 
             if (resp.data.hits.ratio < 0) {
               this.ratio = -resp.data.hits.ratio;
@@ -691,6 +694,7 @@ export default {
       }
       this.datefff = date;
       this.pieData1 = [];
+      this.pieData2map = [];
       http
         .get("bi/get_tourism_dist_by_date", {
           date: http.gmt2str(this.datefff),
@@ -722,7 +726,7 @@ export default {
           city_id: this.city
         })
         .then(resp => {
-          this.total = resp.data.hits.total;
+          this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 
           if (resp.data.hits.ratio < 0) {
             this.ratio = -resp.data.hits.ratio;
