@@ -633,7 +633,7 @@
         cashChart.setOption({
           color: ["#006EFF", "#29CC85", "#ffbb00", "#ff584c", "#9741d9", "#1fc0cc"],
           tooltip: {
-            position: ['10%', '40%'],
+            position: ['10%', '34%'],
             alwaysShowContent: true,
             trigger: "item",
             formatter: "{a}<br/>{b}: {d}%",
@@ -987,8 +987,8 @@
         http
           .get("bi/get_consume_by_date", {date: http.gmt2str(this.picDate3), city_id:this.ccc})
           .then(resp => {
-            this.vagprice = resp.data.hist.avg_amount;
-            this.middle = resp.data.hist.median_amount;
+            this.vagprice = http.qfw(resp.data.hist.avg_amount);
+            this.middle = http.qfw(resp.data.hist.median_amount);
           });
       },
       dateChange4(){
