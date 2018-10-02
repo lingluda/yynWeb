@@ -86,7 +86,7 @@
                   }
                 );
                 //绘制热力图
-                heatmap.setData({max: 100, data: self1.testData[0].points});
+                heatmap.setData({max: 100, data: self1.testData[self1.testData.length-1].points});
               } else {
                 alert("您的浏览器不支持canvas，无法绘制热力图！！")
               }
@@ -99,8 +99,8 @@
                 playInterval: 1000,
                 bottom: '0',
                 symbolSize: 15,
-                autoPlay: true,
-                //currentIndex: this.timelines,
+                autoPlay: false,
+                currentIndex: this.testData.length-1,
                 loop: true,
                 realtime: true,
                 width: '95%',

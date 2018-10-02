@@ -613,8 +613,8 @@
               type: "pie",
               radius: ["40%", "55%"],
               avoidLabelOverlap: false,
-              label: false,
-              labelLine: false,
+              //label: false,
+              //labelLine: false,
               emphasis: {
                 label: oLabelStyle
               },
@@ -655,8 +655,8 @@
               name: "消费分析",
               type: "pie",
               radius: '50%',
-              label: false,
-              labelLine: false,
+              //label: false,
+              //labelLine: false,
               itemStyle: {
                 borderColor: '#fff',
                 borderWidth: 1
@@ -807,7 +807,20 @@
           },
           xAxis: {
             type: "category",
-            data: this.cityx
+            data: this.cityx,
+            axisLabel: {
+              interval: 0,
+              formatter:function(value,index)
+              {
+                debugger
+                if (index % 2 != 0) {
+                  return '\n\n' + value;
+                }
+                else {
+                  return value;
+                }
+              }
+            },
           },
           yAxis: {
             type: "value",

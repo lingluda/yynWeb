@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="ti">
-      <span>首页</span>
+      <span>旅游热度</span>
+      <Icon type="ios-arrow-forward" />
+      <span style="font-size: 12px;">首页</span>
     </div>
 
       <div label="首页" name="index" class="lyrd_sy_content">
@@ -231,6 +233,7 @@ export default {
       this.initLine();
     }, 50);
     this.getCity();
+    this.form1change1()
     //this.init()
   },
   methods: {
@@ -519,7 +522,9 @@ export default {
         });
     },
     form1change1() {
+      console.log('1111111111111111111',this.date1)
       this.totalP = "";
+      console.log(this.date1)
       this.lineDatax = [];
       this.lineDatay = [];
       http
@@ -538,6 +543,8 @@ export default {
         });
     },
     form1change2() {
+      console.log('1111111111111111111',http.gmt2str(this.date1[0]))
+
       this.totalP = "";
       this.lineDatax = [];
       this.lineDatay = [];
@@ -559,9 +566,11 @@ export default {
     p2() {
       if (this.dateChoice2 == 3) {
         this.date1 = [http.getWeekAgo(), http.getToday()];
+        this.form1change1()
       }
       if (this.dateChoice2 == 4) {
         this.date1 = [http.getMonthAgo(), http.getToday()];
+        this.form1change1()
       }
     },
     p1() {

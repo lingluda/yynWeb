@@ -54,8 +54,8 @@
                       <span class="qsnet_sp">陈小辉一审被判18年</span>
                       <!-- <p class="qsnet_time">2018-05-10</p> -->
                     </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
+                    <Col span="4" class="qsnet_num">59.5万</Col>
+                    <Col span="4" class="qsnet_num">23.1万</Col>
                     <Col span="4" class="qsnet_num">2018-05-10</Col>
                   </Row>
                 </li>
@@ -91,8 +91,8 @@
                       <span class="qsnet_sp">陈小辉一审被判18年</span>
                       <!-- <p class="qsnet_time">2018-05-10</p> -->
                     </Col>
-                    <Col span="4" class="qsnet_num">59.5W</Col>
-                    <Col span="4" class="qsnet_num">23.1W</Col>
+                    <Col span="4" class="qsnet_num">59.5万</Col>
+                    <Col span="4" class="qsnet_num">23.1万</Col>
                     <Col span="4" class="qsnet_num">2018-05-10</Col>
                   </Row>
                 </li>

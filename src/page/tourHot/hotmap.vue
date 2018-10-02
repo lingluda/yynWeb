@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div class="tit">景区客流热力</div>
+  <div class="tit">
+    <span >旅游热度</span>
+    <Icon type="ios-arrow-forward" />
+    <span style="font-size: 12px;color: #000">景区客流热力</span>
+  </div>
     <div class="tabpane_content">
           <card>
             <div style="margin-bottom: 20px">
