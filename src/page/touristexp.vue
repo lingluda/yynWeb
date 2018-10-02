@@ -274,8 +274,8 @@ export default {
       this.timeX=[]
       this.titleDate ='近7天'
       http.get('bi/get_complaint_by_date',{date:http.getYesterDay()}).then(resp=>{
-        this.close1=resp.data.hits.closed;
-        this.unclose1=resp.data.hits.unclosed;
+        this.close1=http.qfw(resp.data.hits.closed);
+        this.unclose1=http.qfw(resp.data.hits.unclosed);
         this.timeX.push(parseInt(resp.data.hits.min_proc*100)/100);
         this.timeX.push(parseInt(resp.data.hits.max_proc*100)/100);
         this.timeX.push(parseInt(resp.data.hits.avg_proc*100)/100);
@@ -591,9 +591,9 @@ export default {
       http
         .get("bi/get_complaint_by_date", { date: http.gmt2str(this.picdate1) })
         .then(resp => {
-          this.add = resp.data.hits.total;
-          this.close = resp.data.hits.closed;
-          this.unclose = resp.data.hits.unclosed;
+          this.add = http.qfw(resp.data.hits.total);
+          this.close = http.qfw(resp.data.hits.closed);
+          this.unclose = http.qfw(resp.data.hits.unclosed);
           if (resp.data.hits.link<0){
             this.link = -resp.data.hits.link;
             this.showud1=1
@@ -620,8 +620,8 @@ export default {
       http
         .get("bi/get_complaint_by_mon", { date: http.gmt2strm(this.picdate2) })
         .then(resp => {
-          this.close1=resp.data.hits.closed;
-          this.unclose1=resp.data.hits.unclosed;
+          this.close1=http.qfw(resp.data.hits.closed);
+          this.unclose1=http.qfw(resp.data.hits.unclosed);
           this.timeX.push(parseInt(resp.data.hits.min_proc*100)/100);
           this.timeX.push(parseInt(resp.data.hits.max_proc*100)/100);
           this.timeX.push(parseInt(resp.data.hits.avg_proc*100)/100);
@@ -653,9 +653,9 @@ export default {
       http
         .get("bi/get_complaint_by_date", { date: http.gmt2str(this.picdate1),city_id:this.p11 })
         .then(resp => {
-          this.add = resp.data.hits.total;
-          this.close = resp.data.hits.closed;
-          this.unclose = resp.data.hits.unclosed;
+          this.add = http.qfw(resp.data.hits.total);
+          this.close = http.qfw(resp.data.hits.closed);
+          this.unclose = http.qfw(resp.data.hits.unclosed);
           if (resp.data.hits.link<0){
             this.link = -resp.data.hits.link;
             this.showud1=1

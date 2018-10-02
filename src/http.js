@@ -142,6 +142,10 @@ http.addr2lnglat = function (addr) {
   };
   return result;
 }
+http.qfw =function (num) {
+  var reg=/\d{1,3}(?=(\d{3})+$)/g;
+  return (num + '').replace(reg, '$&,');
+}
 function encodeUrl(obj) {
 
   let url = '';

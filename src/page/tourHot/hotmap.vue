@@ -506,8 +506,8 @@
            this.ratio = resp.data.hits.ratio;
            this.showud1=2
          }
-          this.daymount = resp.data.hits.his;
-          this.currentTime = resp.data.hits.real;
+          this.daymount = http.qfw(resp.data.hits.his);
+          this.currentTime = http.qfw(resp.data.hits.real);
           this.touristc = resp.data.hits.link;
         })
       },
