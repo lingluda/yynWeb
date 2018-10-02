@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="ti">
-      <span>首页</span>
+      <span>旅游热度</span>
+      <Icon type="ios-arrow-forward" />
+      <span style="font-size: 12px;">首页</span>
     </div>
 
       <div label="首页" name="index" class="lyrd_sy_content">

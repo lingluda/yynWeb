@@ -1,7 +1,9 @@
 <template>
   <div >
     <div class="ti">
-      <span >热度排行</span>
+      <span>旅游热度</span>
+      <Icon type="ios-arrow-forward" />
+      <span style="font-size: 12px;color: #000">热度排行</span>
     </div>
     <div class="tabpane_content">
         <card  class="lyrd_sy_ykrs">

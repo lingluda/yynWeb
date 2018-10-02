@@ -227,7 +227,7 @@
             bottom: 10,
             left: 'center',
             icon:'circle',
-            data: ['今日景区客流','昨日景区客流','客流变化量']
+            data: ['当日景区客流','昨日景区客流','客流变化量']
           },
           grid: {
             left: '3%',
@@ -257,7 +257,7 @@
           },
           series: [
             {
-              name: '今日景区客流',
+              name: '当日景区客流',
               type: 'bar',
               data: this.max2n
             },

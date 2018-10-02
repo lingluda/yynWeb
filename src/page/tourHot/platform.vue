@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="ti">
-      <span>平台运营</span>
+      <span>旅游热度</span>
+      <Icon type="ios-arrow-forward" />
+      <span style="font-size: 12px;">平台运营</span>
     </div>
 
      <div class="tabpane_content">
