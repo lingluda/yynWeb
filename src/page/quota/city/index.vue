@@ -12,9 +12,9 @@
                                 <span class="lyrd_index_today_visit">今年累计旅游人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">210,760</span>
+                                <span class="lyrd_index_today_num">9994.11</span>
                                 <span class="lyrd_index_today_dw">万人次(与上年同比
-                                    <span :style={color:color2}><Icon type="md-arrow-down" size="22" />5.2%</span>)
+                                    <span :style={color:color1}><Icon type="md-arrow-up" size="22" />21.18%</span>)
                                 </span>
                             </div>
                         </div>
@@ -31,9 +31,9 @@
                                 <span class="lyrd_index_today_visit">今年累计旅游收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1000,00</span>
-                                <span class="lyrd_index_today_dw">万人次(与上年同比
-                                    <span :style={color:color1}><Icon type="md-arrow-up" size="22" />5.2%</span>)
+                                <span class="lyrd_index_today_num">14066284.58</span>
+                                <span class="lyrd_index_today_dw">万元(与上年同比
+                                    <span :style={color:color1}><Icon type="md-arrow-up" size="22" />27.34%</span>)
                                 </span>
                             </div>
                         </div>
@@ -83,7 +83,7 @@ export default {
     },
     data() {
         return {
-            color1: "#ffbb00",
+            color1: "#ff0000",
             color2: "green",
         }
     },

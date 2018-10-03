@@ -80,12 +80,10 @@ export default {
                             color: '#999',
                             formatter: '{value}%'
                         },
-                        min: -10
+                        min: -10,
+                        max: 60
                     }
                 ],
-                grid: {
-                    top: 80,
-                },
                 legend: [
                     {
                         y: 'bottom',
@@ -105,18 +103,24 @@ export default {
                         }
                     }
                 },
+                grid:{
+                    containLabel: true,
+                    left: 20,
+                    right: 20,
+                    top: 80
+                },
                 series: [
                     {
                         type: 'bar',
                         name: '国内过夜旅游收入',
                         barWidth: 30,
-                        data: [90, 55, 68, 70, 80, 85, 100, 45]
+                        data: [4089702.92, 5737359.84, 5285132.6, 5254775.52, 5365150.32, 5188802.83, 6208129.66, 6890973.48]
                     }, {
                         type: 'line',
                         name: '国内过夜旅游年同比',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [35, 25, 30, 23, 16, 33, 29, 12]
+                        data: [3.98, 39.22, 29.62, 40.74, 21.02, 18.51, 13.68, 6.87]
                     }
                 ]
             });

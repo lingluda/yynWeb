@@ -35,7 +35,7 @@ export default {
                 },
                 yAxis: [
                     {
-                        name: '单位：天',
+                        name: '单位：人天',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -96,6 +96,11 @@ export default {
                         }
                     }
                 },
+                grid:{
+                    containLabel: true,
+                    left: 20,
+                    right: 20
+                },
                 series: [
                     {
                         type: 'bar',
@@ -108,13 +113,13 @@ export default {
                                 color: '#000'
                             }
                         },
-                        data: [13, 8, 10, 11, 12, 13, 15, 7]
+                        data: [825366, 1191938, 1191557, 1336674, 1497597, 1552980, 1245811, 1226040]
                     }, {
                         type: 'line',
                         name: '年同比',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [35, 25, 30, 23, 16, 33, 29, 12]
+                        data: [11.41, 15.55, 4.04, 2.19, 6.56, 2.81, -0.22, -2.25]
                     }
                 ]
             });

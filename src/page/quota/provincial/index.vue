@@ -12,7 +12,7 @@
                                 <span class="lyrd_index_today_visit">全省旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1,210,760</span>
+                                <span class="lyrd_index_today_num">47,187.97</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                                 <span class="lyrd_index_today_visit">国内旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1,140,000</span>
+                                <span class="lyrd_index_today_num">46,701.80</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                                 <span class="lyrd_index_today_visit">海外旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">70,760</span>
+                                <span class="lyrd_index_today_num">486.17</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                                 <span class="lyrd_index_today_visit">全省旅游业总收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1,210,760</span>
+                                <span class="lyrd_index_today_num">59,076,450.98</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                                 <span class="lyrd_index_today_visit">国内旅游收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1,140,000</span>
+                                <span class="lyrd_index_today_num">57,307,819.53</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                                 <span class="lyrd_index_today_visit">旅游外汇收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1000,00</span>
+                                <span class="lyrd_index_today_num">1,525,282.42</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>

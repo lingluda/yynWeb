@@ -80,12 +80,8 @@ export default {
                             color: '#999',
                             formatter: '{value}%'
                         },
-                        min: -10
                     }
                 ],
-                grid: {
-                    top: 80,
-                },
                 legend: [
                     {
                         y: 'bottom',
@@ -105,18 +101,24 @@ export default {
                         }
                     }
                 },
+                grid:{
+                    containLabel: true,
+                    left: 20,
+                    right: 20,
+                    top: 80
+                },
                 series: [
                     {
                         type: 'bar',
                         name: '国内一日旅游收入',
                         barWidth: 30,
-                        data: [90, 55, 68, 70, 80, 85, 100, 45]
+                        data: [1304164.57, 2180633.45, 1685101.07, 1434000.43, 1595912.04, 1557601.19, 1636164.46, 1894215.15]
                     }, {
                         type: 'line',
                         name: '国内一日旅游年同比',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [35, 25, 30, 23, 16, 33, 29, 12]
+                        data: [-3.4, 66.8, 50.57, 39.06, 25.09, 36.47, 28.11, 28.91]
                     }
                 ]
             });

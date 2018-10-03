@@ -74,7 +74,8 @@ export default {
                             color: '#999',
                             formatter: '{value}%'
                         },
-                        min: -10
+                        min: -20,
+                        max: 50
                     }
                 ],
                 legend: [
@@ -108,13 +109,13 @@ export default {
                                 color: '#000'
                             }
                         },
-                        data: [90, 55, 68, 70, 80, 85, 100, 45]
+                        data: [60.17, 60.74, 64.91, 62.87, 60.74, 55.34, 59.98, 56.98]
                     }, {
                         type: 'line',
                         name: '年同比',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [35, 25, 30, 23, 16, 33, 29, 12]
+                        data: [18.19, 23.81, 27.19, 15.77, 13.56, -3.11, -6.4, -11.14]
                     }
                 ]
             });

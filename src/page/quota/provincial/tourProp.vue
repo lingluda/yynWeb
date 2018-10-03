@@ -12,16 +12,15 @@ export default {
                 legend: {
                     y: 'bottom',
                     data:[
-                        { name: '台湾', icon: 'circle' },
-                        { name: '澳门', icon: 'circle' },
                         { name: '香港', icon: 'circle' },
+                        { name: '澳门', icon: 'circle' },
+                        { name: '台湾', icon: 'circle' },
                         { name: '其它国家', icon: 'circle' }
                     ]
                 },
                 series: [{
                     type:'pie',
                     radius: ['35%', '50%'],
-                    clockwise: false,
                     label: {
                         normal: {
                             fontSize: 16,
@@ -33,10 +32,10 @@ export default {
                         borderColor: '#fff'
                     },
                     data:[
-                        {value:342, name:'台湾'},
-                        {value:242, name:'澳门'},
-                        {value:142, name:'香港'},
-                        { value: 70, name: '其它国家' }
+                        {value:3711561, name: '其它国家' },
+                        {value:436095, name:'台湾'},
+                        {value:207203, name:'澳门'},
+                        {value:506821, name:'香港'},
                     ]
                 }]
             });

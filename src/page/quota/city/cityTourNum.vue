@@ -73,21 +73,22 @@ export default {
                         axisLabel: {
                             color: '#999',
                             formatter: '{value}%'
-                        },
-                        min: -10
+                        }
                     }
                 ],
                 grid: {
-                    bottom: 80
+                    containLabel: true,
+                    left: 20,
+                    right: 20
                 },
                 legend: [
                     {
                         y: 'bottom',
                         data: [
-                            { name: '国内旅游人数', icon: 'circle' },
-                            '国内旅游年同比',
                             {name: '海外旅游人数', icon: 'circle'},
-                            '海外旅游年同比'
+                            '海外旅游年同比',
+                            { name: '国内旅游人数', icon: 'circle' },
+                            '国内旅游年同比'
                         ]
                     }
                 ],
@@ -103,27 +104,27 @@ export default {
                 series: [
                     {
                         type: 'bar',
+                        name: '国内旅游人数',
+                        stack: '总量',
+                        data: [1119.27, 1627.9, 1203.97, 986.98, 1058.88, 1178.47, 1333.4, 1485.25]
+                    }, {
+                        type: 'bar',
                         name: '海外旅游人数',
                         stack: '总量',
                         barWidth: '30',
-                        data: [380, 210, 420, 300, 550, 390, 650, 320]
-                    }, {
-                        type: 'bar',
-                        name: '国内旅游人数',
-                        stack: '总量',
-                        data: [500, 300, 200, 400, 250, 480, 350, 180]
+                        data: [5.77, 6.333, 10.09, 10.95, 10.97, 11.45, 10.89, 11.68]
                     }, {
                         type: 'line',
                         name: '国内旅游年同比',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [35, 25, 30, 23, 16, 33, 29, 12]
+                        data: [-9.22, 77.51, 36.05, 28.39, 20.96, 27.34, 9.55, 4.16]
                     }, {
                         type: 'line',
                         name: '海外旅游年同比',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [10, 20, 22, 15, 8, 25, 21, 6]
+                        data: [6.87, 3.97, 6.54, 6.7, 5.65, 13.16, 7.21, 6.98]
                     }
                 ]
             });
