@@ -6,7 +6,7 @@
                 <Col span="12">
                 <card>
                     <div class="lyrd_index_count_content">
-                        <div class="lyrd_index_count_bg1"></div>
+                        <div class="icon-jnlj-lyrs"></div>
                         <div class="lyrd_index_count_num">
                             <div>
                                 <span class="lyrd_index_today_visit">今年累计旅游人数</span>
@@ -25,7 +25,7 @@
                 <Col span="12">
                 <card>
                     <div class="lyrd_index_count_content">
-                        <div class="lyrd_index_count_bg1"></div>
+                        <div class="icon-jnlj-lysr"></div>
                         <div class="lyrd_index_count_num">
                             <div>
                                 <span class="lyrd_index_today_visit">今年累计旅游收入</span>
@@ -171,6 +171,29 @@ export default {
 .borderBlock {
     padding: 20px;
     border: 1px solid #dcdee2;
+}
+
+// 图标
+.icon-jnlj-lyrs {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background: #f2f2f2;
+  background-image: url(../../../assets/imgs/jnlj_lyrs.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 20px;
+}
+
+.icon-jnlj-lysr {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background: #f2f2f2;
+  background-image: url(../../../assets/imgs/jnlj_lysr.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 20px;
 }
 </style>
 

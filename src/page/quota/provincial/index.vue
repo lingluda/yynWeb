@@ -6,7 +6,7 @@
                 <Row>
                     <Col span="10">
                     <div class="lyrd_index_count_content lyrd_index_count_content_line">
-                        <div class="lyrd_index_count_bg1"></div>
+                        <div class="icon-qsly-jdrs"></div>
                         <div class="lyrd_index_count_num">
                             <div>
                                 <span class="lyrd_index_today_visit">全省旅游接待人数</span>
@@ -20,7 +20,7 @@
                     </Col>
                     <Col span="7">
                     <div class="lyrd_index_count_content lyrd_index_count_content_line">
-                        <div class="lyrd_index_count_bg1"></div>
+                        <div class="icon-gnly-jdrs"></div>
                         <div class="lyrd_index_count_num">
                             <div>
                                 <span class="lyrd_index_today_visit">国内旅游接待人数</span>
@@ -34,10 +34,10 @@
                     </Col>
                     <Col span="7">
                     <div class="lyrd_index_count_content">
-                        <div class="lyrd_index_count_bg1"></div>
+                        <div class="icon-hwly-jdrs"></div>
                         <div class="lyrd_index_count_num">
                             <div>
-                                <span class="lyrd_index_today_visit">日总接待游客量</span>
+                                <span class="lyrd_index_today_visit">海外旅游接待人数</span>
                             </div>
                             <div>
                                 <span class="lyrd_index_today_num">70,760</span>
@@ -53,7 +53,7 @@
                 <Row>
                     <Col span="10">
                     <div class="lyrd_index_count_content lyrd_index_count_content_line">
-                        <div class="lyrd_index_count_bg1"></div>
+                        <div class="icon-qsly-yzsr"></div>
                         <div class="lyrd_index_count_num">
                             <div>
                                 <span class="lyrd_index_today_visit">全省旅游业总收入</span>
@@ -67,7 +67,7 @@
                     </Col>
                     <Col span="7">
                     <div class="lyrd_index_count_content lyrd_index_count_content_line">
-                        <div class="lyrd_index_count_bg1"></div>
+                        <div class="icon-gnly-sr"></div>
                         <div class="lyrd_index_count_num">
                             <div>
                                 <span class="lyrd_index_today_visit">国内旅游收入</span>
@@ -81,7 +81,7 @@
                     </Col>
                     <Col span="7">
                     <div class="lyrd_index_count_content">
-                        <div class="lyrd_index_count_bg1"></div>
+                        <div class="icon-lywh-sr"></div>
                         <div class="lyrd_index_count_num">
                             <div>
                                 <span class="lyrd_index_today_visit">旅游外汇收入</span>
@@ -334,6 +334,73 @@ export default {
 .borderBlock {
     padding: 10px;
     border: 1px solid #dcdee2;
+}
+
+// 图标
+.icon-gnly-sr {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background: #f2f2f2;
+  background-image: url(../../../assets/imgs/gnly_sr.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 20px;
+}
+
+.icon-qsly-jdrs {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background: #f2f2f2;
+  background-image: url(../../../assets/imgs/qsly_jdrs.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 20px;
+}
+
+.icon-qsly-yzsr {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background: #f2f2f2;
+  background-image: url(../../../assets/imgs/qsly_yzsr.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 20px;
+}
+
+.icon-hwly-jdrs {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background: #f2f2f2;
+  background-image: url(../../../assets/imgs/hwly_jdrs.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 20px;
+}
+
+.icon-lywh-sr {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background: #f2f2f2;
+  background-image: url(../../../assets/imgs/lywh_sr.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 20px;
+}
+
+.icon-gnly-jdrs {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background: #f2f2f2;
+  background-image: url(../../../assets/imgs/gnly_jdrs.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 20px;
 }
 </style>
 
