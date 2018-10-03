@@ -1,7 +1,7 @@
 <template>
   <div>
   <div class="tit">
-    <span >旅游热度</span>
+    <span style="color: rgb(102, 159, 199);">旅游热度</span>
     <Icon type="ios-arrow-forward" />
     <span style="font-size: 12px;color: #000">景区客流热力</span>
   </div>
@@ -97,12 +97,12 @@
                     <div class="hotmap_tb1">
                       <div class="lyrd_hotmap_count_bg1"></div>
                       <div class="lyrd_hotmap_num">
-                        <span class="lyrd_hotmap_desc">景区实时游客人数：</span>
+                        <span class="lyrd_hotmap_desc1">景区实时游客人数：</span>
                         <span class="lyrd_hotmap_today_num">{{currentTime}}</span>
                         <span class="lyrd_hotmap_today_dw">人</span>
                         <div>
                         <span class="lyrd_hotmap_desc1">当日峰值：</span>
-                        <span class="lyrd_hotmap_today_num">{{daymount}}</span>
+                        <span class="lyrd_hotmap_today_num" style="margin-top: -10px">{{daymount}}</span>
                         <span class="lyrd_hotmap_today_dw">人</span>
                       </div>
                       </div>
@@ -130,8 +130,8 @@
                         <div>
                           <span class="lyrd_hotmap_today_num">{{link}}</span>
                           <span class="lyrd_hotmap_today_dw">%</span>
-                          <span v-if="showud1==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
-                          <span v-if="showud1!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
+                          <span v-if="showud2==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
+                          <span v-if="showud2!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                         </div>
                       </div>
                     </div>
@@ -262,6 +262,7 @@
     font-weight: 600;
     color: #000;
     line-height: 18px;
+    vertical-align: top;
   }
 
   .hotmap_tb {
@@ -441,7 +442,8 @@
           },
           tooltip: {
             trigger: "axis",
-            formatter: '{b0}<br />{a1} {c1} 人<br />{a0} {c0} 人'
+            formatter: '{b0}<br />{a1} {c1} 人<br />{a0} {c0} 人',
+
           },
           legend: {
             bottom: 2,
@@ -494,10 +496,10 @@
         }).then(resp => {
           if (resp.data.hits.link<0){
             this.link = -resp.data.hits.link;
-            this.showud1=1
+            this.showud2=1
           } else {
             this.link = resp.data.hits.link;
-            this.showud1=2
+            this.showud2=2
           }
          if (resp.data.hits.ratio<0){
            this.ratio = -resp.data.hits.ratio;
@@ -530,10 +532,10 @@
         }).then(resp => {
           if (resp.data.hits.link<0){
             this.link = -resp.data.hits.link;
-            this.showud1=1
+            this.showud2=1
           } else {
             this.link = resp.data.hits.link;
-            this.showud1=2
+            this.showud2=2
           }
           if (resp.data.hits.ratio<0){
             this.ratio = -resp.data.hits.ratio;
@@ -542,8 +544,8 @@
             this.ratio = resp.data.hits.ratio;
             this.showud1=2
           }
-          this.daymount = resp.data.hits.his;
-          this.currentTime = resp.data.hits.real;
+          this.daymount = http.qfw(resp.data.hits.his);
+          this.currentTime = http.qfw(resp.data.hits.real);
           this.touristc = resp.data.hits.link;
         })
       },

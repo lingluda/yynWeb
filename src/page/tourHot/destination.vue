@@ -1,7 +1,7 @@
 <template>
   <div >
     <div class="ti">
-      <span>旅游热度</span>
+      <span style="color: rgb(102, 159, 199);">旅游热度</span>
       <Icon type="ios-arrow-forward" />
       <span style="font-size: 12px;color: #000">热度排行</span>
     </div>
@@ -42,7 +42,7 @@
           <div style="margin-bottom: 20px;">
             <span style="font-weight: bold;color: #000000">热门路线</span>
             <!--<pers-st :pers="21"></pers-st>-->
-            <Tooltip content="一机游app对各线路页面访问量排行，购买量为下单量" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+            <Tooltip content="一机游app对各线路页面访问量排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
             <DatePicker v-model="picDate3" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
           </div>
@@ -52,14 +52,14 @@
               <tr>
                 <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门线路下单量（次）</td>
                 <td style="width: 40%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa"></td>
-                <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门路线(次)</td>
-                <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">下单平均价格(元)</td>
+                <!--<td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门路线(次)</td>-->
+                <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa;text-align: center">下单平均价格(元)</td>
               </tr>
               <tr v-for="item in fdata">
                 <td style="border-bottom: 1px dashed rgb(206,226,225);font-size: 12px">{{item.name}}</td>
                 <td style="border-bottom: 1px dashed rgb(206,226,225)"> <pers-st :pers=item.tpers :persn=item.order></pers-st></td>
-                <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.dau}}</td>
-                <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.price}}</td>
+                <!--<td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.dau}}</td>-->
+                <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225);text-align: center">{{item.price}}</td>
               </tr>
             </table>
           </div>
@@ -371,7 +371,7 @@ table{
             left: 'center',
             icon:'circle',
             data: [{
-              name: "今日景区客流"
+              name: "当日景区客流"
             },{
               name : "昨日景区客流"
             },{
@@ -408,7 +408,7 @@ table{
           },
           series: [
             {
-              name: '今日景区客流',
+              name: '当日景区客流',
               type: 'bar',
               data: this.max2n,
               itemStyle: {

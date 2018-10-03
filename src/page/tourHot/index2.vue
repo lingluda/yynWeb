@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="ti">
-      <span>旅游热度</span>
+      <span style="color: rgb(102, 159, 199);">旅游热度</span>
       <Icon type="ios-arrow-forward" />
       <span style="font-size: 12px;">首页</span>
     </div>
@@ -85,8 +85,8 @@
           </div>
           <div class="lyrd_index_jryk"  v-if="isshowmap!=0">
             <div class="lyrd_index_jryk_title">
-              <span class="lyrd_index_search_title">{{(this.datefff).toString().substring(8,10)}}日游客{{btitle}}所占比例</span>
-
+              <span class="lyrd_index_search_title">{{btitle}}游客所占比例</span>
+              <!--{{(this.datefff).toString().substring(8,10)}}日-->
             </div>
             <div>
               <div id="mybar" style="height:220px;min-width: 400px;"></div>
@@ -94,7 +94,7 @@
           </div>
           <div class="lyrd_index_jryk1" v-if="isshowmap==0">
             <div class="lyrd_index_jryk_title">
-              <span class="lyrd_index_search_title">游客{{btitle}}所占比例</span>
+              <span class="lyrd_index_search_title">{{btitle}}游客所占比例</span>
               <!--{{(this.datefff).toString().substring(8,10)}}日-->
             </div>
             <Row >
@@ -397,7 +397,7 @@ export default {
         tooltip: {
           trigger: "axis",
           backgroundColor: "#323232",
-          formatter: "{c} 万"
+          formatter: "{b} : {c} 万"
         },
         xAxis: {
           type: "category",

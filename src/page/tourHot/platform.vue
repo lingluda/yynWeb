@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="ti">
-      <span>旅游热度</span>
+      <span style="color: rgb(102, 159, 199);">旅游热度</span>
       <Icon type="ios-arrow-forward" />
       <span style="font-size: 12px;">平台运营</span>
     </div>
@@ -9,8 +9,8 @@
      <div class="tabpane_content">
         <card>
           <div style="margin-bottom: 20px">
-            <span style="font-weight: bold;color: #000000">{{(this.picDate).toString().substring(8,10)}}日平台运营数据</span>
-
+            <span style="font-weight: bold;color: #000000">平台运营数据</span>
+            <!--{{(this.picDate).toString().substring(8,10)}}日-->
             <DatePicker placement="bottom-end" v-model="picDate" type="date" placeholder="Select date"
                         style="width: 120px;float: right"></DatePicker>
           </div>
@@ -28,7 +28,7 @@
                       <span style="font-weight: bold;color: #000000">新增用户量</span>
 
                     </div>
-                    <span style="font-size: 32px;color: #006eff;font-weight: 600">{{addData.total}}</span>
+                    <span style="font-size: 32px;color: #006eff;font-weight: 600">{{addtotal}}</span>
                     <span style="color: #006eff">人</span>
                   </Col>
                   <Col span="10">
@@ -55,7 +55,7 @@
                       <span style="font-weight: bold;color: #000000">活跃用户数</span>
 
                     </div>
-                    <span style="font-size: 32px;color: #006eff;font-weight: 600">{{aduData.total}}</span>
+                    <span style="font-size: 32px;color: #006eff;font-weight: 600">{{adutotal}}</span>
                     <span style="color: #006eff">人</span>
                   </Col>
                   <Col span="10">
@@ -117,6 +117,8 @@
   export default {
     data() {
       return {
+        addtotal:'',
+        adutotal:'',
         cho7:'1',
         dd1:http.getToday(),
         dd2:'2018-01',
@@ -132,7 +134,7 @@
         color2:'',
         color3:'',
         color4:'',
-        picMonth: [http.getWeekAgo(), http.getToday()],
+        picMonth: [http.getWeekAgo(), http.getYesterDay()],
         picDate: http.getYesterDay(),
         addData: '',
         aduData: '',
@@ -148,11 +150,11 @@
       choose7(val){
         console.log(val)
         if (val==1){
-        this.picMonth=[http.getWeekAgo(), http.getToday()]
+        this.picMonth=[http.getWeekAgo(), http.getYesterDay()]
         this.lineDatax1 = []
         this.lineDatax2 = []
         this.lineDatay = []
-        http.get('bi/get_ops_trend_date', {startTime: http.getWeekAgo(), endTime: http.getToday(), type: 'd'}).then(resp => {
+        http.get('bi/get_ops_trend_date', {startTime: http.getWeekAgo(), endTime: http.getYesterDay(), type: 'd'}).then(resp => {
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.lineDatax1.push(resp.data.hits[i].dau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)
@@ -162,11 +164,11 @@
         })
         }
         if (val==2){
-          this.picMonth=[http.getMonthAgo(), http.getToday()]
+          this.picMonth=[http.getMonthAgo(), http.getYesterDay()]
           this.lineDatax1 = []
           this.lineDatax2 = []
           this.lineDatay = []
-          http.get('bi/get_ops_trend_date', {startTime: http.getMonthAgo(), endTime: http.getToday(), type: 'd'}).then(resp => {
+          http.get('bi/get_ops_trend_date', {startTime: http.getMonthAgo(), endTime: http.getYesterDay(), type: 'd'}).then(resp => {
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.lineDatax1.push(resp.data.hits[i].dau)
               this.lineDatax2.push(resp.data.hits[i].incr_num)
@@ -251,7 +253,9 @@
       wp1(){
         http.get('bi/get_ops_qty_by_date', {date: http.gmt2str(this.picDate)}).then(resp => {
           this.addData = resp.data.hits[0]
+          this.addtotal=http.qfw(resp.data.hits[0].total)
           this.aduData = resp.data.hits[1]
+          this.adutotal=http.qfw(resp.data.hits[1].total)
           if (Number(resp.data.hits[0].link)>=0){
             this.flink=resp.data.hits[0].link
             this.color1='#ffbb00'

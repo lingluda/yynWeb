@@ -235,7 +235,7 @@ export default {
       picTo:'1',
       picdate1:http.getYesterDay(),
       picdate2:http.getMonthAgo(),
-      picdate3:[http.getWeekAgo(),http.getToday()],
+      picdate3:[http.getWeekAgo(),http.getYesterDay()],
       add: "",
       link: "",
       ratio: "",
@@ -258,10 +258,10 @@ export default {
   methods: {
     dateChoice11(val){
       if (val==1){
-        this.picdate3 =[http.getWeekAgo(),http.getToday()]
+        this.picdate3 =[http.getWeekAgo(),http.getYesterDay()]
         this._dd2()
       } else {
-        this.picdate3 =[http.getMonthAgo(),http.getToday()]
+        this.picdate3 =[http.getMonthAgo(),http.getYesterDay()]
         this._dd2()
       }
     },
@@ -596,17 +596,18 @@ export default {
           this.unclose = http.qfw(resp.data.hits.unclosed);
           if (resp.data.hits.link<0){
             this.link = -resp.data.hits.link;
-            this.showud1=1
-          } else {
-            this.link = resp.data.hits.link;
-            this.showud1=2
-          }
-          if (resp.data.hits.ratio<0){
-            this.ratio = -resp.data.hits.ratio;
             this.showud2=1
           } else {
-            this.ratio = resp.data.hits.ratio;
+            this.link = resp.data.hits.link;
             this.showud2=2
+          }
+          if (resp.data.hits.ratio<0){
+            console.log(resp.data.hits.ratio)
+            this.ratio = -resp.data.hits.ratio;
+            this.showud1=1
+          } else {
+            this.ratio = resp.data.hits.ratio;
+            this.showud1=2
           }
         });
     },
@@ -658,17 +659,18 @@ export default {
           this.unclose = http.qfw(resp.data.hits.unclosed);
           if (resp.data.hits.link<0){
             this.link = -resp.data.hits.link;
-            this.showud1=1
-          } else {
-            this.link = resp.data.hits.link;
-            this.showud1=2
-          }
-          if (resp.data.hits.ratio<0){
-            this.ratio = -resp.data.hits.ratio;
             this.showud2=1
           } else {
-            this.ratio = resp.data.hits.ratio;
+            this.link = resp.data.hits.link;
             this.showud2=2
+          }
+          if (resp.data.hits.ratio<0){
+            console.log(resp.data.hits.ratio)
+            this.ratio = -resp.data.hits.ratio;
+            this.showud1=2
+          } else {
+            this.ratio = resp.data.hits.ratio;
+            this.showud1=1
           }
         });
     },
