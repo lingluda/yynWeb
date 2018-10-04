@@ -7,6 +7,9 @@ import $ from 'jquery'
 //     timeout: 30000
 // });
 
+
+
+
 let http = {
 };
 http.post = function (url, data) {

@@ -578,6 +578,7 @@
           formatter: '{a|{b}}\n{b|{d}%}',
           backgroundColor: '#fff',
           width: 80,
+          borderRadius: 10,
           rich: {
               a: {
                   color: '#878787',
@@ -613,8 +614,8 @@
               type: "pie",
               radius: ["40%", "55%"],
               avoidLabelOverlap: false,
-              //label: false,
-              //labelLine: false,
+              label: false,
+              labelLine: false,
               emphasis: {
                 label: oLabelStyle
               },
@@ -812,7 +813,7 @@
               interval: 0,
               formatter:function(value,index)
               {
-                debugger
+                //debugger
                 if (index % 2 != 0) {
                   return '\n\n' + value;
                 }
