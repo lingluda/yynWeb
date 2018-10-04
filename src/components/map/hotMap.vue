@@ -26,9 +26,9 @@
     export default {
         name: "hotMap",
       props:{
-        x2:String,
-        x3:Date,
-        x4:String,
+        x2:Array,
+        x3:Array,
+        x4:Array,
       },
       data(){
           return{
@@ -67,7 +67,7 @@
               },
               zoomControl: false, //启用缩放控件
               panControl: false,
-              center: new qq.maps.LatLng(this.centerx[1], this.centerx[0])
+              center: new qq.maps.LatLng(this.x2[1],this.x2[0])
             });
             //地图异步加载，在idle或者tilesloaded后初始化
             let self1 = this
@@ -86,7 +86,7 @@
                   }
                 );
                 //绘制热力图
-                heatmap.setData({max: 100, data: self1.testData[self1.testData.length-1].points});
+                heatmap.setData({max: 100, data: self1.x3[self1.x3.length-1].points});
               } else {
                 alert("您的浏览器不支持canvas，无法绘制热力图！！")
               }
@@ -95,12 +95,12 @@
             chart.setOption({
               timeline: {   // 时间轴样式
                 axisType: 'category',
-                data: this.timelines,
+                data: this.x4,
                 playInterval: 1000,
                 bottom: '0',
                 symbolSize: 15,
                 autoPlay: false,
-                currentIndex: this.testData.length-1,
+                currentIndex: this.x3.length-1,
                 loop: true,
                 realtime: true,
                 width: '95%',
@@ -136,14 +136,14 @@
             chart.on('timelinechanged', function (timeLineIndex) {
               // 设置 每个series里的xAxis里的值
               self.arrIndex = parseInt(timeLineIndex.currentIndex);
-              heatmap.setData({max: 100, data: self.testData[self.arrIndex].points});
+              heatmap.setData({max: 100, data: self.x3[self.arrIndex].points});
             });
           },
       },
       watch:{
-          x2:'init',
-          x3:'init',
-          x4:'init'
+          x2:'initMap',
+          x3:'initMap',
+          x4:'initMap'
       }
     }
 </script>

@@ -16,21 +16,21 @@
               <Select style="width: 120px" v-model="city11">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
-              <Select style="width: 120px" v-model="senic_id">
+              <Select style="width: 120px" v-model="senic_id" @on-change="searchformi">
                 <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
               </Select>
-              <DatePicker type="date" v-model="date11" placeholder="自选时间" style="width: 120px"></DatePicker>
+              <DatePicker type="date" v-model="date11" @on-change="searchformi" placeholder="自选时间" style="width: 120px"></DatePicker>
               <!--   <Select style="width: 150px">
                    <Option value="城市">城市</Option>
                  </Select>-->
-              <Select style="width: 120px" v-model="power">
+              <Select style="width: 120px" v-model="power" @on-change="searchformi">
                 <Option value="60">60分钟</Option>
                 <Option value="30">30分钟</Option>
                 <Option value="15">15分钟</Option>
               </Select>
             </div>
             <div class="mapContainer">
-            <hot_map :x1="this.city11" :x2="senic_id" :x3="this.date11" :x4="this.power" style="width: 100%;height: 400px;" class="heatmap">
+            <hot_map :x2="this.hotmapx" :x3="hotmapd" :x4="this.hotmapl" style="width: 100%;height: 400px;" class="heatmap">
 
             </hot_map>
      <!--      <div id="hotmap" style="width: 100%;height: 400px;" class="heatmap">
@@ -306,8 +306,8 @@
     data() {
       return {
         initMapData:[],
-        senic_id:'80ace0e1-ae1f-4c6f-5f59-813ef365bd6b',
-        senic_id5:'80ace0e1-ae1f-4c6f-5f59-813ef365bd6b',
+        senic_id:'e4fc748a-a60c-4716-687b-01254d621833',
+        senic_id5:'e4fc748a-a60c-4716-687b-01254d621833',
         senicData:[],
         showud1:2,
         showud2:1,
@@ -319,7 +319,7 @@
         da1:[http.getToday(),http.getToday()],
         da2:[http.getYesterDay(),http.getYesterDay()],
         modelcity:'',
-        modelsenic:'80ace0e1-ae1f-4c6f-5f59-813ef365bd6b',
+        modelsenic:'e4fc748a-a60c-4716-687b-01254d621833',
         power:'60',
         power1:'60',
         city11:'',
@@ -343,6 +343,9 @@
         daymount: '',
         currentTime: '',
         touristc: '',
+        hotmapx:[],
+        hotmapd:[],
+        hotmapl:[],
       };
     },
     mounted() {
@@ -350,15 +353,20 @@
     },
     methods: {
       init() {
-        http.get('bi/get_scenic_by_city',{city_id:this.city11}).then(resp=>{
-          this.senicData=resp.data.hits
-        })
+
         http.get('bi/get_all_city', {}).then(resp => {
           this.cityData = resp.data.hits;
           this.modelcity=resp.data.hits[0].id
           this.city11=resp.data.hits[0].id
           this.piccity=resp.data.hits[0].id
+          http.get('bi/get_scenic_by_city',{city_id:this.city11}).then(resp=>{
+            this.senicData=resp.data.hits
+            console.log(1111,this.senicData)
+            this.senic_id=this.senicData[0].id
+          })
         })
+
+        console.log(1111,this.senic_id)
         http.get('bi/get_scenic_tourist_compare_by_date', {
           startTime: http.gmt2str(this.da1[0]),
           startTime1: http.gmt2str(this.da2[0]),
@@ -376,11 +384,26 @@
             this.lineDatax.push(resp.data.hits.curlist[i].time)
             this.lineDatay2.push(parseInt(resp.data.hits.curlist[i].n))
           }
-          console.log('名称1：：',this.lineDatayn1)
-          console.log('数据1：：',this.lineDatay1)
-          console.log('名称2：：',this.lineDatayn2)
-          console.log('数据2：：',this.lineDatay2)
           this.initline();
+        })
+        this.hotmapl=[]
+        http.get('bi/get_scenic_tourist_heat_dist',{date:http.gmt2str(this.date11),scenic:this.senic_id,min:this.power}).then(resp=>{
+          this.hotmapx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
+          this.hotmapd=resp.data.hits;
+          for (var i = 0; i < resp.data.hits.length; i++) {
+            this.hotmapl.push(resp.data.hits[i].time)
+          }
+        })
+      },
+      searchformi(){
+
+        this.hotmapl=[]
+        http.get('bi/get_scenic_tourist_heat_dist',{date:http.gmt2str(this.date11),scenic:this.senic_id,min:this.power}).then(resp=>{
+          this.hotmapx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
+          this.hotmapd=resp.data.hits;
+          for (var i = 0; i < resp.data.hits.length; i++) {
+            this.hotmapl.push(resp.data.hits[i].time)
+          }
         })
       },
       picd(){
@@ -517,6 +540,14 @@
         http.get('bi/get_scenic_by_city',{city_id:this.city11}).then(resp=>{
           this.senicData=resp.data.hits
           this.senic_id=this.senicData[0].id
+          this.hotmapl=[]
+          http.get('bi/get_scenic_tourist_heat_dist',{date:http.gmt2str(this.date11),scenic:this.senic_id,min:this.power}).then(resp=>{
+            this.hotmapx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
+            this.hotmapd=resp.data.hits;
+            for (var i = 0; i < resp.data.hits.length; i++) {
+              this.hotmapl.push(resp.data.hits[i].time)
+            }
+          })
         })
       },
       picsb(){
@@ -590,6 +621,7 @@
       today: 'pic1',
       picDate6: 'pic1',
       city11:'sinic',
+      senic_id:'p1',
       senic_id5:'pccsscs',
       modelcity:'pspsp',
       modelsenic:'ssdsadfa'
