@@ -13,7 +13,7 @@
 
 <style lang="less" scoped>
 .flowList {
-    padding: 0 10px;
+  padding: 0 10px;
 
   .flowImg {
     width: 38px;
@@ -36,12 +36,11 @@
     border-bottom: 1px dashed #e5e5e5;
 
     .ivu-col.ivu-col-span-2 {
-      font-weight: bold;
-      color: #000;
     }
 
     .ivu-col.ivu-col-span-12 {
       padding-left: 20px;
+      color: #000;
     }
 
     .ivu-col.ivu-col-span-10 {
