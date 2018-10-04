@@ -107,7 +107,7 @@
                 x: '20px',
                 controlPosition: 'right',
                 lineStyle: {
-                  color: '#e5e5e5',
+                  color: '#0c70f9',
                   width: 5,
                 },
                 label: {

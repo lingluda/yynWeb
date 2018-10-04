@@ -245,7 +245,7 @@
         picDate: http.getToday(),
         picDate3: http.getYesterDay(),
         picDate4: [this.d22,this.d11],
-        cpicDate: "2018-09-01",
+        cpicDate: http.getYesterDay(),
         columns1: [
           {
             title: "排名",
