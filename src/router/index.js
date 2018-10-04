@@ -99,7 +99,7 @@ export default new Router({
           path: '/quota',
           name: 'quota',
           component: resolve => {
-            require(['../page/quota/provincial/index.vue'], resolve)
+            require(['../page/quota/index.vue'], resolve)
           }
         },
         {

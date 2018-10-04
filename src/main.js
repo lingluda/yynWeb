@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from  '../src/store/index.js'
 import iView from 'iview';
 import echarts from 'echarts'
 import 'iview/dist/styles/iview.css';
@@ -16,6 +17,7 @@ Vue.use(iView);
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
