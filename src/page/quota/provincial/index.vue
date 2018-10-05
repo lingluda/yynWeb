@@ -51,7 +51,7 @@
 
             <card>
                 <Row>
-                    <Col span="10">
+                    <Col span="8">
                     <div class="lyrd_index_count_content lyrd_index_count_content_line">
                         <div class="icon-qsly-yzsr"></div>
                         <div class="lyrd_index_count_num">
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     </Col>
-                    <Col span="7">
+                    <Col span="8">
                     <div class="lyrd_index_count_content lyrd_index_count_content_line">
                         <div class="icon-gnly-sr"></div>
                         <div class="lyrd_index_count_num">
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     </Col>
-                    <Col span="7">
+                    <Col span="8">
                     <div class="lyrd_index_count_content">
                         <div class="icon-lywh-sr"></div>
                         <div class="lyrd_index_count_num">
@@ -119,7 +119,7 @@
                 <card>
                     <div class="lyrd_index_search">
                         <div class="lyrd_index_search_left">
-                            <span class="lyrd_index_search_title">旅游人数占比</span>
+                            <span class="lyrd_index_search_title">海外游客统计</span>
                         </div>
                         <div class="lyrd_index_search_right">
                             <!-- <DatePicker v-model="tourProDate" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>

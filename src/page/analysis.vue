@@ -190,6 +190,7 @@ export default {
       pie1:[],
       pie2:[],
       cityData:[],
+      cityDataall:[],
       city1:'',
       city2:'',
       date1:'2018-08-28',
@@ -244,8 +245,11 @@ export default {
     init() {
       this.date1 = http.getToday()
       http.get('bi/get_all_city_prov', {}).then(resp => {
-        this.cityData = resp.data.hits;
+        this.cityDataall = resp.data.hits;
         this.city1=resp.data.hits[0].code;
+      })
+      http.get('bi/get_all_city', {}).then(resp => {
+        this.cityData = resp.data.hits;
         this.city2=resp.data.hits[0].code;
       })
     },
