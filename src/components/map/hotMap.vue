@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div>{{x4}}
   <div id="map-canvas" style="width: 100%;height: 400px;" class="heatmap">
     <div class="visualmap">
       <div>

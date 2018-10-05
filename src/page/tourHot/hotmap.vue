@@ -13,7 +13,7 @@
                   <span style="font-weight: bold;color: #000000">景区客流热力分布图</span>
                 </div>
               </div>
-              <Select style="width: 120px" v-model="city11">
+              <Select style="width: 120px" v-model="city11" @on-change="sinic">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
               <Select style="width: 120px" v-model="senic_id" @on-change="searchformi">
@@ -632,7 +632,7 @@
       piccity: 'picsb',
       today: 'pic1',
       picDate6: 'pic1',
-      city11:'sinic',
+      //city11:'sinic',
       senic_id:'p1',
       senic_id5:'pccsscs',
       modelcity:'pspsp',
