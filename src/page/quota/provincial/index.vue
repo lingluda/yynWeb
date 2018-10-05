@@ -106,9 +106,9 @@
                             <span class="lyrd_index_search_title">旅游人次</span>
                         </div>
                         <div class="lyrd_index_search_right">
-                            <Select style="width:120px;margin-left:15px" @on-change="form1change">
+                            <!-- <Select style="width:120px;margin-left:15px" @on-change="form1change">
                                 <Option v-for="item in selData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                            </Select>
+                            </Select> -->
                         </div>
                     </div>
                     <tourNum></tourNum>
@@ -122,10 +122,10 @@
                             <span class="lyrd_index_search_title">旅游人数占比</span>
                         </div>
                         <div class="lyrd_index_search_right">
-                            <DatePicker v-model="tourProDate" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
+                            <!-- <DatePicker v-model="tourProDate" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
                             <Select style="width:120px;margin-left:15px" @on-change="form1change">
                                 <Option v-for="item in tourPro" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                            </Select>
+                            </Select> -->
                         </div>
                     </div>
                     <tourProp></tourProp>
@@ -169,9 +169,9 @@
                         <span class="lyrd_index_search_title">旅游收入</span>
                     </div>
                     <div class="lyrd_index_search_right">
-                        <Select style="width:120px;margin-left:15px" @on-change="form1change">
+                        <!-- <Select style="width:120px;margin-left:15px" @on-change="form1change">
                             <Option v-for="item in tourIncome" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select>
+                        </Select> -->
                     </div>
                 </div>
                 <Row :gutter="20">

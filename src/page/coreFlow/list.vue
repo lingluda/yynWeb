@@ -2,8 +2,10 @@
     <div class="flowList">
         <Row v-for="item in listData">
             <Col :span="2">
-              <div class="flowImg"></div>
-            <!--<div style="width: 38px;height: 38px;background-size: 100%;:background: url('../../assets/coreFlow/item.scenic.png')"></div>-->
+              <!-- <div class="flowImg"></div> -->
+            <div style="width: 38px;height: 37px;">
+              <img :src="item.tx"/>
+            </div>
             </Col>
             <Col :span="12">{{item.name}}</Col>
             <Col :span="10">客流人数：<span class="flowNum">{{item.n}}</span></Col>
@@ -25,6 +27,9 @@
       init(){
         http.get('bi/get_scenic_tourist_key_by_date',{}).then(resp=>{
             this.listData=resp.data.hits;
+            for(var i=0;i<this.listData.length;i++){
+              this.listData[i].tx = require('../../assets/imgs/'+this.listData[i].scenic+".png");
+            }
         })
       }
     }
