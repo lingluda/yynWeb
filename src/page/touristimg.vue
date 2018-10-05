@@ -243,9 +243,9 @@
         cityData1: [],
         proData: [],
         picDate: http.getToday(),
-        picDate3: http.getYesterDay(),
+        picDate3: http.getToday(),
         picDate4: [this.d22,this.d11],
-        cpicDate: http.getYesterDay(),
+        cpicDate: http.getToday(),
         columns1: [
           {
             title: "排名",
@@ -613,9 +613,9 @@
             {
               type: "pie",
               radius: ["40%", "55%"],
-              avoidLabelOverlap: false,
-              label: false,
-              labelLine: false,
+              avoidLabelOverlap: true,
+              //label: false,
+              //labelLine: false,
               emphasis: {
                 label: oLabelStyle
               },
@@ -878,7 +878,20 @@
           },
           xAxis: {
             type: "category",
-            data: this.provx
+            data: this.provx,
+            axisLabel: {
+              interval: 0,
+              formatter:function(value,index)
+              {
+                //debugger
+                if (index % 2 != 0) {
+                  return '\n\n' + value;
+                }
+                else {
+                  return value;
+                }
+              }
+            },
           },
           yAxis: {
             type: "value",

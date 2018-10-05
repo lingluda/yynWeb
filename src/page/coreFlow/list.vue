@@ -1,15 +1,35 @@
 <template>
     <div class="flowList">
-        <Row v-for="(item,index) in 9" :key="index" v-if="index < 9">
+        <Row v-for="item in listData">
             <Col :span="2">
-            <div class="flowImg"></div>
+              <div class="flowImg"></div>
+            <!--<div style="width: 38px;height: 38px;background-size: 100%;:background: url('../../assets/coreFlow/item.scenic.png')"></div>-->
             </Col>
-            <Col :span="12">云南民族村</Col>
-            <Col :span="10">客流人数：<span class="flowNum">89123</span></Col>
+            <Col :span="12">{{item.name}}</Col>
+            <Col :span="10">客流人数：<span class="flowNum">{{item.n}}</span></Col>
         </Row>
     </div>
 </template>
-
+<script>
+  import http from "@/http.js"
+  export default {
+    data(){
+      return{
+        listData:[]
+      }
+    },
+    mounted(){
+      this.init()
+    },
+    methods:{
+      init(){
+        http.get('bi/get_scenic_tourist_key_by_date',{}).then(resp=>{
+            this.listData=resp.data.hits;
+        })
+      }
+    }
+  }
+</script>
 
 <style lang="less" scoped>
 .flowList {
