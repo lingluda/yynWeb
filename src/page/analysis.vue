@@ -243,7 +243,7 @@ export default {
   methods: {
     init() {
       this.date1 = http.getToday()
-      http.get('bi/get_all_city', {}).then(resp => {
+      http.get('bi/get_all_city_prov', {}).then(resp => {
         this.cityData = resp.data.hits;
         this.city1=resp.data.hits[0].code;
         this.city2=resp.data.hits[0].code;
