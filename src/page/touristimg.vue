@@ -192,7 +192,7 @@
 
     .sex-icon {
       position: absolute;
-      top: 50%;
+      top: 40%;
       margin-top: -16px;
     }
     .sex-icon:last-child {
