@@ -96,7 +96,15 @@
                     </div>-->
                     <div class="hotmap_tb1">
                       <div class="lyrd_hotmap_count_bg1"></div>
-                      <div class="lyrd_hotmap_num">
+                       <div class="lyrd_hotmap_num">
+                        <div class="lyrd_hotmap_desc">景区实时游客人数</div>
+                        <div>
+                          <span class="lyrd_hotmap_today_num">{{currentTime}}</span>
+                          <span class="lyrd_hotmap_today_dw">人</span>
+                          <span>(当日峰值{{daymount}})</span>
+                        </div>
+                      </div>
+                      <!-- <div class="lyrd_hotmap_num">
                         <span class="lyrd_hotmap_desc1">景区实时游客人数：</span>
                         <span class="lyrd_hotmap_today_num">{{currentTime}}</span>
                         <span class="lyrd_hotmap_today_dw">人</span>
@@ -105,7 +113,7 @@
                         <span class="lyrd_hotmap_today_num" style="margin-top: -10px">{{daymount}}</span>
                         <span class="lyrd_hotmap_today_dw">人</span>
                       </div>
-                      </div>
+                      </div> -->
                     </div>
                   </Col>
                   <Col span="7">

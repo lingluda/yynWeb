@@ -9,7 +9,7 @@
      <div class="tabpane_content">
         <card>
           <div style="margin-bottom: 20px">
-            <span style="font-weight: bold;color: #000000">平台运营数据</span>
+            <span style="font-weight: bold;color: #000000">当日平台运营数据</span>
             <!--{{(this.picDate).toString().substring(8,10)}}日-->
             <DatePicker placement="bottom-end" v-model="picDate" type="date" placeholder="Select date"
                         style="width: 120px;float: right"></DatePicker>

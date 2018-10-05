@@ -33,7 +33,7 @@
         <Col span="12" style="height: 865px">
           <card style="height:100%">
             <div style="line-height:40px;height:50px">
-              <span style="font-weight: bold;color: #000000">全省网络热词TOP10</span>
+              <span style="font-weight: bold;color: #000000">全省网络热词</span>
               <Tooltip content="与全省相关网络热词排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
             </div>
@@ -66,7 +66,7 @@
         <Col span="12" style="height: 865px">
           <card style="height:100%">
            <div style="line-height:40px;height:50px">
-              <span style="font-weight: bold;color: #000000">州市网络热词TOP10</span>
+              <span style="font-weight: bold;color: #000000">州市网络热词</span>
               <Tooltip content="与全省相关网络热词排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
               <Select style="width: 150px;float:right" v-model="city2">
@@ -243,7 +243,7 @@ export default {
   methods: {
     init() {
       this.date1 = http.getToday()
-      http.get('bi/get_all_city_prov', {}).then(resp => {
+      http.get('bi/get_all_city', {}).then(resp => {
         this.cityData = resp.data.hits;
         this.city1=resp.data.hits[0].code;
         this.city2=resp.data.hits[0].code;

@@ -25,7 +25,7 @@
                 <div class="lyrd_index_count_bg1"></div>
                 <div class="lyrd_index_count_num">
                     <div>
-                      <span class="lyrd_index_today_visit">日新增投诉量</span>
+                      <span class="lyrd_index_today_visit">当日新增投诉量</span>
                       <!--{{(this.picdate1).toString().substring(8,10)}}日-->
                     </div>
                     <div>
