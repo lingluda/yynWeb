@@ -30,7 +30,7 @@
               </Select>
             </div>
             <div class="mapContainer">
-            <hot_map :x2="this.hotmapx" :x3="hotmapd" :x4="this.hotmapl" style="width: 100%;height: 400px;" class="heatmap">
+            <hot_map :x2="this.hotmapx" :x3="hotmapd" :x4="this.hotmapll" style="width: 100%;height: 400px;" class="heatmap">
 
             </hot_map>
      <!--      <div id="hotmap" style="width: 100%;height: 400px;" class="heatmap">
@@ -354,6 +354,7 @@
         hotmapx:[],
         hotmapd:[],
         hotmapl:[],
+        hotmapll:[],
       };
     },
     mounted() {
@@ -401,6 +402,7 @@
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.hotmapl.push(resp.data.hits[i].time)
           }
+          this.hotmapll=this.hotmapl
         })
       },
       searchformi(){
@@ -412,6 +414,7 @@
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.hotmapl.push(resp.data.hits[i].time)
           }
+          this.hotmapll=this.hotmapl
         })
       },
       picd(){
@@ -555,6 +558,7 @@
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.hotmapl.push(resp.data.hits[i].time)
             }
+            this.hotmapll=this.hotmapl
           })
         })
       },
