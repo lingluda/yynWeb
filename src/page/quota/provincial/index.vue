@@ -4,7 +4,7 @@
         <div class="quota_bg">
             <card>
                 <Row>
-                    <Col span="10">
+                    <Col span="8">
                     <div class="lyrd_index_count_content lyrd_index_count_content_line">
                         <div class="icon-qsly-jdrs"></div>
                         <div class="lyrd_index_count_num">
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     </Col>
-                    <Col span="7">
+                    <Col span="8">
                     <div class="lyrd_index_count_content lyrd_index_count_content_line">
                         <div class="icon-gnly-jdrs"></div>
                         <div class="lyrd_index_count_num">
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     </Col>
-                    <Col span="7">
+                    <Col span="8">
                     <div class="lyrd_index_count_content">
                         <div class="icon-hwly-jdrs"></div>
                         <div class="lyrd_index_count_num">

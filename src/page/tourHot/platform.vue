@@ -33,10 +33,10 @@
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
-                    <span >&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color1}"><Icon v-if="is1==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is1!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{fratio}}%&nbsp;&nbsp;</span>
+                    <span >&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color2}"><Icon v-if="is2==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is2!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{fratio}}%&nbsp;&nbsp;</span>
                     </div>
                     <div style="background-color: #f6f8fa;margin-top: 10px;padding-top: 2px">
-                    <span >&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color2}"><Icon v-if="is2==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is2!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{flink}}%&nbsp;&nbsp;</span>
+                    <span >&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color1}"><Icon v-if="is1==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is1!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{flink}}%&nbsp;&nbsp;</span>
                     </div>
                   </Col>
                 </Row>
@@ -60,11 +60,11 @@
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
-                    <span>&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color3}"><Icon v-if="is3==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is3!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{ratio}}%&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color4}"><Icon v-if="is4==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is4!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{ratio}}%&nbsp;&nbsp;</span>
                     </div>
 
                     <div style="background-color: #f6f8fa;margin-top: 10px;padding-top: 2px">
-                    <span>&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color4}"><Icon v-if="is4==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is4!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{link}}%&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color3}"><Icon v-if="is3==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is3!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{link}}%&nbsp;&nbsp;</span>
                     </div>
                   </Col>
                 </Row>

@@ -223,7 +223,7 @@ export default {
       titleDate:'',
       dd1:http.getToday(),
       dd2:'2018-01',
-      showud1:2,
+      showud1:1,
       showud2:2,
       color1:'#ffbb00',
       color2:'green',
@@ -667,10 +667,10 @@ export default {
           if (resp.data.hits.ratio<0){
             console.log(resp.data.hits.ratio)
             this.ratio = -resp.data.hits.ratio;
-            this.showud1=2
+            this.showud1=1
           } else {
             this.ratio = resp.data.hits.ratio;
-            this.showud1=1
+            this.showud1=2
           }
         });
     },
