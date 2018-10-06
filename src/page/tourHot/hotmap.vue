@@ -160,7 +160,7 @@
                 <Select style="width: 120px" v-model="modelcity">
                   <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                 </Select>
-                <DatePicker v-model="da1" type="daterange" show-week-numbers  placeholder="Select date"
+                <DatePicker v-model="da1" type="date" show-week-numbers  placeholder="Select date"
                             style="width: 180px;" :options="disoptionsdate"></DatePicker>
                 <Select style="width: 120px" v-model="power1">
                   <Option value="60">60分钟</Option>
@@ -170,7 +170,7 @@
                 <Select style="width: 120px" v-model="modelsenic">
                   <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
                 </Select>
-                <DatePicker v-model="da2" type="daterange" show-week-numbers  placeholder="Select date"
+                <DatePicker v-model="da2" type="date" show-week-numbers  placeholder="Select date"
                             style="width: 180px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
                 <Checkbox v-model="single">选择对比日期</Checkbox>
               </div>
@@ -324,8 +324,8 @@
         playState:false,
         centerx:[],
         mapx:[],
-        da1:[http.getToday(),http.getToday()],
-        da2:[http.getYesterDay(),http.getYesterDay()],
+        da1:http.getToday(),
+        da2:http.getYesterDay(),
         modelcity:'',
         modelsenic:'e4fc748a-a60c-4716-687b-01254d621833',
         power:'60',
@@ -382,10 +382,10 @@
 
         console.log(1111,this.senic_id)
         http.get('bi/get_scenic_tourist_compare_by_date', {
-          startTime: http.gmt2str(this.da1[0]),
-          startTime1: http.gmt2str(this.da2[0]),
-          endTime: http.gmt2str(this.da1[1]),
-          endTime1: http.gmt2str(this.da2[1]),
+          startTime: http.gmt2str(this.da1),
+          startTime1: http.gmt2str(this.da2),
+          // endTime: http.gmt2str(this.da1[1]),
+          // endTime1: http.gmt2str(this.da2[1]),
           scenic: this.modelsenic,
           min: this.power1
         }).then(resp => {
@@ -424,10 +424,10 @@
       },
       picd(){
         http.get('bi/get_scenic_tourist_compare_by_date', {
-          startTime: http.gmt2str(this.da1[0]),
-          startTime1: http.gmt2str(this.da2[0]),
-          endTime: http.gmt2str(this.da1[1]),
-          endTime1: http.gmt2str(this.da2[1]),
+          startTime: http.gmt2str(this.da1),
+          startTime1: http.gmt2str(this.da2),
+          // endTime: http.gmt2str(this.da1[1]),
+          // endTime1: http.gmt2str(this.da2[1]),
           scenic: this.modelsenic,
           min: this.power1
         }).then(resp => {
@@ -608,10 +608,10 @@
         this.lineDatax=[]
         this.lineDatay2=[]
         http.get('bi/get_scenic_tourist_compare_by_date', {
-          startTime: http.gmt2str(this.da1[0]),
-          startTime1: http.gmt2str(this.da2[0]),
-          endTime: http.gmt2str(this.da1[1]),
-          endTime1: http.gmt2str(this.da2[1]),
+          startTime: http.gmt2str(this.da1),
+          startTime1: http.gmt2str(this.da2),
+          // endTime: http.gmt2str(this.da1[1]),
+          // endTime1: http.gmt2str(this.da2[1]),
           scenic: this.modelsenic,
           min: this.power1
         }).then(resp => {

@@ -1,6 +1,11 @@
 <template>
     <div style="height:100%">
-        <div class="tits">核心景区客流</div>
+        <!-- <div class="tits">核心景区客流</div> -->
+            <div class="ti">
+      <span style="color: rgb(102, 159, 199);">旅游热度</span>
+      <Icon type="ios-arrow-forward" />
+      <span style="font-size: 12px;color: #000">核心景区客流</span>
+    </div>
         <div class="coreFlow_bg">
             <card>
                 <div class="lyrd_index_search">
