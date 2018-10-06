@@ -17,7 +17,7 @@
                 <span style="color: #000;font-size:14px;font-weight: bold">一机游当日搜索各目的地访问用户数据 </span>
                 <span style="color: #a5a5a5;font-size:12px;">(单位：万人)</span>
               </div>
-              <DatePicker v-model="picDate1" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
+              <DatePicker v-model="picDate1" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right" :options="disoptionsdate"></DatePicker>
             </div>
             <div id="simBar" style="width: 100%;height: 285px;"></div>
           </div>
@@ -33,7 +33,7 @@
                  <span style="color: #000;font-weight:bold;font-size:14px;">一机游当日搜索各景区访问用户数据 </span>
                   <span style="color: #a5a5a5;font-size:12px;">(单位：万人)</span>
                 </div>
-              <DatePicker  placement="bottom-end" v-model="picDate2" type="date" placeholder="Select date" style="width:120px;float: right"></DatePicker>
+              <DatePicker  placement="bottom-end" v-model="picDate2" type="date" placeholder="Select date" style="width:120px;float: right" :options="disoptionsdate"></DatePicker>
             </div>
             <div id="simBars" style="width: 100%;height: 300px;"></div>
           </div>
@@ -44,7 +44,7 @@
             <!--<pers-st :pers="21"></pers-st>-->
             <Tooltip content="一机游app对各线路页面访问量排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
             </Tooltip>
-            <DatePicker v-model="picDate3" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
+            <DatePicker v-model="picDate3" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right" :options="disoptionsdate"></DatePicker>
           </div>
           <div>
             <!--<Table :columns="columns" :data="fdata"></Table>-->
@@ -73,7 +73,7 @@
                     <span style="font-weight: bold;color: #000000">景区客流</span>
                     <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
-                  <DatePicker type="date" v-model="picDate4" placeholder="Select date" style="width: 120px;margin-left:15px;"></DatePicker>
+                  <DatePicker type="date" v-model="picDate4" placeholder="Select date" style="width: 120px;margin-left:15px;" :options="disoptionsdate"></DatePicker>
                   <div id="max1" style="width: 100%;height: 550px;"></div>
                 </div>
               </Col>
@@ -87,7 +87,7 @@
                     <Radio label="1">增长量</Radio>
                     <Radio label="2">增长率</Radio>
                   </RadioGroup>-->
-                  <DatePicker type="date" v-model="picDate5" placeholder="Select date" style="width: 120px;margin-left:15px;"></DatePicker>
+                  <DatePicker type="date" v-model="picDate5" placeholder="Select date" style="width: 120px;margin-left:15px;" :options="disoptionsdate"></DatePicker>
                   <div id="max2" style="width: 100%;height: 550px;"></div>
                 </div>
               </Col>
@@ -141,8 +141,8 @@ table{
         picDate1:http.getYesterDay(),
         picDate2:http.getYesterDay(),
         picDate3:http.getYesterDay(),
-        picDate4:http.getYesterDay(),
-        picDate5:http.getYesterDay(),
+        picDate4:http.getToday(),
+        picDate5:http.getToday(),
         chan:'app',
         barDatax:[],
         barDatay:[],
@@ -185,6 +185,11 @@ table{
         max2n:[],
         max2y:[],
         max2name:[],
+        disoptionsdate: {
+            disabledDate (date) {
+                return date< new Date(2018,7,1);
+            }
+        }
       }
     },
     mounted() {

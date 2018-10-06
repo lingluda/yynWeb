@@ -12,7 +12,7 @@
             <Radio label="1">今日</Radio>
             <Radio label="2">昨日</Radio>
           </RadioGroup>-->
-          <DatePicker type="date" v-model="picdate1" placeholder="自选时间" style="width: 120px"></DatePicker>
+          <DatePicker type="date" v-model="picdate1" placeholder="自选时间" style="width: 120px" :options="disoptionsdate"></DatePicker>
           <Select style="width: 120px" v-model="p11">
             <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
           </Select>
@@ -78,7 +78,7 @@
           </div>
           <div>
             <Button label="7" style="border-radius: 0px" @click="change7">近7天</Button>
-            <DatePicker type="month" placement="bottom-end" v-model="picdate2" placeholder="自选时间" style="width: 120px"></DatePicker>
+            <DatePicker type="month" placement="bottom-end" v-model="picdate2" placeholder="自选时间" style="width: 120px" :options="disoptionsdate"></DatePicker>
           </div>
         </div>
         <div style="height:300px">
@@ -124,7 +124,7 @@
         <span style="float: right;padding:5px 5px 0px 5px">-</span>
         <DatePicker v-model="dd2" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
 -->
-        <DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:180px;float: right" @on-change="_dd2"></DatePicker>
+        <DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:180px;float: right" @on-change="_dd2"  :options="disoptionsdate"></DatePicker>
 
         <RadioGroup v-model="dateChoice1" type="button" style="float: right" @on-change="dateChoice11">
           <Radio label="1">最近7天</Radio>
@@ -249,7 +249,12 @@ export default {
       procX2: [],
       procX3: [],
       procY1: [],
-      procY2: []
+      procY2: [],
+      disoptionsdate: {
+          disabledDate (date) {
+              return date< new Date(2018,7,1);
+          }
+      }
     };
   },
   mounted() {

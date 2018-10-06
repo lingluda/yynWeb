@@ -15,7 +15,7 @@
         <Select style="width: 120px" placeholder="区域" v-model="ccc1" @on-change="_ccc1">
           <Option v-for="(item, index) in senicData" :value="item.id" :key="index">{{item.name}}</Option>
         </Select>
-        <DatePicker type="date" v-model="picDate" placeholder="自选时间" style="width: 120px" @on-change="dateChange"></DatePicker>
+        <DatePicker type="date" v-model="picDate" placeholder="自选时间" style="width: 120px" @on-change="dateChange" :options="disoptionsdate"></DatePicker>
         <Row :gutter="16" style="margin-top: 20px">
           <Col span="6">
             <div id="sex">
@@ -65,7 +65,7 @@
           <Radio label="3">火车</Radio>
           <Radio label="4">汽车</Radio>
         </RadioGroup>
-        <DatePicker type="date" v-model="hotlineDate" placeholder="自选时间" style="width: 120px"></DatePicker>
+        <DatePicker type="date" v-model="hotlineDate" placeholder="自选时间" style="width: 120px" :options="disoptionsdate"></DatePicker>
         <Select style="width: 120px" placeholder="清选择" v-model="ccti">
           <Option v-for="(item, index) in cityData1" :value="item.name" :key="index">{{item.name}}</Option>
         </Select>
@@ -98,7 +98,7 @@
             <Col span="10" style="border: 1px solid #dcdee2;margin-right:20px;height:100%;padding:0 30px">
               <div style="padding:20px 0;height:50%;border-bottom:1px solid #dcdee2">
                 <DatePicker v-model="picDate3" type="date" placeholder="选择日期"
-                            style="width: 150px;float: right"></DatePicker>
+                            style="width: 150px;float: right" :options="disoptionsdate"></DatePicker>
                 <div style="margin-top:40px;display:flex">
                   <img src="../assets/imgs/cash1.png" style="margin-right:20px;width:60px;height:60px"/>
                   <div>
@@ -120,9 +120,9 @@
             <Col span="14" style="border: 1px solid #dcdee2;height:100%">
               <div style="padding-bottom: 20px;padding: 20px">
                 <span style="font-weight: bold;color: #000000">消费类型占比</span>
-                <DatePicker v-model="d11" placement="bottom-end" format="yyyy-MM" type="month" placeholder="结束月份" style="width: 100px;float: right"></DatePicker>
+                <DatePicker v-model="d11" placement="bottom-end" format="yyyy-MM" type="month" placeholder="结束月份" style="width: 100px;float: right" :options="disoptionsdate"></DatePicker>
                 <span style="float: right;padding:5px 5px 0px 5px">-</span>
-                <DatePicker v-model="d22" placement="bottom-end" format="yyyy-MM" type="month" placeholder="开始月份" style="width: 100px;float: right"></DatePicker>
+                <DatePicker v-model="d22" placement="bottom-end" format="yyyy-MM" type="month" placeholder="开始月份" style="width: 100px;float: right" :options="disoptionsdate"></DatePicker>
               </div>
               <div id="cash" style="height:300px;width:100%"></div>
             </Col>
@@ -285,6 +285,11 @@
         data2: [],
         data3: [],
         cashData: [],
+        disoptionsdate: {
+            disabledDate (date) {
+                return date< new Date(2018,7,1);
+            }
+        }
       };
     },
     mounted() {
