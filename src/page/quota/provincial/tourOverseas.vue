@@ -9,6 +9,21 @@ export default {
         setTimeout(() => {
             this.$echarts.init(document.querySelector("#chartTourOverseas")).setOption({
                 color: ['#645be6', '#a9a9a9'],
+                title:{
+                    text: "{a|海外游客旅游天数} {b|（单位：万人天）}",
+                    textStyle: {
+                        rich: {
+                            a: {
+                                fontWeight : 'bold',
+                                fontSize: 14
+                            },
+                            b: {
+                                fontSize: 12,
+                                color: '#a5a5a5'
+                            }
+                        }
+                    }
+                },
                 xAxis: {
                     data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月'],
                     axisLabel: {
@@ -35,7 +50,7 @@ export default {
                 },
                 yAxis: [
                     {
-                        name: '单位：人天',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -56,7 +71,7 @@ export default {
                             }
                         }
                     }, {
-                        name: '年同比',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -113,7 +128,7 @@ export default {
                                 color: '#000'
                             }
                         },
-                        data: [825366, 1191938, 1191557, 1336674, 1497597, 1552980, 1245811, 1226040]
+                        data: [82, 119, 119, 133, 149, 155, 124, 122]
                     }, {
                         type: 'line',
                         name: '年同比',

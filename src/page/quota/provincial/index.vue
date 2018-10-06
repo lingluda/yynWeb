@@ -1,7 +1,6 @@
 <template>
     <div style="height:100%;">
-        <div class="tits">云南省关键指标</div>
-        <!-- <div data-v-7c01ada6="" class="ti"><span data-v-7c01ada6="" style="color: rgb(102, 159, 199);">关键指标</span> <i data-v-7c01ada6="" class="ivu-icon ivu-icon-ios-arrow-forward"></i> <span data-v-7c01ada6="" style="font-size: 12px; color: rgb(0, 0, 0);">云南省</span></div> -->
+        <div class="tits">云南省今年关键指标</div>
         <div class="quota_bg">
             <card>
                 <Row>
@@ -13,7 +12,7 @@
                                 <span class="lyrd_index_today_visit">全省旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">47,187.97</span>
+                                <span class="lyrd_index_today_num">47,187</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -27,7 +26,7 @@
                                 <span class="lyrd_index_today_visit">国内旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">46,701.80</span>
+                                <span class="lyrd_index_today_num">46,701</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -41,7 +40,7 @@
                                 <span class="lyrd_index_today_visit">海外旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">486.17</span>
+                                <span class="lyrd_index_today_num">486</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -60,7 +59,7 @@
                                 <span class="lyrd_index_today_visit">全省旅游业总收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">59,076,450.98</span>
+                                <span class="lyrd_index_today_num">59,076,450</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -74,7 +73,7 @@
                                 <span class="lyrd_index_today_visit">国内旅游收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">57,307,819.53</span>
+                                <span class="lyrd_index_today_num">57,307,819</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -88,7 +87,7 @@
                                 <span class="lyrd_index_today_visit">旅游外汇收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1,525,282.42</span>
+                                <span class="lyrd_index_today_num">1,525,282</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -97,81 +96,43 @@
                 </Row>
             </card>
 
-            <Row :gutter="20">
-                <!-- 旅游人次 -->
-                <Col span="12">
-                <card>
-                    <div class="lyrd_index_search">
-                        <div class="lyrd_index_search_left">
-                            <span class="lyrd_index_search_title">旅游人次</span>
-                        </div>
-                        <div class="lyrd_index_search_right">
-                            <!-- <Select style="width:120px;margin-left:15px" @on-change="form1change">
-                                <Option v-for="item in selData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                            </Select> -->
-                        </div>
-                    </div>
-                    <tourNum></tourNum>
-                </card>
-                </Col>
-                <!-- 旅游人数占比 -->
-                <Col span="12">
-                <card>
-                    <div class="lyrd_index_search">
-                        <div class="lyrd_index_search_left">
-                            <span class="lyrd_index_search_title">海外游客统计</span>
-                        </div>
-                        <div class="lyrd_index_search_right">
-                            <!-- <DatePicker v-model="tourProDate" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
-                            <Select style="width:120px;margin-left:15px" @on-change="form1change">
-                                <Option v-for="item in tourPro" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                            </Select> -->
-                        </div>
-                    </div>
-                    <tourProp></tourProp>
-                </card>
-                </Col>
-            </Row>
 
-            <!-- 口岸入境一日游、海外游客旅游天数 -->
-            <Row :gutter="20">
-                <Col span="12">
-                <card>
-                    <div class="lyrd_index_search">
-                        <div class="lyrd_index_search_left">
-                            <span class="lyrd_index_search_title">口岸入境一日游</span>
-                        </div>
-                        <div class="lyrd_index_search_right">
-                            <Select style="width:120px;margin-left:15px" @on-change="form1change">
-                                <Option v-for="item in tourEnter" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                            </Select>
-                        </div>
+            <card>
+                <div class="lyrd_index_search">
+                    <div class="lyrd_index_search_left">
+                        <span class="lyrd_index_search_title">旅客客流</span>
                     </div>
-                    <tourEnter></tourEnter>
-                </card>
-                </Col>
-                <Col span="12">
-                <card>
-                    <div class="lyrd_index_search">
-                        <div class="lyrd_index_search_left">
-                            <span class="lyrd_index_search_title">海外游客旅游天数</span>
-                        </div>
+                </div>
+                <Row :gutter="20">
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourNum></tourNum>
                     </div>
-                    <tourOverseas></tourOverseas>
-                </card>
-                </Col>
-            </Row>
-
-            <!-- 旅游收入 -->
+                    </Col>
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourEnter></tourEnter>
+                    </div>
+                    </Col>
+                </Row>
+                <br>
+                <Row :gutter="20">
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourOverseas></tourOverseas> 
+                    </div>
+                    </Col>
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourProp></tourProp>
+                    </div>
+                    </Col>
+                </Row>
+            </card>
             <card>
                 <div class="lyrd_index_search">
                     <div class="lyrd_index_search_left">
                         <span class="lyrd_index_search_title">旅游收入</span>
-                    </div>
-                    <div class="lyrd_index_search_right">
-                        <!-- <Select style="width:120px;margin-left:15px" @on-change="form1change">
-                            <Option v-for="item in tourIncome" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select> -->
                     </div>
                 </div>
                 <Row :gutter="20">
@@ -186,6 +147,19 @@
                     </div>
                     </Col>
                 </Row>
+                <br>
+                <Row :gutter="20">
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourIncomeC></tourIncomeC>
+                    </div>
+                    </Col>
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourIncomeD></tourIncomeD>
+                    </div>
+                    </Col>
+                </Row>
             </card>
         </div>
     </div>
@@ -193,148 +167,151 @@
 
 <script>
 // 旅游人次
-import tourNum from "./tourNum.vue";
+import tourNum from "./tourNum.vue"
 // 旅游人数占比
-import tourProp from "./tourProp.vue";
+import tourProp from "./tourProp.vue"
 // 旅游收入--国内一日游收入
-import tourIncomeA from "./tourIncomeA.vue";
+import tourIncomeA from "./tourIncomeA.vue"
 // 旅游收入--国内过夜旅游收入
-import tourIncomeB from "./tourIncomeB.vue";
+import tourIncomeB from "./tourIncomeB.vue"
+import tourIncomeC from "./tourIncomeC.vue"
+import tourIncomeD from "./tourIncomeD.vue"
 // 口岸入境一日游
-import tourEnter from "./tourEnter.vue";
+import tourEnter from "./tourEnter.vue"
 // 海外游客旅游天数
-import tourOverseas from "./tourOverseas.vue";
+import tourOverseas from "./tourOverseas.vue"
 
 export default {
-  components: {
-    tourNum,
-    tourProp,
-    tourIncomeA,
-    tourIncomeB,
-    tourEnter,
-    tourOverseas
-  },
-  data() {
-    return {
-      // 旅游人次下拉框数据
-      tourNum: [
-        {
-          value: "New York",
-          label: "海外旅游"
-        }
-      ],
+    components: {
+        tourNum,
+        tourProp,
+        tourIncomeA,
+        tourIncomeB,
+        tourIncomeC,
+        tourIncomeD,
+        tourEnter,
+        tourOverseas
+    },
+    data() {
+        return {
+            // 旅游人次下拉框数据
+            tourNum: [
+                {
+                    value: "New York",
+                    label: "海外旅游",
+                }
+            ],
 
-      // 旅游人数占下拉框数据
-      tourProoDate: "2018-01",
-      tourProp: [
-        {
-          value: "New York",
-          label: "海外旅游",
-          x
-        }
-      ],
+            // 旅游人数占下拉框数据
+            tourProoDate: "2018-01",
+            tourProp: [
+                {
+                    value: "New York",
+                    label: "海外旅游",
+                }
+            ],
 
-      // 旅游收入下拉框数据
-      tourIncome: [
-        {
-          value: "New York",
-          label: "海外旅游"
-        }
-      ],
+            // 旅游收入下拉框数据
+            tourIncome: [
+                {
+                    value: "New York",
+                    label: "海外旅游",
+                }
+            ],
 
-      // 口岸入境一日游
-      tourEnter: [
-        {
-          value: "New York",
-          label: "人数"
+            // 口岸入境一日游
+            tourEnter: [
+                {
+                    value: "New York",
+                    label: "人数",
+                }
+            ]
         }
-      ]
-    };
-  },
-  methods: {
-    handleChange() {},
-    form1change() {}
-  }
-};
+    },
+    methods: {
+        handleChange() {},
+        form1change() {}
+    }
+}
 </script>
 
 
 <style lang="less" scoped>
 // 标题
 .tits {
-  line-height: 60px;
-  font-size: 16px;
-  padding-left: 20px;
-  font-weight: 600;
-  color: #000;
-  background: #fff;
-  border-bottom: 1px solid #e2e4e6;
+    line-height: 60px;
+    font-size: 16px;
+    padding-left: 20px;
+    font-weight: 600;
+    color: #000;
+    background: #fff;
+    border-bottom: 1px solid #e2e4e6;
 }
 
 // 灰色背景
 .quota_bg {
-  padding: 20px;
-  background: rgb(242, 242, 242);
-  min-height: calc(100% - 60px - 1px);
+    padding: 20px;
+    background: rgb(242, 242, 242);
+    min-height: calc(100% - 60px - 1px);
 }
 
 .lyrd_index_count_content {
-  display: flex;
-  justify-content: flex-start;
-  margin: 10px 0 5px 25px;
-  padding: 10px 0 10px 0;
+    display: flex;
+    justify-content: flex-start;
+    margin: 10px 0 5px 25px;
+    padding: 10px 0 10px 0;
 }
 
 .lyrd_index_count_bg1 {
-  width: 70px;
-  height: 70px;
-  border-radius: 100%;
-  background: #f2f2f2;
-  background-image: url(../../../assets/imgs/index_today.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  margin-right: 20px;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    background: #f2f2f2;
+    background-image: url(../../../assets/imgs/index_today.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 20px;
 }
 
 .lyrd_index_today_visit {
-  font-size: 16px;
-  color: #272727;
-  font-weight: 600;
+    font-size: 16px;
+    color: #272727;
+    font-weight: 600;
 }
 
 .lyrd_index_today_num {
-  font-size: 32px;
-  font-weight: 600;
-  color: #000;
+    font-size: 32px;
+    font-weight: 600;
+    color: #000;
 }
 
 .lyrd_index_count_content_line {
-  border-right: 1px solid #dcdee2;
+    border-right: 1px solid #dcdee2;
 }
 
 .ivu-card {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .lyrd_index_search {
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
-  // line-height: 70px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    // line-height: 70px;
 }
 
 .lyrd_index_search_title {
-  font-size: 14px;
-  font-weight: 700;
-  padding-right: 8px;
-  color: #000;
-  vertical-align: middle;
-  vertical-align: -webkit-baseline-middle;
+    font-size: 14px;
+    font-weight: 700;
+    padding-right: 8px;
+    color: #000;
+    vertical-align: middle;
+    vertical-align: -webkit-baseline-middle;
 }
 
 .borderBlock {
-  padding: 10px;
-  border: 1px solid #dcdee2;
+    padding: 10px;
+    border: 1px solid #dcdee2;
 }
 
 // 图标

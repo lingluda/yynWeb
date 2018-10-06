@@ -9,6 +9,12 @@ export default {
         setTimeout(() => {
             this.$echarts.init(document.querySelector("#chartTouristProportion")).setOption({
                 color: ['#3c6ffe', '#63cd8d', '#f0b83e', '#e6534e'],
+                title:{
+                    text: '海外游客人数来源地占比',
+                    textStyle: {
+                        fontSize: 14
+                    }
+                },
                 legend: {
                     y: 'bottom',
                     data:[

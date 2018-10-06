@@ -8,11 +8,20 @@ export default {
         //等容器渲染完成之后再加载图表，不然无法获取到准确的宽高度
         setTimeout(() => {
             this.$echarts.init(document.querySelector("#chartTourIncomeA")).setOption({
-                color: ['#645be6', '#a9a9a9'],
+                color: ['#1aaba8', '#a9a9a9'],
                 title:{
-                    text: '国内过夜旅游收入',
+                    text: "{a|旅游业总收入} {b|（单位：万元）}",
                     textStyle: {
-                        fontSize: 14
+                        rich: {
+                            a: {
+                                fontWeight : 'bold',
+                                fontSize: 14
+                            },
+                            b: {
+                                fontSize: 12,
+                                color: '#a5a5a5'
+                            }
+                        }
                     }
                 },
                 xAxis: {
@@ -41,7 +50,7 @@ export default {
                 },
                 yAxis: [
                     {
-                        name: '收入：万元',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -62,7 +71,7 @@ export default {
                             }
                         }
                     }, {
-                        name: '年同比',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -89,8 +98,8 @@ export default {
                         y: 'bottom',
                         itemGap: 30,
                         data: [
-                            { name: '国内过夜旅游收入', icon: 'circle' },
-                            '国内过夜旅游年同比'
+                            { name: '旅游业总收入', icon: 'circle' },
+                            '旅游业总收入年同比'
                         ]
                     }
                 ],
@@ -112,15 +121,22 @@ export default {
                 series: [
                     {
                         type: 'bar',
-                        name: '国内过夜旅游收入',
+                        name: '旅游业总收入',
                         barWidth: 30,
-                        data: [4089702.92, 5737359.84, 5285132.6, 5254775.52, 5365150.32, 5188802.83, 6208129.66, 6890973.48]
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'top',
+                                color: '#000'
+                            }
+                        },
+                        data: [555, 813, 718, 692, 721, 700, 806, 899]
                     }, {
                         type: 'line',
-                        name: '国内过夜旅游年同比',
+                        name: '旅游业总收入年同比',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [3.98, 39.22, 29.62, 40.74, 21.02, 18.51, 13.68, 6.87]
+                        data: [2.37, 44.92, 33.1, 38.73, 21.37, 21.38, 15.88, 10.58]
                     }
                 ]
             });

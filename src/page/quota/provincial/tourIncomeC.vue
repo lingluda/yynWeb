@@ -1,5 +1,5 @@
 <template>
-    <div id="chartTouristTimes" style="height:400px;"></div>
+    <div id="chartTourIncomeC" style="height:400px;"></div>
 </template>
 
 <script>
@@ -7,11 +7,10 @@ export default {
     mounted(){
         //等容器渲染完成之后再加载图表，不然无法获取到准确的宽高度
         setTimeout(() => {
-            this.$echarts.init(document.querySelector("#chartTouristTimes")).setOption({
-                color: ['#3c6ffe', '#a9a9a9'],
-                //国内旅游游客流量
+            this.$echarts.init(document.querySelector("#chartTourIncomeC")).setOption({
+                color: ['#63cd8d', '#a9a9a9'],
                 title:{
-                    text: "{a|国内旅游游客流量} {b|（单位：万人）}",
+                    text: "{a|国内过夜旅游收入} {b|（单位：万元）}",
                     textStyle: {
                         rich: {
                             a: {
@@ -90,6 +89,7 @@ export default {
                             color: '#999',
                             formatter: '{value}%'
                         },
+                        min: -10,
                         max: 60
                     }
                 ],
@@ -98,8 +98,8 @@ export default {
                         y: 'bottom',
                         itemGap: 30,
                         data: [
-                            { name: '人次', icon: 'circle' },
-                            '年同比'
+                            { name: '国内过夜旅游收入', icon: 'circle' },
+                            '国内过夜旅游年同比'
                         ]
                     }
                 ],
@@ -112,43 +112,31 @@ export default {
                         }
                     }
                 },
+                grid:{
+                    containLabel: true,
+                    left: 20,
+                    right: 20,
+                    top: 80
+                },
                 series: [
                     {
                         type: 'bar',
-                        name: '人次',
+                        name: '国内过夜旅游收入',
                         barWidth: 30,
                         label: {
                             normal: {
                                 show: true,
                                 position: 'top',
-                                color: '#000',
-                                formatter : function (str) {
-                                    var strNum = str.value
-                                    if(strNum.length <= 3) {
-                                        return strNum;
-                                    }
-                                    if(!/^(\+|-)?(\d+)(\.\d+)?$/.test(strNum)) {
-                                        return strNum;
-                                    }
-                                    var a = RegExp.$1,
-                                        b = RegExp.$2,
-                                        c = RegExp.$3;
-                                    var re = new RegExp();
-                                    re.compile("(\\d)(\\d{3})(,|$)");
-                                    while(re.test(b)) {
-                                        b = b.replace(re, "$1,$2$3");
-                                    }
-                                    return a + "" + b + "" + c;
-                                }
+                                color: '#000'
                             }
                         },
-                        data: [4507, 6910, 5776, 5202, 5612, 5586, 6162, 6942]
+                        data: [408, 573, 528, 525, 536, 518, 620, 689]
                     }, {
                         type: 'line',
-                        name: '年同比',
+                        name: '国内过夜旅游年同比',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [-0.84, 48.6, 34.14, 32.23, 20.64, 29.13, 17.72, 16.15]
+                        data: [3.98, 39.22, 29.62, 40.74, 21.02, 18.51, 13.68, 6.87]
                     }
                 ]
             });

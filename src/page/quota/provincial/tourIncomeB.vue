@@ -10,9 +10,18 @@ export default {
             this.$echarts.init(document.querySelector("#chartTourIncomeB")).setOption({
                 color: ['#63cd8d', '#a9a9a9'],
                 title:{
-                    text: '国内一日旅游收入',
+                    text: "{a|旅游外汇收入} {b|（单位：万元）}",
                     textStyle: {
-                        fontSize: 14
+                        rich: {
+                            a: {
+                                fontWeight : 'bold',
+                                fontSize: 14
+                            },
+                            b: {
+                                fontSize: 12,
+                                color: '#a5a5a5'
+                            }
+                        }
                     }
                 },
                 xAxis: {
@@ -41,7 +50,7 @@ export default {
                 },
                 yAxis: [
                     {
-                        name: '收入：万元',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -62,7 +71,7 @@ export default {
                             }
                         }
                     }, {
-                        name: '年同比',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -87,8 +96,8 @@ export default {
                         y: 'bottom',
                         itemGap: 30,
                         data: [
-                            { name: '国内一日旅游收入', icon: 'circle' },
-                            '国内一日旅游年同比'
+                            { name: '旅游外汇收入', icon: 'circle' },
+                            '旅游外汇收入年同比'
                         ]
                     }
                 ],
@@ -110,15 +119,22 @@ export default {
                 series: [
                     {
                         type: 'bar',
-                        name: '国内一日旅游收入',
+                        name: '旅游外汇收入',
                         barWidth: 30,
-                        data: [1304164.57, 2180633.45, 1685101.07, 1434000.43, 1595912.04, 1557601.19, 1636164.46, 1894215.15]
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'top',
+                                color: '#000'
+                            }
+                        },
+                        data: [15, 21, 21, 23, 25, 26, 21, 21]
                     }, {
                         type: 'line',
-                        name: '国内一日旅游年同比',
+                        name: '旅游外汇收入年同比',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [-3.4, 66.8, 50.57, 39.06, 25.09, 36.47, 28.11, 28.91]
+                        data: [12.99, 16.93, 6.34, 3.86, 7.98, 2.92, -0.39, -3.04]
                     }
                 ]
             });
