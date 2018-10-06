@@ -138,12 +138,12 @@
                 <Row :gutter="20">
                     <Col span="12">
                     <div class="borderBlock">
-                        <tourIncomeA></tourIncomeA>
+                        <tourIncomeTotal></tourIncomeTotal>
                     </div>
                     </Col>
                     <Col span="12">
                     <div class="borderBlock">
-                        <tourIncomeB></tourIncomeB>
+                        <tourIncomeOversea></tourIncomeOversea>
                     </div>
                     </Col>
                 </Row>
@@ -151,12 +151,12 @@
                 <Row :gutter="20">
                     <Col span="12">
                     <div class="borderBlock">
-                        <tourIncomeC></tourIncomeC>
+                        <tourIncomeNight></tourIncomeNight>
                     </div>
                     </Col>
                     <Col span="12">
                     <div class="borderBlock">
-                        <tourIncomeD></tourIncomeD>
+                        <tourIncomeOne></tourIncomeOne>
                     </div>
                     </Col>
                 </Row>
@@ -171,11 +171,11 @@ import tourNum from "./tourNum.vue"
 // 旅游人数占比
 import tourProp from "./tourProp.vue"
 // 旅游收入--国内一日游收入
-import tourIncomeA from "./tourIncomeA.vue"
+import tourIncomeTotal from "./tourIncomeTotal.vue"
 // 旅游收入--国内过夜旅游收入
-import tourIncomeB from "./tourIncomeB.vue"
-import tourIncomeC from "./tourIncomeC.vue"
-import tourIncomeD from "./tourIncomeD.vue"
+import tourIncomeOversea from "./tourIncomeOversea.vue"
+import tourIncomeNight from "./tourIncomeNight.vue"
+import tourIncomeOne from "./tourIncomeOne.vue"
 // 口岸入境一日游
 import tourEnter from "./tourEnter.vue"
 // 海外游客旅游天数
@@ -185,10 +185,10 @@ export default {
     components: {
         tourNum,
         tourProp,
-        tourIncomeA,
-        tourIncomeB,
-        tourIncomeC,
-        tourIncomeD,
+        tourIncomeTotal,
+        tourIncomeOversea,
+        tourIncomeNight,
+        tourIncomeOne,
         tourEnter,
         tourOverseas
     },

@@ -1,5 +1,5 @@
 <template>
-    <div id="chartTourIncomeB" style="height:400px;"></div>
+    <div id="tourIncomeNight" style="height:400px;"></div>
 </template>
 
 <script>
@@ -7,10 +7,10 @@ export default {
     mounted(){
         //等容器渲染完成之后再加载图表，不然无法获取到准确的宽高度
         setTimeout(() => {
-            this.$echarts.init(document.querySelector("#chartTourIncomeB")).setOption({
+            this.$echarts.init(document.querySelector("#tourIncomeNight")).setOption({
                 color: ['#63cd8d', '#a9a9a9'],
                 title:{
-                    text: "{a|旅游外汇收入} {b|（单位：万元）}",
+                    text: "{a|国内过夜旅游收入} {b|（单位：万元）}",
                     textStyle: {
                         rich: {
                             a: {
@@ -89,6 +89,8 @@ export default {
                             color: '#999',
                             formatter: '{value}%'
                         },
+                        min: -10,
+                        max: 60
                     }
                 ],
                 legend: [
@@ -96,8 +98,8 @@ export default {
                         y: 'bottom',
                         itemGap: 30,
                         data: [
-                            { name: '旅游外汇收入', icon: 'circle' },
-                            '旅游外汇收入年同比'
+                            { name: '国内过夜旅游收入', icon: 'circle' },
+                            '国内过夜旅游年同比'
                         ]
                     }
                 ],
@@ -119,7 +121,7 @@ export default {
                 series: [
                     {
                         type: 'bar',
-                        name: '旅游外汇收入',
+                        name: '国内过夜旅游收入',
                         barWidth: 30,
                         label: {
                             normal: {
@@ -128,13 +130,13 @@ export default {
                                 color: '#000'
                             }
                         },
-                        data: [15, 21, 21, 23, 25, 26, 21, 21]
+                        data: [408, 573, 528, 525, 536, 518, 620, 689]
                     }, {
                         type: 'line',
-                        name: '旅游外汇收入年同比',
+                        name: '国内过夜旅游年同比',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [12.99, 16.93, 6.34, 3.86, 7.98, 2.92, -0.39, -3.04]
+                        data: [3.98, 39.22, 29.62, 40.74, 21.02, 18.51, 13.68, 6.87]
                     }
                 ]
             });

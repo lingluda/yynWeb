@@ -10,6 +10,7 @@
             <Col :span="12">{{item.name}}</Col>
             <Col :span="10">客流人数：<span class="flowNum">{{item.n}}</span></Col>
         </Row>
+        <a href="javascript:;"><p style="text-align: right;margin-top:15px">查看更多 >></p></a>
     </div>
 </template>
 <script>
