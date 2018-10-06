@@ -1,5 +1,5 @@
 <template>
-    <div class="flowList">
+    <div class="flowList" style="height:585px">
         <Row v-for="item in listData">
             <Col :span="2">
               <!-- <div class="flowImg"></div> -->

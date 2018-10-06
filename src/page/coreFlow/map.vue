@@ -72,7 +72,7 @@ export default {
                 symbolSize: 8, //function (v){ return 10 + v/1000 },
                 label: {
                   normal: {
-                    color: "#fff",
+                    color: "#000",
                     formatter: "{b}:{c}",
                     position: "right",
                     show: true,
