@@ -20,8 +20,8 @@
           <Col span="6">
             <div id="sex">
               <div style="height: inherit;"></div>
-              <Icon type="ios-woman" size="32" color="#ff50fe" class="sex-icon"/>
-              <Icon type="ios-man" size="32" color="#1ea9ff" class="sex-icon"/>
+              <!-- <Icon type="ios-woman" size="32" color="#ff50fe" class="sex-icon"/> -->
+              <!-- <Icon type="ios-man" size="32" color="#1ea9ff" class="sex-icon"/> -->
             </div>
           </Col>
           <Col span="6">
@@ -243,7 +243,7 @@
         cityData1: [],
         proData: [],
         picDate: http.getToday(),
-        picDate3: http.getToday(),
+        picDate3: http.getYesterDay(),
         picDate4: [this.d22,this.d11],
         cpicDate: http.getToday(),
         columns1: [
@@ -256,7 +256,7 @@
           {
             title: "线路",
             key: "moveline",
-            width:100,
+            width:120,
             color:"red"
           },
 
@@ -319,6 +319,9 @@
           top: 10,
           io: this.tabname
         }).then(resp => {
+          if (!resp.data || !resp.data.hits) {
+            return
+          }
           this.data1 = resp.data.hits;
           this.data3 = resp.data.hits;
           for (var i=0;i<resp.data.hits.length;i++){
@@ -344,7 +347,7 @@
             {
               title: "线路",
               key: "moveline",
-              width:100,
+              width:120,
             },
             {
               title: "热度",
@@ -379,7 +382,7 @@
             {
               title: "线路",
               key: "moveline",
-              width:100,
+              width:120,
               color:"red"
             },
 
@@ -406,7 +409,7 @@
             {
               title: "线路",
               key: "moveline",
-              width:100,
+              width:120,
               color:"red"
             },
 
@@ -435,7 +438,7 @@
             {
               title: "线路",
               key: "moveline",
-              width:100,
+              width:120,
               color:"red"
             },
 
@@ -458,16 +461,24 @@
       init() {
         http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
-          this.ccc = resp.data.hits[0].id
+          if (resp.data.hits) {
+            this.ccc = resp.data.hits[0].id
+          }
         })
         http.get('bi/get_all_city', {}).then(resp => {
           this.cityData1 = resp.data.hits;
-          this.ccti = resp.data.hits[0].name
+          if (resp.data.hits) {
+            this.ccti = resp.data.hits[0].name
+          }
         })
-        http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
-          this.senicData=resp.data.hits
-          this.ccc1 = resp.data.hits[0].id
-        })
+        if(this.ccc){
+          http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
+            this.senicData=resp.data.hits
+            if (resp.data.hits) {
+              this.ccc1 = resp.data.hits[0].id
+            }
+          })
+        }
 
         this.provx = [];
         this.provy = [];
@@ -571,7 +582,7 @@
         if(!oOptions.color){
           oOptions.color = ["#006EFF", "#29CC85", "#ffbb00", "#ff584c", "#9741d9", "#1fc0cc", "#7ff936", "#ff9c19", "#e63984", "#655ce6", "#47cc50", "#fb0b6"];
         }
-        let oLabelStyle = {
+        const oLabelStyle = {
           show: true,
           position: "center",
           lineHeight: 24,
@@ -582,15 +593,32 @@
           rich: {
               a: {
                   color: '#878787',
-                  fontSize: 14
+                  fontSize: 12
               },
               b: {
                   color: '#000',
-                  fontSize: 20
+                  fontSize: 12
               }
           }
         };
-        oOptions.data[0].label = oLabelStyle;
+        // 前三数据
+        const initLen = 3
+        const chartData = oOptions.data.slice(0, initLen)
+
+        // 其他 (除前三数据的和)
+        let extraValue = 0
+        for (let i = initLen, len = oOptions.data.length; i < len; i++){
+          if (oOptions.data[i]) {
+            extraValue += oOptions.data[i].value
+          }
+        }
+        if(extraValue) {
+          chartData.push({
+            name: '其他',
+            value: extraValue
+          })
+        }
+
         this.$echarts.init(document.querySelector(oOptions.el)).setOption({
           color: oOptions.color,
           title: {
@@ -602,10 +630,10 @@
             y: 15
           },
           legend: {
-            y: 320,
+            y: 340,
             x: "center",
             icon: "circle",
-            data: oOptions.data.map(item => item.name),
+            data: chartData.map(item => item.name),
             itemWidth: 10,
             itemHeight: 12
           },
@@ -614,8 +642,13 @@
               type: "pie",
               radius: ["40%", "55%"],
               avoidLabelOverlap: true,
-              //label: false,
-              //labelLine: false,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'outside',
+                  formatter: '{b}\n{d}%',
+                },
+              },
               emphasis: {
                 label: oLabelStyle
               },
@@ -623,7 +656,7 @@
                 borderColor: '#fff',
                 borderWidth: 1
               },
-              data: oOptions.data
+              data: chartData
             }
           ]
         });
@@ -811,15 +844,33 @@
             data: this.cityx,
             axisLabel: {
               interval: 0,
-              formatter:function(value,index)
-              {
-                //debugger
-                if (index % 2 != 0) {
-                  return '\n\n' + value;
+              formatter(params) {
+                let newParamsName = '' // 最终拼接成的字符串
+                const paramsNameNumber = params.length // 实际标签的个数
+                const provideNumber = 7 // 每行能显示的字的个数
+                const rowNumber = Math.ceil(paramsNameNumber / provideNumber) // 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
+                if (paramsNameNumber > provideNumber) {
+                  // 循环每一行, p表示行
+                  for (var p = 0; p < rowNumber; p++) {
+                    let tempStr = '' // 表示每一次截取的字符串
+                    const start = p * provideNumber // 开始截取的位置
+                    const end = start + provideNumber // 结束截取的位置
+                    // 此处特殊处理最后一行的索引值
+                    if (p == rowNumber - 1) {
+                      // 最后一次不换行
+                      tempStr = params.substring(start, paramsNameNumber)
+                    } else {
+                      // 每一次拼接字符串并换行
+                      tempStr = params.substring(start, end) + '\n'
+                    }
+                    newParamsName += tempStr // 最终拼成的字符串
+                  }
+                } else {
+                  // 将旧标签的值赋给新标签
+                  newParamsName = params
                 }
-                else {
-                  return value;
-                }
+                //将最终的字符串返回
+                return newParamsName
               }
             },
           },
@@ -881,15 +932,33 @@
             data: this.provx,
             axisLabel: {
               interval: 0,
-              formatter:function(value,index)
-              {
-                //debugger
-                if (index % 2 != 0) {
-                  return '\n\n' + value;
+              formatter(params) {
+                let newParamsName = '' // 最终拼接成的字符串
+                const paramsNameNumber = params.length // 实际标签的个数
+                const provideNumber = 7 // 每行能显示的字的个数
+                const rowNumber = Math.ceil(paramsNameNumber / provideNumber) // 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
+                if (paramsNameNumber > provideNumber) {
+                  // 循环每一行, p表示行
+                  for (var p = 0; p < rowNumber; p++) {
+                    let tempStr = '' // 表示每一次截取的字符串
+                    const start = p * provideNumber // 开始截取的位置
+                    const end = start + provideNumber // 结束截取的位置
+                    // 此处特殊处理最后一行的索引值
+                    if (p == rowNumber - 1) {
+                      // 最后一次不换行
+                      tempStr = params.substring(start, paramsNameNumber)
+                    } else {
+                      // 每一次拼接字符串并换行
+                      tempStr = params.substring(start, end) + '\n'
+                    }
+                    newParamsName += tempStr // 最终拼成的字符串
+                  }
+                } else {
+                  // 将旧标签的值赋给新标签
+                  newParamsName = params
                 }
-                else {
-                  return value;
-                }
+                //将最终的字符串返回
+                return newParamsName
               }
             },
           },
