@@ -95,12 +95,12 @@ export default {
                 ],
                 tooltip: {
                     trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#999'
-                        }
-                    }
+                    // axisPointer: {
+                    //     type: 'cross',
+                    //     crossStyle: {
+                    //         color: '#999'
+                    //     }
+                    // }
                 },
                 series: [
                     {
