@@ -514,13 +514,13 @@
             {
               name: this.lineDatayn1,
               type: "line",
-              stack: "总量",
+              stack: "总量1",
               data: this.lineDatay1
             },
             {
               name: this.lineDatayn2,
               type: "line",
-              stack: "总量",
+              stack: "总量2",
               data: this.lineDatay2
             }
 

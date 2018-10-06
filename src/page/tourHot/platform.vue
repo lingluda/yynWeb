@@ -232,12 +232,14 @@
           series: [{
             name: '活跃用户数',
             data: this.lineDatax1,
-            type: 'line'
+            type: 'line',
+            stack: "总量1",
           },
             {
               name: '新增用户量',
               data: this.lineDatax2,
-              type: 'line'
+              type: 'line',
+              stack: "总量2"
             }
           ]
         })
