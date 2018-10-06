@@ -14,7 +14,7 @@
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div class="tabpane_content_title">
               <div>
-                <span style="color: #000;font-size:14px;font-weight: bold">一机游今日搜索各目的地访问用户数据 </span>
+                <span style="color: #000;font-size:14px;font-weight: bold">一机游当日搜索各目的地访问用户数据 </span>
                 <span style="color: #a5a5a5;font-size:12px;">(单位：万人)</span>
               </div>
               <DatePicker v-model="picDate1" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
@@ -30,7 +30,7 @@
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div class="tabpane_content_title">
                <div >
-                 <span style="color: #000;font-weight:bold;font-size:14px;">一机游今日搜索各目的地访问用户数据 </span>
+                 <span style="color: #000;font-weight:bold;font-size:14px;">一机游当日搜索各景区访问用户数据 </span>
                   <span style="color: #a5a5a5;font-size:12px;">(单位：万人)</span>
                 </div>
               <DatePicker  placement="bottom-end" v-model="picDate2" type="date" placeholder="Select date" style="width:120px;float: right"></DatePicker>
