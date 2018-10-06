@@ -11,7 +11,7 @@
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">当日平台运营数据</span>
             <!--{{(this.picDate).toString().substring(8,10)}}日-->
-            <DatePicker placement="bottom-end" v-model="picDate" type="date" placeholder="Select date"
+            <DatePicker placement="bottom-end" v-model="picDate" type="date" placeholder="Select date" :options="disoptionsdate"
                         style="width: 120px;float: right"></DatePicker>
           </div>
           <Row :gutter="16">
@@ -76,7 +76,7 @@
           <div style="margin-bottom: 20px">
             <span style="font-weight: bold;color: #000000">用户趋势分析</span>
 
-            <DatePicker placement="bottom-end" type="daterange"  v-model="picMonth" @on-change="change1" placeholder="自选时间"
+            <DatePicker placement="bottom-end" type="daterange"  v-model="picMonth" @on-change="change1" placeholder="自选时间"  :options="disoptionsdate"
                         style="width: 180px;float: right"></DatePicker>
             <RadioGroup v-model="cho7" type="button" style="float: right" @on-change="choose7">
               <Radio label="1">最近7日</Radio>
@@ -141,6 +141,11 @@
         lineDatax1: [],
         lineDatax2: [],
         lineDatay: [],
+        disoptionsdate: {
+            disabledDate (date) {
+                return date< new Date(2018,7,1);
+            }
+        }
       }
     },
     mounted() {

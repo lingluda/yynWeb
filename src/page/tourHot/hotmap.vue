@@ -19,7 +19,7 @@
               <Select style="width: 120px" v-model="senic_id" @on-change="searchformi">
                 <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
               </Select>
-              <DatePicker type="date" v-model="date11" @on-change="searchformi" placeholder="自选时间" style="width: 120px"></DatePicker>
+              <DatePicker type="date" v-model="date11" @on-change="searchformi" placeholder="自选时间" style="width: 120px" :options="disoptionsdate"></DatePicker>
               <!--   <Select style="width: 150px">
                    <Option value="城市">城市</Option>
                  </Select>-->
@@ -62,7 +62,7 @@
                 </div>
                 <div>
                   <DatePicker v-model="picDate6" type="date" placeholder="Select date"
-                              style="width: 120px;"></DatePicker>
+                              style="width: 120px;" :options="disoptionsdate"></DatePicker>
 
                   <Select style="width: 120px" v-model="piccity">
                     <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
@@ -161,7 +161,7 @@
                   <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                 </Select>
                 <DatePicker v-model="da1" type="daterange" show-week-numbers  placeholder="Select date"
-                            style="width: 180px;"></DatePicker>
+                            style="width: 180px;" :options="disoptionsdate"></DatePicker>
                 <Select style="width: 120px" v-model="power1">
                   <Option value="60">60分钟</Option>
                 </Select>
@@ -171,7 +171,7 @@
                   <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
                 </Select>
                 <DatePicker v-model="da2" type="daterange" show-week-numbers  placeholder="Select date"
-                            style="width: 180px;" @on-change="picd"></DatePicker>
+                            style="width: 180px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
                 <Checkbox v-model="single">选择对比日期</Checkbox>
               </div>
               <div class="hotmap_klqs">
@@ -355,6 +355,11 @@
         hotmapd:[],
         hotmapl:[],
         hotmapll:[],
+        disoptionsdate: {
+            disabledDate (date) {
+                return date< new Date(2018,7,1);
+            }
+        }
       };
     },
     mounted() {
