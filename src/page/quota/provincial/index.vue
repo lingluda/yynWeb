@@ -1,6 +1,7 @@
 <template>
     <div style="height:100%;">
-        <div class="tits">云南省今年关键指标</div>
+        <!-- <div class="tits"></div> -->
+        <div data-v-7c01ada6="" class="ti"><span data-v-7c01ada6="" style="color: rgb(102, 159, 199);">关键指标</span> <i data-v-7c01ada6="" class="ivu-icon ivu-icon-ios-arrow-forward"></i> <span data-v-7c01ada6="" style="font-size: 12px; color: rgb(0, 0, 0);">云南省</span></div>
         <div class="quota_bg">
             <card>
                 <Row>
@@ -96,7 +97,6 @@
                 </Row>
             </card>
 
-            
             <Row :gutter="20">
                 <!-- 旅游人次 -->
                 <Col span="12">
@@ -193,147 +193,148 @@
 
 <script>
 // 旅游人次
-import tourNum from "./tourNum.vue"
+import tourNum from "./tourNum.vue";
 // 旅游人数占比
-import tourProp from "./tourProp.vue"
+import tourProp from "./tourProp.vue";
 // 旅游收入--国内一日游收入
-import tourIncomeA from "./tourIncomeA.vue"
+import tourIncomeA from "./tourIncomeA.vue";
 // 旅游收入--国内过夜旅游收入
-import tourIncomeB from "./tourIncomeB.vue"
+import tourIncomeB from "./tourIncomeB.vue";
 // 口岸入境一日游
-import tourEnter from "./tourEnter.vue"
+import tourEnter from "./tourEnter.vue";
 // 海外游客旅游天数
-import tourOverseas from "./tourOverseas.vue"
+import tourOverseas from "./tourOverseas.vue";
 
 export default {
-    components: {
-        tourNum,
-        tourProp,
-        tourIncomeA,
-        tourIncomeB,
-        tourEnter,
-        tourOverseas
-    },
-    data() {
-        return {
-            // 旅游人次下拉框数据
-            tourNum: [
-                {
-                    value: "New York",
-                    label: "海外旅游",
-                }
-            ],
-
-            // 旅游人数占下拉框数据
-            tourProoDate: "2018-01",
-            tourProp: [
-                {
-                    value: "New York",
-                    label: "海外旅游",x
-                }
-            ],
-
-            // 旅游收入下拉框数据
-            tourIncome: [
-                {
-                    value: "New York",
-                    label: "海外旅游",
-                }
-            ],
-
-            // 口岸入境一日游
-            tourEnter: [
-                {
-                    value: "New York",
-                    label: "人数",
-                }
-            ]
+  components: {
+    tourNum,
+    tourProp,
+    tourIncomeA,
+    tourIncomeB,
+    tourEnter,
+    tourOverseas
+  },
+  data() {
+    return {
+      // 旅游人次下拉框数据
+      tourNum: [
+        {
+          value: "New York",
+          label: "海外旅游"
         }
-    },
-    methods: {
-        handleChange() {},
-        form1change() {}
-    }
-}
+      ],
+
+      // 旅游人数占下拉框数据
+      tourProoDate: "2018-01",
+      tourProp: [
+        {
+          value: "New York",
+          label: "海外旅游",
+          x
+        }
+      ],
+
+      // 旅游收入下拉框数据
+      tourIncome: [
+        {
+          value: "New York",
+          label: "海外旅游"
+        }
+      ],
+
+      // 口岸入境一日游
+      tourEnter: [
+        {
+          value: "New York",
+          label: "人数"
+        }
+      ]
+    };
+  },
+  methods: {
+    handleChange() {},
+    form1change() {}
+  }
+};
 </script>
 
 
 <style lang="less" scoped>
 // 标题
 .tits {
-    line-height: 60px;
-    font-size: 16px;
-    padding-left: 20px;
-    font-weight: 600;
-    color: #000;
-    background: #fff;
-    border-bottom: 1px solid #e2e4e6;
+  line-height: 60px;
+  font-size: 16px;
+  padding-left: 20px;
+  font-weight: 600;
+  color: #000;
+  background: #fff;
+  border-bottom: 1px solid #e2e4e6;
 }
 
 // 灰色背景
 .quota_bg {
-    padding: 20px;
-    background: rgb(242, 242, 242);
-    min-height: calc(100% - 60px - 1px);
+  padding: 20px;
+  background: rgb(242, 242, 242);
+  min-height: calc(100% - 60px - 1px);
 }
 
 .lyrd_index_count_content {
-    display: flex;
-    justify-content: flex-start;
-    margin: 10px 0 5px 25px;
-    padding: 10px 0 10px 0;
+  display: flex;
+  justify-content: flex-start;
+  margin: 10px 0 5px 25px;
+  padding: 10px 0 10px 0;
 }
 
 .lyrd_index_count_bg1 {
-    width: 70px;
-    height: 70px;
-    border-radius: 100%;
-    background: #f2f2f2;
-    background-image: url(../../../assets/imgs/index_today.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-right: 20px;
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background: #f2f2f2;
+  background-image: url(../../../assets/imgs/index_today.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 20px;
 }
 
 .lyrd_index_today_visit {
-    font-size: 16px;
-    color: #272727;
-    font-weight: 600;
+  font-size: 16px;
+  color: #272727;
+  font-weight: 600;
 }
 
 .lyrd_index_today_num {
-    font-size: 32px;
-    font-weight: 600;
-    color: #000;
+  font-size: 32px;
+  font-weight: 600;
+  color: #000;
 }
 
 .lyrd_index_count_content_line {
-    border-right: 1px solid #dcdee2;
+  border-right: 1px solid #dcdee2;
 }
 
 .ivu-card {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .lyrd_index_search {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    // line-height: 70px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  // line-height: 70px;
 }
 
 .lyrd_index_search_title {
-    font-size: 14px;
-    font-weight: 700;
-    padding-right: 8px;
-    color: #000;
-    vertical-align: middle;
-    vertical-align: -webkit-baseline-middle;
+  font-size: 14px;
+  font-weight: 700;
+  padding-right: 8px;
+  color: #000;
+  vertical-align: middle;
+  vertical-align: -webkit-baseline-middle;
 }
 
 .borderBlock {
-    padding: 10px;
-    border: 1px solid #dcdee2;
+  padding: 10px;
+  border: 1px solid #dcdee2;
 }
 
 // 图标
