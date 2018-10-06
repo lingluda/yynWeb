@@ -1,7 +1,7 @@
 <template>
     <div style="height:100%;">
-        <!-- <div class="tits"></div> -->
-        <div data-v-7c01ada6="" class="ti"><span data-v-7c01ada6="" style="color: rgb(102, 159, 199);">关键指标</span> <i data-v-7c01ada6="" class="ivu-icon ivu-icon-ios-arrow-forward"></i> <span data-v-7c01ada6="" style="font-size: 12px; color: rgb(0, 0, 0);">云南省</span></div>
+        <div class="tits">云南省关键指标</div>
+        <!-- <div data-v-7c01ada6="" class="ti"><span data-v-7c01ada6="" style="color: rgb(102, 159, 199);">关键指标</span> <i data-v-7c01ada6="" class="ivu-icon ivu-icon-ios-arrow-forward"></i> <span data-v-7c01ada6="" style="font-size: 12px; color: rgb(0, 0, 0);">云南省</span></div> -->
         <div class="quota_bg">
             <card>
                 <Row>
