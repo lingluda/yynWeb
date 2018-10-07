@@ -136,7 +136,7 @@
             chart.on('timelinechanged', function (timeLineIndex) {
               // 设置 每个series里的xAxis里的值
               self.arrIndex = parseInt(timeLineIndex.currentIndex);
-              heatmap.setData({max: 100, data: self.x3[self.arrIndex].points});
+              heatmap.setData({max: 200, data: self.x3[self.arrIndex].points});
             });
           },
       },

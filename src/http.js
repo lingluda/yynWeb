@@ -6,7 +6,7 @@ axios.interceptors.response.use(
     if (response.status === 200 && response.data.errcode !== 0) {
       const code = response.data.errcode
       const msg = response.data.errmsg || '接口返回错误'
-      Message.error(msg)
+      // Message.error(msg)
       console.error(`cgi: ${response.config.url}`, {
         code,
         msg
