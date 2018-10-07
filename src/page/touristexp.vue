@@ -385,13 +385,7 @@ export default {
       let myline = this.$echarts.init(document.getElementById("myline"));
       myline.setOption({
         tooltip : {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross',
-            label: {
-              backgroundColor: '#6a7985'
-            }
-          }
+          trigger: 'axis'
         },
         xAxis: {
           type: "category",
@@ -484,13 +478,7 @@ export default {
       complaint.setOption(option);
       var option2 = {
         tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-            crossStyle: {
-              color: "#999"
-            }
-          }
+          trigger: "axis"
         },
         legend: {
           data: ["平均时长", "最大时长", "最小时长"],

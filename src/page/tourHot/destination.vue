@@ -129,6 +129,8 @@ table{
   import http from '@/http.js'
   import '@/dateFormate'
   import pers_st from '../analysisform'
+  import * as echartsHelper from '@/helpers/echarts'
+
   export default {
     components:{
       "pers-st":pers_st
@@ -481,16 +483,7 @@ table{
             data: this.barDatax1,
             axisLabel: {
               interval: 0,
-              formatter:function(value,index)
-              {
-                debugger
-                if (index % 2 != 0) {
-                  return '\n\n' + value;
-                }
-                else {
-                  return value;
-                }
-              }
+              formatter: echartsHelper.labelFormatter
             },
 
             axisLine:{

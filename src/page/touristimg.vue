@@ -204,7 +204,9 @@
 <script>
   import http from "@/http.js";
   import "@/dateFormate.js";
-  import gomap from '../components/map/echartMap'
+  import gomap from '@/components/map/echartMap'
+  import * as echartsHelper from '@/helpers/echarts'
+
   export default {
     components:{
       "aaamap":gomap,
@@ -308,15 +310,20 @@
         this.mobilex = [];
         this.mobiley = [];
 
-        http.get('bi/get_scenic_by_city',{city_id:val}).then(resp=>{
-          this.senicData=resp.data.hits
-          this.ccc1='';
-        })
+        if (val) {
+          http.get('bi/get_scenic_by_city',{city_id:val}).then(resp=>{
+            this.senicData=resp.data.hits
+            this.ccc1='';
+          })
+        }
         http
           .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:val})
           .then(this.getPortraitData);
       },
       hotlinedp(){
+        if (!this.ccti) {
+          return
+        }
         this.data2=[]
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
@@ -496,10 +503,12 @@
         this.mobilex = [];
         this.mobiley = [];
 
-        http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
-          this.senicData=resp.data.hits
-          this.ccc1='';
-        })
+        if (this.ccc) {
+          http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
+            this.senicData=resp.data.hits
+            this.ccc1='';
+          })
+        }
         http
           .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:this.ccc})
           .then(this.getPortraitData);
@@ -849,34 +858,7 @@
             data: this.cityx,
             axisLabel: {
               interval: 0,
-              formatter(params) {
-                let newParamsName = '' // 最终拼接成的字符串
-                const paramsNameNumber = params.length // 实际标签的个数
-                const provideNumber = 7 // 每行能显示的字的个数
-                const rowNumber = Math.ceil(paramsNameNumber / provideNumber) // 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
-                if (paramsNameNumber > provideNumber) {
-                  // 循环每一行, p表示行
-                  for (var p = 0; p < rowNumber; p++) {
-                    let tempStr = '' // 表示每一次截取的字符串
-                    const start = p * provideNumber // 开始截取的位置
-                    const end = start + provideNumber // 结束截取的位置
-                    // 此处特殊处理最后一行的索引值
-                    if (p == rowNumber - 1) {
-                      // 最后一次不换行
-                      tempStr = params.substring(start, paramsNameNumber)
-                    } else {
-                      // 每一次拼接字符串并换行
-                      tempStr = params.substring(start, end) + '\n'
-                    }
-                    newParamsName += tempStr // 最终拼成的字符串
-                  }
-                } else {
-                  // 将旧标签的值赋给新标签
-                  newParamsName = params
-                }
-                //将最终的字符串返回
-                return newParamsName
-              }
+              formatter: echartsHelper.labelFormatter
             },
           },
           yAxis: {
@@ -937,34 +919,7 @@
             data: this.provx,
             axisLabel: {
               interval: 0,
-              formatter(params) {
-                let newParamsName = '' // 最终拼接成的字符串
-                const paramsNameNumber = params.length // 实际标签的个数
-                const provideNumber = 7 // 每行能显示的字的个数
-                const rowNumber = Math.ceil(paramsNameNumber / provideNumber) // 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
-                if (paramsNameNumber > provideNumber) {
-                  // 循环每一行, p表示行
-                  for (var p = 0; p < rowNumber; p++) {
-                    let tempStr = '' // 表示每一次截取的字符串
-                    const start = p * provideNumber // 开始截取的位置
-                    const end = start + provideNumber // 结束截取的位置
-                    // 此处特殊处理最后一行的索引值
-                    if (p == rowNumber - 1) {
-                      // 最后一次不换行
-                      tempStr = params.substring(start, paramsNameNumber)
-                    } else {
-                      // 每一次拼接字符串并换行
-                      tempStr = params.substring(start, end) + '\n'
-                    }
-                    newParamsName += tempStr // 最终拼成的字符串
-                  }
-                } else {
-                  // 将旧标签的值赋给新标签
-                  newParamsName = params
-                }
-                //将最终的字符串返回
-                return newParamsName
-              }
+              formatter: echartsHelper.labelFormatter
             },
           },
           yAxis: {
@@ -996,6 +951,10 @@
         });
       },
       clicktab() {
+        if (!this.ccti) {
+          return
+        }
+
         if (this.tabname==='in'){
           this.ioindex=1
         }
@@ -1147,6 +1106,9 @@
         }
       },
       _ccti(){
+        if (!this.ccti) {
+          return
+        }
         this.data2=[]
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
