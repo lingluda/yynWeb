@@ -29,7 +29,7 @@
       </Row>
 
     </card>
-      <Row :gutter="16" style="margin-top: 20px;">
+      <!-- <Row :gutter="16" style="margin-top: 20px;">
         <Col span="12" style="height: 865px">
           <card style="height:100%">
             <div style="line-height:40px;height:50px">
@@ -47,8 +47,7 @@
             </div>
             <div id="qsnet">
               <ul>
-                <li style="display:flex;justify-content: center;align-items: center; height: 600px;">暂无数据</li>
-                <!-- <li class="qsnet_li" v-for="(item,index) in 10" :key="index" v-if="index < 10">
+                <li class="qsnet_li" v-for="(item,index) in 10" :key="index" v-if="index < 10">
                   <Row class="qsnet_row">
                     <Col span="12" class="qsnet_num">
                       <i class="qsnet_idx">{{index + 1}}</i>
@@ -58,7 +57,7 @@
                     <Col span="4" class="qsnet_num">23.1万</Col>
                     <Col span="4" class="qsnet_num">2018-05-10</Col>
                   </Row>
-                </li> -->
+                </li>
               </ul>
             </div>
           </card>
@@ -84,8 +83,7 @@
             </div>
             <div id="zsnet">
               <ul>
-                <li style="display:flex;justify-content: center;align-items: center; height: 600px;">暂无数据</li>
-                <!-- <li class="qsnet_li" v-for="(item,index) in 10" :key="index" v-if="index < 10">
+                <li class="qsnet_li" v-for="(item,index) in 10" :key="index" v-if="index < 10">
                   <Row class="qsnet_row">
                     <Col span="12" class="qsnet_num">
                       <i class="qsnet_idx">1</i>
@@ -95,12 +93,12 @@
                     <Col span="4" class="qsnet_num">23.1万</Col>
                     <Col span="4" class="qsnet_num">2018-05-10</Col>
                   </Row>
-                </li> -->
+                </li>
               </ul>
             </div>
           </card>
         </Col>
-      </Row>
+      </Row> -->
     </div>
   </div>
 </template>

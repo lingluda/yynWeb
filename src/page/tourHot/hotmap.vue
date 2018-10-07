@@ -120,7 +120,7 @@
                     <div class="hotmap_tb">
                       <div class="lyrd_hotmap_count_bg1"></div>
                       <div class="lyrd_hotmap_num">
-                        <div class="lyrd_hotmap_desc">与昨日环比<span style="color:#515a6e;font-size:12px">(峰值)</span></div>
+                        <div class="lyrd_hotmap_desc">与昨日环比</div>
                         <div>
                           <span class="lyrd_hotmap_today_num">{{ratio}}</span>
                           <span class="lyrd_hotmap_today_dw">%</span>
@@ -134,7 +134,7 @@
                     <div class="hotmap_tb">
                       <div class="lyrd_hotmap_count_bg2"></div>
                       <div class="lyrd_hotmap_num">
-                        <div class="lyrd_hotmap_desc">与上月同比<span style="color:#515a6e;font-size:12px">(峰值)</span></div>
+                        <div class="lyrd_hotmap_desc">与上月同比</div>
                         <div>
                           <span class="lyrd_hotmap_today_num">{{link}}</span>
                           <span class="lyrd_hotmap_today_dw">%</span>
