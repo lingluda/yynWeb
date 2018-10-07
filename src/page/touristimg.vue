@@ -310,15 +310,20 @@
         this.mobilex = [];
         this.mobiley = [];
 
-        http.get('bi/get_scenic_by_city',{city_id:val}).then(resp=>{
-          this.senicData=resp.data.hits
-          this.ccc1='';
-        })
+        if (val) {
+          http.get('bi/get_scenic_by_city',{city_id:val}).then(resp=>{
+            this.senicData=resp.data.hits
+            this.ccc1='';
+          })
+        }
         http
           .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:val})
           .then(this.getPortraitData);
       },
       hotlinedp(){
+        if (!this.ccti) {
+          return
+        }
         this.data2=[]
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
@@ -498,10 +503,12 @@
         this.mobilex = [];
         this.mobiley = [];
 
-        http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
-          this.senicData=resp.data.hits
-          this.ccc1='';
-        })
+        if (this.ccc) {
+          http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
+            this.senicData=resp.data.hits
+            this.ccc1='';
+          })
+        }
         http
           .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:this.ccc})
           .then(this.getPortraitData);
@@ -944,6 +951,10 @@
         });
       },
       clicktab() {
+        if (!this.ccti) {
+          return
+        }
+
         if (this.tabname==='in'){
           this.ioindex=1
         }
@@ -1095,6 +1106,9 @@
         }
       },
       _ccti(){
+        if (!this.ccti) {
+          return
+        }
         this.data2=[]
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
