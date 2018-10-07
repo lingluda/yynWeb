@@ -1135,7 +1135,7 @@
           .get("bi/get_portrait_origin_by_date", {
             date: this.cpicDate,
             type: "city",
-            scenic: "",
+            scenic: this.ccc1,
             city_id: this.ccc
           })
           .then(resp => {
@@ -1149,7 +1149,7 @@
           .get("bi/get_portrait_origin_by_date", {
             date: this.cpicDate,
             type: "prov",
-            scenic: "",
+            scenic: this.ccc1,
             city_id: this.ccc
           })
           .then(resp => {
