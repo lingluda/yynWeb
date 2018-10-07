@@ -82,7 +82,7 @@
                     //是否在每一屏都开启重新计算，如果为true则每一屏都会有一个红点
                     "useLocalExtrema": true,
                     //设置大小字段
-                    "valueField": 'count'
+                    "valueField": "weight"
                   }
                 );
                 //绘制热力图
