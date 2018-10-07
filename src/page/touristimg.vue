@@ -319,6 +319,34 @@
         http
           .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:val})
           .then(this.getPortraitData);
+                  http
+          .get("bi/get_portrait_origin_by_date", {
+            date: this.cpicDate,
+            type: "city",
+            scenic: "",
+            city_id: this.ccc
+          })
+          .then(resp => {
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.cityx.push(resp.data.hist[i].origin_city);
+              this.cityy.push(parseInt(resp.data.hist[i].origin_percent* 10000)/100);
+            }
+            this.initCity();
+          });
+        http
+          .get("bi/get_portrait_origin_by_date", {
+            date: this.cpicDate,
+            type: "prov",
+            scenic: "",
+            city_id: this.ccc
+          })
+          .then(resp => {
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.provx.push(resp.data.hist[i].origin_province);
+              this.provy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
+            }
+            this.initPro();
+          });
       },
       hotlinedp(){
         if (!this.ccti) {
@@ -1103,6 +1131,34 @@
           http
             .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:this.ccc,scenic:this.ccc1})
             .then(this.getPortraitData);
+                  http
+          .get("bi/get_portrait_origin_by_date", {
+            date: this.cpicDate,
+            type: "city",
+            scenic: "",
+            city_id: this.ccc
+          })
+          .then(resp => {
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.cityx.push(resp.data.hist[i].origin_city);
+              this.cityy.push(parseInt(resp.data.hist[i].origin_percent* 10000)/100);
+            }
+            this.initCity();
+          });
+        http
+          .get("bi/get_portrait_origin_by_date", {
+            date: this.cpicDate,
+            type: "prov",
+            scenic: "",
+            city_id: this.ccc
+          })
+          .then(resp => {
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.provx.push(resp.data.hist[i].origin_province);
+              this.provy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
+            }
+            this.initPro();
+          });
         }
       },
       _ccti(){

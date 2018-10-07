@@ -112,9 +112,9 @@
           </Row>
         </div>
         <!-- 关闭投诉各阶段处理时长 -->
-          <div style="border:1px solid #dcdee2;margin-top:30px;height:400px">
+          <!-- <div style="border:1px solid #dcdee2;margin-top:30px;height:400px">
               <div id="closeComplaint2" style="height:400px;width:100%"></div>
-          </div>
+          </div> -->
       </card>
     <card class="card_margin">
       <div style="margin-bottom: 20px;">
@@ -420,9 +420,9 @@ export default {
       let complaint = this.$echarts.init(
         document.getElementById("closeComplaint")
       );
-      let complaint2 = this.$echarts.init(
-        document.getElementById("closeComplaint2")
-      );
+      // let complaint2 = this.$echarts.init(
+      //   document.getElementById("closeComplaint2")
+      // );
       var option = {
         tooltip: {},
         title: {
@@ -578,7 +578,7 @@ export default {
           }
         ]
       };
-      complaint2.setOption(option2);
+      // complaint2.setOption(option2);
     },
     pic1(){
       http

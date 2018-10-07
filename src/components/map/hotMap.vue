@@ -8,11 +8,11 @@
       </div>
       <div class="bargrad"></div>
       <div class="range">
-        <span>0-55</span>
-        <span>56-121</span>
-        <span>122-187</span>
-        <span>188-221</span>
-        <span>>221</span>
+        <span>0-5</span>
+        <span>6-11</span>
+        <span>12-17</span>
+        <span>18-21</span>
+        <span>>21</span>
       </div>
     </div>
   </div>
@@ -154,12 +154,12 @@
   .mapContainer .visualmap {width:350px; height:70px; background-color:rgba(0,0,0,0.45); position: absolute; right:10px; bottom:10px; z-index:1;}
   .mapContainer .visualmap div {color:#fff; margin-top:10px; margin-left:10px;}
   .mapContainer .visualmap .range {margin-top:5px;}
-  .mapContainer .visualmap .range span {margin-left:15px; margin-right:5px;}
+  .mapContainer .visualmap .range span {margin-left:15px; margin-right:20px;}
   .mapContainer .visualmap .bargrad {
     background: -webkit-linear-gradient(left,red,orange,yellow,green,blue);
     background: -o-linear-gradient(left,red,orange,yellow,green,blue);
     background: -moz-linear-gradient(left,red,orange,yellow,green,blue);
     background: linear-gradient(to left, red,orange,yellow,#4cff2f,#47fff4,blue);
-    height:10px; border-radius:5px;position:relative; margin:5px 10px 0px 10px; z-index:2;
+    height:6px; border-radius:5px;position:relative; margin:5px 10px 0px 10px; z-index:2;
     background-color:#fff;}
   </style>
