@@ -18,14 +18,14 @@
            <DatePicker placement="bottom-end" type="date" v-model="date1" placeholder="自选时间" style="width: 120px"  :options="disoptionsdate"></DatePicker>
         </div>
       </div>
-        <Col span="12" style="padding:0 80px">
+        <Col span="24" style="padding:0 80px">
           <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">媒体情绪</div>
           <div id="health" style="width: 100%;height: 260px;margin-top: -20px"></div>
         </Col>
-        <Col span="12" style="padding:0 50px">
+        <!-- <Col span="12" style="padding:0 50px">
           <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">一机游情绪</div>
           <div id="unhealth" style="width: 100%;height: 260px;margin-top: -20px"></div>
-        </Col>
+        </Col> -->
       </Row>
 
     </card>
@@ -242,7 +242,7 @@ export default {
   mounted() {
     this.init();
     this.initHealth1();
-    this.initUNHealth1();
+    // this.initUNHealth1();
   },
   methods: {
     init() {
@@ -553,7 +553,7 @@ export default {
             this.pien.push(resp.data.hits[i].name)
           }
           this.initHealth();
-          this.initUNHealth();
+          // this.initUNHealth();
         });
       }
     }
