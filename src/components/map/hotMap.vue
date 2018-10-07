@@ -71,6 +71,7 @@
             });
             //地图异步加载，在idle或者tilesloaded后初始化
             let self1 = this
+            const heatValueMax = 20
             qq.maps.event.addListenerOnce(map, "idle", function () {
               if (QQMapPlugin.isSupportCanvas) {
                 heatmap = new QQMapPlugin.HeatmapOverlay(map,
@@ -80,13 +81,13 @@
                     //热力图最大透明度
                     "maxOpacity": 0.8,
                     //是否在每一屏都开启重新计算，如果为true则每一屏都会有一个红点
-                    "useLocalExtrema": true,
+                    "useLocalExtrema": false,
                     //设置大小字段
                     "valueField": "weight"
                   }
                 );
                 //绘制热力图
-                heatmap.setData({max: 100, data: self1.x3[self1.x3.length-1].points});
+                heatmap.setData({max: heatValueMax, data: self1.x3[self1.x3.length-1].points});
               } else {
                 alert("您的浏览器不支持canvas，无法绘制热力图！！")
               }
@@ -136,7 +137,7 @@
             chart.on('timelinechanged', function (timeLineIndex) {
               // 设置 每个series里的xAxis里的值
               self.arrIndex = parseInt(timeLineIndex.currentIndex);
-              heatmap.setData({max: 200, data: self.x3[self.arrIndex].points});
+              heatmap.setData({max: heatValueMax, data: self.x3[self.arrIndex].points});
             });
           },
       },
