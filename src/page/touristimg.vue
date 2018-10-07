@@ -287,7 +287,7 @@
         cashData: [],
         disoptionsdate: {
             disabledDate (date) {
-                return date< new Date(2018,7,1);
+                return date< new Date(2018,7,1) || date > new Date()
             }
         }
       };
