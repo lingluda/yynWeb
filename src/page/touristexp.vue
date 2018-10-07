@@ -278,7 +278,7 @@ export default {
       this.procY1=[]
       this.timeX=[]
       this.titleDate ='近7天'
-      http.get('bi/get_complaint_by_date',{date:http.getYesterDay()}).then(resp=>{
+      http.get('bi/get_complaint_by_date',{date:http.getYesterDay(),city_id:this.p11}).then(resp=>{
         this.close1=http.qfw(resp.data.hits.closed);
         this.unclose1=http.qfw(resp.data.hits.unclosed);
         this.timeX.push(parseInt(resp.data.hits.min_proc*100)/100);
@@ -582,7 +582,7 @@ export default {
     },
     pic1(){
       http
-        .get("bi/get_complaint_by_date", { date: http.gmt2str(this.picdate1) })
+        .get("bi/get_complaint_by_date", { date: http.gmt2str(this.picdate1),city_id:this.p11  })
         .then(resp => {
           this.add = http.qfw(resp.data.hits.total);
           this.close = http.qfw(resp.data.hits.closed);
