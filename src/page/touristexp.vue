@@ -278,7 +278,7 @@ export default {
       this.procY1=[]
       this.timeX=[]
       this.titleDate ='近7天'
-      http.get('bi/get_complaint_by_date',{date:http.getYesterDay(),city_id:this.p11}).then(resp=>{
+      http.get('bi/get_complaint_by_date',{date:http.getYesterDay()}).then(resp=>{
         this.close1=http.qfw(resp.data.hits.closed);
         this.unclose1=http.qfw(resp.data.hits.unclosed);
         this.timeX.push(parseInt(resp.data.hits.min_proc*100)/100);
