@@ -541,21 +541,23 @@ export default {
       this.pien=[]
       this.pie1=[]
       this.pie2=[]
-      http.get('bi/get_pom_by_date',{date:http.gmt2str(this.date1),area_code:this.city1}).then(resp=>{
-        this.pie1=resp.data.hits;
-        if (this.pie1[2].proportion>20){
-          this.title1='不健康'
-          this.color1='red'
-        } else {
-          this.title1='健康'
-          this.color1='green'
-        }
-        for (var i=0;i<resp.data.hits.length;i++) {
-          this.pien.push(resp.data.hits[i].name)
-        }
-        this.initHealth();
-        this.initUNHealth();
-      })
+      if(this.city1){
+        http.get('bi/get_pom_by_date',{date:http.gmt2str(this.date1),area_code:this.city1}).then(resp=>{
+          this.pie1=resp.data.hits;
+          if (this.pie1[2].proportion>20){
+            this.title1='不健康'
+            this.color1='red'
+          } else {
+            this.title1='健康'
+            this.color1='green'
+          }
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.pien.push(resp.data.hits[i].name)
+          }
+          this.initHealth();
+          this.initUNHealth();
+        });
+      }
     }
   },
   watch:{
