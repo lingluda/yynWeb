@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message } from 'iView'
+import { Message } from 'iview'
 
 axios.interceptors.response.use(
   response => {
