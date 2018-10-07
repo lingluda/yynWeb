@@ -98,7 +98,7 @@ export default {
                         itemGap: 30,
                         data: [
                             { name: '天数', icon: 'circle' },
-                            '年同比'
+                            '年同比增长率'
                         ]
                     }
                 ],
@@ -125,7 +125,7 @@ export default {
                         data: [82, 119, 119, 133, 149, 155, 124, 122]
                     }, {
                         type: 'line',
-                        name: '年同比',
+                        name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
                         data: [11.41, 15.55, 4.04, 2.19, 6.56, 2.81, -0.22, -2.25]

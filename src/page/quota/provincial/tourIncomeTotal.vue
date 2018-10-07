@@ -99,7 +99,7 @@ export default {
                         itemGap: 30,
                         data: [
                             { name: '旅游业总收入', icon: 'circle' },
-                            '旅游业总收入年同比'
+                            '年同比增长率'
                         ]
                     }
                 ],
@@ -127,7 +127,7 @@ export default {
                         data: [555, 813, 718, 692, 721, 700, 806, 899]
                     }, {
                         type: 'line',
-                        name: '旅游业总收入年同比',
+                        name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
                         data: [2.37, 44.92, 33.1, 38.73, 21.37, 21.38, 15.88, 10.58]

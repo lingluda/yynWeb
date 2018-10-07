@@ -97,7 +97,7 @@ export default {
                         itemGap: 30,
                         data: [
                             { name: '旅游外汇收入', icon: 'circle' },
-                            '旅游外汇收入年同比'
+                            '年同比增长率'
                         ]
                     }
                 ],
@@ -125,7 +125,7 @@ export default {
                         data: [15, 21, 21, 23, 25, 26, 21, 21]
                     }, {
                         type: 'line',
-                        name: '旅游外汇收入年同比',
+                        name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
                         data: [12.99, 16.93, 6.34, 3.86, 7.98, 2.92, -0.39, -3.04]

@@ -1,6 +1,10 @@
 <template>
     <div style="height:100%;">
-        <div class="tits">云南省今年关键指标</div>
+        <div class="tits">云南省2018年1-8月旅游行业关键指标
+            <Tooltip content="云南全省旅游行业运行关键指标，数据来源：省旅游行业快报" placement="right" max-width="200">
+                <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
+            </Tooltip>
+        </div>
         <div class="quota_bg">
             <card>
                 <Row>
@@ -100,7 +104,7 @@
             <card>
                 <div class="lyrd_index_search">
                     <div class="lyrd_index_search_left">
-                        <span class="lyrd_index_search_title">旅客客流</span>
+                        <span class="lyrd_index_search_title">旅客客流旅客客流</span>
                     </div>
                 </div>
                 <Row :gutter="20">

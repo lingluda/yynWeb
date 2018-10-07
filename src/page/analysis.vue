@@ -47,18 +47,18 @@
             </div>
             <div id="qsnet">
               <ul>
-                <li class="qsnet_li" v-for="(item,index) in 10" :key="index" v-if="index < 10">
+                <li style="display:flex;justify-content: center;align-items: center; height: 600px;">暂无数据</li>
+                <!-- <li class="qsnet_li" v-for="(item,index) in 10" :key="index" v-if="index < 10">
                   <Row class="qsnet_row">
                     <Col span="12" class="qsnet_num">
                       <i class="qsnet_idx">{{index + 1}}</i>
                       <span class="qsnet_sp">陈小辉一审被判18年</span>
-                      <!-- <p class="qsnet_time">2018-05-10</p> -->
                     </Col>
                     <Col span="4" class="qsnet_num">59.5万</Col>
                     <Col span="4" class="qsnet_num">23.1万</Col>
                     <Col span="4" class="qsnet_num">2018-05-10</Col>
                   </Row>
-                </li>
+                </li> -->
               </ul>
             </div>
           </card>
@@ -84,18 +84,18 @@
             </div>
             <div id="zsnet">
               <ul>
-                <li class="qsnet_li" v-for="(item,index) in 10" :key="index" v-if="index < 10">
+                <li style="display:flex;justify-content: center;align-items: center; height: 600px;">暂无数据</li>
+                <!-- <li class="qsnet_li" v-for="(item,index) in 10" :key="index" v-if="index < 10">
                   <Row class="qsnet_row">
                     <Col span="12" class="qsnet_num">
                       <i class="qsnet_idx">1</i>
                       <span class="qsnet_sp">陈小辉一审被判18年</span>
-                      <!-- <p class="qsnet_time">2018-05-10</p> -->
                     </Col>
                     <Col span="4" class="qsnet_num">59.5万</Col>
                     <Col span="4" class="qsnet_num">23.1万</Col>
                     <Col span="4" class="qsnet_num">2018-05-10</Col>
                   </Row>
-                </li>
+                </li> -->
               </ul>
             </div>
           </card>

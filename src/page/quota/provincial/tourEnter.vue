@@ -99,7 +99,7 @@ export default {
                         itemGap: 30,
                         data: [
                             { name: '人次', icon: 'circle' },
-                            '年同比'
+                            '年同比增长率'
                         ]
                     }
                 ],
@@ -121,7 +121,7 @@ export default {
                         data: [40, 56, 57, 64, 71, 74, 63, 60]
                     }, {
                         type: 'line',
-                        name: '年同比',
+                        name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
                         data: [30.83, 16.72, 8.78, 3.47, 6.19, 6.74, 4.04, -0.8]

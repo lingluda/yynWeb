@@ -97,7 +97,7 @@ export default {
                         itemGap: 30,
                         data: [
                             { name: '国内一日旅游收入', icon: 'circle' },
-                            '国内一日旅游年同比'
+                            '年同比增长率'
                         ]
                     }
                 ],
@@ -125,7 +125,7 @@ export default {
                         data: [130, 218, 168, 143, 159, 155, 163, 189]
                     }, {
                         type: 'line',
-                        name: '国内一日旅游年同比',
+                        name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
                         data: [-3.4, 66.8, 50.57, 39.06, 25.09, 36.47, 28.11, 28.91]

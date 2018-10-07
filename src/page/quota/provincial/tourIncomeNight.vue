@@ -99,7 +99,7 @@ export default {
                         itemGap: 30,
                         data: [
                             { name: '国内过夜旅游收入', icon: 'circle' },
-                            '国内过夜旅游年同比'
+                            '年同比增长率'
                         ]
                     }
                 ],
@@ -127,7 +127,7 @@ export default {
                         data: [408, 573, 528, 525, 536, 518, 620, 689]
                     }, {
                         type: 'line',
-                        name: '国内过夜旅游年同比',
+                        name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
                         data: [3.98, 39.22, 29.62, 40.74, 21.02, 18.51, 13.68, 6.87]
