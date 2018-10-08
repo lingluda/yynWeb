@@ -9,6 +9,22 @@ export default {
         setTimeout(() => {
             this.$echarts.init(document.querySelector("#chartTouristTimes")).setOption({
                 color: ['#3c6ffe', '#a9a9a9'],
+                //国内旅游游客流量
+                title:{
+                    text: "{a|国内旅游游客流量} {b|（单位：万人）}",
+                    textStyle: {
+                        rich: {
+                            a: {
+                                fontWeight : 'bold',
+                                fontSize: 14
+                            },
+                            b: {
+                                fontSize: 12,
+                                color: '#a5a5a5'
+                            }
+                        }
+                    }
+                },
                 xAxis: {
                     data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月'],
                     axisLabel: {
@@ -35,7 +51,7 @@ export default {
                 },
                 yAxis: [
                     {
-                        name: '人数：万人次',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -56,7 +72,7 @@ export default {
                             }
                         }
                     }, {
-                        name: '年同比',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -83,18 +99,12 @@ export default {
                         itemGap: 30,
                         data: [
                             { name: '人次', icon: 'circle' },
-                            '年同比'
+                            '年同比增长率'
                         ]
                     }
                 ],
                 tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#999'
-                        }
-                    }
+                    trigger: 'axis'
                 },
                 series: [
                     {
@@ -105,13 +115,31 @@ export default {
                             normal: {
                                 show: true,
                                 position: 'top',
-                                color: '#000'
+                                color: '#000',
+                                formatter : function (str) {
+                                    var strNum = str.value
+                                    if(strNum.length <= 3) {
+                                        return strNum;
+                                    }
+                                    if(!/^(\+|-)?(\d+)(\.\d+)?$/.test(strNum)) {
+                                        return strNum;
+                                    }
+                                    var a = RegExp.$1,
+                                        b = RegExp.$2,
+                                        c = RegExp.$3;
+                                    var re = new RegExp();
+                                    re.compile("(\\d)(\\d{3})(,|$)");
+                                    while(re.test(b)) {
+                                        b = b.replace(re, "$1,$2$3");
+                                    }
+                                    return a + "" + b + "" + c;
+                                }
                             }
                         },
-                        data: [4507.53, 6910.59, 5776.43, 5202.57, 5612.86, 5586.99, 6162.39, 6942.44]
+                        data: [4507, 6910, 5776, 5202, 5612, 5586, 6162, 6942]
                     }, {
                         type: 'line',
-                        name: '年同比',
+                        name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
                         data: [-0.84, 48.6, 34.14, 32.23, 20.64, 29.13, 17.72, 16.15]

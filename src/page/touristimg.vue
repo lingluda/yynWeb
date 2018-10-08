@@ -15,13 +15,13 @@
         <Select style="width: 120px" placeholder="区域" v-model="ccc1" @on-change="_ccc1">
           <Option v-for="(item, index) in senicData" :value="item.id" :key="index">{{item.name}}</Option>
         </Select>
-        <DatePicker type="date" v-model="picDate" placeholder="自选时间" style="width: 120px" @on-change="dateChange"></DatePicker>
+        <DatePicker type="date" v-model="picDate" placeholder="自选时间" style="width: 120px" @on-change="dateChange" :options="disoptionsdate"></DatePicker>
         <Row :gutter="16" style="margin-top: 20px">
           <Col span="6">
             <div id="sex">
               <div style="height: inherit;"></div>
-              <Icon type="ios-woman" size="32" color="#ff50fe" class="sex-icon"/>
-              <Icon type="ios-man" size="32" color="#1ea9ff" class="sex-icon"/>
+              <!-- <Icon type="ios-woman" size="32" color="#ff50fe" class="sex-icon"/> -->
+              <!-- <Icon type="ios-man" size="32" color="#1ea9ff" class="sex-icon"/> -->
             </div>
           </Col>
           <Col span="6">
@@ -65,7 +65,7 @@
           <Radio label="3">火车</Radio>
           <Radio label="4">汽车</Radio>
         </RadioGroup>
-        <DatePicker type="date" v-model="hotlineDate" placeholder="自选时间" style="width: 120px"></DatePicker>
+        <DatePicker type="date" v-model="hotlineDate" placeholder="自选时间" style="width: 120px" :options="disoptionsdate"></DatePicker>
         <Select style="width: 120px" placeholder="清选择" v-model="ccti">
           <Option v-for="(item, index) in cityData1" :value="item.name" :key="index">{{item.name}}</Option>
         </Select>
@@ -98,7 +98,7 @@
             <Col span="10" style="border: 1px solid #dcdee2;margin-right:20px;height:100%;padding:0 30px">
               <div style="padding:20px 0;height:50%;border-bottom:1px solid #dcdee2">
                 <DatePicker v-model="picDate3" type="date" placeholder="选择日期"
-                            style="width: 150px;float: right"></DatePicker>
+                            style="width: 150px;float: right" :options="disoptionsdate"></DatePicker>
                 <div style="margin-top:40px;display:flex">
                   <img src="../assets/imgs/cash1.png" style="margin-right:20px;width:60px;height:60px"/>
                   <div>
@@ -120,9 +120,9 @@
             <Col span="14" style="border: 1px solid #dcdee2;height:100%">
               <div style="padding-bottom: 20px;padding: 20px">
                 <span style="font-weight: bold;color: #000000">消费类型占比</span>
-                <DatePicker v-model="d11" placement="bottom-end" format="yyyy-MM" type="month" placeholder="结束月份" style="width: 100px;float: right"></DatePicker>
+                <DatePicker v-model="d11" placement="bottom-end" format="yyyy-MM" type="month" placeholder="结束月份" style="width: 100px;float: right" :options="disoptionsdate"></DatePicker>
                 <span style="float: right;padding:5px 5px 0px 5px">-</span>
-                <DatePicker v-model="d22" placement="bottom-end" format="yyyy-MM" type="month" placeholder="开始月份" style="width: 100px;float: right"></DatePicker>
+                <DatePicker v-model="d22" placement="bottom-end" format="yyyy-MM" type="month" placeholder="开始月份" style="width: 100px;float: right" :options="disoptionsdate"></DatePicker>
               </div>
               <div id="cash" style="height:300px;width:100%"></div>
             </Col>
@@ -204,7 +204,9 @@
 <script>
   import http from "@/http.js";
   import "@/dateFormate.js";
-  import gomap from '../components/map/echartMap'
+  import gomap from '@/components/map/echartMap'
+  import * as echartsHelper from '@/helpers/echarts'
+
   export default {
     components:{
       "aaamap":gomap,
@@ -243,7 +245,7 @@
         cityData1: [],
         proData: [],
         picDate: http.getToday(),
-        picDate3: http.getToday(),
+        picDate3: http.getYesterDay(),
         picDate4: [this.d22,this.d11],
         cpicDate: http.getToday(),
         columns1: [
@@ -256,7 +258,7 @@
           {
             title: "线路",
             key: "moveline",
-            width:100,
+            width:120,
             color:"red"
           },
 
@@ -285,6 +287,11 @@
         data2: [],
         data3: [],
         cashData: [],
+        disoptionsdate: {
+            disabledDate (date) {
+                return date< new Date(2018,7,1) || date > new Date()
+            }
+        }
       };
     },
     mounted() {
@@ -303,15 +310,48 @@
         this.mobilex = [];
         this.mobiley = [];
 
-        http.get('bi/get_scenic_by_city',{city_id:val}).then(resp=>{
-          this.senicData=resp.data.hits
-          this.ccc1='';
-        })
+        if (val) {
+          http.get('bi/get_scenic_by_city',{city_id:val}).then(resp=>{
+            this.senicData=resp.data.hits
+            this.ccc1='';
+          })
+        }
         http
           .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:val})
           .then(this.getPortraitData);
+                  http
+          .get("bi/get_portrait_origin_by_date", {
+            date: this.cpicDate,
+            type: "city",
+            scenic: "",
+            city_id: this.ccc
+          })
+          .then(resp => {
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.cityx.push(resp.data.hist[i].origin_city);
+              this.cityy.push(parseInt(resp.data.hist[i].origin_percent* 10000)/100);
+            }
+            this.initCity();
+          });
+        http
+          .get("bi/get_portrait_origin_by_date", {
+            date: this.cpicDate,
+            type: "prov",
+            scenic: "",
+            city_id: this.ccc
+          })
+          .then(resp => {
+            for (var i = 0; i < resp.data.hist.length; i++) {
+              this.provx.push(resp.data.hist[i].origin_province);
+              this.provy.push(parseInt(resp.data.hist[i].origin_percent * 10000)/100);
+            }
+            this.initPro();
+          });
       },
       hotlinedp(){
+        if (!this.ccti) {
+          return
+        }
         this.data2=[]
         http.get("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
@@ -319,6 +359,9 @@
           top: 10,
           io: this.tabname
         }).then(resp => {
+          if (!resp.data || !resp.data.hits) {
+            return
+          }
           this.data1 = resp.data.hits;
           this.data3 = resp.data.hits;
           for (var i=0;i<resp.data.hits.length;i++){
@@ -344,7 +387,7 @@
             {
               title: "线路",
               key: "moveline",
-              width:100,
+              width:120,
             },
             {
               title: "热度",
@@ -379,7 +422,7 @@
             {
               title: "线路",
               key: "moveline",
-              width:100,
+              width:120,
               color:"red"
             },
 
@@ -406,7 +449,7 @@
             {
               title: "线路",
               key: "moveline",
-              width:100,
+              width:120,
               color:"red"
             },
 
@@ -435,7 +478,7 @@
             {
               title: "线路",
               key: "moveline",
-              width:100,
+              width:120,
               color:"red"
             },
 
@@ -458,16 +501,24 @@
       init() {
         http.get('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
-          this.ccc = resp.data.hits[0].id
+          if (resp.data.hits) {
+            this.ccc = resp.data.hits[0].id
+          }
         })
         http.get('bi/get_all_city', {}).then(resp => {
           this.cityData1 = resp.data.hits;
-          this.ccti = resp.data.hits[0].name
+          if (resp.data.hits) {
+            this.ccti = resp.data.hits[0].name
+          }
         })
-        http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
-          this.senicData=resp.data.hits
-          this.ccc1 = resp.data.hits[0].id
-        })
+        if(this.ccc){
+          http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
+            this.senicData=resp.data.hits
+            if (resp.data.hits) {
+              this.ccc1 = resp.data.hits[0].id
+            }
+          })
+        }
 
         this.provx = [];
         this.provy = [];
@@ -480,10 +531,12 @@
         this.mobilex = [];
         this.mobiley = [];
 
-        http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
-          this.senicData=resp.data.hits
-          this.ccc1='';
-        })
+        if (this.ccc) {
+          http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
+            this.senicData=resp.data.hits
+            this.ccc1='';
+          })
+        }
         http
           .get("bi/get_portrait_base_by_date", {date: http.gmt2str(this.cpicDate),city_id:this.ccc})
           .then(this.getPortraitData);
@@ -571,7 +624,7 @@
         if(!oOptions.color){
           oOptions.color = ["#006EFF", "#29CC85", "#ffbb00", "#ff584c", "#9741d9", "#1fc0cc", "#7ff936", "#ff9c19", "#e63984", "#655ce6", "#47cc50", "#fb0b6"];
         }
-        let oLabelStyle = {
+        const oLabelStyle = {
           show: true,
           position: "center",
           lineHeight: 24,
@@ -582,15 +635,32 @@
           rich: {
               a: {
                   color: '#878787',
-                  fontSize: 14
+                  fontSize: 12
               },
               b: {
                   color: '#000',
-                  fontSize: 20
+                  fontSize: 12
               }
           }
         };
-        oOptions.data[0].label = oLabelStyle;
+        // 前三数据
+        const initLen = 3
+        const chartData = oOptions.data.slice(0, initLen)
+
+        // 其他 (除前三数据的和)
+        let extraValue = 0
+        for (let i = initLen, len = oOptions.data.length; i < len; i++){
+          if (oOptions.data[i]) {
+            extraValue += oOptions.data[i].value
+          }
+        }
+        if(extraValue) {
+          chartData.push({
+            name: '其他',
+            value: extraValue
+          })
+        }
+
         this.$echarts.init(document.querySelector(oOptions.el)).setOption({
           color: oOptions.color,
           title: {
@@ -602,28 +672,24 @@
             y: 15
           },
           legend: {
-            y: 320,
+            y: 340,
             x: "center",
             icon: "circle",
-            data: oOptions.data.map(item => item.name),
+            data: chartData.map(item => item.name),
             itemWidth: 10,
             itemHeight: 12
-          },
-          tooltip : {
-            trigger: 'item',
-            formatter: "{b} : {d}%",
-            backgroundColor: "#323232"
           },
           series: [
             {
               type: "pie",
               radius: ["40%", "55%"],
               avoidLabelOverlap: true,
-              //label: false,
-              labelLine: {
-                show: true,
-                length: 6,
-                length2: 6
+              label: {
+                normal: {
+                  show: true,
+                  position: 'outside',
+                  formatter: '{b}\n{d}%',
+                },
               },
               emphasis: {
                 label: oLabelStyle
@@ -632,7 +698,7 @@
                 borderColor: '#fff',
                 borderWidth: 1
               },
-              data: oOptions.data
+              data: chartData
             }
           ]
         });
@@ -1024,6 +1090,38 @@
           .then(resp => {
             //循环控制趟数
             this.cashData = resp.data.hits;
+           /* var s = 0;
+            var s1 = 0;
+            //为什么 isSort = true，不能写在循环外面
+            //因为 交换位置 isSort = false.  isSort的值永远是false 。我们要检测的是某一趟是否交换位置
+            for (var i = 0; i < this.cashData.length - 1; i++) {
+              var isSort = true; //假设排序ok
+              //控制两两比较的次数       1--6      2--5   4 3 2 1
+              for (var j = 0; j < this.cashData.length - 1 - i; j++) {
+                //两两比较   从小到大排序
+
+                //如果交换位置，说明没有排序好，如果不交换位置，说明排序好
+                if (this.cashData[j].total < this.cashData[j + 1].total) {
+                  isSort = false;  //没有排序好呢
+                  //交换位置
+                  var tmp = this.cashData[j];
+                  this.cashData[j] = this.cashData[j + 1];
+                  this.cashData[j + 1] = tmp;
+                }
+
+                s++; //记录内循环的次数
+              }
+              s1++;  //记录外循环的次数
+
+              if(isSort) {
+                //如果排序好了
+                break;
+              }
+            }
+            console.log('this.cashData：：',this.cashData)
+            for (var i = 0; i < resp.data.hits.length; i++) {
+              this.cashDataX.push(resp.data.hits[i].name);
+            }*/
             this.initCash();
           });
       },
@@ -1081,6 +1179,38 @@
           })
           .then(resp => {
             this.cashData = resp.data.hits;
+           /* var s = 0;
+            var s1 = 0;
+            //为什么 isSort = true，不能写在循环外面
+            //因为 交换位置 isSort = false.  isSort的值永远是false 。我们要检测的是某一趟是否交换位置
+            for (var i = 0; i < this.cashData.length - 1; i++) {
+              var isSort = true; //假设排序ok
+              //控制两两比较的次数       1--6      2--5   4 3 2 1
+              for (var j = 0; j < this.cashData.length - 1 - i; j++) {
+                //两两比较   从小到大排序
+
+                //如果交换位置，说明没有排序好，如果不交换位置，说明排序好
+                if (this.cashData[j].total < this.cashData[j + 1].total) {
+                  isSort = false;  //没有排序好呢
+                  //交换位置
+                  var tmp = this.cashData[j];
+                  this.cashData[j] = this.cashData[j + 1];
+                  this.cashData[j + 1] = tmp;
+                }
+
+                s++; //记录内循环的次数
+              }
+              s1++;  //记录外循环的次数
+
+              if(isSort) {
+                //如果排序好了
+                break;
+              }
+            }
+            console.log('this.cashData：：',this.cashData)
+            for (var i = 0; i < resp.data.hits.length; i++) {
+              this.cashDataX.push(resp.data.hits[i].name);
+            }*/
             this.initCash();
           });
       }

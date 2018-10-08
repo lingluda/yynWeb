@@ -1,5 +1,5 @@
 <template>
-    <div id="chartTourIncomeA" style="height:400px;"></div>
+    <div id="tourIncomeOversea" style="height:400px;"></div>
 </template>
 
 <script>
@@ -7,12 +7,21 @@ export default {
     mounted(){
         //等容器渲染完成之后再加载图表，不然无法获取到准确的宽高度
         setTimeout(() => {
-            this.$echarts.init(document.querySelector("#chartTourIncomeA")).setOption({
-                color: ['#645be6', '#a9a9a9'],
+            this.$echarts.init(document.querySelector("#tourIncomeOversea")).setOption({
+                color: ['#63cd8d', '#a9a9a9'],
                 title:{
-                    text: '国内过夜旅游收入',
+                    text: "{a|旅游外汇收入} {b|（单位：万元）}",
                     textStyle: {
-                        fontSize: 14
+                        rich: {
+                            a: {
+                                fontWeight : 'bold',
+                                fontSize: 14
+                            },
+                            b: {
+                                fontSize: 12,
+                                color: '#a5a5a5'
+                            }
+                        }
                     }
                 },
                 xAxis: {
@@ -41,7 +50,7 @@ export default {
                 },
                 yAxis: [
                     {
-                        name: '收入：万元',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -62,7 +71,7 @@ export default {
                             }
                         }
                     }, {
-                        name: '年同比',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -80,8 +89,6 @@ export default {
                             color: '#999',
                             formatter: '{value}%'
                         },
-                        min: -10,
-                        max: 60
                     }
                 ],
                 legend: [
@@ -89,19 +96,13 @@ export default {
                         y: 'bottom',
                         itemGap: 30,
                         data: [
-                            { name: '国内过夜旅游收入', icon: 'circle' },
-                            '国内过夜旅游年同比'
+                            { name: '旅游外汇收入', icon: 'circle' },
+                            '年同比增长率'
                         ]
                     }
                 ],
                 tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#999'
-                        }
-                    }
+                    trigger: 'axis'
                 },
                 grid:{
                     containLabel: true,
@@ -112,15 +113,22 @@ export default {
                 series: [
                     {
                         type: 'bar',
-                        name: '国内过夜旅游收入',
+                        name: '旅游外汇收入',
                         barWidth: 30,
-                        data: [4089702.92, 5737359.84, 5285132.6, 5254775.52, 5365150.32, 5188802.83, 6208129.66, 6890973.48]
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'top',
+                                color: '#000'
+                            }
+                        },
+                        data: [15, 21, 21, 23, 25, 26, 21, 21]
                     }, {
                         type: 'line',
-                        name: '国内过夜旅游年同比',
+                        name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [3.98, 39.22, 29.62, 40.74, 21.02, 18.51, 13.68, 6.87]
+                        data: [12.99, 16.93, 6.34, 3.86, 7.98, 2.92, -0.39, -3.04]
                     }
                 ]
             });

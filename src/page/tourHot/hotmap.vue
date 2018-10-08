@@ -19,7 +19,7 @@
               <Select style="width: 120px" v-model="senic_id" @on-change="searchformi">
                 <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
               </Select>
-              <DatePicker type="date" v-model="date11" @on-change="searchformi" placeholder="自选时间" style="width: 120px"></DatePicker>
+              <DatePicker type="date" v-model="date11" @on-change="searchformi" placeholder="自选时间" style="width: 120px" :options="disoptionsdate"></DatePicker>
               <!--   <Select style="width: 150px">
                    <Option value="城市">城市</Option>
                  </Select>-->
@@ -62,7 +62,7 @@
                 </div>
                 <div>
                   <DatePicker v-model="picDate6" type="date" placeholder="Select date"
-                              style="width: 120px;"></DatePicker>
+                              style="width: 120px;" :options="disoptionsdate"></DatePicker>
 
                   <Select style="width: 120px" v-model="piccity">
                     <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
@@ -160,8 +160,8 @@
                 <Select style="width: 120px" v-model="modelcity">
                   <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                 </Select>
-                <DatePicker v-model="da1" type="daterange" show-week-numbers  placeholder="Select date"
-                            style="width: 180px;"></DatePicker>
+                <DatePicker v-model="da1" type="date" show-week-numbers  placeholder="Select date"
+                            style="width: 180px;" :options="disoptionsdate"></DatePicker>
                 <Select style="width: 120px" v-model="power1">
                   <Option value="60">60分钟</Option>
                 </Select>
@@ -170,8 +170,8 @@
                 <Select style="width: 120px" v-model="modelsenic">
                   <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
                 </Select>
-                <DatePicker v-model="da2" type="daterange" show-week-numbers  placeholder="Select date"
-                            style="width: 180px;" @on-change="picd"></DatePicker>
+                <DatePicker v-model="da2" type="date" show-week-numbers  placeholder="Select date"
+                            style="width: 180px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
                 <Checkbox v-model="single">选择对比日期</Checkbox>
               </div>
               <div class="hotmap_klqs">
@@ -324,8 +324,8 @@
         playState:false,
         centerx:[],
         mapx:[],
-        da1:[http.getToday(),http.getToday()],
-        da2:[http.getYesterDay(),http.getYesterDay()],
+        da1:http.getToday(),
+        da2:http.getYesterDay(),
         modelcity:'',
         modelsenic:'e4fc748a-a60c-4716-687b-01254d621833',
         power:'60',
@@ -355,6 +355,11 @@
         hotmapd:[],
         hotmapl:[],
         hotmapll:[],
+        disoptionsdate: {
+            disabledDate (date) {
+                return date< new Date(2018,7,1) || date > new Date()
+            }
+        }
       };
     },
     mounted() {
@@ -377,10 +382,10 @@
 
         console.log(1111,this.senic_id)
         http.get('bi/get_scenic_tourist_compare_by_date', {
-          startTime: http.gmt2str(this.da1[0]),
-          startTime1: http.gmt2str(this.da2[0]),
-          endTime: http.gmt2str(this.da1[1]),
-          endTime1: http.gmt2str(this.da2[1]),
+          startTime: http.gmt2str(this.da1),
+          startTime1: http.gmt2str(this.da2),
+          // endTime: http.gmt2str(this.da1[1]),
+          // endTime1: http.gmt2str(this.da2[1]),
           scenic: this.modelsenic,
           min: this.power1
         }).then(resp => {
@@ -419,10 +424,10 @@
       },
       picd(){
         http.get('bi/get_scenic_tourist_compare_by_date', {
-          startTime: http.gmt2str(this.da1[0]),
-          startTime1: http.gmt2str(this.da2[0]),
-          endTime: http.gmt2str(this.da1[1]),
-          endTime1: http.gmt2str(this.da2[1]),
+          startTime: http.gmt2str(this.da1),
+          startTime1: http.gmt2str(this.da2),
+          // endTime: http.gmt2str(this.da1[1]),
+          // endTime1: http.gmt2str(this.da2[1]),
           scenic: this.modelsenic,
           min: this.power1
         }).then(resp => {
@@ -507,16 +512,16 @@
           },
           series: [
             {
-              name: this.lineDatayn2,
-              type: "line",
-              stack: "总量",
-              data: this.lineDatay2
-            },
-            {
               name: this.lineDatayn1,
               type: "line",
-              stack: "总量",
+              stack: "总量1",
               data: this.lineDatay1
+            },
+            {
+              name: this.lineDatayn2,
+              type: "line",
+              stack: "总量2",
+              data: this.lineDatay2
             }
 
           ]
@@ -603,15 +608,15 @@
         this.lineDatax=[]
         this.lineDatay2=[]
         http.get('bi/get_scenic_tourist_compare_by_date', {
-          startTime: http.gmt2str(this.da1[0]),
-          startTime1: http.gmt2str(this.da2[0]),
-          endTime: http.gmt2str(this.da1[1]),
-          endTime1: http.gmt2str(this.da2[1]),
+          startTime: http.gmt2str(this.da1),
+          startTime1: http.gmt2str(this.da2),
+          // endTime: http.gmt2str(this.da1[1]),
+          // endTime1: http.gmt2str(this.da2[1]),
           scenic: this.modelsenic,
           min: this.power1
         }).then(resp => {
           this.lineDatayn1 = resp.data.hits.cprdate;
-          for (var i = 0; i < resp.data.hits.cprlist.length; i++) {
+          for (var i = 0; i < resp.data.hits.curlist.length; i++) {
             this.lineDatay1.push(parseInt(resp.data.hits.cprlist[i].n))
           }
           this.lineDatayn2 = resp.data.hits.curdate;

@@ -8,11 +8,11 @@
       </div>
       <div class="bargrad"></div>
       <div class="range">
-        <span>0-55</span>
-        <span>56-121</span>
-        <span>122-187</span>
-        <span>188-221</span>
-        <span>>221</span>
+        <span>0-5</span>
+        <span>6-11</span>
+        <span>12-17</span>
+        <span>18-21</span>
+        <span>>21</span>
       </div>
     </div>
   </div>
@@ -71,6 +71,7 @@
             });
             //地图异步加载，在idle或者tilesloaded后初始化
             let self1 = this
+            const heatValueMax = 20
             qq.maps.event.addListenerOnce(map, "idle", function () {
               if (QQMapPlugin.isSupportCanvas) {
                 heatmap = new QQMapPlugin.HeatmapOverlay(map,
@@ -80,13 +81,13 @@
                     //热力图最大透明度
                     "maxOpacity": 0.8,
                     //是否在每一屏都开启重新计算，如果为true则每一屏都会有一个红点
-                    "useLocalExtrema": true,
+                    "useLocalExtrema": false,
                     //设置大小字段
-                    "valueField": 'count'
+                    "valueField": "weight"
                   }
                 );
                 //绘制热力图
-                heatmap.setData({max: 100, data: self1.x3[self1.x3.length-1].points});
+                heatmap.setData({max: heatValueMax, data: self1.x3[self1.x3.length-1].points});
               } else {
                 alert("您的浏览器不支持canvas，无法绘制热力图！！")
               }
@@ -136,7 +137,7 @@
             chart.on('timelinechanged', function (timeLineIndex) {
               // 设置 每个series里的xAxis里的值
               self.arrIndex = parseInt(timeLineIndex.currentIndex);
-              heatmap.setData({max: 100, data: self.x3[self.arrIndex].points});
+              heatmap.setData({max: heatValueMax, data: self.x3[self.arrIndex].points});
             });
           },
       },
@@ -154,12 +155,12 @@
   .mapContainer .visualmap {width:350px; height:70px; background-color:rgba(0,0,0,0.45); position: absolute; right:10px; bottom:10px; z-index:1;}
   .mapContainer .visualmap div {color:#fff; margin-top:10px; margin-left:10px;}
   .mapContainer .visualmap .range {margin-top:5px;}
-  .mapContainer .visualmap .range span {margin-left:15px; margin-right:5px;}
+  .mapContainer .visualmap .range span {margin-left:15px; margin-right:20px;}
   .mapContainer .visualmap .bargrad {
     background: -webkit-linear-gradient(left,red,orange,yellow,green,blue);
     background: -o-linear-gradient(left,red,orange,yellow,green,blue);
     background: -moz-linear-gradient(left,red,orange,yellow,green,blue);
     background: linear-gradient(to left, red,orange,yellow,#4cff2f,#47fff4,blue);
-    height:10px; border-radius:5px;position:relative; margin:5px 10px 0px 10px; z-index:2;
+    height:6px; border-radius:5px;position:relative; margin:5px 10px 0px 10px; z-index:2;
     background-color:#fff;}
   </style>

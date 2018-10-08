@@ -9,6 +9,21 @@ export default {
         setTimeout(() => {
             this.$echarts.init(document.querySelector("#chartTourEnter")).setOption({
                 color: ['#3c6ffe', '#a9a9a9'],
+                title:{
+                    text: "{a| 海外旅游游客流量} {b| （单位：万人）}",
+                    textStyle: {
+                        rich: {
+                            a: {
+                                fontWeight : 'bold',
+                                fontSize: 14
+                            },
+                            b: {
+                                fontSize: 12,
+                                color: '#a5a5a5'
+                            }
+                        }
+                    }
+                },
                 xAxis: {
                     data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月'],
                     axisLabel: {
@@ -35,7 +50,7 @@ export default {
                 },
                 yAxis: [
                     {
-                        name: '人数：万人次',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -56,7 +71,7 @@ export default {
                             }
                         }
                     }, {
-                        name: '年同比',
+                        name: '',
                         nameGap: 20,
                         nameTextStyle: {
                             color: '#999'
@@ -84,18 +99,12 @@ export default {
                         itemGap: 30,
                         data: [
                             { name: '人次', icon: 'circle' },
-                            '年同比'
+                            '年同比增长率'
                         ]
                     }
                 ],
                 tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        crossStyle: {
-                            color: '#999'
-                        }
-                    }
+                    trigger: 'axis'
                 },
                 series: [
                     {
@@ -109,13 +118,13 @@ export default {
                                 color: '#000'
                             }
                         },
-                        data: [60.17, 60.74, 64.91, 62.87, 60.74, 55.34, 59.98, 56.98]
+                        data: [40, 56, 57, 64, 71, 74, 63, 60]
                     }, {
                         type: 'line',
-                        name: '年同比',
+                        name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [18.19, 23.81, 27.19, 15.77, 13.56, -3.11, -6.4, -11.14]
+                        data: [30.83, 16.72, 8.78, 3.47, 6.19, 6.74, 4.04, -0.8]
                     }
                 ]
             });

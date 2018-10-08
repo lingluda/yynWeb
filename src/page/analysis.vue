@@ -15,21 +15,21 @@
           <Select style="width: 120px" v-model="city1">
             <Option v-for="item in cityDataall" :value="item.code">{{item.name}}</Option>
           </Select>
-           <DatePicker placement="bottom-end" type="date" v-model="date1" placeholder="自选时间" style="width: 120px"></DatePicker>
+           <DatePicker placement="bottom-end" type="date" v-model="date1" placeholder="自选时间" style="width: 120px"  :options="disoptionsdate"></DatePicker>
         </div>
       </div>
-        <Col span="12" style="padding:0 80px">
+        <Col span="24" style="padding:0 80px">
           <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">媒体情绪</div>
           <div id="health" style="width: 100%;height: 260px;margin-top: -20px"></div>
         </Col>
-        <Col span="12" style="padding:0 50px">
+        <!-- <Col span="12" style="padding:0 50px">
           <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">一机游情绪</div>
           <div id="unhealth" style="width: 100%;height: 260px;margin-top: -20px"></div>
-        </Col>
+        </Col> -->
       </Row>
 
     </card>
-      <Row :gutter="16" style="margin-top: 20px;">
+      <!-- <Row :gutter="16" style="margin-top: 20px;">
         <Col span="12" style="height: 865px">
           <card style="height:100%">
             <div style="line-height:40px;height:50px">
@@ -52,7 +52,6 @@
                     <Col span="12" class="qsnet_num">
                       <i class="qsnet_idx">{{index + 1}}</i>
                       <span class="qsnet_sp">陈小辉一审被判18年</span>
-                      <!-- <p class="qsnet_time">2018-05-10</p> -->
                     </Col>
                     <Col span="4" class="qsnet_num">59.5万</Col>
                     <Col span="4" class="qsnet_num">23.1万</Col>
@@ -89,7 +88,6 @@
                     <Col span="12" class="qsnet_num">
                       <i class="qsnet_idx">1</i>
                       <span class="qsnet_sp">陈小辉一审被判18年</span>
-                      <!-- <p class="qsnet_time">2018-05-10</p> -->
                     </Col>
                     <Col span="4" class="qsnet_num">59.5万</Col>
                     <Col span="4" class="qsnet_num">23.1万</Col>
@@ -100,7 +98,7 @@
             </div>
           </card>
         </Col>
-      </Row>
+      </Row> -->
     </div>
   </div>
 </template>
@@ -233,13 +231,18 @@ export default {
           address: "Ottawa No. 2 Lake Park",
           date: "2016-10-04"
         }
-      ]
+      ],
+      disoptionsdate: {
+          disabledDate (date) {
+              return date< new Date(2018,7,1) || date > new Date()
+          }
+      }
     };
   },
   mounted() {
     this.init();
     this.initHealth1();
-    this.initUNHealth1();
+    // this.initUNHealth1();
   },
   methods: {
     init() {
@@ -536,21 +539,23 @@ export default {
       this.pien=[]
       this.pie1=[]
       this.pie2=[]
-      http.get('bi/get_pom_by_date',{date:http.gmt2str(this.date1),area_code:this.city1}).then(resp=>{
-        this.pie1=resp.data.hits;
-        if (this.pie1[2].proportion>20){
-          this.title1='不健康'
-          this.color1='red'
-        } else {
-          this.title1='健康'
-          this.color1='green'
-        }
-        for (var i=0;i<resp.data.hits.length;i++) {
-          this.pien.push(resp.data.hits[i].name)
-        }
-        this.initHealth();
-        this.initUNHealth();
-      })
+      if(this.city1){
+        http.get('bi/get_pom_by_date',{date:http.gmt2str(this.date1),area_code:this.city1}).then(resp=>{
+          this.pie1=resp.data.hits;
+          if (this.pie1[2].proportion>20){
+            this.title1='不健康'
+            this.color1='red'
+          } else {
+            this.title1='健康'
+            this.color1='green'
+          }
+          for (var i=0;i<resp.data.hits.length;i++) {
+            this.pien.push(resp.data.hits[i].name)
+          }
+          this.initHealth();
+          // this.initUNHealth();
+        });
+      }
     }
   },
   watch:{

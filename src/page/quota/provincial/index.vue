@@ -1,6 +1,10 @@
 <template>
     <div style="height:100%;">
-        <div class="tits">云南省今年关键指标</div>
+        <div class="tits">云南省2018年1-8月旅游行业关键指标
+            <Tooltip content="云南全省旅游行业运行关键指标，数据来源：省旅游行业快报" placement="right" max-width="200">
+                <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
+            </Tooltip>
+        </div>
         <div class="quota_bg">
             <card>
                 <Row>
@@ -12,7 +16,7 @@
                                 <span class="lyrd_index_today_visit">全省旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">47,187.97</span>
+                                <span class="lyrd_index_today_num">47,187</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -26,7 +30,7 @@
                                 <span class="lyrd_index_today_visit">国内旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">46,701.80</span>
+                                <span class="lyrd_index_today_num">46,701</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -40,7 +44,7 @@
                                 <span class="lyrd_index_today_visit">海外旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">486.17</span>
+                                <span class="lyrd_index_today_num">486</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -59,7 +63,7 @@
                                 <span class="lyrd_index_today_visit">全省旅游业总收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">59,076,450.98</span>
+                                <span class="lyrd_index_today_num">59,076,450</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -73,7 +77,7 @@
                                 <span class="lyrd_index_today_visit">国内旅游收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">57,307,819.53</span>
+                                <span class="lyrd_index_today_num">57,307,819</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -87,7 +91,7 @@
                                 <span class="lyrd_index_today_visit">旅游外汇收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1,525,282.42</span>
+                                <span class="lyrd_index_today_num">1,525,282</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -96,93 +100,67 @@
                 </Row>
             </card>
 
-            
-            <Row :gutter="20">
-                <!-- 旅游人次 -->
-                <Col span="12">
-                <card>
-                    <div class="lyrd_index_search">
-                        <div class="lyrd_index_search_left">
-                            <span class="lyrd_index_search_title">旅游人次</span>
-                        </div>
-                        <div class="lyrd_index_search_right">
-                            <!-- <Select style="width:120px;margin-left:15px" @on-change="form1change">
-                                <Option v-for="item in selData" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                            </Select> -->
-                        </div>
-                    </div>
-                    <tourNum></tourNum>
-                </card>
-                </Col>
-                <!-- 旅游人数占比 -->
-                <Col span="12">
-                <card>
-                    <div class="lyrd_index_search">
-                        <div class="lyrd_index_search_left">
-                            <span class="lyrd_index_search_title">海外游客统计</span>
-                        </div>
-                        <div class="lyrd_index_search_right">
-                            <!-- <DatePicker v-model="tourProDate" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
-                            <Select style="width:120px;margin-left:15px" @on-change="form1change">
-                                <Option v-for="item in tourPro" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                            </Select> -->
-                        </div>
-                    </div>
-                    <tourProp></tourProp>
-                </card>
-                </Col>
-            </Row>
 
-            <!-- 口岸入境一日游、海外游客旅游天数 -->
-            <Row :gutter="20">
-                <Col span="12">
-                <card>
-                    <div class="lyrd_index_search">
-                        <div class="lyrd_index_search_left">
-                            <span class="lyrd_index_search_title">口岸入境一日游</span>
-                        </div>
-                        <div class="lyrd_index_search_right">
-                            <Select style="width:120px;margin-left:15px" @on-change="form1change">
-                                <Option v-for="item in tourEnter" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                            </Select>
-                        </div>
-                    </div>
-                    <tourEnter></tourEnter>
-                </card>
-                </Col>
-                <Col span="12">
-                <card>
-                    <div class="lyrd_index_search">
-                        <div class="lyrd_index_search_left">
-                            <span class="lyrd_index_search_title">海外游客旅游天数</span>
-                        </div>
-                    </div>
-                    <tourOverseas></tourOverseas>
-                </card>
-                </Col>
-            </Row>
-
-            <!-- 旅游收入 -->
             <card>
                 <div class="lyrd_index_search">
                     <div class="lyrd_index_search_left">
-                        <span class="lyrd_index_search_title">旅游收入</span>
-                    </div>
-                    <div class="lyrd_index_search_right">
-                        <!-- <Select style="width:120px;margin-left:15px" @on-change="form1change">
-                            <Option v-for="item in tourIncome" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                        </Select> -->
+                        <span class="lyrd_index_search_title">旅客客流旅客客流</span>
                     </div>
                 </div>
                 <Row :gutter="20">
                     <Col span="12">
                     <div class="borderBlock">
-                        <tourIncomeA></tourIncomeA>
+                        <tourNum></tourNum>
                     </div>
                     </Col>
                     <Col span="12">
                     <div class="borderBlock">
-                        <tourIncomeB></tourIncomeB>
+                        <tourEnter></tourEnter>
+                    </div>
+                    </Col>
+                </Row>
+                <br>
+                <Row :gutter="20">
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourOverseas></tourOverseas> 
+                    </div>
+                    </Col>
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourProp></tourProp>
+                    </div>
+                    </Col>
+                </Row>
+            </card>
+            <card>
+                <div class="lyrd_index_search">
+                    <div class="lyrd_index_search_left">
+                        <span class="lyrd_index_search_title">旅游收入</span>
+                    </div>
+                </div>
+                <Row :gutter="20">
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourIncomeTotal></tourIncomeTotal>
+                    </div>
+                    </Col>
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourIncomeOversea></tourIncomeOversea>
+                    </div>
+                    </Col>
+                </Row>
+                <br>
+                <Row :gutter="20">
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourIncomeNight></tourIncomeNight>
+                    </div>
+                    </Col>
+                    <Col span="12">
+                    <div class="borderBlock">
+                        <tourIncomeOne></tourIncomeOne>
                     </div>
                     </Col>
                 </Row>
@@ -197,9 +175,11 @@ import tourNum from "./tourNum.vue"
 // 旅游人数占比
 import tourProp from "./tourProp.vue"
 // 旅游收入--国内一日游收入
-import tourIncomeA from "./tourIncomeA.vue"
+import tourIncomeTotal from "./tourIncomeTotal.vue"
 // 旅游收入--国内过夜旅游收入
-import tourIncomeB from "./tourIncomeB.vue"
+import tourIncomeOversea from "./tourIncomeOversea.vue"
+import tourIncomeNight from "./tourIncomeNight.vue"
+import tourIncomeOne from "./tourIncomeOne.vue"
 // 口岸入境一日游
 import tourEnter from "./tourEnter.vue"
 // 海外游客旅游天数
@@ -209,8 +189,10 @@ export default {
     components: {
         tourNum,
         tourProp,
-        tourIncomeA,
-        tourIncomeB,
+        tourIncomeTotal,
+        tourIncomeOversea,
+        tourIncomeNight,
+        tourIncomeOne,
         tourEnter,
         tourOverseas
     },
@@ -229,7 +211,7 @@ export default {
             tourProp: [
                 {
                     value: "New York",
-                    label: "海外旅游",x
+                    label: "海外旅游",
                 }
             ],
 
