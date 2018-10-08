@@ -31,7 +31,7 @@
                     <div>
                       <span class="lyrd_index_today_num">{{add}}</span>
                       <span class="lyrd_index_today_dw">件</span>
-                      <span>(新关闭{{close}}，未关闭{{unclose}})</span>
+                      <!-- <span>(新关闭{{close}}，未关闭{{unclose}})</span> -->
                     </div>
                 </div>
               </div>
@@ -97,7 +97,7 @@
                 <div style="margin-top:25px;display:flex">
                   <img src="../assets/imgs/exp4.png" style="margin-right:20px;width:60px;height:60px"/>
                   <div>
-                    <div style="color:#000;font-size:16px">{{titleDate}}平台累计未处理投诉量</div>
+                    <div style="color:#000;font-size:16px">{{titleDate}}平台累计处理中投诉量</div>
                     <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">{{unclose1}}</span>件</div>
                   </div>
                 </div>
