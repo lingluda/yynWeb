@@ -104,7 +104,7 @@
             <card>
                 <div class="lyrd_index_search">
                     <div class="lyrd_index_search_left">
-                        <span class="lyrd_index_search_title">旅客客流旅客客流</span>
+                        <span class="lyrd_index_search_title">旅客客流</span>
                     </div>
                 </div>
                 <Row :gutter="20">
