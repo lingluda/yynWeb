@@ -38,32 +38,32 @@
             <div id="simBars" style="width: 100%;height: 300px;"></div>
           </div>
         </card>
-        <!-- <card style="margin-top: 20px">
-          <div style="margin-bottom: 20px;">
-            <span style="font-weight: bold;color: #000000">热门路线</span> -->
-            <!--<pers-st :pers="21"></pers-st>-->
-            <!-- <Tooltip content="一机游app对各线路页面访问量排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
-            </Tooltip>
-            <DatePicker v-model="picDate3" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right" :options="disoptionsdate"></DatePicker>
-          </div>
-          <div> -->
-            <!--<Table :columns="columns" :data="fdata"></Table>-->
-            <!-- <table style="border: 1px solid rgb(220, 222, 226);width: 100%;text-align: left;border-collapse:collapse">
-              <tr>
-                <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门线路下单量（次）</td>
-                <td style="width: 40%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa"></td> -->
-                <!--<td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门路线(次)</td>-->
-                <!-- <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa;text-align: center">下单平均价格(元)</td>
-              </tr>
-              <tr v-for="item in fdata">
-                <td style="border-bottom: 1px dashed rgb(206,226,225);font-size: 12px">{{item.name}}</td>
-                <td style="border-bottom: 1px dashed rgb(206,226,225)"> <pers-st :pers=item.tpers :persn=item.order></pers-st></td> -->
-                <!--<td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.dau}}</td>-->
-                <!-- <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225);text-align: center">{{item.price}}</td>
-              </tr>
-            </table>
-          </div>
-        </card> -->
+        <card style="margin-top: 20px">
+              <div style="margin-bottom: 20px;">
+                <span style="font-weight: bold;color: #000000">热门路线</span>
+                <!--<pers-st :pers="21"></pers-st>-->
+                <Tooltip content="一机游app对各线路页面访问量排行" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                </Tooltip>
+                <DatePicker v-model="picDate3" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right" :options="disoptionsdate"></DatePicker>
+              </div>
+              <div>
+                <!--<Table :columns="columns" :data="fdata"></Table>-->
+                <table style="border: 1px solid rgb(220, 222, 226);width: 100%;text-align: left;border-collapse:collapse">
+                  <tr>
+                    <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门线路下单量（次）</td>
+                    <td style="width: 40%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa"></td>
+                    <!--<td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门路线(次)</td>-->
+                    <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa;text-align: center">下单平均价格(元)</td>
+                  </tr>
+                  <tr v-for="item in fdata">
+                    <td style="border-bottom: 1px dashed rgb(206,226,225);font-size: 12px">{{item.name}}</td>
+                    <td style="border-bottom: 1px dashed rgb(206,226,225)"> <pers-st :pers=item.tpers :persn=item.order></pers-st></td>
+                    <!--<td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.dau}}</td>-->
+                    <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225);text-align: center">{{item.price}}</td>
+                  </tr>
+                </table>
+              </div>
+            </card>
         <card style="margin-top: 20px">
           <div>
             <Row :gutter="16">
