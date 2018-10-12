@@ -388,7 +388,7 @@
     澳门特别行政区:[113.5575190,22.2041180]
   }
   // 出发点和迁徙点的对应关系数组,颜色通过value对应到visualMap中的颜色值调整
-  var mapFontSize = [25, 23, 23, 22, 22, 21, 20, 20, 18, 20]
+  var mapFontSize = [12, 8, 8, 8, 8, 12, 8, 12, 8, 8]
   export default {
     props:{
       d2d:Array,
@@ -501,8 +501,8 @@
               label: {
                 normal: {
                   show: true,
-                  position: "right",
-                  offset: [13, 0],
+                  position: "left",
+                  offset: [0, 0],
                   formatter: "{b}",
                   fontWeight: "lighter"
                 },
@@ -522,7 +522,7 @@
                 }
               },
               data: item[1].map(function(dataItem, i) {
-                var mapFontSize = [12];
+                //var mapFontSize = [12];
                 var arr = {
                   name: dataItem[_this.ioindex].name,
                   value: geoCoordMap[dataItem[_this.ioindex].name].concat([
