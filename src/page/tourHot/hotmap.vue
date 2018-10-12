@@ -161,7 +161,7 @@
                   <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                 </Select>
                 <DatePicker v-model="da1" type="date" show-week-numbers  placeholder="Select date"
-                            style="width: 180px;" :options="disoptionsdate"></DatePicker>
+                            style="width: 120px;" :options="disoptionsdate"></DatePicker>
                 <Select style="width: 120px" v-model="power1">
                   <Option value="60">60分钟</Option>
                 </Select>
@@ -171,7 +171,7 @@
                   <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
                 </Select>
                 <DatePicker v-model="da2" type="date" show-week-numbers  placeholder="Select date"
-                            style="width: 180px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
+                            style="width: 120px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
                 <Checkbox v-model="single">选择对比日期</Checkbox>
               </div>
               <div class="hotmap_klqs">
@@ -423,6 +423,9 @@
         })
       },
       picd(){
+        this.lineDatay1=[]
+        this.lineDatay2=[]
+        this.lineDatax=[]
         http.get('bi/get_scenic_tourist_compare_by_date', {
           startTime: http.gmt2str(this.da1),
           startTime1: http.gmt2str(this.da2),
@@ -481,8 +484,8 @@
           },
           tooltip: {
             trigger: "axis",
-            formatter: '{b0}<br />{a1} {c1} 人<br />{a0} {c0} 人',
-
+            //formatter: '{b0}<br />{a1} {c1} 人<br />{a0} {c0} 人',
+            //color: 'red'
           },
           legend: {
             bottom: 2,

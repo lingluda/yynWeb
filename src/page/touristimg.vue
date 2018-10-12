@@ -12,7 +12,7 @@
         <Select style="width: 120px" placeholder="城市" v-model="ccc" @on-change="clisk">
           <Option v-for="(item, index) in cityData" :value="item.id" :key="index">{{item.name}}</Option>
         </Select>
-        <Select style="width: 120px" placeholder="区域" v-model="ccc1" @on-change="_ccc1">
+        <Select style="width: 120px" placeholder="景区" v-model="ccc1" @on-change="_ccc1">
           <Option v-for="(item, index) in senicData" :value="item.id" :key="index">{{item.name}}</Option>
         </Select>
         <DatePicker type="date" v-model="picDate" placeholder="自选时间" style="width: 120px" @on-change="dateChange" :options="disoptionsdate"></DatePicker>
@@ -124,7 +124,7 @@
                 <span style="float: right;padding:5px 5px 0px 5px">-</span>
                 <DatePicker v-model="d22" placement="bottom-end" format="yyyy-MM" type="month" placeholder="开始月份" style="width: 100px;float: right" :options="disoptionsdate"></DatePicker>
               </div>
-              <div id="cash" style="height:300px;width:100%"></div>
+              <div id="cash" style="height:300px;width:100%;margin-left: -50px"></div>
             </Col>
           </Row>
         </div>
@@ -309,7 +309,8 @@
         this.carDatay = [];
         this.mobilex = [];
         this.mobiley = [];
-
+        this.ccc1='';
+        this.senicData=[];
         if (val) {
           http.get('bi/get_scenic_by_city',{city_id:val}).then(resp=>{
             this.senicData=resp.data.hits
@@ -684,6 +685,11 @@
               type: "pie",
               radius: ["40%", "55%"],
               avoidLabelOverlap: true,
+              labelLine:{
+                show:true,
+                length:5,
+                length2:4
+              },
               label: {
                 normal: {
                   show: true,
@@ -708,7 +714,7 @@
         let cashChart = this.$echarts.init(document.getElementById("cash"));
         cashChart.setOption({
           color: ["#006EFF", "#29CC85", "#ffbb00", "#ff584c", "#9741d9", "#1fc0cc"],
-          tooltip: {
+         /* tooltip: {
             position: ['10%', '34%'],
             alwaysShowContent: true,
             trigger: "item",
@@ -717,7 +723,7 @@
               type: "shadow"
             },
             backgroundColor: "#323232"
-          },
+          },*/
           legend: {
             orient: "vertical",
             right: 40,
@@ -731,7 +737,13 @@
               name: "消费分析",
               type: "pie",
               radius: '50%',
-              //label: false,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'outside',
+                  formatter: '{b}\n{d}%',
+                },
+              },
               //labelLine: false,
               itemStyle: {
                 borderColor: '#fff',

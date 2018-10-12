@@ -258,11 +258,22 @@
         })
       },
       wp1(){
+        console.log(1111)
         http.get('bi/get_ops_qty_by_date', {date: http.gmt2str(this.picDate)}).then(resp => {
-          this.addData = resp.data.hits[0]
           this.addtotal=http.qfw(resp.data.hits[0].total)
           this.aduData = resp.data.hits[1]
           this.adutotal=http.qfw(resp.data.hits[1].total)
+          if (resp.data.hits[0]==0){
+            this.addData='暂无数据'
+          } else {
+            this.addData = resp.data.hits[0]
+          }
+          if (this.addtotal==0){
+            this.addtotal='暂无数据'
+          }
+          if (this.aduData==0){
+            this.aduData='暂无数据'
+          }
           if (Number(resp.data.hits[0].link)>=0){
             this.flink=resp.data.hits[0].link
             this.color1='#ffbb00'

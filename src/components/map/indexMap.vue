@@ -35,7 +35,7 @@
                 max: 30,
 
                 text:['高','低'],
-                realtime: false,
+                realtime: true,
                 calculable: true,
                 inRange: {
                   color: ['#92cde8', '#3190ce']

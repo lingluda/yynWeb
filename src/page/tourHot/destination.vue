@@ -371,7 +371,8 @@ table{
               type: 'shadow'
             },
             backgroundColor:'#323232',
-            formatter: '{b0}<br />{a0} {c0} 万<br />{a1} {c1} 万 <br />{a2} {c2}'+ this.unitD
+            //formatter: '{b0}<br />{a0} {c0} 万<br />{a1} {c1} 万 <br />{a2} {c2}'+ this.unitD
+            formatter: '{b0}<br />{a0} {c0} 万<br />{a1} {c1} 万'
           },
           legend: {
             bottom: 10,

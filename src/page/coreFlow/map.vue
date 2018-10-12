@@ -47,7 +47,7 @@ export default {
             min: 0,
             max: 100000,
             text: ["高", "低"],
-            realtime: false,
+            realtime: true,
             calculable: true,
             inRange: {
               color: ["#a7cdff", "#3d91ff", "#0059e0", "#001780"]
