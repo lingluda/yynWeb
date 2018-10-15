@@ -13,8 +13,8 @@
                 <Radio label="2">昨日</Radio>
               </RadioGroup>-->
             <DatePicker type="date" v-model="picdate1" placeholder="自选时间" style="width: 120px"
-                        :options="disoptionsdate"></DatePicker>
-            <Select style="width: 120px" v-model="p11">
+                        :options="disoptionsdate" @on-change="pic1"></DatePicker>
+            <Select style="width: 120px" v-model="p11" @on-change="ppp1">
               <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
             </Select>
           </div>
@@ -29,11 +29,12 @@
                     <span class="lyrd_index_today_visit">当日新增投诉量</span>
                     <!--{{(this.picdate1).toString().substring(8,10)}}日-->
                   </div>
-                  <div>
+                  <div v-if="isshow1==1">
                     <span class="lyrd_index_today_num">{{add}}</span>
                     <span class="lyrd_index_today_dw">件</span>
                     <!-- <span>(新关闭{{close}}，未关闭{{unclose}})</span> -->
                   </div>
+                  <div v-if="isshow1==2" style="margin-top: 20px">暂无数据</div>
                 </div>
               </div>
             </Col>
@@ -45,11 +46,12 @@
                     <span class="lyrd_index_today_visit">与昨日环比</span>
 
                   </div>
-                  <div>
+                  <div v-if="isshow2==1">
                     <span class="lyrd_index_today_num">{{ratio}}</span><span style="color: #006eff;">%</span>
                     <span v-if="showud1==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
                     <span v-if="showud1!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                   </div>
+                  <div v-if="isshow2==2" style="margin-top: 20px">暂无数据</div>
                 </div>
               </div>
             </Col>
@@ -60,11 +62,12 @@
                   <div>
                     <span class="lyrd_index_today_visit">与上月同比</span>
                   </div>
-                  <div>
+                  <div v-if="isshow3==1">
                     <span class="lyrd_index_today_num">{{link}}</span> <span style="color: #006eff;">%</span>
                     <span v-if="showud2==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
                     <span v-if="showud2!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                   </div>
+                  <div v-if="isshow3==2" style="margin-top: 20px">暂无数据</div>
                 </div>
               </div>
             </Col>
@@ -81,7 +84,7 @@
             <Button label="7" style="border-radius: 0px" @click="change7">近7天</Button>
             <DatePicker type="month" placement="bottom-end" v-model="picdate2" placeholder="自选时间" style="width: 120px"
                         :options="disoptionsdate" @on-change="pic2"></DatePicker>
-            <Select style="width: 120px" v-model="p12" @on-change="pic2">
+            <Select style="width: 120px" v-model="p11" @on-change="ppp2">
               <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
             </Select>
           </div>
@@ -129,7 +132,7 @@
             <span style="float: right;padding:5px 5px 0px 5px">-</span>
             <DatePicker v-model="dd2" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
     -->
-          <Select style="width: 120px;float: right" v-model="p13" @on-change="_dd2">
+          <Select style="width: 120px;float: right" v-model="p11" @on-change="ppp3">
             <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
           </Select>
           <DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期"
@@ -240,6 +243,9 @@
   export default {
     data() {
       return {
+        isshow1:1,
+        isshow2:1,
+        isshow3:1,
         dateChoice1: '1',
         titleDate: '',
         dd1: http.getToday(),
@@ -326,6 +332,7 @@
         })
         this._dd2()
         this.pic2()
+        this.pic1()
       },
       initComplain() {
         let complain = this.$echarts.init(document.getElementById("complain"));
@@ -611,13 +618,13 @@
           .get("bi/get_complaint_by_date", {date: http.gmt2str(this.picdate1), city_id: this.p11})
           .then(resp => {
             if (!('hits' in resp.data)) {
-              console.log(11111111)
-              this.add = '暂无数据'
-              this.close = '暂无数据'
-              this.unclose = '暂无数据'
-              this.link = '暂无数据'
-              this.ratio = '暂无数据'
+              this.isshow1=2
+              this.isshow2=2
+              this.isshow3=2
             } else {
+              this.isshow1=1
+              this.isshow2=1
+              this.isshow3=1
               this.add = http.qfw(resp.data.hits.total);
               this.close = http.qfw(resp.data.hits.closed);
               this.unclose = http.qfw(resp.data.hits.unclosed);
@@ -647,7 +654,7 @@
         this.timeX = [];
         this.titleDate = this.picdate2.getMonth() + 1 + '月'
         http
-          .get("bi/get_complaint_by_mon", {date: http.gmt2strm(this.picdate2),city_id:this.p12})
+          .get("bi/get_complaint_by_mon", {date: http.gmt2strm(this.picdate2),city_id:this.p11})
           .then(resp => {
             this.close1 = http.qfw(resp.data.hits.closed);
             this.unclose1 = http.qfw(resp.data.hits.unclosed);
@@ -680,6 +687,21 @@
             }
             this.initLine();
           });
+      },
+      ppp1(){
+        this.ppp()
+        this.pic2()
+        this._dd2()
+      },
+      ppp2(){
+        this.ppp()
+        this.pic2()
+        this._dd2()
+      },
+      ppp3(){
+        this.ppp()
+        this.pic2()
+        this._dd2()
       },
       ppp() {
         http
@@ -720,7 +742,7 @@
           .get("bi/get_complaint_trend_by_timespan", {
             startTime: http.gmt2str(this.picdate3[0]),
             endTime: http.gmt2str(this.picdate3[1]),
-            city_id: this.p13
+            city_id: this.p11
           })
           .then(resp => {
             for (var i = 0; i < resp.data.hits.length; i++) {
@@ -732,10 +754,10 @@
       }
     },
     watch: {
-      picdate1: 'pic1',
+      //picdate1: 'pic1',
       //picdate2: 'pic2',
       //picdate3:'pic3',
-      p11: 'ppp',
+     // p11: 'ppp',
       //p12: 'pic2',
       picTo: 'ptt',
       //dd1:'_dd2'

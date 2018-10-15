@@ -26,10 +26,12 @@
                   <Col span="10">
                     <div style="margin-bottom: 10px;width: 50%;">
                       <span style="font-weight: bold;color: #000000">新增用户量</span>
-
                     </div>
+                    <div v-if="issh1==1">
                     <span style="font-size: 32px;color: #006eff;font-weight: 600">{{addtotal}}</span>
                     <span style="color: #006eff">人</span>
+                    </div>
+                    <div v-if="issh1==2" style="margin-top: 20px">暂无数据</div>
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
@@ -55,8 +57,11 @@
                       <span style="font-weight: bold;color: #000000">活跃用户数</span>
 
                     </div>
+                    <div v-if="issh2==1">
                     <span style="font-size: 32px;color: #006eff;font-weight: 600">{{adutotal}}</span>
                     <span style="color: #006eff">人</span>
+                    </div>
+                    <div v-if="issh2==2" style="margin-top: 20px">暂无数据</div>
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
@@ -117,6 +122,8 @@
   export default {
     data() {
       return {
+        issh1:1,
+        issh2:1,
         addtotal:'',
         adutotal:'',
         cho7:'1',
@@ -264,15 +271,21 @@
           this.aduData = resp.data.hits[1]
           this.adutotal=http.qfw(resp.data.hits[1].total)
           if (resp.data.hits[0]==0){
-            this.addData='暂无数据'
+            this.issh1=2
           } else {
+            this.issh1=1
             this.addData = resp.data.hits[0]
           }
+          if (this.adutotal=='0'){
+            this.issh2=2
+          }else {
+            this.issh2=1
+          }
           if (this.addtotal==0){
-            this.addtotal='暂无数据'
+            this.issh1=2
           }
           if (this.aduData==0){
-            this.aduData='暂无数据'
+            this.issh2=2
           }
           if (Number(resp.data.hits[0].link)>=0){
             this.flink=resp.data.hits[0].link

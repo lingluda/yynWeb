@@ -426,6 +426,8 @@
           geo: {
             map: "china",
             //roam: true,
+            center: [113, 31],
+            zoom:1.8,
             label: {
               emphasis: {
                 show: true
@@ -522,7 +524,7 @@
                 }
               },
               data: item[1].map(function(dataItem, i) {
-                //var mapFontSize = [12];
+                var mapFontSize = [12];
                 var arr = {
                   name: dataItem[_this.ioindex].name,
                   value: geoCoordMap[dataItem[_this.ioindex].name].concat([

@@ -98,11 +98,12 @@
                       <div class="lyrd_hotmap_count_bg1"></div>
                        <div class="lyrd_hotmap_num">
                         <div class="lyrd_hotmap_desc">景区实时游客人数</div>
-                        <div>
+                        <div v-if="isshowd1==1">
                           <span class="lyrd_hotmap_today_num">{{currentTime}}</span>
                           <span class="lyrd_hotmap_today_dw">人</span>
                           <span>(当日峰值{{daymount}})</span>
                         </div>
+                         <div v-if="isshowd1==2" style="margin-top: 20px">暂无数据</div>
                       </div>
                       <!-- <div class="lyrd_hotmap_num">
                         <span class="lyrd_hotmap_desc1">景区实时游客人数：</span>
@@ -121,12 +122,13 @@
                       <div class="lyrd_hotmap_count_bg1"></div>
                       <div class="lyrd_hotmap_num">
                         <div class="lyrd_hotmap_desc">与昨日环比</div>
-                        <div>
+                        <div v-if="isshowd2==1">
                           <span class="lyrd_hotmap_today_num">{{ratio}}</span>
                           <span class="lyrd_hotmap_today_dw">%</span>
                           <span v-if="showud1==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
                           <span v-if="showud1!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                         </div>
+                        <div v-if="isshowd2==2" style="margin-top: 20px">暂无数据</div>
                       </div>
                     </div>
                   </Col>
@@ -135,12 +137,13 @@
                       <div class="lyrd_hotmap_count_bg2"></div>
                       <div class="lyrd_hotmap_num">
                         <div class="lyrd_hotmap_desc">与上月同比</div>
-                        <div>
+                        <div v-if="isshowd3==1">
                           <span class="lyrd_hotmap_today_num">{{link}}</span>
                           <span class="lyrd_hotmap_today_dw">%</span>
                           <span v-if="showud2==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
                           <span v-if="showud2!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                         </div>
+                        <div v-if="isshowd3==2" style="margin-top: 20px">暂无数据</div>
                       </div>
                     </div>
                   </Col>
@@ -313,6 +316,9 @@
     },
     data() {
       return {
+        isshowd1:1,
+        isshowd2:1,
+        isshowd3:1,
         initMapData:[],
         senic_id:'e4fc748a-a60c-4716-687b-01254d621833',
         senic_id5:'e4fc748a-a60c-4716-687b-01254d621833',
@@ -367,7 +373,6 @@
     },
     methods: {
       init() {
-
         http.get('bi/get_all_city', {}).then(resp => {
           this.cityData = resp.data.hits;
           this.modelcity=resp.data.hits[0].id
@@ -553,6 +558,21 @@
           this.daymount = http.qfw(resp.data.hits.his);
           this.currentTime = http.qfw(resp.data.hits.real);
           this.touristc = resp.data.hits.link;
+          if(this.daymount=='0'){
+            this.isshowd1=2
+          } else {
+            this.isshowd1=1
+          }
+          if(this.link=='100'){
+            this.isshowd3=2
+          } else {
+            this.isshowd3=1
+          }
+          if(this.ratio=='0'){
+            this.isshowd2=2
+          } else {
+            this.isshowd2=1
+          }
         })
       },
       sinic(){

@@ -3,7 +3,7 @@
     <div class="ti">
       <span style="color: rgb(102, 159, 199);">旅游热度</span>
       <Icon type="ios-arrow-forward" />
-      <span style="font-size: 12px;">首页</span>
+      <span style="font-size: 12px;">旅游热度概况</span>
     </div>
 
       <div label="首页" name="index" class="lyrd_sy_content">
@@ -12,7 +12,7 @@
             <div class="lyrd_index_search_left">
               <span class="lyrd_index_search_title">游客人数</span>
               <Tooltip content="去除常驻人口游客数量的计算" placement="right" max-width="200">
-                <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+                <Icon size="19" style="margin-top: 5px" type="ios-help-circle-outline" />
               </Tooltip>
             </div>
             <div class="lyrd_index_search_right">
@@ -20,7 +20,7 @@
                 <Radio label="1">今日</Radio>
                 <Radio label="2">昨日</Radio>
               </RadioGroup>
-              <DatePicker v-model="datefff" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
+              <DatePicker v-model="datefff" :options="disoptionsdate" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
               <Select v-model="city" style="width:120px;margin-left:15px" @on-change="form1change">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
@@ -31,16 +31,18 @@
               <Col span="10">
               <div class="lyrd_index_count_content lyrd_index_count_content_line">
                 <div class="lyrd_index_count_bg1"></div>
-                <div class="lyrd_index_count_num">
+                <div class="lyrd_index_count_num" >
                   <div>
                     <span class="lyrd_index_today_visit">总接待游客量</span>
                     <!--{{(this.datefff).toString().substring(8,10)}}日-->
                   </div>
-                  <div>
+                  <div v-if="isshow1==1">
                     <span class="lyrd_index_today_num">{{total.toString().substring(0,total.toString().length-3)}}</span>
                     <span class="lyrd_index_today_dw">人次</span>
                   </div>
+                  <div v-if="isshow1==2" style="margin-top: 20px">暂无数据</div>
                 </div>
+
               </div>
               </Col>
               <Col span="7">
@@ -51,7 +53,7 @@
                     <span class="lyrd_index_today_visit">与昨日环比</span>
 
                   </div>
-                  <div>
+                  <div v-if="isshow2==1">
                     <span class="lyrd_index_today_num">{{ratio}}</span>
                     <span class="lyrd_index_today_dw">%</span>
                     <span v-if="showud1==1">(
@@ -59,6 +61,7 @@
                     <span v-if="showud1!=1">(
                       <Icon :style={color:color1} type="md-arrow-up" size="22" />)</span>
                   </div>
+                  <div v-if="isshow2==2" style="margin-top: 20px">暂无数据</div>
                 </div>
               </div>
               </Col>
@@ -70,7 +73,7 @@
                     <span class="lyrd_index_today_visit">与上月同比</span>
 
                   </div>
-                  <div>
+                  <div v-if="isshow3==1">
                     <span class="lyrd_index_today_num">{{link}}</span>
                     <span class="lyrd_index_today_dw">%</span>
                     <span v-if="showud2==1">(
@@ -78,6 +81,7 @@
                     <span v-if="showud2!=1">(
                       <Icon :style={color:color2} type="md-arrow-down" size="22" />)</span>
                   </div>
+                  <div v-if="isshow3==2" style="margin-top: 20px">暂无数据</div>
                 </div>
               </div>
               </Col>
@@ -169,6 +173,14 @@ export default {
   },
   data() {
     return {
+      disoptionsdate: {
+        disabledDate (date) {
+          return date< new Date(2018,7,1) || date > new Date()
+        }
+      },
+      isshow1:1,
+      isshow2:1,
+      isshow3:1,
       isshowmap:'',
       btitle: "各市州",
       showud1: 1,
@@ -279,7 +291,21 @@ export default {
         })
         .then(resp => {
           this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-
+          if (this.total=='0.00'){
+            this.isshow1=2
+          }else {
+            this.isshow1=1
+          }
+          if (resp.data.hits.ratio===0){
+            this.isshow2=2
+          }else {
+            this.isshow2=1
+          }
+          if (resp.data.hits.link===-100){
+            this.isshow3=2
+          } else {
+            this.isshow3=1
+          }
           if (resp.data.hits.ratio < 0) {
             this.ratio = -resp.data.hits.ratio;
             this.showud1 = 1;
@@ -505,7 +531,21 @@ export default {
         })
         .then(resp => {
           this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-
+          if (this.total=='0.00'){
+            this.isshow1=2
+          }else {
+            this.isshow1=1
+          }
+          if (resp.data.hits.ratio===0){
+            this.isshow2=2
+          }else {
+            this.isshow2=1
+          }
+          if (resp.data.hits.link===-100){
+            this.isshow3=2
+          } else {
+            this.isshow3=1
+          }
           if (resp.data.hits.ratio < 0) {
             this.ratio = -resp.data.hits.ratio;
             this.showud1 = 1;
@@ -612,7 +652,21 @@ export default {
           })
           .then(resp => {
             this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-
+            if (this.total=='0.00'){
+              this.isshow1=2
+            }else {
+              this.isshow1=1
+            }
+            if (resp.data.hits.ratio===0){
+              this.isshow2=2
+            }else {
+              this.isshow2=1
+            }
+            if (resp.data.hits.link===-100){
+              this.isshow3=2
+            } else {
+              this.isshow3=1
+            }
             if (resp.data.hits.ratio < 0) {
               this.ratio = -resp.data.hits.ratio;
               this.showud1 = 1;
@@ -667,7 +721,21 @@ export default {
           })
           .then(resp => {
             this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-
+            if (this.total=='0.00'){
+              this.isshow1=2
+            }else {
+              this.isshow1=1
+            }
+            if (resp.data.hits.ratio===0){
+              this.isshow2=2
+            }else {
+              this.isshow2=1
+            }
+            if (resp.data.hits.link===-100){
+              this.isshow3=2
+            } else {
+              this.isshow3=1
+            }
             if (resp.data.hits.ratio < 0) {
               this.ratio = -resp.data.hits.ratio;
               this.showud1 = 1;
@@ -727,7 +795,22 @@ export default {
         })
         .then(resp => {
           this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-
+          console.log('this.total',resp.data.hits.ratio)
+          if (this.total=='0.00'){
+            this.isshow1=2
+          }else {
+            this.isshow1=1
+          }
+          if (resp.data.hits.ratio===0){
+            this.isshow2=2
+          }else {
+            this.isshow2=1
+          }
+          if (resp.data.hits.link===-100){
+            this.isshow3=2
+          } else {
+            this.isshow3=1
+          }
           if (resp.data.hits.ratio < 0) {
             this.ratio = -resp.data.hits.ratio;
             this.showud1 = 1;
