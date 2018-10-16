@@ -64,7 +64,7 @@
                   <DatePicker v-model="picDate6" type="date" placeholder="Select date"
                               style="width: 120px;" :options="disoptionsdate"></DatePicker>
 
-                  <Select style="width: 120px" v-model="piccity">
+                  <Select style="width: 120px" v-model="city11">
                     <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                   </Select>
                   <Select style="width: 120px" v-model="senic_id5">
@@ -160,7 +160,7 @@
                 </div>
               </div>
               <div>
-                <Select style="width: 120px" v-model="modelcity">
+                <Select style="width: 120px" v-model="city11">
                   <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                 </Select>
                 <DatePicker v-model="da1" type="date" show-week-numbers  placeholder="Select date"
@@ -591,9 +591,11 @@
         })
       },
       picsb(){
-        http.get('bi/get_scenic_by_city',{city_id:this.piccity}).then(resp=>{
+        this.sinic()
+        http.get('bi/get_scenic_by_city',{city_id:this.city11}).then(resp=>{
           this.senicData=resp.data.hits
           this.senic_id5=this.senicData[0].id
+          this.modelsenic=this.senicData[0].id
         })
       },
       pccsscs(){
@@ -657,7 +659,7 @@
       }
     },
     watch: {
-      piccity: 'picsb',
+      city11: 'picsb',
       today: 'pic1',
       picDate6: 'pic1',
       //city11:'sinic',
