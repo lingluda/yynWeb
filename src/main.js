@@ -10,6 +10,7 @@ import 'iview/dist/styles/iview.css';
 import "babel-polyfill"
 import macarons from 'echarts/theme/macarons'
 import  '../src/assets/js/iframeResizer.contentWindow.js'
+import http from "./http";
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.use(iView);
@@ -21,3 +22,14 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+//系统错误捕获
+const errorHandler = (error, vm)=>{
+  console.error('抛出全局异常');
+  console.error(vm);
+  console.error(error);
+  http.get('write_js_log',{msg:error}).then(resp=>{
+    console.log(resp)
+  })
+}
+Vue.config.errorHandler = errorHandler;
+Vue.prototype.$throw = (error)=> errorHandler(error,this);

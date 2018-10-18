@@ -64,7 +64,7 @@
                 </table>
               </div>
             </card>
-        <card style="margin-top: 20px">
+       <!-- <card style="margin-top: 20px">
           <div>
             <Row :gutter="16">
               <Col span="12">
@@ -83,17 +83,17 @@
                     <span style="font-weight: bold;color: #000000">景区客流变化</span>
                     <span style="color:#a5a5a5"> (单位：万人)</span>
                   </div>
-                  <!--<RadioGroup type="button" style="margin-left: 15px" v-model="addling">
+                  &lt;!&ndash;<RadioGroup type="button" style="margin-left: 15px" v-model="addling">
                     <Radio label="1">增长量</Radio>
                     <Radio label="2">增长率</Radio>
-                  </RadioGroup>-->
+                  </RadioGroup>&ndash;&gt;
                   <DatePicker type="date" v-model="picDate5" placeholder="Select date" style="width: 120px;margin-left:15px;" :options="disoptionsdate"></DatePicker>
                   <div id="max2" style="width: 100%;height: 550px;"></div>
                 </div>
               </Col>
             </Row>
           </div>
-        </card>
+        </card>-->
     </div>
   </div>
 </template>
@@ -291,7 +291,7 @@ table{
             left: '3%',
             right: '4%',
             bottom: '7%',
-            top:'3%',
+            top:'1%',
             containLabel: true
           },
           xAxis: {

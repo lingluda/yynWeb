@@ -56,7 +56,7 @@ export default {
           series: [
             {
               type: "map",
-              roam: true,
+              roam: false,
               map: "云南",
               layoutCenter: ["50%", "50%"],
               layoutSize: "100%",

@@ -12,7 +12,7 @@
             <div class="lyrd_index_search_left">
               <span class="lyrd_index_search_title">游客人数</span>
               <Tooltip content="去除常驻人口游客数量的计算" placement="right" max-width="200">
-                <Icon size="19" style="margin-top: 5px" type="ios-help-circle-outline" />
+                <Icon size="19" style="margin: 7px 0px 0px -8px" type="ios-help-circle-outline" />
               </Tooltip>
             </div>
             <div class="lyrd_index_search_right">
@@ -296,12 +296,23 @@ export default {
           }else {
             this.isshow1=1
           }
+          if (resp.data.hits.pred==-1){
+            this.isshow2=2
+          }else {
+            this.isshow2=1
+          }
+
           if (resp.data.hits.ratio===0){
             this.isshow2=2
           }else {
             this.isshow2=1
           }
-          if (resp.data.hits.link===-100){
+          if (resp.data.hits.pred==-1){
+            this.isshow3=2
+          } else {
+            this.isshow3=1
+          }
+          if (resp.data.hits.link===-100||resp.data.hits.link===0){
             this.isshow3=2
           } else {
             this.isshow3=1
@@ -437,6 +448,9 @@ export default {
         },
         yAxis: {
           name: "万人",
+          nameTextStyle: {
+            color: '#999'
+          },
           type: "value",
           axisLine: {
             lineStyle: {
@@ -521,7 +535,6 @@ export default {
               value: resp.data.hits[i].proportion
             });
           }
-          console.log(this.pieData1)
           this.initBar();
         });
       http
@@ -536,12 +549,22 @@ export default {
           }else {
             this.isshow1=1
           }
+          if (resp.data.hits.pred==-1){
+            this.isshow3=2
+          } else {
+            this.isshow3=1
+          }
+          if (resp.data.hits.prem==-1){
+            this.isshow2=2
+          } else {
+            this.isshow2=1
+          }
           if (resp.data.hits.ratio===0){
             this.isshow2=2
           }else {
             this.isshow2=1
           }
-          if (resp.data.hits.link===-100){
+          if (resp.data.hits.link===-100||resp.data.hits.link===0){
             this.isshow3=2
           } else {
             this.isshow3=1
@@ -563,9 +586,7 @@ export default {
         });
     },
     form1change1() {
-      console.log('1111111111111111111',this.date1)
       this.totalP = "";
-      console.log(this.date1)
       this.lineDatax = [];
       this.lineDatay = [];
       http
@@ -584,8 +605,6 @@ export default {
         });
     },
     form1change2() {
-      console.log('1111111111111111111',http.gmt2str(this.date1[0]))
-
       this.totalP = "";
       this.lineDatax = [];
       this.lineDatay = [];
@@ -642,7 +661,6 @@ export default {
                 value: resp.data.hits[i].proportion
               });
             }
-            console.log(this.pieData1)
             this.initBar();
           });
         http
@@ -657,12 +675,22 @@ export default {
             }else {
               this.isshow1=1
             }
+            if (resp.data.hits.pred==-1){
+              this.isshow3=2
+            } else {
+              this.isshow3=1
+            }
+            if (resp.data.hits.prem==-1){
+              this.isshow2=2
+            } else {
+              this.isshow2=1
+            }
             if (resp.data.hits.ratio===0){
               this.isshow2=2
             }else {
               this.isshow2=1
             }
-            if (resp.data.hits.link===-100){
+            if (resp.data.hits.link===-100||resp.data.hits.link===0){
               this.isshow3=2
             } else {
               this.isshow3=1
@@ -694,7 +722,6 @@ export default {
           })
           .then(resp => {
             this.pieData = resp.data.hits;
-            console.log(this.pieData)
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.pieData1.push({
                 name:
@@ -711,7 +738,6 @@ export default {
                 value: resp.data.hits[i].proportion
               });
             }
-            console.log(this.pieData1)
             this.initBar();
           });
         http
@@ -726,12 +752,22 @@ export default {
             }else {
               this.isshow1=1
             }
+            if (resp.data.hits.pred==-1){
+              this.isshow3=2
+            } else {
+              this.isshow3=1
+            }
+            if (resp.data.hits.prem==-1){
+              this.isshow2=2
+            } else {
+              this.isshow2=1
+            }
             if (resp.data.hits.ratio===0){
               this.isshow2=2
             }else {
               this.isshow2=1
             }
-            if (resp.data.hits.link===-100){
+            if (resp.data.hits.link===-100||resp.data.hits.link===0){
               this.isshow3=2
             } else {
               this.isshow3=1
@@ -795,18 +831,27 @@ export default {
         })
         .then(resp => {
           this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-          console.log('this.total',resp.data.hits.ratio)
           if (this.total=='0.00'){
             this.isshow1=2
           }else {
             this.isshow1=1
+          }
+          if (resp.data.hits.pred==-1){
+            this.isshow3=2
+          } else {
+            this.isshow3=1
+          }
+          if (resp.data.hits.prem==-1){
+            this.isshow2=2
+          } else {
+            this.isshow2=1
           }
           if (resp.data.hits.ratio===0){
             this.isshow2=2
           }else {
             this.isshow2=1
           }
-          if (resp.data.hits.link===-100){
+          if (resp.data.hits.link===-100||resp.data.hits.link===0){
             this.isshow3=2
           } else {
             this.isshow3=1

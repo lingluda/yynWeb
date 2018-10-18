@@ -108,6 +108,13 @@ export default new Router({
           component: resolve => {
             require(['../page/coreFlow/index.vue'], resolve)
           }
+        },
+        {
+          path: '/coreFlow/list',
+          name: 'coreFlow',
+          component: resolve => {
+            require(['../page/coreFlow/listInfo.vue'], resolve)
+          }
         }
       ]
     }

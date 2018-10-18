@@ -35,10 +35,18 @@
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
-                    <span >&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color2}"><Icon v-if="is2==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is2!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{fratio}}%&nbsp;&nbsp;</span>
+                    <span >&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                      <span :style="{color:color2}" v-if="isshoe1==1">
+                        <Icon v-if="is2==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/>
+                        <Icon v-if="is2!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{fratio}}%&nbsp;&nbsp;</span>
+                    <span v-if="isshoe1==2">暂无数据</span>
                     </div>
                     <div style="background-color: #f6f8fa;margin-top: 10px;padding-top: 2px">
-                    <span >&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color1}"><Icon v-if="is1==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is1!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{flink}}%&nbsp;&nbsp;</span>
+                    <span >&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                      <span :style="{color:color1}" v-if="isshoe2==1">
+                        <Icon v-if="is1==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/>
+                        <Icon v-if="is1!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{flink}}%&nbsp;&nbsp;</span>
+                      <span v-if="isshoe2==2">暂无数据</span>
                     </div>
                   </Col>
                 </Row>
@@ -65,11 +73,19 @@
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
-                    <span>&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color4}"><Icon v-if="is4==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is4!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{ratio}}%&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;与昨日环比&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                      <span :style="{color:color4}" v-if="isshoe3==1">
+                        <Icon v-if="is4==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/>
+                        <Icon v-if="is4!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{ratio}}%&nbsp;&nbsp;</span>
+                      <span v-if="isshoe3==2">暂无数据</span>
                     </div>
 
                     <div style="background-color: #f6f8fa;margin-top: 10px;padding-top: 2px">
-                    <span>&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span> <span :style="{color:color3}"><Icon v-if="is3==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/><Icon v-if="is3!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{link}}%&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                      <span :style="{color:color3}" v-if="isshoe4==1">
+                        <Icon v-if="is3==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/>
+                        <Icon v-if="is3!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{link}}%&nbsp;&nbsp;</span>
+                      <span v-if="isshoe4==2">暂无数据</span>
                     </div>
                   </Col>
                 </Row>
@@ -122,6 +138,10 @@
   export default {
     data() {
       return {
+        isshoe1:1,
+        isshoe2:1,
+        isshoe3:1,
+        isshoe4:1,
         issh1:1,
         issh2:1,
         addtotal:'',
@@ -160,7 +180,6 @@
     },
     methods: {
       choose7(val){
-        console.log(val)
         if (val==1){
         this.picMonth=[http.getWeekAgo(), http.getYesterDay()]
         this.lineDatax1 = []
@@ -265,7 +284,6 @@
         })
       },
       wp1(){
-        console.log(1111)
         http.get('bi/get_ops_qty_by_date', {date: http.gmt2str(this.picDate)}).then(resp => {
           this.addtotal=http.qfw(resp.data.hits[0].total)
           this.aduData = resp.data.hits[1]
@@ -323,6 +341,26 @@
             this.ratio=-resp.data.hits[1].ratio
             this.color4='green'
             this.is4=2
+          }
+          if (resp.data.hits[0].pred==0||resp.data.hits[0].pred==-1){
+            this.isshoe1=2
+          }else {
+            this.isshoe1=1
+          }
+          if (resp.data.hits[0].prem==0||resp.data.hits[0].prem==-1){
+            this.isshoe2=2
+          }else {
+            this.isshoe2=1
+          }
+          if (resp.data.hits[1].pred==0||resp.data.hits[1].pred==-1){
+            this.isshoe3=2
+          }else {
+            this.isshoe3=1
+          }
+          if (resp.data.hits[1].prem==0||resp.data.hits[0].prem==-1){
+            this.isshoe4=2
+          }else {
+            this.isshoe4=1
           }
         })
       },

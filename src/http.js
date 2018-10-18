@@ -7,6 +7,7 @@ axios.interceptors.response.use(
       const code = response.data.errcode
       const msg = response.data.errmsg || '接口返回错误'
       // Message.error(msg)
+      axios.get('bi/write_js_log?uri='+response.config.url+'&msg='+msg)
       console.error(`cgi: ${response.config.url}`, {
         code,
         msg
@@ -156,6 +157,23 @@ http.addr2lnglat = function (addr) {
 http.qfw = function (num) {
   var reg = /\d{1,3}(?=(\d{3})+$)/g
   return (num + '').replace(reg, '$&,')
+}
+http.fn = function (str) {
+  let newStr ='';
+  var len = 0;
+  for (var i=0; i<str.length; i++) {
+    if (str.charCodeAt(i)>127 || str.charCodeAt(i)==94) {
+      len += 2;
+    } else {
+      len ++;
+    }
+  }
+  if (len>7){
+    newStr = str.substring(0,7)+'/n'+str.substring(7,len)
+  }else {
+    newStr = str
+  }
+  return newStr
 }
 function encodeUrl (obj) {
   let url = ''

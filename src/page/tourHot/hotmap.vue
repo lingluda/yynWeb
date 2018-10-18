@@ -73,27 +73,9 @@
                 </div>
               </div>
               <div class="hotmap_kljd">
-                <Row>
+                <span v-if="is1==2" style="position: absolute;margin-top: 90px;margin-left: 35%;color: #000">景区已闭园，当日峰值游客人数为<span style="color: rgb(0, 110, 255)">{{daymount}}</span>人</span>
+                <Row v-if="is1==1">
                   <Col span="10">
-                    <!--<div style="margin-top: 20px;margin-left: 80px">
-                      &lt;!&ndash;<img src="../../assets/imgs/tkhot.png"/>&ndash;&gt;
-                    </div>
-                    <div >
-                      <span style=" font-size: 16px;  font-weight: bold">景区游客人数</span>
-                      <p style="font-size: 12px">(单位：人)</p>
-                    </div>
-                    <div>
-
-                    </div>
-                    <div>
-                      <span>当日峰值：</span>
-                      <span style="font-weight: bold">{{daymount}}</span>
-                    </div>
-
-                    <div >
-                      <span>景区实时游客人数：</span>
-                      <span style="font-weight: bold">{{currentTime}}</span>
-                    </div>-->
                     <div class="hotmap_tb1">
                       <div class="lyrd_hotmap_count_bg1"></div>
                        <div class="lyrd_hotmap_num">
@@ -105,16 +87,6 @@
                         </div>
                          <div v-if="isshowd1==2" style="margin-top: 20px">暂无数据</div>
                       </div>
-                      <!-- <div class="lyrd_hotmap_num">
-                        <span class="lyrd_hotmap_desc1">景区实时游客人数：</span>
-                        <span class="lyrd_hotmap_today_num">{{currentTime}}</span>
-                        <span class="lyrd_hotmap_today_dw">人</span>
-                        <div>
-                        <span class="lyrd_hotmap_desc1">当日峰值：</span>
-                        <span class="lyrd_hotmap_today_num" style="margin-top: -10px">{{daymount}}</span>
-                        <span class="lyrd_hotmap_today_dw">人</span>
-                      </div>
-                      </div> -->
                     </div>
                   </Col>
                   <Col span="7">
@@ -163,19 +135,20 @@
                 <Select style="width: 120px" v-model="city11">
                   <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
                 </Select>
-                <DatePicker v-model="da1" type="date" show-week-numbers  placeholder="Select date"
-                            style="width: 120px;" :options="disoptionsdate"></DatePicker>
-                <Select style="width: 120px" v-model="power1">
+                <DatePicker v-model="da1" type="date" placeholder="Select date"
+                            style="width: 120px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
+                <Select style="width: 120px" v-model="power1" @on-change="picd">
                   <Option value="60">60分钟</Option>
+                  <Option value="30">30分钟</Option>
                 </Select>
               </div>
               <div style="margin-top: 10px">
                 <Select style="width: 120px" v-model="modelsenic">
                   <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
                 </Select>
-                <DatePicker v-model="da2" type="date" show-week-numbers  placeholder="Select date"
+                <DatePicker v-model="da2" type="date"  placeholder="Select date"
                             style="width: 120px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
-                <Checkbox v-model="single">选择对比日期</Checkbox>
+                <!--<Checkbox v-model="single" @on-change="sing">选择对比日期</Checkbox>-->
               </div>
               <div class="hotmap_klqs">
                 <div id="mybar" style="height:480px;width: 92%;"></div>
@@ -316,6 +289,7 @@
     },
     data() {
       return {
+        is1:2,
         isshowd1:1,
         isshowd2:1,
         isshowd3:1,
@@ -373,6 +347,7 @@
     },
     methods: {
       init() {
+
         http.get('bi/get_all_city', {}).then(resp => {
           this.cityData = resp.data.hits;
           this.modelcity=resp.data.hits[0].id
@@ -380,17 +355,13 @@
           this.piccity=resp.data.hits[0].id
           http.get('bi/get_scenic_by_city',{city_id:this.city11}).then(resp=>{
             this.senicData=resp.data.hits
-            console.log(1111,this.senicData)
             this.senic_id=this.senicData[0].id
           })
         })
-
-        console.log(1111,this.senic_id)
         http.get('bi/get_scenic_tourist_compare_by_date', {
           startTime: http.gmt2str(this.da1),
           startTime1: http.gmt2str(this.da2),
-          // endTime: http.gmt2str(this.da1[1]),
-          // endTime1: http.gmt2str(this.da2[1]),
+
           scenic: this.modelsenic,
           min: this.power1
         }).then(resp => {
@@ -416,7 +387,6 @@
         })
       },
       searchformi(){
-
         this.hotmapl=[]
         http.get('bi/get_scenic_tourist_heat_dist',{date:http.gmt2str(this.date11),scenic:this.senic_id,min:this.power}).then(resp=>{
           this.hotmapx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
@@ -434,8 +404,6 @@
         http.get('bi/get_scenic_tourist_compare_by_date', {
           startTime: http.gmt2str(this.da1),
           startTime1: http.gmt2str(this.da2),
-          // endTime: http.gmt2str(this.da1[1]),
-          // endTime1: http.gmt2str(this.da2[1]),
           scenic: this.modelsenic,
           min: this.power1
         }).then(resp => {
@@ -449,6 +417,28 @@
             this.lineDatay2.push(parseInt(resp.data.hits.curlist[i].n))
           }
           this.initline();
+        })
+      },
+      picds(){
+        this.lineDatay1=[]
+        this.lineDatay2=[]
+        this.lineDatax=[]
+        http.get('bi/get_scenic_tourist_compare_by_date', {
+          startTime: http.gmt2str(this.da1),
+          startTime1: http.gmt2str(this.da2),
+          scenic: this.modelsenic,
+          min: this.power1
+        }).then(resp => {
+          this.lineDatayn1 = resp.data.hits.cprdate;
+          for (var i = 0; i < resp.data.hits.cprlist.length; i++) {
+            this.lineDatay1.push(parseInt(resp.data.hits.cprlist[i].n))
+          }
+          this.lineDatayn2 = resp.data.hits.curdate;
+          for (var i = 0; i < resp.data.hits.curlist.length; i++) {
+            this.lineDatax.push(resp.data.hits.curlist[i].time)
+            this.lineDatay2.push(parseInt(resp.data.hits.curlist[i].n))
+          }
+          this.initlines();
         })
       },
       initGauge() {
@@ -536,11 +526,70 @@
         };
         mybar.setOption(option);
       },
+      initlines() {
+        var mybar = this.$echarts.init(document.getElementById("mybar"));
+        var option = {
+          title: {
+            text: "人数",
+            textStyle: {
+              fontSize: 12,
+              color: "#999"
+            },
+            padding: [20, 0, 3, 80]
+          },
+          tooltip: {
+            trigger: "axis",
+            //formatter: '{b0}<br />{a1} {c1} 人<br />{a0} {c0} 人',
+            //color: 'red'
+          },
+          legend: {
+            bottom: 2,
+            left: 'center',
+            data: [this.lineDatayn1, this.lineDatayn2]
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "8%",
+            containLabel: true
+          },
+          color: ['#006EFF', '#29CC85'],
+          xAxis: {
+            type: "category",
+            boundaryGap: false,
+            data: this.lineDatax
+          },
+          yAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01],
+            splitLine: {
+              lineStyle: {
+                color: '#e8e8e8'
+              }
+            }
+          },
+          series: [
+            {
+              name: this.lineDatayn1,
+              type: "line",
+              stack: "总量1",
+              data: this.lineDatay1
+            }
+          ]
+        };
+        mybar.setOption(option);
+      },
+
       pic1() {
         http.get('bi/get_scenic_tourist_by_date', {
           date: http.gmt2str(this.picDate6),
           scenic: this.senic_id5
         }).then(resp => {
+          if (resp.data.isclose==1){
+            this.is1=2
+          } else {
+            this.is1=1
+          }
           if (resp.data.hits.link<0){
             this.link = -resp.data.hits.link;
             this.showud2=1
@@ -558,17 +607,17 @@
           this.daymount = http.qfw(resp.data.hits.his);
           this.currentTime = http.qfw(resp.data.hits.real);
           this.touristc = resp.data.hits.link;
-          if(this.daymount=='0'){
+          if(this.daymount==0){
             this.isshowd1=2
           } else {
             this.isshowd1=1
           }
-          if(this.link=='100'){
+          if(resp.data.hits.prem==-1){
             this.isshowd3=2
           } else {
             this.isshowd3=1
           }
-          if(this.ratio=='0'){
+          if(resp.data.hits.pred==-1){
             this.isshowd2=2
           } else {
             this.isshowd2=1
@@ -591,7 +640,6 @@
         })
       },
       picsb(){
-        this.sinic()
         http.get('bi/get_scenic_by_city',{city_id:this.city11}).then(resp=>{
           this.senicData=resp.data.hits
           this.senic_id5=this.senicData[0].id
@@ -603,6 +651,11 @@
           date: http.gmt2str(this.picDate6),
           scenic: this.senic_id5
         }).then(resp => {
+          if (resp.data.isclose==1){
+            this.is1=2
+          } else {
+            this.is1=1
+          }
           if (resp.data.hits.link<0){
             this.link = -resp.data.hits.link;
             this.showud2=1
@@ -620,6 +673,21 @@
           this.daymount = http.qfw(resp.data.hits.his);
           this.currentTime = http.qfw(resp.data.hits.real);
           this.touristc = resp.data.hits.link;
+          if(this.daymount==0){
+            this.isshowd1=2
+          } else {
+            this.isshowd1=1
+          }
+          if(resp.data.hits.prem==-1){
+            this.isshowd3=2
+          } else {
+            this.isshowd3=1
+          }
+          if(resp.data.hits.pred==-1){
+            this.isshowd2=2
+          } else {
+            this.isshowd2=1
+          }
         })
       },
       pspsp(){
@@ -635,8 +703,6 @@
         http.get('bi/get_scenic_tourist_compare_by_date', {
           startTime: http.gmt2str(this.da1),
           startTime1: http.gmt2str(this.da2),
-          // endTime: http.gmt2str(this.da1[1]),
-          // endTime1: http.gmt2str(this.da2[1]),
           scenic: this.modelsenic,
           min: this.power1
         }).then(resp => {
@@ -649,11 +715,6 @@
             this.lineDatax.push(resp.data.hits.curlist[i].time)
             this.lineDatay2.push(parseInt(resp.data.hits.curlist[i].n))
           }
-          console.log('名称1：：',this.lineDatayn1)
-          console.log('数据1：：',this.lineDatay1)
-          console.log('lineDatax：：',this.lineDatax)
-          console.log('名称2：：',this.lineDatayn2)
-          console.log('数据2：：',this.lineDatay2)
           this.initline();
         })
       }
@@ -666,7 +727,7 @@
       senic_id:'p1',
       senic_id5:'pccsscs',
       modelcity:'pspsp',
-      modelsenic:'ssdsadfa'
+      modelsenic:'ssdsadfa',
     }
   };
 </script>

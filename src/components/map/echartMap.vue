@@ -425,9 +425,13 @@
           hoverable: false,
           geo: {
             map: "china",
-            //roam: true,
+            roam: true,
             center: [113, 31],
-            zoom:1.8,
+            zoom:1.6,
+            scaleLimit:{
+              max:8,
+              min:1
+            },
             label: {
               emphasis: {
                 show: true

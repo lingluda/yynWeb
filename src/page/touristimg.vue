@@ -898,16 +898,7 @@
             data: this.cityx,
             axisLabel: {
               interval: 0,
-              formatter:function(value,index)
-              {
-                //debugger
-                if (index % 2 != 0) {
-                  return '\n\n' + value;
-                }
-                else {
-                  return value;
-                }
-              }
+              formatter:echartsHelper.labelFormatter
             },
           },
           yAxis: {
@@ -968,16 +959,7 @@
             data: this.provx,
             axisLabel: {
               interval: 0,
-              formatter:function(value,index)
-              {
-                //debugger
-                if (index % 2 != 0) {
-                  return '\n\n' + value;
-                }
-                else {
-                  return value;
-                }
-              }
+              formatter:echartsHelper.labelFormatter
             },
           },
           yAxis: {
@@ -1139,7 +1121,6 @@
       },
       _ccc1(){
         if (this.ccc1==''||this.ccc1=="undefined"||this.ccc1==null){
-          console.log(this.ccc1)
         }
         else {
           this.cccM=this.ccc1
