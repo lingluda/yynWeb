@@ -27,7 +27,7 @@ const errorHandler = (error, vm)=>{
   console.error('抛出全局异常');
   console.error(vm);
   console.error(error);
-  http.get('write_js_log',{msg:error}).then(resp=>{
+  http.get('bi/write_js_log',{msg:error}).then(resp=>{
     console.log(resp)
   })
 }

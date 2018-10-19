@@ -54,6 +54,24 @@ http.getToday = function () {
   }
   return year + '-' + currentMonth + '-' + currentDay
 }
+http.getTodays = function () {
+  var data = new Date()
+  var year = data.getUTCFullYear()
+  var month = data.getMonth() + 1
+  var day = data.getDate()
+  var currentData = data.toLocaleDateString()
+  if (month < 10) {
+    var currentMonth = '0' + month
+  } else {
+    currentMonth = month.toString()
+  }
+  if (day < 10) {
+    var currentDay = '0' + day
+  } else {
+    currentDay = day.toString()
+  }
+  return year + '-' + currentMonth + '-' + currentDay + ' 00:00:00'
+}
 http.getYesterDay = function () {
   var data = new Date()
   data.setDate(data.getDate() - 1)
@@ -140,7 +158,38 @@ http.gmt2strm = function (time) {
   } else {
     DD = date.getDate().toString()
   }
-  let Str = date.getFullYear() + '-' + MM
+  let Str = date.getFullYear() + '-' + MM +'-'+ DD
+  return Str
+}
+http.gmt2strms = function (time) {
+  let date = new Date(time)
+  var YY = date.getMonth() + 1
+  if (YY < 10) {
+    var MM = '0' + YY
+  } else {
+    MM = YY.toString()
+  }
+  if (date.getDate() < 10) {
+    var DD = '0' + date.getDate()
+  } else {
+    DD = date.getDate().toString()
+  }
+  if (date.getHours() < 10) {
+    var HH = '0' + date.getHours()
+  } else {
+    HH = date.getHours().toString()
+  }
+  if (date.getMinutes() < 10) {
+    var aa = '0' + date.getMinutes()
+  } else {
+    aa = date.getMinutes().toString()
+  }
+  if (date.getSeconds() < 10) {
+    var ss = '0' + date.getSeconds()
+  } else {
+    ss = date.getSeconds().toString()
+  }
+  let Str = date.getFullYear() + '-' + MM +'-'+  DD +' '+HH+':'+aa+':'+ss
   return Str
 }
 http.addr2lnglat = function (addr) {

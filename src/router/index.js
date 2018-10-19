@@ -54,6 +54,20 @@ export default new Router({
           }
         },
         {
+          path: 'errlog',
+          name: 'errlog',
+          component: resolve => {
+            require(['../page/ErrLog.vue'], resolve)
+          }
+        },
+        {
+          path: 'reqlog',
+          name: 'reqlog',
+          component: resolve => {
+            require(['../page/ReqLog.vue'], resolve)
+          }
+        },
+        {
           path: '/scenic',
           name: 'scenic',
           component: resolve => {

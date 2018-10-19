@@ -80,7 +80,7 @@
           },
           {
             title: '景区最大承载量',
-            key: 'fit_capacity'
+            key: 'fit'
           },
           {
             title: '营业时间',
@@ -99,6 +99,11 @@
           this.data1=resp.data.hits
           this.total=parseInt(resp.data.total)
           for (var i=0;i<this.data1.length;i++){
+            if (this.data1[i].fit_capacity==0){
+              this.data1[i].fit='暂无数据'
+            }else {
+              this.data1[i].fit=this.data1[i].fit_capacity
+            }
             this.data1[i].px = this.data1[i].grade +'A'
             if (this.data1[i].n==-1){
               this.data1[i].isclose ='已闭园'

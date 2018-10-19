@@ -13,9 +13,9 @@
 
       </Col>
       <Col :span="12">{{item.name}}</Col>
-      <Col :span="6" style="color: red" v-if="item.isclose>item.fit_capacity*0.8"><span class="flowNum">{{item.isclose}}</span></Col>
-      <Col :span="6" v-if="item.isclose<item.fit_capacity*0.8"><span class="flowNum">{{item.isclose}}</span></Col>
-      <Col :span="4"><span class="flowNum">{{item.fit_capacity}}</span></Col>
+      <Col :span="6" style="color: red" v-if="item.n>item.fit_capacity*0.8"><span class="flowNum">{{item.isclose}}</span></Col>
+      <Col :span="6" v-if="item.n<item.fit_capacity*0.8"><span class="flowNum">{{item.isclose}}</span></Col>
+      <Col :span="4"><span class="flowNum">{{item.fit}}</span></Col>
     </Row>
     <router-link to="coreFlow/list"><p style="text-align: right;margin-top:-1px">查看更多 >></p></router-link>
   </div>
@@ -38,7 +38,12 @@
         http.get('bi/get_scenic_tourist_key_by_date', {}).then(resp => {
           this.listData = resp.data.hits;
           for (var i = 0; i < this.listData.length; i++) {
-            if (this.listData[i].n === -1) {
+            if (this.listData[i].fit_capacity==0){
+              this.listData[i].fit='暂无数据'
+            }else {
+                this.listData[i].fit=this.listData[i].fit_capacity
+            }
+            if (this.listData[i].n==-1) {
               this.listData[i].isclose = '已闭园'
             } else {
               this.listData[i].isclose = this.listData[i].n

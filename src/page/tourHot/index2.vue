@@ -105,7 +105,7 @@
               <Col span="12">
                 <x_map :mapdata="this.pieData2map" style="width: 100%;height: 500px;"></x_map>
               </Col>
-              <Col span="12" style="display: flex;justify-items: center;padding: 20px">
+              <Col span="12" style="display: flex;justify-items: center;padding: 20px;">
                 <ul class="ul">
                   <li v-for="item in pieData1">{{item.name}}</li>
                 </ul>
@@ -894,9 +894,9 @@ export default {
 </script>
 <style lang="less" scoped>
   .ul{
-    list-style: none outside none; margin:0; padding: 0;border-top: 1px solid #dbdbdb;min-width: 550px;margin-top: 120px;
+    list-style: none outside none; margin:0; padding: 0;margin-top: 120px;
   }
-  .ul li{ float:left;   width: 25%;  padding: 10px; border-bottom: 1px solid #dbdbdb   }
+  .ul li{ float:left;   width: 140px;  padding: 10px; border-bottom: 1px solid #dbdbdb   }
   .ti {
     margin-bottom: unset !important;
   color: #000;

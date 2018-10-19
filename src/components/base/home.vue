@@ -37,7 +37,7 @@
       </Row>
     </Header>-->
     <Layout>
-    <!-- <Sider hide-trigger style="display: flex;height: calc(100vh-50px);background-color: rgb(51, 51, 51)">
+     <!--<Sider hide-trigger style="display: flex;height: calc(100vh-50px);background-color: rgb(51, 51, 51)">
         <span class="sidebars" @click="selected('index')"><a v-if="'index'===selecteds">旅游热度</a><span v-if="'index'!=selecteds">旅游热度</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;" /></span>
         <span class="sidebars1" @click="selected('touristimg')"><a v-if="'touristimg'===selecteds">游客画像</a><span v-if="'touristimg'!=selecteds">游客画像</span>
@@ -50,8 +50,6 @@
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;" /></span>
         <span class="sidebars1" @click="selected('quota')"><a v-if="'quota'===selecteds">关键指标</a><span v-if="'quota'!=selecteds">关键指标</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;" /></span>
-
-
       </Sider>-->
       <Content style="width:100%;height: 100vh;">
         <router-view></router-view>

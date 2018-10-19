@@ -10,7 +10,7 @@
       <card>
         <div class="lyrd_index_search">
           <div class="lyrd_index_search_left">
-            <span class="lyrd_index_search_title">景区实时客流人数排行</span>
+            <span class="lyrd_index_search_title">景区实时游客人数排行</span>
           </div>
         </div>
         <Row :gutter="20">

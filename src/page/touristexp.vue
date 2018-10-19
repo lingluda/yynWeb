@@ -617,18 +617,6 @@
         http
           .get("bi/get_complaint_by_date", {date: http.gmt2str(this.picdate1), city_id: this.p11})
           .then(resp => {
-            if (!('hits' in resp.data)) {
-              this.isshow1=2
-            }
-            if (!('hits' in resp.data)||resp.data.hits.prem==0||resp.data.hits.prem==-1) {
-              this.isshow2=2
-            }
-            if (!('hits' in resp.data)||resp.data.hits.pred==0||resp.data.hits.pred==-1) {
-              this.isshow3=2
-            } else {
-              this.isshow1=1
-              this.isshow2=1
-              this.isshow3=1
               this.add = http.qfw(resp.data.hits.total);
               this.close = http.qfw(resp.data.hits.closed);
               this.unclose = http.qfw(resp.data.hits.unclosed);
@@ -646,6 +634,14 @@
                 this.ratio = resp.data.hits.ratio;
                 this.showud1 = 2
               }
+            if (!('hits' in resp.data)) {
+              this.isshow1=2
+            }
+            if (!('hits' in resp.data)||resp.data.hits.prem==0||resp.data.hits.prem==-1) {
+              this.isshow2=2
+            }
+            if (!('hits' in resp.data)||resp.data.hits.pred==0||resp.data.hits.pred==-1) {
+              this.isshow3=2
             }
           });
       },
@@ -710,17 +706,6 @@
         http
           .get("bi/get_complaint_by_date", {date: http.gmt2str(this.picdate1), city_id: this.p11})
           .then(resp => {
-            if (!('hits' in resp.data)) {
-              this.isshow1=2
-            }
-            if (!('hits' in resp.data)||resp.data.hits.prem==0||resp.data.hits.prem==-1) {
-              this.isshow2=2
-            }
-            if (!('hits' in resp.data)||resp.data.hits.pred==0||resp.data.hits.pred==-1) {
-              this.isshow3=2
-            } else {
-              this.isshow2=1
-              this.isshow3=1
               this.add = http.qfw(resp.data.hits.total);
               this.close = http.qfw(resp.data.hits.closed);
               this.unclose = http.qfw(resp.data.hits.unclosed);
@@ -738,6 +723,14 @@
                 this.ratio = resp.data.hits.ratio;
                 this.showud1 = 2
               }
+            if (!('hits' in resp.data)) {
+              this.isshow1=2
+            }
+            if (!('hits' in resp.data)||resp.data.hits.prem==0||resp.data.hits.prem==-1) {
+              this.isshow2=2
+            }
+            if (!('hits' in resp.data)||resp.data.hits.pred==0||resp.data.hits.pred==-1) {
+              this.isshow3=2
             }
           });
       },

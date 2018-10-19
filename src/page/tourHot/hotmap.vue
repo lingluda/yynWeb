@@ -151,7 +151,7 @@
                 <!--<Checkbox v-model="single" @on-change="sing">选择对比日期</Checkbox>-->
               </div>
               <div class="hotmap_klqs">
-                <div id="mybar" style="height:480px;width: 92%;"></div>
+                <div id="mybar" style="height:480px;width: 100%;"></div>
               </div>
             </div>
           </card>
@@ -585,7 +585,7 @@
           date: http.gmt2str(this.picDate6),
           scenic: this.senic_id5
         }).then(resp => {
-          if (resp.data.isclose==1){
+          if (resp.data.hits.isclose==1){
             this.is1=2
           } else {
             this.is1=1
@@ -651,7 +651,7 @@
           date: http.gmt2str(this.picDate6),
           scenic: this.senic_id5
         }).then(resp => {
-          if (resp.data.isclose==1){
+          if (resp.data.hits.isclose==1){
             this.is1=2
           } else {
             this.is1=1
