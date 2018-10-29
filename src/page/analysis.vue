@@ -10,6 +10,9 @@
         <div style="display:flex;justify-content: space-between;padding:20px">
         <div class="card_title">
           <span style="font-weight: bold;color: #000000">舆情正负面情绪分析</span>
+          <Tooltip content="当负面舆情低于20%时，判定现舆情总体状态较为健康。" placement="right" max-width="200">
+            <Icon size="19" type="ios-help-circle-outline" />
+          </Tooltip>
         </div>
         <div>
           <Select style="width: 120px" v-model="city1">
@@ -18,14 +21,14 @@
            <DatePicker placement="bottom-end" type="date" v-model="date1" placeholder="自选时间" style="width: 120px"  :options="disoptionsdate"></DatePicker>
         </div>
       </div>
-        <Col span="12" style="padding:0 80px">
+        <Col span="24" style="padding:0 80px">
           <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">媒体情绪</div>
           <div id="health" style="width: 100%;height: 260px;margin-top: -20px"></div>
         </Col>
-        <Col span="12" style="padding:0 50px">
+        <!--<Col span="12" style="padding:0 50px">
           <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">一机游情绪</div>
           <div id="unhealth" style="width: 100%;height: 260px;margin-top: -20px"></div>
-        </Col>
+        </Col>-->
       </Row>
 
     </card>

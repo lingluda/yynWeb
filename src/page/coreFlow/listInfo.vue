@@ -6,6 +6,9 @@
       <router-link to="/coreFlow"><span style="font-size: 12px;color: rgb(102, 159, 199)">核心景区排行</span></router-link>
       <Icon type="ios-arrow-forward"/>
       <span style="font-size: 12px;color: #000">核心景区详情</span>
+      <Tooltip content="仅对该区域内AAAA及AAAAA景区进行排行" placement="right" max-width="200">
+        <Icon size="19"  type="ios-help-circle-outline" />
+      </Tooltip>
     </div>
     <div style="padding: 20px 20px 45px 20px;background-color: #f2f2f2">
       <Table :columns="columns1" :data="data1"></Table>
@@ -49,7 +52,7 @@
           },
           {
             title: '景区级别',
-            key: 'px'
+            key: 'grade_alias'
           },
           {
             title: '所在区县',
@@ -63,13 +66,19 @@
             title: '实时游客人数',
             key: 'isclose',
             render:(h,params)=>{
-              if (params.row.pers>0.8){
+              if (params.row.n>params.row.fit){
                 return h('div',[
-                  h('span',{
+                  h('Tooltip',{
                     style:{
-                      color:'red'
+                      color:'red',
+                    },
+                    attrs:{
+                      maxWidth:'200',
+                      content:'现景区人数已超出景区最优承载人数',
+                      placement:'top'
                     }
                   },params.row.isclose)
+
                 ])
               }else {
                 return h('div',[
@@ -79,12 +88,26 @@
             }
           },
           {
-            title: '景区最大承载量',
+            title: '景区最优承载量',
             key: 'fit'
           },
           {
+            title: '最大承载量',
+            key: 'max_capacity',
+            width:115,
+            render:(h,params)=>{
+              if (params.row.max_capacity==0) {
+                return h('span','暂无数据')
+              } else {
+                return h('div',[
+                  h('span',params.row.max_capacity)
+                ])
+              }
+            }
+          },
+          {
             title: '营业时间',
-            key: 'busi_time'
+            key: 'busi_time_alias'
           },
         ],
         data1: []
@@ -95,7 +118,163 @@
     },
     methods: {
       init(){
-        http.get('bi/get_scenic_tourist_key_more',{pindex:this.current,size:this.psize}).then(resp=>{
+        console.log('12222222223',this.$route.query.d1)
+        console.log('12222222223',this.$route.query.d2)
+        console.log('12222222223',this.$route.query.c1)
+        if(this.$route.query.d1==http.getToday()&&this.$route.query.d2==http.getToday()){
+          this.columns1=[
+            {
+              title: '景区名称',
+              key: 'name',
+              render: (h, params) => {
+                return h('div', [
+                  h('img', {
+                    style: {
+                      height: '30px',
+                      width: '30px',
+                    },
+                    attrs: {
+                      src: params.row.imgurl
+                    }
+                  }),
+                  h('span',{
+                    style:{
+                      position:'absolute',
+                      marginTop:'9px',
+                      marginLeft:'5px'
+                    }
+                  }, params.row.name)
+                ]);
+              }
+            },
+            {
+              title: '景区级别',
+              key: 'grade_alias'
+            },
+            {
+              title: '所在区县',
+              key: 'distname'
+            },
+            {
+              title: '所在州市',
+              key: 'cityname'
+            },
+            {
+              title: '实时游客人数',
+              key: 'isclose',
+              render:(h,params)=>{
+                if (params.row.n>params.row.fit){
+                  return h('div',[
+                    h('Tooltip',{
+                      style:{
+                        color:'red',
+                      },
+                      attrs:{
+                        maxWidth:'200',
+                        content:'现景区人数已超出景区最优承载人数',
+                        placement:'top'
+                      }
+                    },params.row.isclose)
+
+                  ])
+                }else {
+                  return h('div',[
+                    h('span',params.row.isclose)
+                  ])
+                }
+              }
+            },
+            {
+              title: '景区最优承载量',
+              key: 'fit'
+            },
+            {
+              title: '最大承载量',
+              key: 'max_capacity',
+              width:115,
+              render:(h,params)=>{
+                if (params.row.max_capacity==0) {
+                  return h('span','暂无数据')
+                } else {
+                  return h('div',[
+                    h('span',params.row.max_capacity)
+                  ])
+                }
+              }
+            },
+            {
+              title: '营业时间',
+              key: 'busi_time_alias'
+            },
+          ]
+        }else {
+          this.columns1=[
+            {
+              title: '景区名称',
+              key: 'name',
+              render: (h, params) => {
+                return h('div', [
+                  h('img', {
+                    style: {
+                      height: '30px',
+                      width: '30px',
+                    },
+                    attrs: {
+                      src: params.row.imgurl
+                    }
+                  }),
+                  h('span',{
+                    style:{
+                      position:'absolute',
+                      marginTop:'9px',
+                      marginLeft:'5px'
+                    }
+                  }, params.row.name)
+                ]);
+              }
+            },
+            {
+              title: '景区级别',
+              key: 'grade_alias'
+            },
+            {
+              title: '所在区县',
+              key: 'distname'
+            },
+            {
+              title: '所在州市',
+              key: 'cityname'
+            },
+            {
+              title: '累计游客人数',
+              key: 'isclose',
+
+            },
+            {
+              title: '景区最优承载量',
+              key: 'fit'
+            },
+            {
+              title: '最大承载量',
+              key: 'max_capacity',
+              width:115,
+              render:(h,params)=>{
+                if (params.row.max_capacity==0) {
+                  return h('span','暂无数据')
+                } else {
+                  return h('div',[
+                    h('span',params.row.max_capacity)
+                  ])
+                }
+              }
+            },
+            {
+              title: '营业时间',
+              key: 'busi_time_alias'
+            },
+          ]
+        }
+        http.get('bi/get_key_scenic_tourist_datespan',{pindex:this.current,size:this.psize,startTime:this.$route.query.d1,endTime:this.$route.query.d2,city_id:this.$route.query.c1}).then(resp=>{
           this.data1=resp.data.hits
           this.total=parseInt(resp.data.total)
           for (var i=0;i<this.data1.length;i++){

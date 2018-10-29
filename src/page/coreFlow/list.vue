@@ -1,65 +1,154 @@
 <template>
-  <div class="flowList" style="height:569px">
-    <Row style="height: 35px;margin-top: -6px">
-      <Col :span="12" style="font-weight: bold">景区名称</Col>
-      <Col :span="6" style="font-weight: bold">实时客流人数</Col>
-      <Col :span="6" style="font-weight: bold">景区最大承载量</Col>
-    </Row>
-    <Row v-for="item in listData">
-      <Col :span="2">
-        <!-- <div class="flowImg"></div> -->
+  <div class="flowList" style="height:600px">
+    <Table :columns="columns1" :data="listData" size="large" style="width: 100%"></Table>
 
-        <img style="width: 38px;height: 37px;border: 0px" :src="item.tx"/>
-
-      </Col>
-      <Col :span="12">{{item.name}}</Col>
-      <Col :span="6" style="color: red" v-if="item.n>item.fit_capacity*0.8"><span class="flowNum">{{item.isclose}}</span></Col>
-      <Col :span="6" v-if="item.n<item.fit_capacity*0.8"><span class="flowNum">{{item.isclose}}</span></Col>
-      <Col :span="4"><span class="flowNum">{{item.fit}}</span></Col>
-    </Row>
-    <router-link to="coreFlow/list"><p style="text-align: right;margin-top:-1px">查看更多 >></p></router-link>
   </div>
 </template>
 <script>
   import http from "@/http.js"
 
   export default {
+    props:{
+      listData:Array,
+      startDate:String,
+
+    },
     data() {
       return {
-        listData: [],
-        cc: '#000'
+        data1: [],
+        cc: '#000',
+        columns1: [],
       }
     },
     mounted() {
-      this.init()
     },
     methods: {
       init() {
-        http.get('bi/get_scenic_tourist_key_by_date', {}).then(resp => {
-          this.listData = resp.data.hits;
-          for (var i = 0; i < this.listData.length; i++) {
-            if (this.listData[i].fit_capacity==0){
-              this.listData[i].fit='暂无数据'
-            }else {
-                this.listData[i].fit=this.listData[i].fit_capacity
-            }
-            if (this.listData[i].n==-1) {
-              this.listData[i].isclose = '已闭园'
-            } else {
-              this.listData[i].isclose = this.listData[i].n
-            }
+          if(http.gmt2strm(this.startDate[0])==http.getToday()&&http.gmt2strm(this.startDate[1])==http.getToday()){
+            this.columns1=[
+              {
+                title: '景区名称',
+                key: 'name',
+                render: (h, params) => {
+                  return h('div', [
+                    h('img', {
+                      style: {
+                        height: '30px',
+                        width: '30px',
+                      },
+                      attrs: {
+                        src: params.row.image.thumb_url
+                      }
+                    }),
+                    h('span',{
+                      style:{
+                        position:'absolute',
+                        marginTop:'9px',
+                        marginLeft:'5px'
+                      }
+                    }, params.row.name)
+                  ]);
+                }
+              },
+              {
+                title: '实时人数',
+                key: 'isclose',
+                width:95,
+                render:(h,params)=>{
+                  if (params.row.n==-1){
+                    return h('span','已闭园')
+                  }
+                  if (params.row.n/params.row.max_capacity>0.8&&params.row.max_capacity!=0){
+                    return h('div',[
+                      h('Tooltip',{
+                        style:{
+                          color:'red',
+                        },
+                        attrs:{
+                          maxWidth:'120',
+                          content:'当前游客人数已超过该景区最大承载量的80%',
+                          placement:'top'
+                        }
+                      },params.row.n)
+                    ])
+                  }else {
+                    return h('div',[
+                      h('span',params.row.n)
+                    ])
+                  }
+                }
+              },
+              {
+                title:'当日接待量',
+                key:'cur',
+                width:110,
+
+              },
+              {
+                title: '最大承载量',
+                key: 'max_capacity',
+                width:115,
+                render:(h,params)=>{
+                  if (params.row.max_capacity==0) {
+                    return h('span','暂无数据')
+                  } else {
+                    return h('div',[
+                      h('span',params.row.max_capacity)
+                    ])
+                  }
+                }
+              }
+            ]
+          }else {
+            this.columns1=[
+              {
+                title: '景区名称',
+                key: 'name',
+                render: (h, params) => {
+                  return h('div', [
+                    h('img', {
+                      style: {
+                        height: '30px',
+                        width: '30px',
+                      },
+                      attrs: {
+                        src: params.row.image.thumb_url
+                      }
+                    }),
+                    h('span',{
+                      style:{
+                        position:'absolute',
+                        marginTop:'9px',
+                        marginLeft:'5px'
+                      }
+                    }, params.row.name)
+                  ]);
+                }
+              },
+              {
+                title:'累计接待量',
+                key:'cur'
+              },
+              {
+                title: '最大承载量',
+                key: 'max_capacity'
+              }
+            ]
           }
 
-          for (var i = 0; i < this.listData.length; i++) {
-            this.listData[i].tx = this.listData[i].image.thumb_url
-          }
-        })
       }
+    },
+    watch:{
+      startDate:'init',
+      endDate:'init',
     }
   }
 </script>
 
 <style lang="less" scoped>
+  .ivu-table-body.ivu-table-overflowX{
+    overflow-x:unset !important;
+  }
   .flowList {
     padding: 0px 10px 40px 0px;
 

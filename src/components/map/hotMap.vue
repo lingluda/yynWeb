@@ -43,6 +43,7 @@
       methods:{
           init(){
             this.timelines=[]
+            this.LoadingBar.start();
             http.get('bi/get_scenic_tourist_heat_dist',{date:http.gmt2str(this.x3),scenic:this.x2,min:this.x4}).then(resp=>{
               this.centerx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
               this.testData=resp.data.hits;
@@ -50,6 +51,7 @@
                 this.timelines.push(resp.data.hits[i].time)
               }
               this.initMap()
+              this.LoadingBar.finish();
             })
           },
           initMap(){

@@ -2,7 +2,7 @@
   <div class="progressContainer">
     <div class="progress" :style="{width:pers+'%'}">
 
-    </div><span style="margin-left: 5px;margin-top: -5px">{{persn}}</span>
+    </div><span style="margin-left: 10px;margin-top: -5px">{{persn}}</span>
   </div>
 </template>
 <script>

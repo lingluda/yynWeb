@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div>{{mapdata}}
   <div id="main" style="width:100%;height:100%;">
   </div>
   </div>
 </template>
 
 <script>
-  import echarts from "echarts"
+  //import echarts from "echarts"
   import "echarts/map/js/yunnan.js";
-  import "../../assets/js/yunnan.js";
+  //import "../../assets/js/yunnan.js";
     export default {
       name: "indexMap",
       props:{
@@ -26,14 +26,11 @@
             let map = this.$echarts.init(document.getElementById("main"))
             map.setOption({
               tooltip: {
-
                     formatter: '{b}\n{c}%',
-
               },
               visualMap: {
                 min: 0,
                 max: 30,
-
                 text:['高','低'],
                 realtime: true,
                 calculable: true,

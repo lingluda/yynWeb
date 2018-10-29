@@ -15,7 +15,7 @@
      </Row>
   </div> -->
   <Layout>
-  <!--<Header style="background: rgb(38, 38, 38);padding: unset;height: 50px">
+ <!-- <Header style="background: rgb(38, 38, 38);padding: unset;height: 50px">
       <Row type="flex" justify="center" align="middle" style="height: 50px">
         <Col span="19">
         <div style="display: flex;">
@@ -37,7 +37,7 @@
       </Row>
     </Header>-->
     <Layout>
-     <!--<Sider hide-trigger style="display: flex;height: calc(100vh-50px);background-color: rgb(51, 51, 51)">
+    <!-- <Sider hide-trigger style="display: flex;height: calc(100vh-50px);background-color: rgb(51, 51, 51)">
         <span class="sidebars" @click="selected('index')"><a v-if="'index'===selecteds">旅游热度</a><span v-if="'index'!=selecteds">旅游热度</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;" /></span>
         <span class="sidebars1" @click="selected('touristimg')"><a v-if="'touristimg'===selecteds">游客画像</a><span v-if="'touristimg'!=selecteds">游客画像</span>
@@ -49,6 +49,9 @@
         <span class="sidebars1" @click="selected('analysisform')"><a v-if="'analysisform'===selecteds">分析报表</a><span v-if="'analysisform'!=selecteds">分析报表</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;" /></span>
         <span class="sidebars1" @click="selected('quota')"><a v-if="'quota'===selecteds">关键指标</a><span v-if="'quota'!=selecteds">关键指标</span>
+          <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;" /></span>
+       <span class="sidebars1" @click="selected('coreFlow')"><a v-if="'coreFlow'===selecteds">核心排行</a><span v-if="'coreFlow'!=selecteds">核心排行</span>
+
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;" /></span>
       </Sider>-->
       <Content style="width:100%;height: 100vh;">

@@ -68,6 +68,34 @@ export default new Router({
           }
         },
         {
+          path: 'report',
+          name: 'report',
+          component: resolve => {
+            require(['../page/report/report.vue'], resolve)
+          }
+        },
+        {
+          path: 'photo',
+          name: 'photo',
+          component: resolve => {
+            require(['../page/report/photo.vue'], resolve)
+          }
+        },
+        {
+          path: 'reportDownload',
+          name: 'reportDownload',
+          component: resolve => {
+            require(['../page/report/reportDownload.vue'], resolve)
+          }
+        },
+        {
+          path: 'map',
+          name: 'map',
+          component: resolve => {
+            require(['../page/coreFlow/ynmap.vue'], resolve)
+          }
+        },
+        {
           path: '/scenic',
           name: 'scenic',
           component: resolve => {

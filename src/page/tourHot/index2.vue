@@ -21,8 +21,12 @@
                 <Radio label="2">昨日</Radio>
               </RadioGroup>
               <DatePicker v-model="datefff" :options="disoptionsdate" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
-              <Select v-model="city" style="width:120px;margin-left:15px" @on-change="form1change">
+              <Select v-model="city" style="width:120px;" @on-change="form1change3">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+              </Select>
+              <Select v-model="citysenic1" style="width:120px;" @on-change="form1change">
+                <Option value="" v-if="senicData.length==0" disabled>请先选择州市</Option>
+                <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
               </Select>
             </div>
           </div>
@@ -87,6 +91,7 @@
               </Col>
             </Row>
           </div>
+          <div v-show="citysenic1===''">
           <div class="lyrd_index_jryk"  v-if="isshowmap!=0">
             <div class="lyrd_index_jryk_title">
               <span class="lyrd_index_search_title">{{btitle}}游客所占比例</span>
@@ -113,6 +118,7 @@
             </Row>
 
           </div>
+          </div>
         </card>
 
         <!-- 客流统计开始 -->
@@ -128,8 +134,12 @@
                 <Radio label="4">最近30天</Radio>
               </RadioGroup>
               <DatePicker v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" placement="bottom-end" style="width:180px" @on-change="form1change1"></DatePicker>
-              <Select v-model="city1" style="width:120px;margin-left:15px" @on-change="form1change1">
+              <Select v-model="city1" style="width:120px;" @on-change="form1change12">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+              </Select>
+              <Select v-model="citysenic2" style="width:120px;" @on-change="form1change1">
+                <Option value="" v-if="senicData2.length==0" disabled>请先选择州市</Option>
+                <Option v-for="item in senicData2" :value="item.id">{{item.name}}</Option>
               </Select>
             </div>
           </div>
@@ -173,6 +183,7 @@ export default {
   },
   data() {
     return {
+      isshowmap1:1,
       disoptionsdate: {
         disabledDate (date) {
           return date< new Date(2018,7,1) || date > new Date()
@@ -196,6 +207,10 @@ export default {
       cdate: "",
       date1: [http.getWeekAgo(), http.getToday()],
       cityData: [],
+      senicData: [],
+      senicData2: [],
+      citysenic1:'',
+      citysenic2:'',
       city: "",
       city1: "",
       start: "",
@@ -255,7 +270,14 @@ export default {
         this.cityData = resp.data.hits;
         this.city = resp.data.hits[0].id;
         this.city1 = resp.data.hits[0].id;
+        http.get('bi/get_scenic_by_city', {city_id: this.city}).then(resp => {
+          if (resp.data.errcode === 0) {
+            this.senicData = resp.data.hits
+            this.senicData2 = resp.data.hits
+          }
+        })
       });
+
       this.datefff = http.getToday();
       this.pieData1 = [];
       this.pieData2map = [];
@@ -503,97 +525,175 @@ export default {
     click(val) {
       this.$router.push(val);
     },
+    form1change3(){
+      this.citysenic1=''
+      this.form1change()
+    },
     form1change() {
-      if (this.city == 0 || this.city == "undefied" || this.city == null) {
-        this.btitle = "各市州";
-        this.isshowmap=0
-      } else {
-        this.btitle = "各景区";
-        this.isshowmap=1
+      if (this.citysenic1=='') {
+        this.isshowmap1 = 1
+        console.log('this.isshowmap', this.isshowmap)
+        this.isshowmap1 = 1
+        if (this.city == 0 || this.city == "undefied" || this.city == null) {
+          this.btitle = "各市州";
+          this.isshowmap = 0
+        } else {
+          this.btitle = "各景区";
+          this.isshowmap = 1
+        }
+        this.pieData1 = [];
+        http.get('bi/get_scenic_by_city', {city_id: this.city}).then(resp => {
+          if (resp.data.errcode === 0) {
+            this.senicData = resp.data.hits
+          }
+          this.citysenic1 = ''
+          console.log(this.citysenic1 === '')
+          this.isshowmap1 = 1
+          console.log('ssssssssss', this.isshowmap1)
+        })
+        http
+          .get("bi/get_tourism_dist_by_date", {
+            date: http.gmt2str(this.datefff),
+            city_id: this.city
+          })
+          .then(resp => {
+            this.pieData = resp.data.hits;
+            for (var i = 0; i < resp.data.hits.length; i++) {
+              this.pieData1.push({
+                name:
+                  resp.data.hits[i].name +
+                  " " +
+                  resp.data.hits[i].proportion +
+                  "%",
+                value: resp.data.hits[i].value
+              });
+            }
+            for (var i = 0; i < resp.data.hits.length; i++) {
+              this.pieData2map.push({
+                name: resp.data.hits[i].name,
+                value: resp.data.hits[i].proportion
+              });
+            }
+            this.initBar();
+          });
+        http
+          .get("bi/get_tourism_qty_by_date", {
+            date: http.gmt2str(this.datefff),
+            city_id: this.city,
+            scenic: this.citysenic1
+          })
+          .then(resp => {
+            this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            if (this.total == '0.00') {
+              this.isshow1 = 2
+            } else {
+              this.isshow1 = 1
+            }
+            if (resp.data.hits.pred == -1) {
+              this.isshow3 = 2
+            } else {
+              this.isshow3 = 1
+            }
+            if (resp.data.hits.prem == -1) {
+              this.isshow2 = 2
+            } else {
+              this.isshow2 = 1
+            }
+            if (resp.data.hits.ratio === 0) {
+              this.isshow2 = 2
+            } else {
+              this.isshow2 = 1
+            }
+            if (resp.data.hits.link === -100 || resp.data.hits.link === 0) {
+              this.isshow3 = 2
+            } else {
+              this.isshow3 = 1
+            }
+            if (resp.data.hits.ratio < 0) {
+              this.ratio = -resp.data.hits.ratio;
+              this.showud1 = 1;
+            } else {
+              this.ratio = resp.data.hits.ratio;
+              this.showud1 = 2;
+            }
+            if (resp.data.hits.link < 0) {
+              this.link = -resp.data.hits.link;
+              this.showud2 = 2;
+            } else {
+              this.link = resp.data.hits.link;
+              this.showud2 = 1;
+            }
+          });
+      }else {
+        this.isshowmap1=2
+        http
+          .get("bi/get_tourism_qty_by_date", {
+            date: http.gmt2str(this.datefff),
+            city_id: this.city,
+            scenic: this.citysenic1
+          })
+          .then(resp => {
+            this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+            if (this.total == '0.00') {
+              this.isshow1 = 2
+            } else {
+              this.isshow1 = 1
+            }
+            if (resp.data.hits.pred == -1) {
+              this.isshow3 = 2
+            } else {
+              this.isshow3 = 1
+            }
+            if (resp.data.hits.prem == -1) {
+              this.isshow2 = 2
+            } else {
+              this.isshow2 = 1
+            }
+            if (resp.data.hits.ratio === 0) {
+              this.isshow2 = 2
+            } else {
+              this.isshow2 = 1
+            }
+            if (resp.data.hits.link === -100 || resp.data.hits.link === 0) {
+              this.isshow3 = 2
+            } else {
+              this.isshow3 = 1
+            }
+            if (resp.data.hits.ratio < 0) {
+              this.ratio = -resp.data.hits.ratio;
+              this.showud1 = 1;
+            } else {
+              this.ratio = resp.data.hits.ratio;
+              this.showud1 = 2;
+            }
+            if (resp.data.hits.link < 0) {
+              this.link = -resp.data.hits.link;
+              this.showud2 = 2;
+            } else {
+              this.link = resp.data.hits.link;
+              this.showud2 = 1;
+            }
+          });
       }
-      this.pieData1 = [];
-      http
-        .get("bi/get_tourism_dist_by_date", {
-          date: http.gmt2str(this.datefff),
-          city_id: this.city
-        })
-        .then(resp => {
-          this.pieData = resp.data.hits;
-          for (var i = 0; i < resp.data.hits.length; i++) {
-            this.pieData1.push({
-              name:
-                resp.data.hits[i].name +
-                " " +
-                resp.data.hits[i].proportion +
-                "%",
-              value: resp.data.hits[i].value
-            });
-          }
-          for (var i = 0; i < resp.data.hits.length; i++) {
-            this.pieData2map.push({
-              name: resp.data.hits[i].name,
-              value: resp.data.hits[i].proportion
-            });
-          }
-          this.initBar();
-        });
-      http
-        .get("bi/get_tourism_qty_by_date", {
-          date: http.gmt2str(this.datefff),
-          city_id: this.city
-        })
-        .then(resp => {
-          this.total = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-          if (this.total=='0.00'){
-            this.isshow1=2
-          }else {
-            this.isshow1=1
-          }
-          if (resp.data.hits.pred==-1){
-            this.isshow3=2
-          } else {
-            this.isshow3=1
-          }
-          if (resp.data.hits.prem==-1){
-            this.isshow2=2
-          } else {
-            this.isshow2=1
-          }
-          if (resp.data.hits.ratio===0){
-            this.isshow2=2
-          }else {
-            this.isshow2=1
-          }
-          if (resp.data.hits.link===-100||resp.data.hits.link===0){
-            this.isshow3=2
-          } else {
-            this.isshow3=1
-          }
-          if (resp.data.hits.ratio < 0) {
-            this.ratio = -resp.data.hits.ratio;
-            this.showud1 = 1;
-          } else {
-            this.ratio = resp.data.hits.ratio;
-            this.showud1 = 2;
-          }
-          if (resp.data.hits.link < 0) {
-            this.link = -resp.data.hits.link;
-            this.showud2 = 2;
-          } else {
-            this.link = resp.data.hits.link;
-            this.showud2 = 1;
-          }
-        });
+    },
+    form1change12(){
+      http.get('bi/get_scenic_by_city',{city_id:this.city1}).then(resp=>{
+        this.senicData2=resp.data.hits
+        this.citysenic2=''
+      })
+      this.form1change1()
     },
     form1change1() {
       this.totalP = "";
       this.lineDatax = [];
       this.lineDatay = [];
+
       http
         .get("bi/get_tourism_trend_by_timespan", {
           startTime: http.gmt2str(this.date1[0]),
           endTime: http.gmt2str(this.date1[1]),
-          city_id: this.city1
+          city_id: this.city1,
+          scenic: this.citysenic2
         })
         .then(resp => {
           this.totalP = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');//使用正则替换，每隔三个数加一个',';
@@ -612,7 +712,8 @@ export default {
         .get("bi/get_tourism_trend_by_timespan", {
           startTime: http.gmt2str(this.date1[0]),
           endTime: http.gmt2str(this.date1[1]),
-          city_id: this.city1
+          city_id: this.city1,
+          scenic: this.citysenic2
         })
         .then(resp => {
           this.totalP = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');//使用正则替换，每隔三个数加一个',';
