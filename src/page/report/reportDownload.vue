@@ -277,12 +277,14 @@
     methods: {
       send(){
         this.issend=1
-        console.log(this.issend)
+       // console.log(this.issend)
       },
       init() {
         http.get('bi/get_cityname_by_id',{city_id:this.FlowCity}).then(resp=>{
           this.FlowCityName=resp.data.hits
         })
+
+      
 
         //游客人数
         http.get('bi/get_tourism_qty_by_datespan', {
@@ -312,7 +314,7 @@
           endTime: http.gmt2strm(this.d11[1]),
           city_id: this.FlowCity
         }).then(resp => {
-          console.log('asdasdasdasdasdas',resp.data.hits.list)
+          //console.log('asdasdasdasdasdas',resp.data.hits.list)
           this.trendPeople1 = resp.data.hits.list.sort((v1, v2) => v2.timestamp - v1.timestamp);;
           this.trendPeople = resp.data.hits.list.sort((v1, v2) => v2.value - v1.value);
         })
@@ -341,11 +343,15 @@
           endTime: http.gmt2strm(this.d11[1]),
           city_id: this.FlowCity
         }).then(resp => {
+         // console.log(resp.data.hits.age);
           this.imggender = resp.data.hits.gender
           this.imgage = resp.data.hits.age.sort((v1, v2) => v2.value - v1.value)
+          this.imgage = this.getTop3(this.imgage);
           this.imgcar = resp.data.hits.car
           this.imgcash = resp.data.hits.consumpting.sort((v1, v2) => v2.value - v1.value)
+          this.imgcash = this.getTop3(this.imgcash);
           this.imgedu = resp.data.hits.edu.sort((v1, v2) => v2.value - v1.value)
+          this.imgedu = this.getTop3(this.imgedu);
           this.imgmobile = resp.data.hits.mobile
         })
            http.get('bi/get_portrait_origin_by_datespan', {
@@ -392,6 +398,8 @@
           this.rank = resp.data.hits.rank.sort((v1, v2) => v2.avg - v1.avg)
         })
 
+       
+
         /*    //线下消费
             http.get('bi/get_key_scenic_tourist_datespan_withdist', {
             startTime: http.gmt2strm(this.d11[0]),
@@ -429,6 +437,23 @@
             console.log(resp)
           })
   */
+      },
+      getTop3(allDate){
+         const initLen = 3
+          const chartData =  allDate.slice(0, initLen)
+          let extraValue = 0
+          for (let i = initLen, len = allDate.length; i < len; i++){
+            if (allDate[i]) {
+              extraValue += allDate[i].value
+            }
+          }
+          if(extraValue) {
+            chartData.push({
+              name: '其他',
+              value: extraValue
+            })
+          }
+          return chartData;
       }
     }
   }
