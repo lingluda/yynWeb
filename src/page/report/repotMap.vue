@@ -79,11 +79,10 @@
           ]
           })
         this.picBase64Info = map.getDataURL();
-        console.log('picBase64Info:::',picBase64Info)
       },
       send(){
         if (this.issend==1) {
-          console.log('send')
+          console.log('picBase64Info:::',this.picBase64Info)
           http.post('downrep',{}).then(resp=>{
             console.log('send1111asd1ada1112send')
           })

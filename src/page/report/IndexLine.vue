@@ -43,10 +43,10 @@
             },
           }]
         });
-
+        this.picBase64Info = myChart.getDataURL();
       },
       send(){
-
+        console.log('IndexLine:::',this.picBase64Info)
       }
     },
     watch:{

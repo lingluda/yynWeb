@@ -58,12 +58,12 @@
           }
         ]
       })
-      this.picBase64Info = map.getDataURL();
-      console.log('picBase64Info:::',picBase64Info)
+      this.picBase64Info = bar.getDataURL();
     },
     methods:{
 
       send(){
+        console.log('ImgBar:::',this.picBase64Info)
 
       }
     },

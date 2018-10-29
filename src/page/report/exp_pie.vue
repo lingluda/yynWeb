@@ -53,13 +53,12 @@
         ],
 
       })
-      this.picBase64Info = map.getDataURL();
-      console.log('picBase64Info:::',picBase64Info)
+      this.picBase64Info = pie.getDataURL();
     },
     methods:{
 
       send(){
-
+        console.log('exp_pie:::', this.picBase64Info)
       }
     },
     watch:{
