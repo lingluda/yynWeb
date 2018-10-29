@@ -1,9 +1,9 @@
 <template>
   <Row>
-    <Col :span="3">
+    <Col :span="4">
       <img src="@/assets/imgs/cash1.png">
     </Col>
-    <Col :span="21">
+    <Col :span="20">
       <div style="text-align: unset">{{useravg}}</div>
       <span style="font-size: 32px;color: #006eff">{{avg}}</span>
       <span style="font-size: 16px;color: #006eff">{{unit}}</span>

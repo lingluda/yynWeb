@@ -47,9 +47,14 @@
       </div>
       <div style="font-size: 28px">3.3 景区指数排行</div>
       <div v-if="c2.indexOf('6')>-1">
-        <div>景区影响力指数最大的为 （景区名称） ，指数值为 ；景区美誉度指数最大</div>
-        <div>的为 ，指数值为 ；景区传播力指数最大的为 ，指数值为 ；景区商</div>
+        <div>景区影响力指数最大的为{{influence[0].name}} ，指数值为 ；{{transmission[0].name}}景区美誉度指数最大</div>
+        <div>的为 ，指数值为 ；{{reputation[0].name}}景区传播力指数最大的为 ，指数值为 ；景区商</div>
         <div>业价值指数最大的为 ，指数值为 。</div>
+        <Row>
+          <Col :span="8"><tstable :rank="influence"></tstable></Col>
+          <Col :span="8"><tstable :rank="transmission"></tstable></Col>
+          <Col :span="8"><tstable :rank="reputation"></tstable></Col>
+        </Row>
       </div>
 
       <div style="font-size: 28px">3.4 游客画像</div>
@@ -85,12 +90,14 @@
           一机游用户平均消费金额为{{avg.avg_amount}}元，用户在{{rank[0].name}}消费金额最高，为{{rank[0].avg}}元；用户消费中，景区门票消费占比{{cate[1].value*100}}%，酒店消费占比{{cate[2].value*100}}%，机票消费占比{{cate[0].value*100}}%。
         </div>
       </div>
-      <Row>
-        <Col :span="12">
-          <div style="margin-top: 20px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
-          <div style="margin-top: 20px"><item></item></div>
+      <Row style="margin-top: 20px">
+        <Col :span="8">人均消费
+          <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
         </Col>
-        <Col :span="12"><exp_pie :issend="issend" :cate="cate"></exp_pie></Col>
+        <Col :span="8" >
+          游客消费地排行
+          <tstable :rank="ranks" style="margin-top: 40px"></tstable></Col>
+        <Col :span="8"><exp_pie :issend="issend" :cate="cate"></exp_pie></Col>
       </Row>
       <!--  <div v-if="c3.indexOf('10')>-1">(3) 游客线下消费
          <div>一机游用户平均消费金额为 元，用户在 （消费地） 消费金额最高，为 元；用户消费中，景区门票消费占比 %，酒店消费占比 %，机票消费占比 %。</div>
@@ -122,6 +129,7 @@
   import exp from './exp'
   import lengthBar from './lengthBar'
   import exp_pie from './exp_pie'
+  import tstable from './tstable'
 
   export default {
     name: "reportDownload",
@@ -133,6 +141,7 @@
       exp,
       lengthBar,
       exp_pie,
+      tstable,
     },
     data() {
       return {
@@ -240,7 +249,7 @@
           },
         ],
         //data1: []
-        //景区指数
+        //景区指数排行
         influence: [],
         transmission: [],
         reputation: [],
@@ -258,6 +267,7 @@
         avg: '',
         cate: [],
         rank: [],
+        ranks: [],
         //线下消费
         //游客体验-累计新增投诉量
         //区域游客占比
@@ -277,7 +287,6 @@
     methods: {
       send(){
         this.issend=1
-        console.log(this.issend)
       },
       init() {
         http.get('bi/get_cityname_by_id',{city_id:this.FlowCity}).then(resp=>{
@@ -303,7 +312,6 @@
           this.areaPeople1 = resp.data.hits.map(item => {
             return {name: item.name, value: item.proportion}
           })
-          // console.log('this.areaPeople1',this.areaPeople1)
         })
 
         //游客趋势
@@ -312,7 +320,6 @@
           endTime: http.gmt2strm(this.d11[1]),
           city_id: this.FlowCity
         }).then(resp => {
-          console.log('asdasdasdasdasdas',resp.data.hits.list)
           this.trendPeople1 = resp.data.hits.list.sort((v1, v2) => v2.timestamp - v1.timestamp);;
           this.trendPeople = resp.data.hits.list.sort((v1, v2) => v2.value - v1.value);
         })
@@ -327,14 +334,28 @@
         })
 
         //景区指数排行
-        /* http.get('', {
+         http.get('bi/get_scenic_influence_datespan', {
            startTime: http.gmt2strm(this.d11[0]),
            endTime: http.gmt2strm(this.d11[1]),
-           city_id: this.FlowCity
+           top:5
          }).then(resp => {
-           console.log(resp)
-         })*/
+           this.influence = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
+         })
 
+        http.get('bi/get_scenic_transmission_datespan', {
+          startTime: http.gmt2strm(this.d11[0]),
+          endTime: http.gmt2strm(this.d11[1]),
+          top:5
+        }).then(resp => {
+          this.transmission = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
+        })
+        http.get('bi/get_scenic_reputation_datespan', {
+          startTime: http.gmt2strm(this.d11[0]),
+          endTime: http.gmt2strm(this.d11[1]),
+          top:5
+        }).then(resp => {
+          this.reputation = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
+        })
         //基本画像
         http.get('bi/get_portrait_base_by_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
@@ -390,6 +411,11 @@
           this.avg = resp.data.hits.avg
           this.cate = resp.data.hits.cate
           this.rank = resp.data.hits.rank.sort((v1, v2) => v2.avg - v1.avg)
+          let tt= 0
+          for (var i=0;i<this.rank.length;i++){
+             tt +=this.rank[i].avg
+          }
+          this.ranks = this.rank.map(item =>{return{name:item.name,total:tt,pers:item.avg/tt,avg:'人均消费'+item.avg+'元'}})
         })
 
         /*    //线下消费
