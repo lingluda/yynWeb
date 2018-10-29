@@ -1,10 +1,16 @@
 <template>
+  <div>
   <div id="myChart" style="height: 400px;width: 100%"></div>
+  </div>
 </template>
 
 <script>
   export default {
     name: "IndexLine",
+    props:{
+      issend:Number,
+      trendPeople1:Array,
+    },
       mounted(){
         this.init()
       },
@@ -15,18 +21,36 @@
         myChart.setOption({
           xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            boundaryGap: false,
+            data: this.trendPeople1.map(item=>{return item.date})
           },
           yAxis: {
             type: 'value'
           },
+          lineStyle: {
+            color: "#006EFF"
+          },
           series: [{
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line'
+            data:  this.trendPeople1.map(item=>{return item.value}),
+            type: 'line',
+            avoidLabelOverlap: true,
+            label: {
+              normal: {
+                show: true,
+                position: 'top',
+                rotate:15
+              }
+            },
           }]
         });
 
+      },
+      send(){
+
       }
+    },
+    watch:{
+      issend:'send'
     }
   }
 </script>

@@ -10,10 +10,17 @@
     </Row>
     <Row>
       <Col :span="12">
-        <div><item></item></div>
-        <div><item></item></div>
+        <div style="margin-top: 20px"><item></item></div>
+        <div style="margin-top: 20px"><item></item></div>
       </Col>
       <Col :span="12"><lengthBar></lengthBar></Col>
+    </Row>
+    <Row>
+      <Col :span="12">
+        <div style="margin-top: 20px"><item></item></div>
+        <div style="margin-top: 20px"><item></item></div>
+      </Col>
+      <Col :span="12"><exp_pie></exp_pie></Col>
     </Row>
     <exp></exp>
     <div style="width: 100%;height: 400px">
@@ -29,6 +36,7 @@
   import ImgBar from './ImgBar'
   import exp from './exp'
   import lengthBar from './lengthBar'
+  import exp_pie from './exp_pie'
   export default {
     name: "photo",
     components:{
@@ -38,6 +46,7 @@
       item,
       exp,
       lengthBar,
+      exp_pie,
     },
     data(){
       return{

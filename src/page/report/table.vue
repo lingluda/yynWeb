@@ -1,51 +1,52 @@
 <template>
-  <Table :columns="columns1" :data="data1" style="height: 400px;width: 100%"></Table>
+  <div id="pie" style="width: 100%;height: 200px;"></div>
 </template>
 <script>
   export default {
+    name:'table',
     data () {
-      return {
-        columns1: [
+      return {}
+    },
+    mounted(){
+      let pie=this.$echarts.init(document.getElementById('pie'))
+      pie.setOption({
+        title : {
+          text: '某站点用户访问来源',
+          subtext: '纯属虚构',
+          x:'center'
+        },
+        tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+        },
+        series : [
           {
-            title: 'Name',
-            key: 'name'
-          },
-          {
-            title: 'Age',
-            key: 'age'
-          },
-          {
-            title: 'Address',
-            key: 'address'
-          }
-        ],
-        data1: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: 'New York No. 1 Lake Park',
-            date: '2016-10-03'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park',
-            date: '2016-10-01'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park',
-            date: '2016-10-02'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park',
-            date: '2016-10-04'
+            name: '访问来源',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+              {value:335, name:'直接访问'},
+              {value:310, name:'邮件营销'},
+              {value:234, name:'联盟广告'},
+              {value:135, name:'视频广告'},
+              {value:1548, name:'搜索引擎'}
+            ],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
           }
         ]
-      }
+      })
     }
   }
 </script>

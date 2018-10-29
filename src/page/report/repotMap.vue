@@ -4,14 +4,20 @@
 
 <script>
   import "echarts/map/js/yunnan.js";
-
+  import http from "../../http";
   var myData = [
     {name: '昌宁县', value: [99.4973450000001, 25.123843]}
   ]
   export default {
     name: "repotMap",
+    props:{
+      issend:Number,
+      mapdata:Array,
+    },
     data() {
-      return {}
+      return {
+        picBase64Info:'',
+      }
     },
     mounted() {
       this.init()
@@ -20,9 +26,16 @@
       init() {
         let map = this.$echarts.init(document.getElementById('mains'))
         map.setOption({
+          title:{
+            text:'单位（%）',
+            textStyle:{
+              fontSize:12
+            }
+          },
           visualMap: {
+            show:false,
             min: 0,
-            max: 2000,
+            max: 100,
             text:['High','Low'],
             realtime: false,
             calculable: true,
@@ -34,12 +47,10 @@
             {
               name: '浏览量',
               type: 'map',
-              roam: true,
-
               //coordinateSystem: 'geo',
               //geoIndex: 0,
               map: '云南',
-              roam: true,
+              roam: false,
               label: {
                 normal: {
                   show: true,
@@ -63,15 +74,26 @@
                   shadowColor: 'rgba(0, 0, 0, 0.5)'
                 }
               },
-              data:[
-                {name: '昆明市', value:200},
-              ]
+              data:this.mapdata
             }
           ]
           })
-      }
-    }
+        this.picBase64Info = map.getDataURL();
+        console.log('picBase64Info:::',picBase64Info)
+      },
+      send(){
+        if (this.issend==1) {
+          console.log('send')
+          http.post('downrep',{}).then(resp=>{
+            console.log('send1111asd1ada1112send')
+          })
+        }
 
+      }
+    },
+  watch:{
+    issend:'send'
+  }
   }
 </script>
 

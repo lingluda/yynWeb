@@ -1,12 +1,19 @@
 <template>
-  <div :id="main" style="width: 100%;height: 200px"></div>
+  <div>
+  <div :id="main" style="width: 100%;height: 350px"></div>
+  </div>
 </template>
 
 <script>
   export default {
     name: "ImgBar",
     props:{
+      issend:Number,
       main:String,
+      sx:Array,
+    },
+    data(){
+      picBase64Info:''
     },
     mounted(){
       let bar = this.$echarts.init(document.getElementById(this.main))
@@ -15,21 +22,23 @@
           trigger: 'item',
           formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
+        color:["#006EFF", "#29CC85", "#ffbb00", "#ff584c", "#9741d9", "#1fc0cc", "#7ff936", "#ff9c19", "#e63984", "#655ce6", "#47cc50", "#fb0b6"],
         legend: {
-          orient: 'vertical',
-          x: 'left',
-          data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+          bottom:'1%',
+          x: 'center',
+          icon: "circle",
+          data: this.sx.map(item=>{return item.name})
         },
         series: [
           {
             name:'访问来源',
             type:'pie',
-            radius: ['50%', '70%'],
-            avoidLabelOverlap: false,
+            radius: ['40%', '55%'],
             label: {
               normal: {
-                show: false,
-                position: 'center'
+                show: true,
+                position: 'outside',
+                formatter: '{b}\n{d}%',
               },
               emphasis: {
                 show: true,
@@ -39,21 +48,27 @@
                 }
               }
             },
-            labelLine: {
-              normal: {
-                show: false
-              }
+            avoidLabelOverlap: true,
+            labelLine:{
+              show:true,
+              length:5,
+              length2:4
             },
-            data:[
-              {value:335, name:'直接访问'},
-              {value:310, name:'邮件营销'},
-              {value:234, name:'联盟广告'},
-              {value:135, name:'视频广告'},
-              {value:1548, name:'搜索引擎'}
-            ]
+            data: this.sx
           }
         ]
       })
+      this.picBase64Info = map.getDataURL();
+      console.log('picBase64Info:::',picBase64Info)
+    },
+    methods:{
+
+      send(){
+
+      }
+    },
+    watch:{
+      issend:'send'
     }
   }
 </script>

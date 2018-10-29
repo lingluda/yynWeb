@@ -25,7 +25,6 @@
           containLabel: true
         },
         xAxis: {
-
           type: 'value',
           boundaryGap: [0, 0.01]
         },
@@ -36,20 +35,8 @@
         },
         series: [
           {
-            name: '最小时长',
             type: 'bar',
-            data: [18203]
-          },
-          {
-            name: '最大时长',
-            type: 'bar',
-            data: [19325]
-          }
-          ,
-          {
-            name: '平均时长',
-            type: 'bar',
-            data: [19325]
+            data: [183,122,213]
           }
         ]
       })

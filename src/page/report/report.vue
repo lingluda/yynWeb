@@ -167,7 +167,7 @@
       },
       picDate(val){
         if (val=='today'){
-          console.log('sas',http.getcn(0))
+           console.log('sas',http.getMonday(0))
           this.reportDate =[http.getToday(),http.getToday()]
         };
         if (val=='yesterday'){
@@ -198,6 +198,7 @@
             city:this.city,
             senic:this.senic
           }})
+        //http.get('')
       },
 
       handleCheckAll () {

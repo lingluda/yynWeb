@@ -285,6 +285,37 @@ http.gmt2strm = function (time) {
   let Str = date.getFullYear() + '-' + MM +'-'+ DD
   return Str
 }
+http.gmt2strmst = function (time) {
+  let date = new Date(time)
+  var YY = date.getMonth() + 1
+  if (YY < 10) {
+    var MM = '0' + YY
+  } else {
+    MM = YY.toString()
+  }
+  if (date.getDate() < 10) {
+    var DD = '0' + date.getDate()
+  } else {
+    DD = date.getDate().toString()
+  }
+  if (date.getHours() < 10) {
+    var HH = '0' + date.getHours()
+  } else {
+    HH = date.getHours().toString()
+  }
+  if (date.getMinutes() < 10) {
+    var aa = '0' + date.getMinutes()
+  } else {
+    aa = date.getMinutes().toString()
+  }
+  if (date.getSeconds() < 10) {
+    var ss = '0' + date.getSeconds()
+  } else {
+    ss = date.getSeconds().toString()
+  }
+  let Str = date.getFullYear()+MM+DD+HH+aa+ss
+  return Str
+}
 http.gmt2strms = function (time) {
   let date = new Date(time)
   var YY = date.getMonth() + 1
@@ -313,7 +344,7 @@ http.gmt2strms = function (time) {
   } else {
     ss = date.getSeconds().toString()
   }
-  let Str = date.getFullYear() + '-' + MM +'-'+  DD +' '+HH+':'+aa+':'+ss
+  let Str = date.getFullYear() + '-' + MM +'-'+  DD+' '+HH+':'+aa+':'+ss
   return Str
 }
 http.addr2lnglat = function (addr) {
