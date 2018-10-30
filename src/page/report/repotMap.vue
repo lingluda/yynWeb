@@ -11,6 +11,7 @@
   export default {
     name: "repotMap",
     props:{
+      wjj:String,
       issend:Number,
       mapdata:Array,
     },
@@ -26,6 +27,7 @@
       init() {
         let map = this.$echarts.init(document.getElementById('mains'))
         map.setOption({
+          animation: false,
           title:{
             text:'单位（%）',
             textStyle:{
@@ -82,11 +84,26 @@
       },
       send(){
         if (this.issend==1) {
-          console.log('picBase64Info:::',this.picBase64Info)
-          http.post('downrep',{}).then(resp=>{
+
+            $.ajax({
+              type : "POST",
+              url : "bi/uploadimg", //?folder=" + folder + "&imgtype=" + imgtype,
+              data : {
+                "folder" : this.wjj,
+                "imgtype" : 'img_visitor_dist',
+                "data" : this.picBase64Info
+              },
+              cache : false,
+              async : false,
+              dataType : "json",
+              success : function(data) {},
+
+            });
+          }
+        /*  console.log('picBase64Info:::',this.picBase64Info)
+          http.posts('bi/uploadimg',{folder:http.gmt2strmst(new Date()),imgtype:'img_visitor_dist',data:this.picBase64Info}).then(resp=>{
             console.log('send1111asd1ada1112send')
-          })
-        }
+          })*/
 
       }
     },

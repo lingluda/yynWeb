@@ -10,6 +10,7 @@
     mounted(){
       let pie=this.$echarts.init(document.getElementById('pie'))
       pie.setOption({
+        animation: false,
         title : {
           text: '某站点用户访问来源',
           subtext: '纯属虚构',

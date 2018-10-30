@@ -5,9 +5,11 @@
 </template>
 
 <script>
+  import http from "../../http";
   export default {
     name: "ImgBar",
     props:{
+      wjj:String,
       issend:Number,
       main:String,
       sx:Array,
@@ -18,6 +20,7 @@
     mounted(){
       let bar = this.$echarts.init(document.getElementById(this.main))
       bar.setOption({
+        animation: false,
         tooltip: {
           trigger: 'item',
           formatter: "{a} <br/>{b}: {c} ({d}%)"
@@ -63,8 +66,23 @@
     methods:{
 
       send(){
-        console.log('ImgBar:::',this.picBase64Info)
+        if (this.issend==1) {
+        $.ajax({
+          type : "POST",
+          url : "bi/uploadimg", //?folder=" + folder + "&imgtype=" + imgtype,
+          data : {
+            "folder" : this.wjj,
+            "imgtype" : 'img_port_'+this.main,
+            "data" : this.picBase64Info
+          },
+          cache : false,
+          async : false,
+          dataType : "json",
+          success : function(data) {},
 
+        });
+
+      }
       }
     },
     watch:{

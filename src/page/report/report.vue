@@ -55,17 +55,17 @@
             </CheckboxGroup>
           </div>
         </div>
-        <div style="border-bottom: 1px dashed #e9e9e9;">
+     <!--   <div style="border-bottom: 1px dashed #e9e9e9;">
           <CheckboxGroup v-model="checkAllGroup2">
             <Checkbox label="6" style="padding: 10px 0 10px 10px;">景区指数排行</Checkbox>
           </CheckboxGroup>
-        </div>
+        </div>-->
         <div style="border-bottom: 1px dashed #e9e9e9;">
           <div style="padding:10px;">
             <Checkbox
               :indeterminate="indeterminate3"
               :value="checkAll3"
-              @click.prevent.native="handleCheckAll3">游客画像</Checkbox>
+              @click.prevent.native="handleCheckAll3">核心景区客流</Checkbox>
             <Icon v-show="isshow3==1" type="ios-arrow-forward" style="float: right" size="18" @click="clickShow3(2)"/>
             <Icon v-show="isshow3==2" type="ios-arrow-down" style="float: right" size="18" @click="clickShow3(1)"/>
           </div>
@@ -78,6 +78,24 @@
             </CheckboxGroup>
           </div>
         </div>
+      <!--  <div style="border-bottom: 1px dashed #e9e9e9;">
+          <div style="padding:10px;">
+            <Checkbox
+              :indeterminate="indeterminate3"
+              :value="checkAll3"
+              @click.prevent.native="handleCheckAll3">游客画像</Checkbox>
+            <Icon v-show="isshow3==1" type="ios-arrow-forward" style="float: right" size="18" @click="clickShow3(2)"/>
+            <Icon v-show="isshow3==2" type="ios-arrow-down" style="float: right" size="18" @click="clickShow3(1)"/>
+          </div>
+          <div v-show="isshow3==2">
+            <CheckboxGroup v-model="checkAllGroup3" @on-change="checkAllGroupChange3" >
+              <Checkbox label="14" style="padding: 0 0 10px 50px">基本画像</Checkbox>
+              <Checkbox label="8" style="padding: 0 0 10px 50px">人口迁徙</Checkbox>
+              <Checkbox label="9" style="padding: 0 0 10px 50px">一机游用户消费</Checkbox>
+              <Checkbox label="10" style="padding: 0 0 10px 50px">游客线下消费</Checkbox>
+            </CheckboxGroup>
+          </div>
+        </div>-->
         <div style="border-bottom: 1px dashed #e9e9e9;">
           <div style="padding:10px;">
             <Checkbox
@@ -99,7 +117,7 @@
 
       <div style="margin: 20px 0 0 40%">
         <Button @click="goto">预览</Button>
-        <Button>下载</Button>
+        <!--<Button>下载</Button>-->
       </div>
     </card>
   </div>
@@ -117,28 +135,32 @@
         senicData:[],
         reportDate:[http.getYesterDay(),http.getToday()],
         indeterminate: false,
-        checkAll: true,
-        checkAllGroup: ['1','2','3'],
+        checkAll: false,
+        checkAllGroup: [],
         isshow:2,
 
         indeterminate1: false,
-        checkAll1: true,
-        checkAllGroup1: ['4','5' ],
+        checkAll1: false,
+        checkAllGroup1: [],
         isshow1:2,
 
         indeterminate2: false,
-        checkAll2: true,
-        checkAllGroup2: ['6'],
+        checkAll2: false,
+        checkAllGroup2: [],
         isshow2:2,
 
         indeterminate3: false,
-        checkAll3: true,
-        checkAllGroup3: ['7','8','9','10' ],
+        checkAll3: false,
+        checkAllGroup3: [],
         isshow3:2,
+       /* indeterminate3: false,
+        checkAll3: false,
+        checkAllGroup3: [],
+        isshow3:2,*/
 
         indeterminate4: false,
-        checkAll4: true,
-        checkAllGroup4: ['11','12','13'],
+        checkAll4: false,
+        checkAllGroup4: [],
         isshow4:2,
       }
     },
@@ -210,7 +232,7 @@
         this.indeterminate = false;
 
         if (this.checkAll) {
-          this.checkAllGroup = ['1', '2', '3'];
+          this.checkAllGroup = ['1', '2', '3',];
         } else {
           this.checkAllGroup = [];
         }
@@ -272,7 +294,37 @@
         this.indeterminate3 = false;
 
         if (this.checkAll3) {
-          this.checkAllGroup3 = ['7', '8','9','10' ];
+          this.checkAllGroup3 = ['4', '5', ];
+        } else {
+          this.checkAllGroup3 = [];
+        }
+      },
+      checkAllGroupChange3 (data) {
+        if (data.length === 3) {
+          this.indeterminate3 = false;
+          this.checkAll3 = true;
+        } else if (data.length > 0) {
+          this.indeterminate3 = true;
+          this.checkAll3 = false;
+        } else {
+          this.indeterminate3 = false;
+          this.checkAll3 = false;
+        }
+      },
+      clickShow3(val){
+        console.log(val)
+        this.isshow3=val
+      },
+   /*   handleCheckAll3 () {
+        if (this.indeterminate3) {
+          this.checkAll3 = false;
+        } else {
+          this.checkAll3 = !this.checkAll3;
+        }
+        this.indeterminate3 = false;
+
+        if (this.checkAll3) {
+          this.checkAllGroup3 = ['14','8','9','10', ];
         } else {
           this.checkAllGroup3 = [];
         }
@@ -292,7 +344,7 @@
       clickShow3(val){
         console.log(val)
         this.isshow3=val
-      },
+      },*/
 
       handleCheckAll4 () {
         if (this.indeterminate4) {

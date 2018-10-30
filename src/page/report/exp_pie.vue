@@ -4,9 +4,11 @@
   </div>
 </template>
 <script>
+  import http from "../../http";
   export default {
     name:'exp_pie',
     props:{
+      wjj:String,
       issend:Number,
       cate:Array
     },
@@ -18,6 +20,7 @@
     mounted(){
       let pie=this.$echarts.init(document.getElementById('pie'))
       pie.setOption({
+        animation: false,
         title : {
           text: '消费类型占比',
           x:'left',
@@ -58,7 +61,22 @@
     methods:{
 
       send(){
-        console.log('exp_pie:::', this.picBase64Info)
+        if (this.issend==1) {
+        $.ajax({
+          type : "POST",
+          url : "bi/uploadimg", //?folder=" + folder + "&imgtype=" + imgtype,
+          data : {
+            "folder" : this.wjj,
+            "imgtype" : 'img_port_ cons_yjy',
+            "data" : this.picBase64Info
+          },
+          cache : false,
+          async : false,
+          dataType : "json",
+          success : function(data) {},
+
+        });
+      }
       }
     },
     watch:{

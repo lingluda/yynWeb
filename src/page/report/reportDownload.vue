@@ -23,17 +23,18 @@
         <div>（排名第三{{areaPeople[2].name}}）接待人数约{{areaPeople[2].value}}人，占比总量{{areaPeople[2].proportion}}%;</div>
         <div>（排名第四{{areaPeople[3].name}}）接待人数约{{areaPeople[3].value}}人，占比总量{{areaPeople[3].proportion}}%;</div>
         <div>（排名第五{{areaPeople[4].name}}）接待人数约{{areaPeople[4].value}}人，占比总量{{areaPeople[4].proportion}}%;</div>
-
+        <div style="width: 400px;height: 500px;">
+          <repotMap :issend="issend" :wjj="wjj" :mapdata="this.areaPeople1" style="width: 100%;height: 500px;"></repotMap>
+        </div>
       </div>
-       <div style="width: 400px;height: 500px;">
-         <repotMap :issend="issend" :mapdata="this.areaPeople1" style="width: 100%;height: 500px;"></repotMap>
-       </div>
+
       <div v-if="c.indexOf('3')>-1">(3) 游客趋势（若日期选择今日、昨日，则无此模块）
         <div>
           {{trendPeople[0].date}}客流量最大，为{{trendPeople[0].value}}人；{{trendPeople[trendPeople.length-1].date}}客流量最小，为{{trendPeople[trendPeople.length-1].value}}人。
         </div>
+        <indexLine :issend="issend" :wjj="wjj" :trendPeople1="trendPeople1"></indexLine>
       </div>
-      <indexLine :issend="issend" :trendPeople1="trendPeople1"></indexLine>
+
 
       <div style="font-size: 28px">3.2 核心景区排行（省级/州市支持导出对应区域排行数据）</div>
       <div v-if="c1.length>0">
@@ -47,10 +48,9 @@
       </div>
       <div style="font-size: 28px">3.3 景区指数排行</div>
       <div v-if="c2.indexOf('6')>-1">
-        <div>景区影响力指数最大的为{{influence[0].name}} ，指数值为 ；{{transmission[0].name}}景区美誉度指数最大</div>
-        <div>的为 ，指数值为 ；{{reputation[0].name}}景区传播力指数最大的为 ，指数值为 ；景区商</div>
-        <div>业价值指数最大的为 ，指数值为 。</div>
-        <Row>
+        <div>景区影响力指数最大的为{{influence[0].name}} ，指数值为{{influence[0].avg}}；景区美誉度指数最大</div>
+        <div>的为{{reputation[0].name}} ，指数值为{{reputation[0].avg}}；景区传播力指数最大的为{{transmission[0].name}}，指数值为{{transmission[0].avg}}；</div>
+        <Row v-if="rank.length!=0">
           <Col :span="8"><tstable :rank="influence"></tstable></Col>
           <Col :span="8"><tstable :rank="transmission"></tstable></Col>
           <Col :span="8"><tstable :rank="reputation"></tstable></Col>
@@ -71,51 +71,64 @@
         </div>
         <div>{{cfcity[0].name}}来源游客量最大，占比总游客的{{parseInt(cfcity[0].origin_percent*10000)/100}}%；</div>
         <div>{{cfprov[0].name}}来源游客量最大，占比总游客的{{parseInt(cfprov[0].origin_percent*10000)/100}}%。</div>
+        <Row :gutter="16">
+          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar1" :sx="imggender"></ImgBar></Col>
+          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar2" :sx="imgage"></ImgBar></Col>
+          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar3" :sx="imgedu"></ImgBar></Col>
+          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar4" :sx="imgcash"></ImgBar></Col>
+        </Row>
       </div>
-      <Row :gutter="16">
-        <Col :span="6"><ImgBar :issend="issend" :main="bar1" :sx="imggender"></ImgBar></Col>
-        <Col :span="6"><ImgBar :issend="issend" :main="bar2" :sx="imgage"></ImgBar></Col>
-        <Col :span="6"><ImgBar :issend="issend" :main="bar3" :sx="imgedu"></ImgBar></Col>
-        <Col :span="6"><ImgBar :issend="issend" :main="bar4" :sx="imgcash"></ImgBar></Col>
-      </Row>
-      <!--  <div v-if="c3.indexOf('8')>-1">(2) 人口迁徙
-       <div>由 （区域） 迁入 （游客已选区域） 的游客量最多， （路线名称） 热度最大，热度值为 ，游客中飞机出游的占比 %，火车出游的占比 %，汽车出游的占比 %；由 （游客已选区域） 迁出 （区域） 的游客量最多，
-         （路线名称） 热度最大，热度值为 ，游客中飞机出游的占比 %，火车出游的占比 %，汽车出游的占比 %。
+
+       <div v-if="c3.indexOf('8')>-1">(2) 人口迁徙
+       <div>由 （区域） 迁入 （游客已选区域） 的游客量最多， {{inMove[0].line}} 热度最大，热度值为 {{inMove[0].n}}，游客中飞机出游的占比 {{parseInt(inMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(inMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(inMove[0].car*10000)/100}}%；由 （游客已选区域） 迁出 （区域） 的游客量最多，
+         {{parseInt(outMove[0].plane*10000)/100}} 热度最大，热度值为{{outMove[0].n}}，游客中飞机出游的占比{{parseInt(outMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(outMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(outMove[0].car*10000)/100}}%。
        </div>
-       <div>（如游客选择全省，则将云南省所有系统中存储的十六个州市区域的按照该格式导出）</div>
-     </div>-->
+         <Table :columns="intable" :data="inMove"></Table>
+         <Table :columns="outtable" :data="outMove"></Table>
+     </div>
 
       <div v-if="c3.indexOf('9')>-1">(3) 一机游用户消费
         <div>
-          一机游用户平均消费金额为{{avg.avg_amount}}元，用户在{{rank[0].name}}消费金额最高，为{{rank[0].avg}}元；用户消费中，景区门票消费占比{{cate[1].value*100}}%，酒店消费占比{{cate[2].value*100}}%，机票消费占比{{cate[0].value*100}}%。
+          一机游用户平均消费金额为{{avg.avg_amount}}元，</div><div v-if="rank.length!=0">用户在{{rank[0].name}}消费金额最高，为{{rank[0].avg}}元；</div><div>用户消费中，景区门票消费占比{{cate[1].value*100}}%，酒店消费占比{{cate[2].value*100}}%，机票消费占比{{cate[0].value*100}}%。
         </div>
+        <Row style="margin-top: 20px">
+          <Col :span="8">人均消费
+            <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
+          </Col>
+          <Col :span="8" >
+            游客消费地排行
+            <tstable v-if="ranks.length!=0" :rank="ranks" style="margin-top: 40px"></tstable></Col>
+          <Col :span="8"><exp_pie :wjj="wjj" :issend="issend" :cate="cate"></exp_pie></Col>
+        </Row>
       </div>
-      <Row style="margin-top: 20px">
-        <Col :span="8">人均消费
-          <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
-        </Col>
-        <Col :span="8" >
-          游客消费地排行
-          <tstable :rank="ranks" style="margin-top: 40px"></tstable></Col>
-        <Col :span="8"><exp_pie :issend="issend" :cate="cate"></exp_pie></Col>
-      </Row>
+
       <!--  <div v-if="c3.indexOf('10')>-1">(3) 游客线下消费
          <div>一机游用户平均消费金额为 元，用户在 （消费地） 消费金额最高，为 元；用户消费中，景区门票消费占比 %，酒店消费占比 %，机票消费占比 %。</div>
-       </div>
+       </div>-->
 
         <div style="font-size: 28px">3.5 游客体验</div>
          <div v-if="c4.indexOf('11')>-1">(1) 累计新增投诉量
-           <div>累计新增投诉量为 件，（如选择日，则有以下内容：与昨日环比 ）与上月同比 。</div>
+           <div>累计新增投诉量为{{ctotal}}件，与上月同比{{clink}} % 。与昨日环比{{cratio}} %</div>
          </div>
          <div v-if="c4.indexOf('12')>-1">(2) 投诉时长分析
-           <div> （已选时间段） 平台累计已处理投诉量 件，累计处理中投诉量 件；已关闭投诉中，平均处理时长为 小时，最大处理时长为 小时，最小处理时长为 小时。</div>
+           <div> （已选时间段） 平台累计已处理投诉量{{ctotal}}件，累计处理中投诉量{{ctotal}}件；已关闭投诉中，平均处理时长为{{cavg}}小时，最大处理时长为{{cmax}}小时，最小处理时长为{{cmin}}小时。</div>
          </div>
+         <!-- <Row>
+            <Col :span="12">
+              <item></item>
+              <item></item>
+            </Col>
+            <Col :span="12">
+              <lengthBar></lengthBar>
+            </Col>
+          </Row>-->
          <div v-if="c4.indexOf('13')>-1">(3) 投诉对象及处理情况分析
-           <div>游客发起投诉后等待处理的平均时长为 小时，最大时长为 小时，最小时长为 小时；</div>
-           <div>平台投诉处理的平均时长为 小时，最大时长为 小时，最小时长为 小时；</div>
-           <div>游客投诉申诉后等待处理的平均时长为 小时，最大时长为 小时，最小时长为 小时。</div>
-         </div>-->
-      <Button @click="send">下载</Button>
+           <div>游客发起投诉后等待处理的平均时长为{{ccc[0].avg}}小时，最大时长为{{ccc[0].max}}小时，最小时长为{{ccc[0].min}}小时；</div>
+           <div>平台投诉处理的平均时长为{{ccc[1].avg}}小时，最大时长为{{ccc[1].avg}} 小时，最小时长为{{ccc[1].avg}} 小时；</div>
+           <div>游客投诉申诉后等待处理的平均时长为{{ccc[2].avg}}小时，最大时长为{{ccc[2].avg}} 小时，最小时长为{{ccc[2].avg}} 小时。</div>
+         <!--<exp :ccc="ccc"></exp>-->
+         </div>
+      <Button @click="send" :disabled='issend==1'>下载</Button>
     </card>
   </div>
 </template>
@@ -130,10 +143,12 @@
   import lengthBar from './lengthBar'
   import exp_pie from './exp_pie'
   import tstable from './tstable'
+  import TableRenderHeader from "iview/src/components/table/header";
 
   export default {
     name: "reportDownload",
     components: {
+      TableRenderHeader,
       repotMap,
       indexLine,
       ImgBar,
@@ -145,6 +160,50 @@
     },
     data() {
       return {
+        intable:[
+          {
+            title:'线路',
+            key:'line',
+          },
+          {
+            title:'热度',
+            key:'n',
+          },
+          {
+            title:'汽车',
+            key:'car',
+          },
+          {
+            title:'火车',
+            key:'train',
+          },
+          {
+            title:'飞机',
+            key:'plane',
+          }
+        ],
+        outtable:[
+          {
+            title:'线路',
+            key:'line',
+          },
+          {
+            title:'热度',
+            key:'n',
+          },
+          {
+            title:'汽车',
+            key:'car',
+          },
+          {
+            title:'火车',
+            key:'train',
+          },
+          {
+            title:'飞机',
+            key:'plane',
+          }
+        ],
         d11: [this.$route.query.s1, this.$route.query.s2],
         c: this.$route.query.c,
         c1: this.$route.query.c1,
@@ -152,7 +211,7 @@
         c3: this.$route.query.c3,
         c4: this.$route.query.c4,
         FlowCity: this.$route.query.city,
-        FlowCityName: '',
+        FlowCityName: '全省',
         //游客人数
         tourPeople: '',
         //区域游客占比
@@ -263,6 +322,8 @@
         cfcity:[],
         cfprov:[],
         //人口迁徙
+        inMove:[],
+        outMove:[],
         //一机游用户消费
         avg: '',
         cate: [],
@@ -270,15 +331,23 @@
         ranks: [],
         //线下消费
         //游客体验-累计新增投诉量
+        clink:'',
+        cratio:'',
+        ctotal:'',
+        cavg:'',
+        cmax:'',
+        cmin:'',
+        ccc:[],
         //区域游客占比
         //投诉时长分析
-        bar1:'bar1',
-        bar2:'bar2',
-        bar3:'bar3',
-        bar4:'bar4',
+        bar1:'base_1',
+        bar2:'base_2',
+        bar3:'base_3',
+        bar4:'base_4',
         useravg:'用户平均消费金额',
         avgunit:'元',
-        issend:'',
+        issend:0,
+        wjj:'',
       }
     },
     mounted() {
@@ -287,11 +356,47 @@
     methods: {
       send(){
         this.issend=1
-       // console.log(this.issend)
+        this.wjj=http.gmt2strmst(new Date())
+        setTimeout(() => {
+        window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime='+http.gmt2strm(this.d11[0])+'&endtime='+http.gmt2strm(this.d11[1])+'&folder='+this.wjj)
+        }, 4000);
       },
       init() {
         http.get('bi/get_cityname_by_id',{city_id:this.FlowCity}).then(resp=>{
-          this.FlowCityName=resp.data.hits
+          if (resp.data.hits!=''){
+            this.FlowCityName=resp.data.hits
+          }
+
+          //人口迁徙
+          http.get('bi/get_migrate_by_date', {
+            date: http.gmt2strm(this.d11[0]),
+            city_name: this.FlowCityName,
+            top:10,
+            io:'in',
+          }).then(resp => {
+            if (resp.data.hits.length!=0){
+            this.inMove =resp.data.hits.sort((v1,v2)=>v2.n-v1.n)
+            for (var i=0;this.inMove.length;i++){
+              this.inMove[i].line=this.inMove[i].from+'-'+this.inMove[i].to
+            }
+            }
+
+              })
+
+          //人口迁徙
+          http.get('bi/get_migrate_by_date', {
+            date: http.gmt2strm(this.d11[0]),
+            city_name: this.FlowCityName,
+            top:10,
+            io:'out',
+          }).then(resp => {
+            if (resp.data.hits.length!=0){
+            this.outMove =resp.data.hits.sort((v1,v2)=>v2.n-v1.n)
+            for (var i=0;this.outMove.length;i++){
+              this.outMove[i].line=this.outMove[i].from+'-'+this.outMove[i].to
+            }
+            }
+          })
         })
 
 
@@ -401,14 +506,8 @@
 
           })*/
 
-        /* //人口迁徙
-         http.get('bi/get_migrate_by_datespan', {
-           startTime: http.gmt2strm(this.d11[0]),
-           endTime: http.gmt2strm(this.d11[1]),
-           city_id: this.FlowCity
-         }).then(resp => {
-           console.log(resp)
-         })*/
+        //人口迁徙
+
 
         //一机游用户消费
         http.get('bi/get_consume_by_datespan', {
@@ -418,12 +517,15 @@
         }).then(resp => {
           this.avg = resp.data.hits.avg
           this.cate = resp.data.hits.cate
+          this.rank = resp.data.hits.rank
+          if (this.rank.length!=0){
           this.rank = resp.data.hits.rank.sort((v1, v2) => v2.avg - v1.avg)
           let tt= 0
           for (var i=0;i<this.rank.length;i++){
              tt +=this.rank[i].avg
           }
           this.ranks = this.rank.map(item =>{return{name:item.name,total:tt,pers:item.avg/tt,avg:'人均消费'+item.avg+'元'}})
+          }
         })
 
 
@@ -438,12 +540,24 @@
           })*/
 
         //游客体验-累计新增投诉量
-        http.get('bi/get_complaint_by_datespan', {
+        http.get('bi/get_complaint_by_date', {
+          startTime: http.gmt2strm(this.d11[0]),
+          city_id: this.FlowCity
+        }).then(resp => {
+          this.ctotal = resp.data.hits.total
+          this.clink = resp.data.hits.link
+          this.cratio = resp.data.hits.ratio
+          this.cavg = resp.data.hits.avg_proc
+          this.cmax = resp.data.hits.max_proc
+          this.cmin = resp.data.hits.min_proc
+          this.ccc = resp.data.hits.proc_stat
+        })
+        http.get('bi/get_complaint_trend_by_timespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
           city_id: this.FlowCity
         }).then(resp => {
-          console.log(resp)
+
         })
 
 

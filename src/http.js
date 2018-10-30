@@ -23,6 +23,13 @@ axios.interceptors.response.use(
 )
 
 let http = {}
+http.posts = function (url, data) {
+  return axios.post({
+    method:'post',
+    url:url,
+    params:{data}
+  })
+}
 http.post = function (url, data) {
   console.log(data)
   if (Object.keys(data).length == 0) {

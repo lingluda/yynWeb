@@ -8,6 +8,7 @@
     mounted() {
       let lbar = this.$echarts.init(document.getElementById('lengthbar'))
       lbar.setOption({
+        animation: false,
         title: {
           text: '世界人口总量',
         },
