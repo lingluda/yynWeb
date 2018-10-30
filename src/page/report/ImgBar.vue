@@ -15,7 +15,9 @@
       sx:Array,
     },
     data(){
-      picBase64Info:''
+      return{
+        picBase64Info:''
+      }
     },
     mounted(){
       let bar = this.$echarts.init(document.getElementById(this.main))
