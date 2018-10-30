@@ -259,31 +259,7 @@
             title: '所在州市',
             key: 'cityname'
           },
-          /*{
-            title: '实时游客人数',
-            key: 'isclose',
-            render:(h,params)=>{
-              if (params.row.n>params.row.fit){
-                return h('div',[
-                  h('Tooltip',{
-                    style:{
-                      color:'red',
-                    },
-                    attrs:{
-                      maxWidth:'200',
-                      content:'现景区人数已超出景区最优承载人数',
-                      placement:'top'
-                    }
-                  },params.row.isclose)
 
-                ])
-              }else {
-                return h('div',[
-                  h('span',params.row.isclose)
-                ])
-              }
-            }
-          },*/
           {
             title: '景区最优承载量',
             key: 'fit_capacity'
@@ -307,7 +283,6 @@
             key: 'busi_time_alias'
           },
         ],
-        //data1: []
         //景区指数排行
         influence: [],
         transmission: [],
@@ -358,7 +333,29 @@
         this.issend=1
         this.wjj=http.gmt2strmst(new Date())
         setTimeout(() => {
-        window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime='+http.gmt2strm(this.d11[0])+'&endtime='+http.gmt2strm(this.d11[1])+'&folder='+this.wjj)
+          let opts =[]
+          if (this.c.length==3){
+            opts.push(100)
+          }
+          if (this.c1.length==3){
+            opts.push(200)
+          }
+          if (this.c2.length==3){
+            opts.push(300)
+          }
+          if (this.c3.length==3){
+            opts.push(400)
+          }
+          if (this.c4.length==3){
+            opts.push(500)
+          }
+          opts.push(this.c)
+          opts.push(this.c1)
+          opts.push(this.c3)
+          opts.push(this.c4)
+          let tt = opts.join(',')
+          console.log(tt)
+          window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime='+http.gmt2strm(this.d11[0])+'&endtime='+http.gmt2strm(this.d11[1])+'&folder='+this.wjj+'&opts='+tt)
         }, 4000);
       },
       init() {
