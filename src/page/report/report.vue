@@ -55,11 +55,11 @@
             </CheckboxGroup>
           </div>
         </div>
-     <!--   <div style="border-bottom: 1px dashed #e9e9e9;">
+        <div style="border-bottom: 1px dashed #e9e9e9;">
           <CheckboxGroup v-model="checkAllGroup2">
             <Checkbox label="6" style="padding: 10px 0 10px 10px;">景区指数排行</Checkbox>
           </CheckboxGroup>
-        </div>-->
+        </div>
         <div style="border-bottom: 1px dashed #e9e9e9;">
           <div style="padding:10px;">
             <Checkbox
@@ -137,22 +137,22 @@
         indeterminate: false,
         checkAll: false,
         checkAllGroup: [],
-        isshow:2,
+        isshow:1,
 
         indeterminate1: false,
         checkAll1: false,
         checkAllGroup1: [],
-        isshow1:2,
+        isshow1:1,
 
         indeterminate2: false,
         checkAll2: false,
         checkAllGroup2: [],
-        isshow2:2,
+        isshow2:1,
 
         indeterminate3: false,
         checkAll3: false,
         checkAllGroup3: [],
-        isshow3:2,
+        isshow3:1,
        /* indeterminate3: false,
         checkAll3: false,
         checkAllGroup3: [],
@@ -161,7 +161,7 @@
         indeterminate4: false,
         checkAll4: false,
         checkAllGroup4: [],
-        isshow4:2,
+        isshow4:1,
       }
     },
     mounted(){
@@ -224,6 +224,7 @@
       },
 
       handleCheckAll () {
+        this.isshow =2
         if (this.indeterminate) {
           this.checkAll = false;
         } else {
@@ -255,6 +256,7 @@
       },
 
       handleCheckAll1 () {
+        this.isshow1=2
         if (this.indeterminate1) {
           this.checkAll1 = false;
         } else {
@@ -286,6 +288,7 @@
       },
 
       handleCheckAll3 () {
+        this.isshow3=2
         if (this.indeterminate3) {
           this.checkAll3 = false;
         } else {
@@ -294,13 +297,13 @@
         this.indeterminate3 = false;
 
         if (this.checkAll3) {
-          this.checkAllGroup3 = ['4', '5', ];
+          this.checkAllGroup3 = ['7', '8', '9','10',];
         } else {
           this.checkAllGroup3 = [];
         }
       },
       checkAllGroupChange3 (data) {
-        if (data.length === 3) {
+        if (data.length === 4) {
           this.indeterminate3 = false;
           this.checkAll3 = true;
         } else if (data.length > 0) {
@@ -347,6 +350,7 @@
       },*/
 
       handleCheckAll4 () {
+        this.isshow4=2
         if (this.indeterminate4) {
           this.checkAll4 = false;
         } else {

@@ -12,44 +12,44 @@
       <div style="font-size: 28px">3.1 旅游热度概况</div>
 
       <div v-if="c.indexOf('1')>-1">(1) 游客人数
-        <div>{{FlowCityName}}总接待游客量为{{tourPeople.total}}人次，（如选择日，则有以下内容：与昨</div>
-        <div>日环比{{tourPeople.ratio}}），与上月同比{{tourPeople.link}}。</div>
+        <div>{{FlowCityName}} 总接待游客量为 {{tourPeople.total}} 人次，（如选择日，则有以下内容：与昨日环比 {{tourPeople.ratio}}），与上月同比 {{tourPeople.link}}。</div>
       </div>
 
-      <div v-if="c.indexOf('2')>-1">(2) 区域游客占比
-        <div> （区域）接待游客占比量前5分别为： （区域/景区名称） ，</div>
-        <div>（排名第一{{areaPeople[0].name}}）接待人数约{{areaPeople[0].value}}人，占比总量{{areaPeople[0].proportion}}%;</div>
-        <div>（排名第二{{areaPeople[1].name}}）接待人数约{{areaPeople[1].value}}人，占比总量{{areaPeople[1].proportion}}%;</div>
-        <div>（排名第三{{areaPeople[2].name}}）接待人数约{{areaPeople[2].value}}人，占比总量{{areaPeople[2].proportion}}%;</div>
-        <div>（排名第四{{areaPeople[3].name}}）接待人数约{{areaPeople[3].value}}人，占比总量{{areaPeople[3].proportion}}%;</div>
-        <div>（排名第五{{areaPeople[4].name}}）接待人数约{{areaPeople[4].value}}人，占比总量{{areaPeople[4].proportion}}%;</div>
+      <div v-if="c.indexOf('2')>-1">(2) {{FlowCityName}}游客占比
+        <div> {{FlowCityName}}接待游客占比量前5分别为：</div>
+        <div>（排名第一 {{areaPeople[0].name}}）接待人数约 {{areaPeople[0].value}}人，占比总量 {{areaPeople[0].proportion}}%;</div>
+        <div>（排名第二 {{areaPeople[1].name}}）接待人数约 {{areaPeople[1].value}}人，占比总量 {{areaPeople[1].proportion}}%;</div>
+        <div>（排名第三 {{areaPeople[2].name}}）接待人数约 {{areaPeople[2].value}}人，占比总量 {{areaPeople[2].proportion}}%;</div>
+        <div>（排名第四 {{areaPeople[3].name}}）接待人数约 {{areaPeople[3].value}}人，占比总量 {{areaPeople[3].proportion}}%;</div>
+        <div>（排名第五 {{areaPeople[4].name}}）接待人数约 {{areaPeople[4].value}}人，占比总量 {{areaPeople[4].proportion}}%;</div>
         <div style="width: 400px;height: 500px;">
           <repotMap :issend="issend" :wjj="wjj" :mapdata="this.areaPeople1" style="width: 100%;height: 500px;"></repotMap>
         </div>
       </div>
 
-      <div v-if="c.indexOf('3')>-1">(3) 游客趋势（若日期选择今日、昨日，则无此模块）
+      <div v-if="c.indexOf('3')>-1">(3) 游客趋势
         <div>
-          {{trendPeople[0].date}}客流量最大，为{{trendPeople[0].value}}人；{{trendPeople[trendPeople.length-1].date}}客流量最小，为{{trendPeople[trendPeople.length-1].value}}人。
+          {{trendPeople[0].date}} 日客流量最大，为 {{trendPeople[0].value}}人；{{trendPeople[trendPeople.length-1].date}} 日客流量最小，为 {{trendPeople[trendPeople.length-1].value}}人。
         </div>
         <indexLine :issend="issend" :wjj="wjj" :trendPeople1="trendPeople1"></indexLine>
       </div>
 
 
-      <div style="font-size: 28px">3.2 核心景区排行（省级/州市支持导出对应区域排行数据）</div>
+      <div style="font-size: 28px">3.2 核心景区排行</div>
       <div v-if="c1.length>0">
-        <div>景区累计游客人数排行前五分别为：</div>
-        <div> {{coreSenic[0].name}}，接待游客人{{coreSenic[0].cur}}人次；</div>
-        <div> {{coreSenic[1].name}}，接待游客人{{coreSenic[1].cur}}人次；</div>
-        <div> {{coreSenic[2].name}}，接待游客人{{coreSenic[2].cur}}人次；</div>
-        <div> {{coreSenic[3].name}}，接待游客人{{coreSenic[3].cur}}人次；</div>
-        <div> {{coreSenic[4].name}}，接待游客人{{coreSenic[4].cur}}人次；</div>
+        <div>{{FlowCityName}} 累计游客人数排行前五分别为：</div>
+        <div> {{coreSenic[0].name}}，接待游客人 {{coreSenic[0].cur}}人次；</div>
+        <div> {{coreSenic[1].name}}，接待游客人 {{coreSenic[1].cur}}人次；</div>
+        <div> {{coreSenic[2].name}}，接待游客人 {{coreSenic[2].cur}}人次；</div>
+        <div> {{coreSenic[3].name}}，接待游客人 {{coreSenic[3].cur}}人次；</div>
+        <div> {{coreSenic[4].name}}，接待游客人 {{coreSenic[4].cur}}人次；</div>
         <Table :columns="columns1" :data="coreSenic"></Table>
       </div>
       <div style="font-size: 28px">3.3 景区指数排行</div>
       <div v-if="c2.indexOf('6')>-1">
-        <div>景区影响力指数最大的为{{influence[0].name}} ，指数值为{{influence[0].avg}}；景区美誉度指数最大</div>
-        <div>的为{{reputation[0].name}} ，指数值为{{reputation[0].avg}}；景区传播力指数最大的为{{transmission[0].name}}，指数值为{{transmission[0].avg}}；</div>
+        <div>景区影响力指数最大的为 {{influence[0].name}} ，指数值为 {{influence[0].avg}}；</div>
+        <div>景区美誉度指数最大的为 {{reputation[0].name}} ，指数值为 {{reputation[0].avg}}；</div>
+        <div>景区传播力指数最大的为 {{transmission[0].name}}，指数值为 {{transmission[0].avg}}；</div>
         <Row v-if="rank.length!=0">
           <Col :span="8"><tstable :rank="influence"></tstable></Col>
           <Col :span="8"><tstable :rank="transmission"></tstable></Col>
@@ -60,7 +60,7 @@
       <div style="font-size: 28px">3.4 游客画像</div>
 
       <div v-if="c3.indexOf('7')>-1">(1) 基本画像
-        <div>（区域/景区）来访游客中:</div>
+        <div>{{FlowCityName}} 来访游客中:</div>
         <div> 男士 占比{{parseInt(imggender[0].value*10000)/100}}%，女士 占比{{parseInt(imggender[1].value*10000)/100}}%；</div>
         <div> {{imgage[0].name}}年龄段的游客最多，占比{{parseInt(imgage[0].value*10000)/100}}%；</div>
         <div> {{imgedu[0].name}}学历 的游客最多，占比{{parseInt(imgedu[0].value*10000)/100}}%；</div>
@@ -80,8 +80,8 @@
       </div>
 
        <div v-if="c3.indexOf('8')>-1">(2) 人口迁徙
-       <div>由 （区域） 迁入 （游客已选区域） 的游客量最多， {{inMove[0].line}} 热度最大，热度值为 {{inMove[0].n}}，游客中飞机出游的占比 {{parseInt(inMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(inMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(inMove[0].car*10000)/100}}%；由 （游客已选区域） 迁出 （区域） 的游客量最多，
-         {{parseInt(outMove[0].plane*10000)/100}} 热度最大，热度值为{{outMove[0].n}}，游客中飞机出游的占比{{parseInt(outMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(outMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(outMove[0].car*10000)/100}}%。
+       <div>由 （区域） 迁入 （游客已选区域） 的游客量最多， {{inMove[0].line}} 热度最大，热度值为 {{inMove[0].n}}，游客中飞机出游的占比 {{parseInt(inMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(inMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(inMove[0].car*10000)/100}}%；</div>
+       <div>  由 （游客已选区域） 迁出 （区域） 的游客量最多， {{outMove[0].line}} 热度最大，热度值为{{outMove[0].n}}，游客中飞机出游的占比{{parseInt(outMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(outMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(outMove[0].car*10000)/100}}%。
        </div>
          <Table :columns="intable" :data="inMove"></Table>
          <Table :columns="outtable" :data="outMove"></Table>
