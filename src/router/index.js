@@ -78,7 +78,7 @@ export default new Router({
           path: 'photo',
           name: 'photo',
           component: resolve => {
-            require(['../page/report/tstable.vue'], resolve)
+            require(['../page/report/photo.vue'], resolve)
           }
         },
         {

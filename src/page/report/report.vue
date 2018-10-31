@@ -72,7 +72,8 @@
           <div v-show="isshow3==2">
             <CheckboxGroup v-model="checkAllGroup3" @on-change="checkAllGroupChange3" >
               <Checkbox label="7" style="padding: 0 0 10px 50px">基本画像</Checkbox>
-              <Checkbox label="8" style="padding: 0 0 10px 50px">人口迁徙</Checkbox>
+              <Checkbox v-if="showchech==1" label="8" style="padding: 0 0 10px 50px">人口迁徙</Checkbox>
+              <Checkbox disabled v-if="showchech==2" label="28" style="padding: 0 0 10px 50px">人口迁徙</Checkbox>
               <Checkbox label="9" style="padding: 0 0 10px 50px">一机游用户消费</Checkbox>
               <Checkbox label="10" style="padding: 0 0 10px 50px">游客线下消费</Checkbox>
             </CheckboxGroup>
@@ -97,11 +98,37 @@
           </div>
         </div>
       </div>
-      <div id="reportmap" style="width:100%;height:580px;"></div>
       <div style="margin: 20px 0 0 40%">
         <Button @click="goto">预览</Button>
         <!--<Button>下载</Button>-->
       </div>
+      <div v-show="false">
+      <div v-if="checkAllGroup.indexOf('2')>-1" id="reportmap" style="width:100%;height:580px;"></div>
+      <div v-if="checkAllGroup.indexOf('3')>-1" id="indexline" style="width:100%;height:580px;"></div>
+      <div v-if="checkAllGroup3.indexOf('7')>-1">
+      <div id="b1" style="width:100%;height:580px;"></div>
+      <div id="b2" style="width:100%;height:580px;"></div>
+      <div id="b3" style="width:100%;height:580px;"></div>
+      <div id="b4" style="width:100%;height:580px;"></div>
+      </div>
+      <Row v-if="checkAllGroup2.indexOf('6')>-1">
+        <Col :span="8"><tstable :rank="influence"></tstable></Col>
+        <Col :span="8"><tstable :rank="transmission"></tstable></Col>
+        <Col :span="8"><tstable :rank="reputation"></tstable></Col>
+      </Row>
+      <Row style="margin-top: 20px"  v-if="checkAllGroup3.indexOf('9')>-1">
+        <Col :span="8">人均消费
+          <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
+        </Col>
+        <Col :span="8" >
+          游客消费地排行
+          <tstable v-if="ranks.length!=0" :rank="ranks" style="margin-top: 40px"></tstable></Col>
+        <Col :span="8"><div id="cashbar" style="width: 100%;height: 400px"></div></Col>
+      </Row>
+
+
+      </div>
+
     </card>
   </div>
 </template>
@@ -110,9 +137,9 @@
   import http from '@/http.js'
   import "echarts/map/js/yunnan.js";
   import repotMap from './repotMap1'
-  import indexLine from './IndexLine'
+  import indexLine from './IndexLine1'
   import item from './item'
-  import ImgBar from './ImgBar'
+  import ImgBar from './ImgBar1'
   import exp from './exp'
   import lengthBar from './lengthBar'
   import exp_pie from './exp_pie'
@@ -131,6 +158,7 @@
     },
     data(){
       return{
+        showchech:1,
         FlowCityName: '全省',
         //游客人数
         tourPeople: '',
@@ -268,10 +296,7 @@
         checkAll3: false,
         checkAllGroup3: [],
         isshow3:1,
-       /* indeterminate3: false,
-        checkAll3: false,
-        checkAllGroup3: [],
-        isshow3:2,*/
+
 
         indeterminate4: false,
         checkAll4: false,
@@ -284,6 +309,13 @@
     },
     methods:{
       getCityS(){
+        if (http.gmt2strm(this.reportDate[0])==http.gmt2strm(this.reportDate[1])) {
+          this.showchech = 1
+          console.log(this.checkAllGroup3)
+        }else {
+          this.showchech = 2
+          console.log(this.checkAllGroup3)
+        }
         http.get("bi/get_all_city_prov", {}).then(resp => {
           this.cityData = resp.data.hits;
           this.city = resp.data.hits[0].id;
@@ -293,6 +325,117 @@
             }
           })
         });
+        this.indexMaps()
+        this.indexLine()
+        this.initImg()
+        this.cash()
+        this.onecash()
+        //游客趋势
+        //基本画像
+
+      },
+      onecash(){
+        //一机游用户消费
+        http.get('bi/get_consume_by_datespan', {
+          startTime: http.gmt2strm(this.reportDate[0]),
+          endTime: http.gmt2strm(this.reportDate[1]),
+          city_id: this.city
+        }).then(resp => {
+          this.avg = resp.data.hits.avg
+          this.cate = resp.data.hits.cate
+          this.initPie('cashbar','消费类型占比',resp.data.hits.cate)
+          this.rank = resp.data.hits.rank
+          if (this.rank.length!=0){
+            this.rank = resp.data.hits.rank.sort((v1, v2) => v2.avg - v1.avg)
+            let tt= 0
+            for (var i=0;i<this.rank.length;i++){
+              tt +=this.rank[i].avg
+            }
+            this.ranks = this.rank.map(item =>{return{name:item.name,total:tt,pers:item.avg/tt,avg:'人均消费'+item.avg+'元'}})
+          }
+        })
+      },
+      cash(){
+        //景区指数排行
+        http.get('bi/get_scenic_influence_datespan', {
+          startTime: http.gmt2strm(this.reportDate[0]),
+          endTime: http.gmt2strm(this.reportDate[1]),
+          top:5
+        }).then(resp => {
+          this.influence = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
+        })
+
+        http.get('bi/get_scenic_transmission_datespan', {
+          startTime: http.gmt2strm(this.reportDate[0]),
+          endTime: http.gmt2strm(this.reportDate[1]),
+          top:5
+        }).then(resp => {
+          this.transmission = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
+        })
+        http.get('bi/get_scenic_reputation_datespan', {
+          startTime: http.gmt2strm(this.reportDate[0]),
+          endTime: http.gmt2strm(this.reportDate[1]),
+          top:5
+        }).then(resp => {
+          this.reputation = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
+        })
+
+      },
+      initPie(id,title,data){
+        let pie=this.$echarts.init(document.getElementById(id))
+        pie.setOption({
+          animation: false,
+          title : {
+            text: title,
+            x:'left',
+            textStyle:{
+              fontSize:14
+            }
+
+          },
+          color:["#006EFF", "#29CC85", "#ffbb00", "#ff584c", "#9741d9", "#1fc0cc", "#7ff936", "#ff9c19", "#e63984", "#655ce6", "#47cc50", "#fb0b6"],
+          tooltip : {
+            trigger: 'item',
+            formatter: " {b} :<br/> {c} ({d}%)"
+          },
+          legend: {
+            // top:'1%',
+            bottom:'1%',
+            left: 'center',
+            icon: "circle",
+            data: data.map(i=>{return i.name})
+          },
+          series : [
+            {
+              type: 'pie',
+              data: data,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'outside',
+                  formatter: '{b}\n{d}%',
+                }
+              },
+            }
+          ],
+
+        })
+      },
+      wdate(){
+        this.indexMaps()
+        this.indexLine()
+        this.initImg()
+        this.cash()
+        this.onecash()
+      },
+      wcity(){
+        this.indexMaps()
+        this.indexLine()
+        this.initImg()
+        this.cash()
+        this.onecash()
+      },
+      indexMaps(){
         //区域游客占比
         http.get('bi/get_tourism_dist_by_datespan', {
           startTime: http.gmt2strm(this.reportDate[0]),
@@ -360,6 +503,102 @@
           })
         })
       },
+      indexLine(){
+        http.get('bi/get_tourism_trend_by_timespan', {
+          startTime: http.gmt2strm(this.reportDate[0]),
+          endTime: http.gmt2strm(this.reportDate[1]),
+          city_id: this.city
+        }).then(resp => {
+          this.trendPeople1 = resp.data.hits.list
+          let myChart = this.$echarts.init(document.getElementById('indexline'))
+          // 绘制图表
+          myChart.setOption({
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: this.trendPeople1.map(item => {
+                return item.date
+              })
+            },
+            yAxis: {
+              type: 'value'
+            },
+            lineStyle: {
+              color: "#006EFF"
+            },
+            series: [{
+              data: this.trendPeople1.map(item => {
+                return item.value
+              }),
+              type: 'line',
+              avoidLabelOverlap: true,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'top',
+                  rotate: 15
+                }
+              },
+            }]
+          });
+        })
+      },
+      initImg(){
+        http.get('bi/get_portrait_base_by_datespan', {
+          startTime: http.gmt2strm(this.reportDate[0]),
+          endTime: http.gmt2strm(this.reportDate[1]),
+          city_id: this.city
+        }).then(resp => {
+          this.initImgBar('b1',resp.data.hits.gender)
+          this.initImgBar('b2',resp.data.hits.age.sort((v1, v2) => v2.value - v1.value))
+          this.initImgBar('b3',resp.data.hits.consumpting.sort((v1, v2) => v2.value - v1.value))
+          this.initImgBar('b4',resp.data.hits.edu.sort((v1, v2) => v2.value - v1.value))
+        })
+      },
+      initImgBar(b1,data){
+        let bar = this.$echarts.init(document.getElementById(b1))
+        bar.setOption({
+          tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+          },
+          color:["#006EFF", "#29CC85", "#ffbb00", "#ff584c", "#9741d9", "#1fc0cc", "#7ff936", "#ff9c19", "#e63984", "#655ce6", "#47cc50", "#fb0b6"],
+          legend: {
+            bottom:'1%',
+            x: 'center',
+            icon: "circle",
+            data: data.map(item=>{return item.name})
+          },
+          series: [
+            {
+              name:'访问来源',
+              type:'pie',
+              radius: ['40%', '55%'],
+              label: {
+                normal: {
+                  show: true,
+                  position: 'outside',
+                  formatter: '{b}\n{d}%',
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '30',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              avoidLabelOverlap: true,
+              labelLine:{
+                show:true,
+                length:5,
+                length2:4
+              },
+              data: data
+            }
+          ]
+        })
+      },
       citychange(){
         this.senic=''
         http.get('bi/get_scenic_by_city', {city_id: this.city}).then(resp => {
@@ -370,7 +609,7 @@
       },
       picDate(val){
         if (val=='today'){
-           console.log('sas',http.getMonday(0))
+           console.log('sas',this.reportDate[0].getTime()==this.reportDate[1].getTime())
           this.reportDate =[http.getToday(),http.getToday()]
         };
         if (val=='yesterday'){
@@ -388,6 +627,13 @@
         if (val=='lastm'){
           this.reportDate =[http.getLstMonthFirstday(),http.getLstMonthEndday()]
         };
+        if (http.gmt2strm(this.reportDate[0])==http.gmt2strm(this.reportDate[1])) {
+          this.showchech = 1
+          console.log(this.checkAllGroup3)
+        }else {
+          this.showchech = 2
+          console.log(this.checkAllGroup3)
+        }
       },
       goto(){
         this.$router.push({path:'reportDownload',query:{
@@ -498,7 +744,7 @@
         console.log(val)
         this.isshow3=val
       },
-      
+
       handleCheckAll4 () {
         this.isshow4=2
         if (this.indeterminate4) {
@@ -531,6 +777,14 @@
         this.isshow4=val
       },
 
+    },
+    watch:{
+      reportDate:'wdate',
+      city:'wcity',
+      checkAllGroup:'wdate',
+      checkAllGroup2:'wdate',
+      checkAllGroup3:'wdate',
+      checkAllGroup4:'wdate',
     }
   }
 </script>
