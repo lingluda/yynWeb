@@ -15,7 +15,10 @@
       lbar.setOption({
         animation: false,
         title: {
-          text: '世界人口总量',
+          text: '已关闭投诉处理时长',
+          textStyle:{
+            fontSize: 12
+          }
         },
         tooltip: {
           trigger: 'axis',
@@ -23,7 +26,7 @@
             type: 'shadow'
           }
         },
-
+        color:["#006EFF", "#29CC85", "#ffbb00", "#ff584c"],
         grid: {
           left: '3%',
           right: '4%',

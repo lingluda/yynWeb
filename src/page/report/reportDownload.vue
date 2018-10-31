@@ -12,7 +12,7 @@
       <div style="font-size: 28px">3.1 旅游热度概况</div>
 
       <div v-if="c.indexOf('1')>-1">(1) 游客人数
-        <div>{{FlowCityName}} 总接待游客量为 {{tourPeople.total}} 人次，（如选择日，则有以下内容：与昨日环比 {{tourPeople.ratio}}），与上月同比 {{tourPeople.link}}。</div>
+        <div>{{FlowCityName}} 总接待游客量为 {{tourPeople.total}} 人次，与昨日环比 {{tourPeople.ratio}}，与上月同比 {{tourPeople.link}}。</div>
       </div>
 
       <div v-if="c.indexOf('2')>-1">(2) {{FlowCityName}}游客占比
@@ -105,32 +105,32 @@
       <!--  <div v-if="c3.indexOf('10')>-1">(3) 游客线下消费
          <div>一机游用户平均消费金额为 元，用户在 （消费地） 消费金额最高，为 元；用户消费中，景区门票消费占比 %，酒店消费占比 %，机票消费占比 %。</div>
        </div>-->
-
-        <div style="font-size: 28px">3.5 游客体验</div>
-         <div v-if="c4.indexOf('11')>-1">(1) 累计新增投诉量
-           <div>累计新增投诉量为{{ctotal}}件，与上月同比{{clink}} % 。与昨日环比{{cratio}} %</div>
-         </div>
-         <div v-if="c4.indexOf('12')>-1">(2) 投诉时长分析
-           <div> （已选时间段） 平台累计已处理投诉量{{ctotal}}件，累计处理中投诉量{{ctotal}}件；已关闭投诉中，平均处理时长为{{cavg}}小时，最大处理时长为{{cmax}}小时，最小处理时长为{{cmin}}小时。</div>
-         </div>
+      <div style="font-size: 28px">3.5 游客体验</div>
+      <div v-if="c4.indexOf('11')>-1">(1) 累计新增投诉量
+        <div>累计新增投诉量为{{ctotal}}件，与上月同比{{clink}} % 。与昨日环比{{cratio}} %</div>
+      </div>
+      <div v-if="c4.indexOf('12')>-1">(2) 投诉时长分析
+        <div> （已选时间段） 平台累计已处理投诉量{{ctotal}}件，累计处理中投诉量{{ctotal}}件；已关闭投诉中，平均处理时长为{{cavg}}小时，最大处理时长为{{cmax}}小时，最小处理时长为{{cmin}}小时。</div>
         <Row>
-            <Col :span="12">
-              <item :useravg="cTitle" :avg="closed" :unit="cType">
-                 
-              </item>
-              <item :useravg="cTitle2" :avg="unclosed" :unit="cType">
-                  
-              </item>
-            </Col>
-            <Col :span="12">
-              <lengthBar :avg_proc="cavg" :max_proc="cmax" :min_proc="cmin"></lengthBar>
-            </Col>
-          </Row>
+          <Col :span="12">
+            <item :useravg="cTitle" :avg="closed" :unit="cType">
+
+            </item>
+            <item :useravg="cTitle2" :avg="unclosed" :unit="cType">
+
+            </item>
+          </Col>
+          <Col :span="12">
+            <lengthBar :avg_proc="cavg" :max_proc="cmax" :min_proc="cmin"></lengthBar>
+          </Col>
+        </Row>
+      </div>
+
          <div v-if="c4.indexOf('13')>-1">(3) 投诉对象及处理情况分析
            <div>游客发起投诉后等待处理的平均时长为{{ccc[0].avg}}小时，最大时长为{{ccc[0].max}}小时，最小时长为{{ccc[0].min}}小时；</div>
            <div>平台投诉处理的平均时长为{{ccc[1].avg}}小时，最大时长为{{ccc[1].avg}} 小时，最小时长为{{ccc[1].avg}} 小时；</div>
            <div>游客投诉申诉后等待处理的平均时长为{{ccc[2].avg}}小时，最大时长为{{ccc[2].avg}} 小时，最小时长为{{ccc[2].avg}} 小时。</div>
-         <exp :ccc="ccc"></exp>
+         <!--<exp :ccc="ccc"></exp>-->
          </div>
       <Button @click="send" :disabled='issend==1'>下载</Button>
     </card>
@@ -164,6 +164,7 @@
     },
     data() {
       return {
+        cType:'件',
         intable:[
           {
             title:'线路',
@@ -263,31 +264,7 @@
             title: '所在州市',
             key: 'cityname'
           },
-          /*{
-            title: '实时游客人数',
-            key: 'isclose',
-            render:(h,params)=>{
-              if (params.row.n>params.row.fit){
-                return h('div',[
-                  h('Tooltip',{
-                    style:{
-                      color:'red',
-                    },
-                    attrs:{
-                      maxWidth:'200',
-                      content:'现景区人数已超出景区最优承载人数',
-                      placement:'top'
-                    }
-                  },params.row.isclose)
 
-                ])
-              }else {
-                return h('div',[
-                  h('span',params.row.isclose)
-                ])
-              }
-            }
-          },*/
           {
             title: '景区最优承载量',
             key: 'fit_capacity'
@@ -311,7 +288,6 @@
             key: 'busi_time_alias'
           },
         ],
-        //data1: []
         //景区指数排行
         influence: [],
         transmission: [],
@@ -335,6 +311,8 @@
         ranks: [],
         //线下消费
         //游客体验-累计新增投诉量
+        cTitle:'',
+        cTitle2:'',
         clink:'',
         cratio:'',
         ctotal:'',
@@ -342,11 +320,6 @@
         cmax:'',
         cmin:'',
         ccc:[],
-        closed:'',
-        unclosed:'',
-        cTitle:'',
-        cTitle2:'',
-        cType:'件',
         //区域游客占比
         //投诉时长分析
         bar1:'base_1',
@@ -367,7 +340,29 @@
         this.issend=1
         this.wjj=http.gmt2strmst(new Date())
         setTimeout(() => {
-        window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime='+http.gmt2strm(this.d11[0])+'&endtime='+http.gmt2strm(this.d11[1])+'&folder='+this.wjj)
+          let opts =[]
+          if (this.c.length==3){
+            opts.push(100)
+          }
+          if (this.c1.length==3){
+            opts.push(200)
+          }
+          if (this.c2.length==3){
+            opts.push(300)
+          }
+          if (this.c3.length==3){
+            opts.push(400)
+          }
+          if (this.c4.length==3){
+            opts.push(500)
+          }
+          opts.push(this.c)
+          opts.push(this.c1)
+          opts.push(this.c3)
+          opts.push(this.c4)
+          let tt = opts.join(',')
+          console.log(tt)
+          window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime='+http.gmt2strm(this.d11[0])+'&endtime='+http.gmt2strm(this.d11[1])+'&folder='+this.wjj+'&opts='+tt)
         }, 4000);
       },
       init() {
@@ -565,33 +560,33 @@
           this.cTitle = http.getToday().substring(5,7) + '月累计已处理投诉量'
           this.cTitle2 = http.getToday().substring(5,7)  + '月累计处理中投诉量'
         })
-        http.get('bi/get_complaint_trend_by_timespan', {
+  /*      http.get('bi/get_complaint_trend_by_timespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
           city_id: this.FlowCity
         }).then(resp => {
 
-        })
+        })*/
 
 
         //投诉时长分析
-         http.get('bi/get_key_scenic_tourist_datespan_withdist', {
+        /* http.get('bi/get_key_scenic_tourist_datespan_withdist', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
           city_id: this.FlowCity
         }).then(resp => {
           console.log(resp)
-        })
+        })*/
 
         //投诉对象及处理情况分析
-          http.get('bi/get_key_scenic_tourist_datespan_withdist', {
+        /*  http.get('bi/get_key_scenic_tourist_datespan_withdist', {
             startTime: http.gmt2strm(this.d11[0]),
             endTime: http.gmt2strm(this.d11[1]),
             city_id: this.FlowCity
           }).then(resp => {
             console.log(resp)
           })
-  
+  */
       },
       getTop3(allDate){
          const initLen = 3

@@ -50,7 +50,7 @@
         <div>景区影响力指数最大的为 {{influence[0].name}} ，指数值为 {{influence[0].avg}}；</div>
         <div>景区美誉度指数最大的为 {{reputation[0].name}} ，指数值为 {{reputation[0].avg}}；</div>
         <div>景区传播力指数最大的为 {{transmission[0].name}}，指数值为 {{transmission[0].avg}}；</div>
-        <Row v-if="rank.length!=0">
+        <Row v-if="rank.length!==0">
           <Col :span="8"><tstable :rank="influence"></tstable></Col>
           <Col :span="8"><tstable :rank="transmission"></tstable></Col>
           <Col :span="8"><tstable :rank="reputation"></tstable></Col>
@@ -113,20 +113,24 @@
          <div v-if="c4.indexOf('12')>-1">(2) 投诉时长分析
            <div> （已选时间段） 平台累计已处理投诉量{{ctotal}}件，累计处理中投诉量{{ctotal}}件；已关闭投诉中，平均处理时长为{{cavg}}小时，最大处理时长为{{cmax}}小时，最小处理时长为{{cmin}}小时。</div>
          </div>
-         <!-- <Row>
+        <Row>
             <Col :span="12">
-              <item></item>
-              <item></item>
+              <item :useravg="cTitle" :avg="closed" :unit="cType">
+                 
+              </item>
+              <item :useravg="cTitle2" :avg="unclosed" :unit="cType">
+                  
+              </item>
             </Col>
             <Col :span="12">
-              <lengthBar></lengthBar>
+              <lengthBar :avg_proc="cavg" :max_proc="cmax" :min_proc="cmin"></lengthBar>
             </Col>
-          </Row>-->
+          </Row>
          <div v-if="c4.indexOf('13')>-1">(3) 投诉对象及处理情况分析
            <div>游客发起投诉后等待处理的平均时长为{{ccc[0].avg}}小时，最大时长为{{ccc[0].max}}小时，最小时长为{{ccc[0].min}}小时；</div>
            <div>平台投诉处理的平均时长为{{ccc[1].avg}}小时，最大时长为{{ccc[1].avg}} 小时，最小时长为{{ccc[1].avg}} 小时；</div>
            <div>游客投诉申诉后等待处理的平均时长为{{ccc[2].avg}}小时，最大时长为{{ccc[2].avg}} 小时，最小时长为{{ccc[2].avg}} 小时。</div>
-         <!--<exp :ccc="ccc"></exp>-->
+         <exp :ccc="ccc"></exp>
          </div>
       <Button @click="send" :disabled='issend==1'>下载</Button>
     </card>
@@ -259,7 +263,31 @@
             title: '所在州市',
             key: 'cityname'
           },
+          /*{
+            title: '实时游客人数',
+            key: 'isclose',
+            render:(h,params)=>{
+              if (params.row.n>params.row.fit){
+                return h('div',[
+                  h('Tooltip',{
+                    style:{
+                      color:'red',
+                    },
+                    attrs:{
+                      maxWidth:'200',
+                      content:'现景区人数已超出景区最优承载人数',
+                      placement:'top'
+                    }
+                  },params.row.isclose)
 
+                ])
+              }else {
+                return h('div',[
+                  h('span',params.row.isclose)
+                ])
+              }
+            }
+          },*/
           {
             title: '景区最优承载量',
             key: 'fit_capacity'
@@ -283,6 +311,7 @@
             key: 'busi_time_alias'
           },
         ],
+        //data1: []
         //景区指数排行
         influence: [],
         transmission: [],
@@ -313,6 +342,11 @@
         cmax:'',
         cmin:'',
         ccc:[],
+        closed:'',
+        unclosed:'',
+        cTitle:'',
+        cTitle2:'',
+        cType:'件',
         //区域游客占比
         //投诉时长分析
         bar1:'base_1',
@@ -333,29 +367,7 @@
         this.issend=1
         this.wjj=http.gmt2strmst(new Date())
         setTimeout(() => {
-          let opts =[]
-          if (this.c.length==3){
-            opts.push(100)
-          }
-          if (this.c1.length==3){
-            opts.push(200)
-          }
-          if (this.c2.length==3){
-            opts.push(300)
-          }
-          if (this.c3.length==3){
-            opts.push(400)
-          }
-          if (this.c4.length==3){
-            opts.push(500)
-          }
-          opts.push(this.c)
-          opts.push(this.c1)
-          opts.push(this.c3)
-          opts.push(this.c4)
-          let tt = opts.join(',')
-          console.log(tt)
-          window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime='+http.gmt2strm(this.d11[0])+'&endtime='+http.gmt2strm(this.d11[1])+'&folder='+this.wjj+'&opts='+tt)
+        window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime='+http.gmt2strm(this.d11[0])+'&endtime='+http.gmt2strm(this.d11[1])+'&folder='+this.wjj)
         }, 4000);
       },
       init() {
@@ -548,6 +560,10 @@
           this.cmax = resp.data.hits.max_proc
           this.cmin = resp.data.hits.min_proc
           this.ccc = resp.data.hits.proc_stat
+          this.closed = resp.data.hits.closed
+          this.unclosed = resp.data.hits.unclosed
+          this.cTitle = http.getToday().substring(5,7) + '月累计已处理投诉量'
+          this.cTitle2 = http.getToday().substring(5,7)  + '月累计处理中投诉量'
         })
         http.get('bi/get_complaint_trend_by_timespan', {
           startTime: http.gmt2strm(this.d11[0]),
@@ -559,23 +575,23 @@
 
 
         //投诉时长分析
-        /* http.get('bi/get_key_scenic_tourist_datespan_withdist', {
+         http.get('bi/get_key_scenic_tourist_datespan_withdist', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
           city_id: this.FlowCity
         }).then(resp => {
           console.log(resp)
-        })*/
+        })
 
         //投诉对象及处理情况分析
-        /*  http.get('bi/get_key_scenic_tourist_datespan_withdist', {
+          http.get('bi/get_key_scenic_tourist_datespan_withdist', {
             startTime: http.gmt2strm(this.d11[0]),
             endTime: http.gmt2strm(this.d11[1]),
             city_id: this.FlowCity
           }).then(resp => {
             console.log(resp)
           })
-  */
+  
       },
       getTop3(allDate){
          const initLen = 3
