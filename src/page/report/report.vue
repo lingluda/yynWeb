@@ -78,24 +78,7 @@
             </CheckboxGroup>
           </div>
         </div>
-      <!--  <div style="border-bottom: 1px dashed #e9e9e9;">
-          <div style="padding:10px;">
-            <Checkbox
-              :indeterminate="indeterminate3"
-              :value="checkAll3"
-              @click.prevent.native="handleCheckAll3">游客画像</Checkbox>
-            <Icon v-show="isshow3==1" type="ios-arrow-forward" style="float: right" size="18" @click="clickShow3(2)"/>
-            <Icon v-show="isshow3==2" type="ios-arrow-down" style="float: right" size="18" @click="clickShow3(1)"/>
-          </div>
-          <div v-show="isshow3==2">
-            <CheckboxGroup v-model="checkAllGroup3" @on-change="checkAllGroupChange3" >
-              <Checkbox label="14" style="padding: 0 0 10px 50px">基本画像</Checkbox>
-              <Checkbox label="8" style="padding: 0 0 10px 50px">人口迁徙</Checkbox>
-              <Checkbox label="9" style="padding: 0 0 10px 50px">一机游用户消费</Checkbox>
-              <Checkbox label="10" style="padding: 0 0 10px 50px">游客线下消费</Checkbox>
-            </CheckboxGroup>
-          </div>
-        </div>-->
+
         <div style="border-bottom: 1px dashed #e9e9e9;">
           <div style="padding:10px;">
             <Checkbox
@@ -114,7 +97,7 @@
           </div>
         </div>
       </div>
-
+      <div id="reportmap" style="width:100%;height:580px;"></div>
       <div style="margin: 20px 0 0 40%">
         <Button @click="goto">预览</Button>
         <!--<Button>下载</Button>-->
@@ -125,10 +108,142 @@
 
 <script>
   import http from '@/http.js'
+  import "echarts/map/js/yunnan.js";
+  import repotMap from './repotMap1'
+  import indexLine from './IndexLine'
+  import item from './item'
+  import ImgBar from './ImgBar'
+  import exp from './exp'
+  import lengthBar from './lengthBar'
+  import exp_pie from './exp_pie'
+  import tstable from './tstable'
   export default {
-    name: "reportDownload",
+    name: "report",
+    components: {
+      repotMap,
+      indexLine,
+      ImgBar,
+      item,
+      exp,
+      lengthBar,
+      exp_pie,
+      tstable,
+    },
     data(){
       return{
+        FlowCityName: '全省',
+        //游客人数
+        tourPeople: '',
+        //区域游客占比
+        areaPeople: [],
+        areaPeople1: [],
+        //游客趋势
+        trendPeople: [],
+        trendPeople1: [],
+        //核心景区排行
+        coreSenic: [],
+        columns1: [
+          {
+            title: '景区名称',
+            key: 'name',
+            render: (h, params) => {
+              return h('div', [
+                h('img', {
+                  style: {
+                    height: '30px',
+                    width: '30px',
+                  },
+                  attrs: {
+                    src: params.row.image.thumb_url
+                  }
+                }),
+                h('span',{
+                  style:{
+                    position:'absolute',
+                    marginTop:'9px',
+                    marginLeft:'5px'
+                  }
+                }, params.row.name)
+              ]);
+            }
+          },
+          {
+            title: '景区级别',
+            key: 'grade_alias'
+          },
+          {
+            title: '所在区县',
+            key: 'distname'
+          },
+          {
+            title: '所在州市',
+            key: 'cityname'
+          },
+
+          {
+            title: '景区最优承载量',
+            key: 'fit_capacity'
+          },
+          {
+            title: '最大承载量',
+            key: 'max_capacity',
+            width:115,
+            render:(h,params)=>{
+              if (params.row.max_capacity==0) {
+                return h('span','暂无数据')
+              } else {
+                return h('div',[
+                  h('span',params.row.max_capacity)
+                ])
+              }
+            }
+          },
+          {
+            title: '营业时间',
+            key: 'busi_time_alias'
+          },
+        ],
+        //景区指数排行
+        influence: [],
+        transmission: [],
+        reputation: [],
+        //基本画像
+        imggender: [],
+        imgage: [],
+        imgcar: [],
+        imgcash: [],
+        imgedu: [],
+        imgmobile: [],
+        cfcity:[],
+        cfprov:[],
+        //人口迁徙
+        inMove:[],
+        outMove:[],
+        //一机游用户消费
+        avg: '',
+        cate: [],
+        rank: [],
+        ranks: [],
+        //线下消费
+        //游客体验-累计新增投诉量
+        clink:'',
+        cratio:'',
+        ctotal:'',
+        cavg:'',
+        cmax:'',
+        cmin:'',
+        ccc:[],
+        //区域游客占比
+        //投诉时长分析
+        bar1:'base_1',
+        bar2:'base_2',
+        bar3:'base_3',
+        bar4:'base_4',
+        useravg:'用户平均消费金额',
+        avgunit:'元',
+        issend:0,
+        wjj:'',
+
         city:'',
         senic:'',
         cityData:[],
@@ -178,6 +293,72 @@
             }
           })
         });
+        //区域游客占比
+        http.get('bi/get_tourism_dist_by_datespan', {
+          startTime: http.gmt2strm(this.reportDate[0]),
+          endTime: http.gmt2strm(this.reportDate[1]),
+          city_id: this.city
+        }).then(resp => {
+          this.areaPeople = resp.data.hits
+          this.areaPeople1 = resp.data.hits.map(item => {
+            return {name: item.name, value: item.proportion}
+          })
+          let map = this.$echarts.init(document.getElementById('reportmap'))
+          map.setOption({
+            animation: false,
+            title:{
+              text:'单位（%）',
+              textStyle:{
+                fontSize:12
+              }
+            },
+            visualMap: {
+              show:false,
+              min: 0,
+              max: 100,
+              text:['High','Low'],
+              realtime: false,
+              calculable: true,
+              inRange: {
+                color: ['#e0ffff', '#006edd']
+              }
+            },
+            series : [
+              {
+                name: '浏览量',
+                type: 'map',
+                //coordinateSystem: 'geo',
+                //geoIndex: 0,
+                map: '云南',
+                roam: false,
+                label: {
+                  normal: {
+                    show: true,
+                    textStyle: {
+                      color: 'rgba(0,0,0,0.4)'
+                    },
+                    formatter: '{b}\n{c}',
+                    borderWidth:0
+                  }
+                },
+                itemStyle: {
+                  normal:{
+                    borderColor: 'rgba(0, 0, 0, 0.2)'
+                  },
+                  emphasis:{
+                    areaColor: null,
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 0,
+                    shadowBlur: 20,
+                    borderWidth: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
+                },
+                data:this.areaPeople1
+              }
+            ]
+          })
+        })
       },
       citychange(){
         this.senic=''
@@ -220,7 +401,6 @@
             city:this.city,
             senic:this.senic
           }})
-        //http.get('')
       },
 
       handleCheckAll () {
@@ -318,37 +498,7 @@
         console.log(val)
         this.isshow3=val
       },
-   /*   handleCheckAll3 () {
-        if (this.indeterminate3) {
-          this.checkAll3 = false;
-        } else {
-          this.checkAll3 = !this.checkAll3;
-        }
-        this.indeterminate3 = false;
-
-        if (this.checkAll3) {
-          this.checkAllGroup3 = ['14','8','9','10', ];
-        } else {
-          this.checkAllGroup3 = [];
-        }
-      },
-      checkAllGroupChange3 (data) {
-        if (data.length === 4) {
-          this.indeterminate3 = false;
-          this.checkAll3 = true;
-        } else if (data.length > 0) {
-          this.indeterminate3 = true;
-          this.checkAll3 = false;
-        } else {
-          this.indeterminate3 = false;
-          this.checkAll3 = false;
-        }
-      },
-      clickShow3(val){
-        console.log(val)
-        this.isshow3=val
-      },*/
-
+      
       handleCheckAll4 () {
         this.isshow4=2
         if (this.indeterminate4) {
