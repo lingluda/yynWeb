@@ -5,6 +5,11 @@
 <script>
   export default {
     name: "lengthBar",
+     props:{
+       avg_proc:Number,
+       max_proc:Number,
+       min_proc:Number,
+    },
     mounted() {
       let lbar = this.$echarts.init(document.getElementById('lengthbar'))
       lbar.setOption({
@@ -37,7 +42,7 @@
         series: [
           {
             type: 'bar',
-            data: [183,122,213]
+            data: [this.min_proc,this.max_proc,this.avg_proc]
           }
         ]
       })

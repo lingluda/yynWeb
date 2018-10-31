@@ -65,7 +65,7 @@
             <Checkbox
               :indeterminate="indeterminate3"
               :value="checkAll3"
-              @click.prevent.native="handleCheckAll3">核心景区客流</Checkbox>
+              @click.prevent.native="handleCheckAll3">游客画像</Checkbox>
             <Icon v-show="isshow3==1" type="ios-arrow-forward" style="float: right" size="18" @click="clickShow3(2)"/>
             <Icon v-show="isshow3==2" type="ios-arrow-down" style="float: right" size="18" @click="clickShow3(1)"/>
           </div>
