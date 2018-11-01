@@ -47,7 +47,16 @@
         series: [
           {
             type: 'bar',
-            data: [this.min,this.max,this.avg]
+            data: [this.min,parseInt(this.max*100)/100,parseInt(this.avg*100)/100],
+            label: {
+              normal: {
+                show: true,
+                position: 'right',
+                textStyle:{
+                  color:'#000'
+                }
+              }
+            },
           }
         ]
       })

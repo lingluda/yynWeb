@@ -111,7 +111,7 @@
         <div>累计新增投诉量为{{ctotal}}件，与上月同比{{clink}} % 。与昨日环比{{cratio}} %</div>
       </div>
       <div v-if="c4.indexOf('12')>-1">(2) 投诉时长分析
-        <div> （已选时间段） 平台累计已处理投诉量{{ctotal}}件，累计处理中投诉量{{ctotal}}件；已关闭投诉中，平均处理时长为{{cavg}}小时，最大处理时长为{{cmax}}小时，最小处理时长为{{cmin}}小时。</div>
+        <div> {{d11[0]}}至{{d11[1]}} 平台累计已处理投诉量{{closed}}件，累计处理中投诉量{{unclosed}}件；已关闭投诉中，平均处理时长为{{parseInt(cavg*100)/100}}小时，最大处理时长为{{parseInt(cmax*100)/100}}小时，最小处理时长为{{parseInt(cmin*100)/100}}小时。</div>
       </div>
        <Row>
          <Col :span="12">
@@ -124,9 +124,9 @@
        </Row>
 
       <div v-if="c4.indexOf('13')>-1">(3) 投诉对象及处理情况分析
-        <div>游客发起投诉后等待处理的平均时长为{{ccc[0].avg}}小时，最大时长为{{ccc[0].max}}小时，最小时长为{{ccc[0].min}}小时；</div>
-        <div>平台投诉处理的平均时长为{{ccc[1].avg}}小时，最大时长为{{ccc[1].avg}} 小时，最小时长为{{ccc[1].avg}} 小时；</div>
-        <div>游客投诉申诉后等待处理的平均时长为{{ccc[2].avg}}小时，最大时长为{{ccc[2].avg}} 小时，最小时长为{{ccc[2].avg}} 小时。</div>
+        <div>游客发起投诉后等待处理的平均时长为{{parseInt(ccc[0].avg*100)/100}}小时，最大时长为{{parseInt(ccc[0].max*100)/100}}小时，最小时长为{{parseInt(ccc[0].min*100)/100}}小时；</div>
+        <div>平台投诉处理的平均时长为{{parseInt(ccc[1].avg*100)/100}}小时，最大时长为{{parseInt(ccc[1].avg*100)/100}} 小时，最小时长为{{parseInt(ccc[1].avg*100)/100}} 小时；</div>
+        <div>游客投诉申诉后等待处理的平均时长为{{parseInt(ccc[2].avg*100)/100}}小时，最大时长为{{parseInt(ccc[2].avg*100)/100}} 小时，最小时长为{{parseInt(ccc[2].avg*100)/100}} 小时。</div>
         <exp :ccc="ccc"></exp>
       </div>
       <Button @click="send" style="float: right" :disabled='issend==1'>下载</Button>

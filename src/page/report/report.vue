@@ -125,8 +125,8 @@
           <tstable v-if="ranks.length!=0" :rank="ranks" style="margin-top: 40px"></tstable></Col>
         <Col :span="8"><div id="cashbar" style="width: 100%;height: 400px"></div></Col>
       </Row>
-        <exp :ccc="ccc"></exp>
-
+        <div id="lengthbar" style="width: 100%;height: 200px;"></div>
+        <div id="fff" style="height: 400px;width: 100%;"></div>
       </div>
 
     </card>
@@ -141,7 +141,6 @@
   import item from './item'
   import ImgBar from './ImgBar1'
   import exp from './exp'
-  import lengthBar from './lengthBar'
   import exp_pie from './exp_pie'
   import tstable from './tstable'
   export default {
@@ -152,7 +151,6 @@
       ImgBar,
       item,
       exp,
-      lengthBar,
       exp_pie,
       tstable,
     },
@@ -335,6 +333,55 @@
         //基本画像
 
       },
+      initLeng(){
+        let lbar = this.$echarts.init(document.getElementById('lengthbar'))
+        lbar.setOption({
+          animation: false,
+          title: {
+            text: '已关闭投诉处理时长',
+            textStyle:{
+              fontSize: 12
+            }
+          },
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          color:["#006EFF", "#29CC85", "#ffbb00", "#ff584c"],
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01]
+          },
+          yAxis: {
+            name:'单位(小时)',
+            type: 'category',
+            data: ['最小时长', '最大时长', '平均时长'],
+          },
+          series: [
+            {
+              type: 'bar',
+              data: [this.cmin,parseInt(this.cmax*100)/100,parseInt(this.cavg*100)/100],
+              label: {
+                normal: {
+                  show: true,
+                  position: 'right',
+                  textStyle:{
+                    color:'#000'
+                  }
+                }
+              },
+            }
+          ]
+        })
+      },
       initexp(){
         //游客体验-累计新增投诉量
         http.get('bi/get_complaint_by_date', {
@@ -347,7 +394,74 @@
           this.cavg = resp.data.hits.avg_proc
           this.cmax = resp.data.hits.max_proc
           this.cmin = resp.data.hits.min_proc
+          this.initLeng()
+
           this.ccc = resp.data.hits.proc_stat
+          let bar = this.$echarts.init(document.getElementById('fff'))
+          bar.setOption({
+            animation: false,
+            tooltip : {
+              trigger: 'axis',
+              axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+            },
+            color: [
+              "#006EFF",
+              "#29CC85",
+              "#ffbb00",],
+            xAxis: {
+              type: 'category',
+              data: this.ccc.map(i=>{return i.name})
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                name:'最大等待时间',
+                data: [parseInt(this.ccc[0].max*100)/100,parseInt(this.ccc[1].max*100)/100,parseInt(this.ccc[2].max*100)/100],
+                type: 'bar',
+                label: {
+                  normal: {
+                    show: true,
+                    position: 'top',
+                    textStyle:{
+                      color:'#000'
+                    }
+                  }
+                },
+              },
+              {
+                name:'平均处理时间',
+                data:[parseInt(this.ccc[0].avg*100)/100,parseInt(this.ccc[1].avg*100)/100,parseInt(this.ccc[2].avg*100)/100,],
+                type: 'bar',
+                label: {
+                  normal: {
+                    show: true,
+                    position: 'top',
+                    textStyle:{
+                      color:'#000'
+                    }
+                  }
+                },
+              },
+              {
+                name:'最小等待时间',
+                data: [parseInt(this.ccc[0].min*100)/100,parseInt(this.ccc[1].min*100)/100,parseInt(this.ccc[2].min*100)/100,],
+                type: 'bar',
+                label: {
+                  normal: {
+                    show: true,
+                    position: 'top',
+                    textStyle:{
+                      color:'#000'
+                    }
+                  }
+                },
+              },
+            ]
+          })
         })
       },
       onecash(){
