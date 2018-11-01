@@ -1,6 +1,6 @@
 <template>
   <div>{{mapdata}}
-  <div id="mains" style="width:100%;height:580px;"></div>
+  <div id="ffff" style="width:100%;height:580px;"></div>
   </div>
 </template>
 
@@ -21,7 +21,7 @@
 
     },
     mounted() {
-      let map = this.$echarts.init(document.getElementById('mains'))
+      let map = this.$echarts.init(document.getElementById('ffff'))
       map.setOption({
         animation: false,
         title:{

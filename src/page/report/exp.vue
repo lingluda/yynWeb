@@ -1,5 +1,5 @@
 <template>
-  <div>{{ccc}}
+  <div>
   <div id="main" style="height: 400px;width: 100%;"></div>
   </div>
 </template>
@@ -8,15 +8,18 @@
   export default {
     name: "exp",
     props: {
+      wjj:String,
       ccc: Array,
+      issend:Number,
     },
     data(){
       return{
+        picBase64Info:''
       }
     },
     mounted() {
-      let bar = this.$echarts.init(document.getElementById('main'))
-      bar.setOption({
+      let xbar = this.$echarts.init(document.getElementById('main'))
+      xbar.setOption({
         animation: false,
         tooltip : {
           trigger: 'axis',
@@ -80,6 +83,32 @@
           },
         ]
       })
+      this.picBase64Info = xbar.getDataURL();
+    },
+    methods:{
+
+      send(){
+        if (this.issend==1) {
+
+          $.ajax({
+            type : "POST",
+            url : "bi/uploadimg", //?folder=" + folder + "&imgtype=" + imgtype,
+            data : {
+              "folder" : this.wjj,
+              "imgtype" : 'img_comp_pic_2',
+              "data" : this.picBase64Info
+            },
+            cache : false,
+            async : false,
+            dataType : "json",
+            success : function(data) {},
+
+          });
+        }
+      }
+    },
+    watch:{
+      issend:'send'
     }
   }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div id="lengthbar" style="width: 100%;height: 200px;"></div>
+  <div id="lengthb" style="width: 100%;height: 200px;"></div>
   </div>
 </template>
 
@@ -8,12 +8,19 @@
   export default {
     name: "lengthBar",
      props:{
+       wjj:String,
        avg:Number,
        max:Number,
        min:Number,
+       issend:Number,
+    },
+    data(){
+      return{
+        picBase64Info:''
+      }
     },
     mounted() {
-      let lbar = this.$echarts.init(document.getElementById('lengthbar'))
+      let lbar = this.$echarts.init(document.getElementById('lengthb'))
       lbar.setOption({
         animation: false,
         title: {
@@ -60,7 +67,34 @@
           }
         ]
       })
+      this.picBase64Info = lbar.getDataURL();
+        },
+    methods:{
+
+      send(){
+        if (this.issend==1) {
+
+          $.ajax({
+            type : "POST",
+            url : "bi/uploadimg", //?folder=" + folder + "&imgtype=" + imgtype,
+            data : {
+              "folder" : this.wjj,
+              "imgtype" : 'img_comp_pic_1',
+              "data" : this.picBase64Info
+            },
+            cache : false,
+            async : false,
+            dataType : "json",
+            success : function(data) {},
+
+          });
         }
+      }
+    },
+    watch:{
+      issend:'send'
+    }
+
   }
 </script>
 

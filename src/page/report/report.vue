@@ -15,7 +15,7 @@
         <Select v-model="city" style="width:120px;" @on-change="citychange">
           <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
         </Select>
-        <Select v-model="senic" placeholder="请先选择州市" style="width:120px;">
+        <Select v-model="senic" placeholder="景区" style="width:120px;">
           <Option value="" v-if="senicData.length==0" disabled>请先选择州市</Option>
           <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
         </Select>
@@ -102,7 +102,7 @@
         <Button @click="goto">预览</Button>
         <!--<Button>下载</Button>-->
       </div>
-      <div v-show="true">
+      <div v-show="false">
       <div v-if="checkAllGroup.indexOf('2')>-1" id="reportmap" style="width:100%;height:580px;"></div>
       <div v-if="checkAllGroup.indexOf('3')>-1" id="indexline" style="width:100%;height:580px;"></div>
       <div v-if="checkAllGroup3.indexOf('7')>-1">
@@ -127,6 +127,7 @@
       </Row>
         <div id="lengthbar" style="width: 100%;height: 200px;"></div>
         <div id="fff" style="height: 400px;width: 100%;"></div>
+        <!--<repotMap :mapdata="this.areaPeople1"></repotMap>-->
       </div>
 
     </card>

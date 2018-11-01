@@ -14,9 +14,9 @@
             <Radio label="1">近7日</Radio>
             <Radio label="2">近30日</Radio>
           </RadioGroup>
-          <DatePicker v-model="indexDate1" placement="bottom-end" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" ></DatePicker>
-          <span>-</span>
-          <DatePicker v-model="indexDate2" placement="bottom-end" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" ></DatePicker>
+          <DatePicker v-model="indexDate1" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:180px" ></DatePicker>
+          <!--<span>-</span>-->
+          <!--<DatePicker v-model="indexDate2" placement="bottom-end" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" ></DatePicker>-->
         </div>
         </div>
 
@@ -146,7 +146,7 @@
             </tr>
 
           </table>
-          <div v-if="fdata.length==0" style="width: 100%;border: 1px solid #dcdee2;text-align: center">当天暂无数据</div>
+          <div v-if="fdata.length==0" style="width: 100%;border: 1px solid #dcdee2;text-align: center">当天暂无下单数据</div>
         </div>
       </card>
         <card  class="lyrd_sy_ykrs">
@@ -313,7 +313,7 @@ table{
     data() {
       return {
         select07:'',
-        indexDate1:http.getYesterDay(),
+        indexDate1:[http.getYesterDay(),http.getYesterDay()],
         indexDate2:http.getYesterDay(),
         unitD:'',
         addling:'1',
@@ -380,16 +380,16 @@ table{
     methods: {
       slelect7(){
         if (this.select07==1){
-          this.indexDate1=http.getWeekAgo()
+          this.indexDate1=[http.getWeekAgo(),http.getToday()]
           this.indexDate2=http.getToday()
         }
         if (this.select07==2){
-          this.indexDate1=http.getMonthAgo()
+          this.indexDate1=[http.getMonthAgo(),http.getToday()]
           this.indexDate2=http.getToday()
         }
       },
       initIndex(){
-        http.get('bi/get_scenic_influence_datespan',{startTime:http.gmt2strm(this.indexDate1),endTime:http.gmt2strm(this.indexDate2),top:5}).then(resp=>{
+        http.get('bi/get_scenic_influence_datespan',{startTime:http.gmt2strm(this.indexDate1[0]),endTime:http.gmt2strm(this.indexDate1[1]),top:5}).then(resp=>{
           this.influence = resp.data.hits
           for (var i=0;i<this.influence.length;i++){
             if (http.StrLen(this.influence[i].name)>10){
@@ -400,7 +400,7 @@ table{
           }
           console.log(this.influence)
         })
-        http.get('bi/get_scenic_transmission_datespan',{startTime:http.gmt2strm(this.indexDate1),endTime:http.gmt2strm(this.indexDate2),top:5}).then(resp=>{
+        http.get('bi/get_scenic_transmission_datespan',{startTime:http.gmt2strm(this.indexDate1[0]),endTime:http.gmt2strm(this.indexDate1[1]),top:5}).then(resp=>{
           this.transmission = resp.data.hits
           for (var i=0;i<this.transmission.length;i++){
             if (http.StrLen(this.transmission[i].name)>10){
@@ -411,7 +411,7 @@ table{
           }
           console.log(this.transmission)
         })
-        http.get('bi/get_scenic_reputation_datespan',{startTime:http.gmt2strm(this.indexDate1),endTime:http.gmt2strm(this.indexDate2),top:5}).then(resp=>{
+        http.get('bi/get_scenic_reputation_datespan',{startTime:http.gmt2strm(this.indexDate1[0]),endTime:http.gmt2strm(this.indexDate1[1]),top:5}).then(resp=>{
           this.reputation = resp.data.hits
           for (var i=0;i<this.reputation.length;i++){
             if (http.StrLen(this.reputation[i].name)>10){

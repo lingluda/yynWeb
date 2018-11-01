@@ -24,7 +24,7 @@
               <Select v-model="city" style="width:120px;" @on-change="form1change3">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
-              <Select v-model="citysenic1" style="width:120px;" placeholder="请先选择州市" @on-change="form1change">
+              <Select v-model="citysenic1" style="width:120px;" placeholder="景区" @on-change="form1change">
                 <Option value="" v-if="senicData.length==0" disabled>请先选择州市</Option>
                 <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
               </Select>
@@ -137,7 +137,7 @@
               <Select v-model="city1" style="width:120px;" @on-change="form1change12">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
-              <Select v-model="citysenic2" style="width:120px;" placeholder="请先选择州市" @on-change="form1change1">
+              <Select v-model="citysenic2" style="width:120px;" placeholder="景区" @on-change="form1change1">
                 <Option value="" v-if="senicData2.length==0" disabled>请先选择州市</Option>
                 <Option v-for="item in senicData2" :value="item.id">{{item.name}}</Option>
               </Select>

@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div id="pie" style="width: 100%;height: 200px;"></div>
+  <div id="pie" style="width: 100%;height: 300px;"></div>
   </div>
 </template>
 <script>
@@ -25,7 +25,9 @@
           text: '消费类型占比',
           x:'left',
           textStyle:{
-            fontSize:14
+            //color:'#000',
+            fontSize:15,
+            fontWeight:'normal'
           }
 
         },
@@ -48,9 +50,14 @@
             label: {
               normal: {
                 show: true,
-                position: 'outside',
+                position: 'inner',
                 formatter: '{b}\n{d}%',
               }
+            },
+            labelLine: false,
+            itemStyle: {
+              borderColor: '#fff',
+              borderWidth: 1
             },
           }
         ],

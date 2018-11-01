@@ -100,11 +100,6 @@
 
             });
           }
-        /*  console.log('picBase64Info:::',this.picBase64Info)
-          http.posts('bi/uploadimg',{folder:http.gmt2strmst(new Date()),imgtype:'img_visitor_dist',data:this.picBase64Info}).then(resp=>{
-            console.log('send1111asd1ada1112send')
-          })*/
-
       }
     },
   watch:{

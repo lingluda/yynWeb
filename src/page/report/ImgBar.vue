@@ -9,6 +9,7 @@
   export default {
     name: "ImgBar",
     props:{
+      t:String,
       wjj:String,
       issend:Number,
       main:String,
@@ -22,6 +23,14 @@
     mounted(){
       let bar = this.$echarts.init(document.getElementById(this.main))
       bar.setOption({
+        title: {
+          text: this.t,
+          textStyle: {
+            fontSize: 14
+          },
+          x: 20,
+          y: 15
+        },
         animation: false,
         tooltip: {
           trigger: 'item',

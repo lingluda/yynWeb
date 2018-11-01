@@ -37,6 +37,30 @@
             data:  this.trendPeople1.map(item=>{return item.value}),
             type: 'line',
             avoidLabelOverlap: true,
+            areaStyle: {
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "#006eff" // 0% 处的颜色
+                  },
+                  {
+                    offset: 0.7,
+                    color: "rgba(255, 255, 255, 0.5)" // 100% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(255, 255, 255, 0.0)" // 100% 处的颜色
+                  }
+                ],
+                globalCoord: false // 缺省为 false
+              }
+            },
             label: {
               normal: {
                 show: true,

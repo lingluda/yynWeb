@@ -3,7 +3,7 @@
     <div class="tits">
       <router-link to="report">报表下载</router-link>
       <span style="font-size: 14px">> 预览</span></div>
-    <card style="margin: 20px">
+    <card style="margin: 20px;padding: 0 60px 40px 60px">
       <div style="text-align: center;font-size: 32px;font-weight: bold">数据报表</div>
       <div style="font-size: 28px">一、该报表时间段</div>
       <div>（{{d11[0]}}至{{d11[1]}}）</div>
@@ -50,11 +50,14 @@
         <div>景区影响力指数最大的为 {{influence[0].name}} ，指数值为 {{influence[0].avg}}；</div>
         <div>景区美誉度指数最大的为 {{reputation[0].name}} ，指数值为 {{reputation[0].avg}}；</div>
         <div>景区传播力指数最大的为 {{transmission[0].name}}，指数值为 {{transmission[0].avg}}；</div>
-        <Row v-if="rank.length!=0">
-          <Col :span="8"><tstable :rank="influence"></tstable></Col>
-          <Col :span="8"><tstable :rank="transmission"></tstable></Col>
-          <Col :span="8"><tstable :rank="reputation"></tstable></Col>
-        </Row>
+        <div v-if="rank.length!=0">
+          <div>(1)影响力指数</div>
+          <tstable :rank="influence"></tstable>
+          <div>(2)美誉度指数</div>
+          <tstable :rank="transmission"></tstable>
+          <div>(3)传播力指数</div>
+          <tstable :rank="reputation"></tstable>
+        </div>
       </div>
 
       <div style="font-size: 28px">3.4 游客画像</div>
@@ -72,18 +75,20 @@
         <div>{{cfcity[0].name}}来源游客量最大，占比总游客的{{parseInt(cfcity[0].origin_percent*10000)/100}}%；</div>
         <div>{{cfprov[0].name}}来源游客量最大，占比总游客的{{parseInt(cfprov[0].origin_percent*10000)/100}}%。</div>
         <Row :gutter="16">
-          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar1" :sx="imggender"></ImgBar></Col>
-          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar2" :sx="imgage"></ImgBar></Col>
-          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar3" :sx="imgedu"></ImgBar></Col>
-          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar4" :sx="imgcash"></ImgBar></Col>
+          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar1" :sx="imggender" :t="t1"></ImgBar></Col>
+          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar2" :sx="imgage" :t="t2"></ImgBar></Col>
+          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar3" :sx="imgedu" :t="t3"></ImgBar></Col>
+          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar4" :sx="imgcash" :t="t4"></ImgBar></Col>
         </Row>
       </div>
 
-      <div v-if="c3.indexOf('8')>-1">(2) 人口迁徙
+      <div v-if="c3.indexOf('8')>-1&&d11[0]==d11[1]">(2) 人口迁徙
         <div>由 {{inMove[0].from}} 迁入 {{inMove[0].to}} 的游客量最多， {{inMove[0].line}} 热度最大，热度值为 {{inMove[0].score}}，游客中飞机出游的占比 {{parseInt(inMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(inMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(inMove[0].car*10000)/100}}%；</div>
         <div>  由 {{outMove[0].from}} 迁出 {{outMove[0].to}} 的游客量最多， {{outMove[0].line}} 热度最大，热度值为{{outMove[0].score}}，游客中飞机出游的占比{{parseInt(outMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(outMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(outMove[0].car*10000)/100}}%。
         </div>
+        <div>1.迁入</div>
         <Table :columns="intable" :data="inMove"></Table>
+        <div>2.迁出</div>
         <Table :columns="outtable" :data="outMove"></Table>
       </div>
 
@@ -92,13 +97,15 @@
           一机游用户平均消费金额为{{avg.avg_amount}}元，</div><div v-if="rank.length!=0">用户在{{rank[0].name}}消费金额最高，为{{rank[0].avg}}元；</div><div>用户消费中，景区门票消费占比{{cate[1].value*100}}%，酒店消费占比{{cate[2].value*100}}%，机票消费占比{{cate[0].value*100}}%。
         </div>
         <Row style="margin-top: 20px">
-          <Col :span="8">人均消费
+          <Col :span="6">人均消费
             <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
           </Col>
-          <Col :span="8" >
+          <Col :span="12" >
             游客消费地排行
             <tstable v-if="ranks.length!=0" :rank="ranks" style="margin-top: 40px"></tstable></Col>
-          <Col :span="8"><exp_pie :wjj="wjj" :issend="issend" :cate="cate"></exp_pie></Col>
+          <Col :span="6">
+            <exp_pie :wjj="wjj" :issend="issend" :cate="cate"></exp_pie>
+          </Col>
         </Row>
       </div>
 
@@ -112,24 +119,24 @@
       </div>
       <div v-if="c4.indexOf('12')>-1">(2) 投诉时长分析
         <div> {{d11[0]}}至{{d11[1]}} 平台累计已处理投诉量{{closed}}件，累计处理中投诉量{{unclosed}}件；已关闭投诉中，平均处理时长为{{parseInt(cavg*100)/100}}小时，最大处理时长为{{parseInt(cmax*100)/100}}小时，最小处理时长为{{parseInt(cmin*100)/100}}小时。</div>
-      </div>
+
        <Row>
          <Col :span="12">
            <item :useravg="cTitle1" :avg="closed" :unit="cunit"></item>
            <item :useravg="cTitle2" :avg="unclosed" :unit="cunit"></item>
          </Col>
          <Col :span="12">
-           <lengthBar :max="cmax" :min="cmin" :avg="cavg"></lengthBar>
+           <lengthBar :max="cmax" :min="cmin" :avg="cavg" :issend="issend" :wjj="wjj"></lengthBar>
          </Col>
        </Row>
-
+      </div>
       <div v-if="c4.indexOf('13')>-1">(3) 投诉对象及处理情况分析
         <div>游客发起投诉后等待处理的平均时长为{{parseInt(ccc[0].avg*100)/100}}小时，最大时长为{{parseInt(ccc[0].max*100)/100}}小时，最小时长为{{parseInt(ccc[0].min*100)/100}}小时；</div>
         <div>平台投诉处理的平均时长为{{parseInt(ccc[1].avg*100)/100}}小时，最大时长为{{parseInt(ccc[1].avg*100)/100}} 小时，最小时长为{{parseInt(ccc[1].avg*100)/100}} 小时；</div>
         <div>游客投诉申诉后等待处理的平均时长为{{parseInt(ccc[2].avg*100)/100}}小时，最大时长为{{parseInt(ccc[2].avg*100)/100}} 小时，最小时长为{{parseInt(ccc[2].avg*100)/100}} 小时。</div>
-        <exp :ccc="ccc"></exp>
+        <exp :ccc="ccc" :issend="issend" :wjj="wjj"></exp>
       </div>
-      <Button @click="send" style="float: right" :disabled='issend==1'>下载</Button>
+      <Button @click="send" type="primary" style="float: right;margin-top: 12px" :disabled='issend==1'>下载</Button>
 
     </card>
   </div>
@@ -344,6 +351,10 @@
         bar2:'base_2',
         bar3:'base_3',
         bar4:'base_4',
+        t1:'性别占比（%）',
+        t2:'年龄占比（%）',
+        t3:'学历占比（%）',
+        t4:'消费能力（%）',
         useravg:'用户平均消费金额',
         avgunit:'元',
         issend:0,
@@ -546,7 +557,7 @@
             for (var i=0;i<this.rank.length;i++){
               tt +=this.rank[i].avg
             }
-            this.ranks = this.rank.map(item =>{return{name:item.name,total:tt,pers:item.avg/tt,avg:'人均消费'+item.avg+'元'}})
+            this.ranks = this.rank.map(item =>{return{name:item.name,total:tt,pers:item.avg/tt,avg:'人均'+item.avg+'元'}})
           }
         })
 
