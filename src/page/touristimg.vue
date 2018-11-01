@@ -113,9 +113,7 @@
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
               <span style="color: #000">人均消费</span>
-              <Tooltip content="根据游云南app中用户的消费进行计算分析" placement="right" max-width="200">
-                <Icon size="19" type="ios-help-circle-outline" />
-              </Tooltip>
+
               </div>
               <Row style="margin: 90px 0 0 50px">
                 <Col :span="8">
@@ -132,9 +130,7 @@
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
                 <span style="color: #000">游客消费地排行</span>
-                <Tooltip content="根据游云南app中用户的消费进行计算分析" placement="right" max-width="200">
-                  <Icon size="19" type="ios-help-circle-outline" />
-                </Tooltip>
+
               </div>
               <div id="qsnet">
                 <ul>
@@ -158,9 +154,7 @@
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
                 <span style="color: #000">消费类型占比</span>
-                <Tooltip content="根据游云南app中用户的消费进行计算分析" placement="right" max-width="200">
-                  <Icon size="19" type="ios-help-circle-outline" />
-                </Tooltip>
+
                 <div id="cash" style="height:250px;width:100%;"></div>
               </div>
             </div>
@@ -169,10 +163,8 @@
       </card>
       <card style="margin-top: 20px">
         <div style="height: 40px">
-          <span style="font-weight: bold;color: #000000">一机游用户消费维度分析</span>
-          <Tooltip content="根据游云南app中用户的消费进行计算分析" placement="right" max-width="200">
-            <Icon size="19" type="ios-help-circle-outline" />
-          </Tooltip>
+          <span style="font-weight: bold;color: #000000">线下用户消费维度分析</span>
+
           <div style="float: right">
             <RadioGroup type="button" @on-change="cashdatechange2">
               <Radio label="1">近7日</Radio>
@@ -186,7 +178,7 @@
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
                 <span style="color: #000">人均消费</span>
-                <Tooltip content="根据游云南app中用户的消费进行计算分析" placement="right" max-width="200">
+                <Tooltip content="根据线下商家的诚信码支付数据计算" placement="right" max-width="200">
                   <Icon size="19" type="ios-help-circle-outline" />
                 </Tooltip>
               </div>
@@ -205,9 +197,7 @@
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
                 <span style="color: #000">游客消费地排行</span>
-                <Tooltip content="根据游云南app中用户的消费进行计算分析" placement="right" max-width="200">
-                  <Icon size="19" type="ios-help-circle-outline" />
-                </Tooltip>
+
               </div>
               <div id="qsnet">
                 <ul>
@@ -231,9 +221,7 @@
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
                 <span style="color: #000">消费类型占比</span>
-                <Tooltip content="根据游云南app中用户的消费进行计算分析" placement="right" max-width="200">
-                  <Icon size="19" type="ios-help-circle-outline" />
-                </Tooltip>
+
                 <div id="cash1" style="height:250px;width:100%;"></div>
               </div>
             </div>

@@ -426,10 +426,10 @@
           geo: {
             map: "china",
             roam: true,
-            center: [113, 31],
-            zoom:1.6,
+            center: [109, 29],
+            zoom:2.4,
             scaleLimit:{
-              max:8,
+              max:12,
               min:1
             },
             label: {

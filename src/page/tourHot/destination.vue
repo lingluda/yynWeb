@@ -26,7 +26,7 @@
               <div id="qsnet">
                 <div style="margin: 10px 0 0 5px;">
                 <span style="color: #000">景区影响力指数</span>
-                <Tooltip content="去除常驻人口游客数量的计算" placement="right" max-width="200">
+                <Tooltip content="根据互联网中景区的搜索、查看量进行计算；" placement="right" max-width="200">
                   <Icon size="19"  type="ios-help-circle-outline" />
                 </Tooltip>
                 </div>
@@ -58,7 +58,7 @@
               <div id="qsnet">
                 <div style="margin: 10px 0 0 5px;">
                   <span style="color: #000">景区传播力指数</span>
-                  <Tooltip content="去除常驻人口游客数量的计算" placement="right" max-width="200">
+                  <Tooltip content="根据游云南app中用户主动分享景区相关内容进行计算；" placement="right" max-width="200">
                     <Icon size="19"  type="ios-help-circle-outline" />
                   </Tooltip>
                 </div>
@@ -89,7 +89,7 @@
               <div id="qsnet">
                 <div style="margin: 10px 0 0 5px;">
                   <span style="color: #000">景区美誉度指数</span>
-                  <Tooltip content="去除常驻人口游客数量的计算" placement="right" max-width="200">
+                  <Tooltip content="根据景区点赞评论及舆情情况进行计算；" placement="right" max-width="200">
                     <Icon size="19"  type="ios-help-circle-outline" />
                   </Tooltip>
                 </div>
@@ -136,13 +136,17 @@
               <!--<td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门路线(次)</td>-->
               <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa;text-align: center">下单平均价格(￥)</td>
             </tr>
+
             <tr v-for="item in fdata">
+
               <td style="border-bottom: 1px dashed rgb(206,226,225);font-size: 12px">{{item.name}}</td>
               <td style="border-bottom: 1px dashed rgb(206,226,225)"> <pers-st :pers=item.tpers :persn=item.order></pers-st></td>
               <!--<td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.dau}}</td>-->
               <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225);text-align: center">{{item.price}}</td>
             </tr>
+
           </table>
+          <div v-if="fdata.length==0" style="width: 100%;border: 1px solid #dcdee2;text-align: center">当天暂无数据</div>
         </div>
       </card>
         <card  class="lyrd_sy_ykrs">

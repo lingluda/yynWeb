@@ -157,7 +157,6 @@
         console.log(http.gmt2strm(this.d11[0]))
         http.get('bi/get_key_scenic_tourist_datespan_withdist',{pindex:1,size:9,startTime:http.gmt2strm(this.d11[0]),endTime:http.gmt2strm(this.d11[1]),city_id:this.FlowCity}).then(res=>{
           this.mapData=res.data
-          console.log('this.mapData',this.mapData)
           this.listData=res.data.hits
           this.lastTime = http.gmt2strms(res.data.hits[0].timestamp)
         })

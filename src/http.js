@@ -243,9 +243,8 @@ http.getWeekAgo = function () {
 }
 http.getMonthAgo = function () {
   var data = new Date()
-  data.setDate(data.getDate() - 30)
   var year = data.getUTCFullYear()
-  var month = data.getMonth() + 1
+  var month = data.getMonth()
   var day = data.getDate()
   var currentData = data.toLocaleDateString()
   if (month < 10) {
@@ -259,6 +258,24 @@ http.getMonthAgo = function () {
     currentDay = day.toString()
   }
   return year + '-' + currentMonth + '-' + currentDay
+}
+http.get2MonthAgo = function () {
+  var data = new Date()
+  var year = data.getUTCFullYear()
+  var month = data.getMonth()
+  var day = data.getDate()
+  var currentData = data.toLocaleDateString()
+  if (month < 10) {
+    var currentMonth = '0' + month
+  } else {
+    currentMonth = month.toString()
+  }
+  if (day < 10) {
+    var currentDay = '0' + day
+  } else {
+    currentDay = day.toString()
+  }
+  return year + '-' + currentMonth + '-' + '01'
 }
 http.gmt2str = function (time) {
   let date = new Date(time)

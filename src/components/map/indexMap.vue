@@ -77,7 +77,7 @@
                     normal: {
                       show: true,
                       textStyle: {
-                        color: 'rgba(0,0,0,0.4)'
+                        color: '#006EFF'
                       },
                       formatter: '{b}\n{c}%',
                       borderWidth:0
@@ -96,7 +96,7 @@
                       shadowColor: 'rgba(0, 0, 0, 0.5)'
                     }
                   },
-                  data:this.mapdata
+                  data:this.mapdata.map(i=>{return{name:i.name,value:parseInt(i.value*100)/100}})
                 }
               ]
             })

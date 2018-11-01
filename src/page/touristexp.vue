@@ -83,7 +83,7 @@
           <div>
             <Button label="7" style="border-radius: 0px" @click="change7">近7天</Button>
             <DatePicker type="month" placement="bottom-end" v-model="picdate2" placeholder="自选时间" style="width: 120px"
-                        :options="disoptionsdate" @on-change="pic2"></DatePicker>
+                        :options="disoptionsdates" @on-change="pic2"></DatePicker>
             <Select style="width: 120px" v-model="p11" @on-change="ppp2">
               <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
             </Select>
@@ -282,6 +282,11 @@
         disoptionsdate: {
           disabledDate(date) {
             return date < new Date(2018, 7, 1) || date > new Date()
+          }
+        },
+        disoptionsdates: {
+          disabledDate(date) {
+            return date < new Date(2018, 7, 1) || date > new Date(http.get2MonthAgo())
           }
         }
       };

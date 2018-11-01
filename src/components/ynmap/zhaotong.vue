@@ -19,7 +19,7 @@
     },
     methods: {
       initMap() {
-        let myData =  this.mapData.hits.map(item => {return { name: item.name,coord:item.coord}});
+        let myData =  this.mapData.hits.slice(0,3).map(item => {return { name: item.name,coord:item.coord}});
         let map = this.$echarts.init(document.getElementById("main"))
         map.setOption({
           geo: {

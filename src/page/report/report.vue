@@ -15,7 +15,7 @@
         <Select v-model="city" style="width:120px;" @on-change="citychange">
           <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
         </Select>
-        <Select v-model="senic" style="width:120px;">
+        <Select v-model="senic" placeholder="请先选择州市" style="width:120px;">
           <Option value="" v-if="senicData.length==0" disabled>请先选择州市</Option>
           <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
         </Select>

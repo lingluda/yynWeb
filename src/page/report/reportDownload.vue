@@ -3,7 +3,7 @@
     <div class="tits">
       <router-link to="report">报表下载</router-link>
       <span style="font-size: 14px">> 预览</span></div>
-    <card style="margin: 20px">
+    <card style="padding: 0px 60px 40px 60px;margin: 20px" class="casr" >
       <div style="text-align: center;font-size: 32px;font-weight: bold">数据报表</div>
       <div style="font-size: 28px">一、该报表时间段</div>
       <div>（{{d11[0]}}至{{d11[1]}}）</div>
@@ -80,8 +80,8 @@
       </div>
 
        <div v-if="c3.indexOf('8')>-1">(2) 人口迁徙
-       <div>由 （区域） 迁入 （游客已选区域） 的游客量最多， {{inMove[0].line}} 热度最大，热度值为 {{inMove[0].n}}，游客中飞机出游的占比 {{parseInt(inMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(inMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(inMove[0].car*10000)/100}}%；</div>
-       <div>  由 （游客已选区域） 迁出 （区域） 的游客量最多， {{outMove[0].line}} 热度最大，热度值为{{outMove[0].n}}，游客中飞机出游的占比{{parseInt(outMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(outMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(outMove[0].car*10000)/100}}%。
+       <div>由 {{inMove[0].from}} 迁入 {{inMove[0].to}} 的游客量最多， {{inMove[0].line}} 热度最大，热度值为 {{inMove[0].score}}，游客中飞机出游的占比 {{parseInt(inMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(inMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(inMove[0].car*10000)/100}}%；</div>
+       <div>  由 {{outMove[0].from}} 迁出 {{outMove[0].to}} 的游客量最多， {{outMove[0].line}} 热度最大，热度值为{{outMove[0].score}}，游客中飞机出游的占比{{parseInt(outMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(outMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(outMove[0].car*10000)/100}}%。
        </div>
          <Table :columns="intable" :data="inMove"></Table>
          <Table :columns="outtable" :data="outMove"></Table>
@@ -130,9 +130,9 @@
            <div>游客发起投诉后等待处理的平均时长为{{ccc[0].avg}}小时，最大时长为{{ccc[0].max}}小时，最小时长为{{ccc[0].min}}小时；</div>
            <div>平台投诉处理的平均时长为{{ccc[1].avg}}小时，最大时长为{{ccc[1].avg}} 小时，最小时长为{{ccc[1].avg}} 小时；</div>
            <div>游客投诉申诉后等待处理的平均时长为{{ccc[2].avg}}小时，最大时长为{{ccc[2].avg}} 小时，最小时长为{{ccc[2].avg}} 小时。</div>
-         <!--<exp :ccc="ccc"></exp>-->
+           <div id="mainss" style="height: 400px;width: 100%;"></div>
          </div>
-      <Button @click="send" :disabled='issend==1'>下载</Button>
+      <Button @click="send" style="float: right" :disabled='issend==1'>下载</Button>
     </card>
   </div>
 </template>
@@ -172,19 +172,28 @@
           },
           {
             title:'热度',
-            key:'n',
+            key:'score',
           },
           {
             title:'汽车',
             key:'car',
+            render: (h,p)=>{
+              return h('div',parseInt(p.row.car*10000)/100+'%')
+            }
           },
           {
             title:'火车',
             key:'train',
+            render: (h,p)=>{
+              return h('div',parseInt(p.row.train*10000)/100+'%')
+            }
           },
           {
             title:'飞机',
             key:'plane',
+            render: (h,p)=>{
+              return h('div',parseInt(p.row.plane*10000)/100+'%')
+            }
           }
         ],
         outtable:[
@@ -194,19 +203,28 @@
           },
           {
             title:'热度',
-            key:'n',
+            key:'score',
           },
           {
             title:'汽车',
             key:'car',
+            render: (h,p)=>{
+              return h('div',parseInt(p.row.car*10000)/100+'%')
+            }
           },
           {
             title:'火车',
             key:'train',
+            render: (h,p)=>{
+              return h('div',parseInt(p.row.train*10000)/100+'%')
+            }
           },
           {
             title:'飞机',
             key:'plane',
+            render: (h,p)=>{
+              return h('div',parseInt(p.row.plane*10000)/100+'%')
+            }
           }
         ],
         d11: [this.$route.query.s1, this.$route.query.s2],
@@ -341,19 +359,19 @@
         this.wjj=http.gmt2strmst(new Date())
         setTimeout(() => {
           let opts =[]
-          if (this.c.length==3){
+          if (this.c.length>0){
             opts.push(100)
           }
-          if (this.c1.length==3){
+          if (this.c1.length>0){
             opts.push(200)
           }
-          if (this.c2.length==3){
+          if (this.c2.length>0){
             opts.push(300)
           }
-          if (this.c3.length==3){
+          if (this.c3.length>0){
             opts.push(400)
           }
-          if (this.c4.length==3){
+          if (this.c4.length>0){
             opts.push(500)
           }
           opts.push(this.c)
@@ -555,11 +573,13 @@
           this.cmax = resp.data.hits.max_proc
           this.cmin = resp.data.hits.min_proc
           this.ccc = resp.data.hits.proc_stat
+          this.fff()
           this.closed = resp.data.hits.closed
           this.unclosed = resp.data.hits.unclosed
           this.cTitle = http.getToday().substring(5,7) + '月累计已处理投诉量'
           this.cTitle2 = http.getToday().substring(5,7)  + '月累计处理中投诉量'
         })
+
   /*      http.get('bi/get_complaint_trend_by_timespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
@@ -587,6 +607,23 @@
             console.log(resp)
           })
   */
+      },
+      fff() {
+        let bar = this.$echarts.init(document.getElementById('mainss'))
+        bar.setOption({
+          animation: false,
+          xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [{
+            data: [120, 200, 150, 80, 70, 110, 130],
+            type: 'bar'
+          }]
+        })
       },
       getTop3(allDate){
          const initLen = 3
@@ -618,6 +655,9 @@
     color: #000;
     background: #fff;
     border-bottom: 1px solid #e2e4e6;
+  }
+  .casr div{
+    line-height: 30px;
   }
 
 </style>

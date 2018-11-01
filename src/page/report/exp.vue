@@ -1,5 +1,7 @@
 <template>
+  <div>{{ccc}}
   <div id="main" style="height: 400px;width: 100%;"></div>
+  </div>
 </template>
 
 <script>

@@ -53,7 +53,7 @@
               {
                 title: '实时人数',
                 key: 'isclose',
-                width:95,
+                width:100,
                 render:(h,params)=>{
                   if (params.row.n==-1){
                     return h('span','已闭园')
@@ -81,7 +81,7 @@
               {
                 title:'当日接待量',
                 key:'cur',
-                width:110,
+                width:115,
 
               },
               {
