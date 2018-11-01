@@ -102,7 +102,7 @@
         <Button @click="goto">预览</Button>
         <!--<Button>下载</Button>-->
       </div>
-      <div v-show="false">
+      <div v-show="true">
       <div v-if="checkAllGroup.indexOf('2')>-1" id="reportmap" style="width:100%;height:580px;"></div>
       <div v-if="checkAllGroup.indexOf('3')>-1" id="indexline" style="width:100%;height:580px;"></div>
       <div v-if="checkAllGroup3.indexOf('7')>-1">
@@ -125,7 +125,7 @@
           <tstable v-if="ranks.length!=0" :rank="ranks" style="margin-top: 40px"></tstable></Col>
         <Col :span="8"><div id="cashbar" style="width: 100%;height: 400px"></div></Col>
       </Row>
-
+        <exp :ccc="ccc"></exp>
 
       </div>
 
@@ -330,9 +330,25 @@
         this.initImg()
         this.cash()
         this.onecash()
+        this.initexp()
         //游客趋势
         //基本画像
 
+      },
+      initexp(){
+        //游客体验-累计新增投诉量
+        http.get('bi/get_complaint_by_date', {
+          startTime: http.gmt2strm(this.reportDate[0]),
+          city_id: this.FlowCity
+        }).then(resp => {
+          this.ctotal = resp.data.hits.total
+          this.clink = resp.data.hits.link
+          this.cratio = resp.data.hits.ratio
+          this.cavg = resp.data.hits.avg_proc
+          this.cmax = resp.data.hits.max_proc
+          this.cmin = resp.data.hits.min_proc
+          this.ccc = resp.data.hits.proc_stat
+        })
       },
       onecash(){
         //一机游用户消费

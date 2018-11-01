@@ -1,14 +1,16 @@
 <template>
+  <div>
   <div id="lengthbar" style="width: 100%;height: 200px;"></div>
+  </div>
 </template>
 
 <script>
   export default {
     name: "lengthBar",
      props:{
-       avg_proc:Number,
-       max_proc:Number,
-       min_proc:Number,
+       avg:Number,
+       max:Number,
+       min:Number,
     },
     mounted() {
       let lbar = this.$echarts.init(document.getElementById('lengthbar'))
@@ -45,7 +47,7 @@
         series: [
           {
             type: 'bar',
-            data: [this.min_proc,this.max_proc,this.avg_proc]
+            data: [this.min,this.max,this.avg]
           }
         ]
       })

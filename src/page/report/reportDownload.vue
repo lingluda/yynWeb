@@ -115,11 +115,11 @@
       </div>
        <Row>
          <Col :span="12">
-           <item></item>
-           <item></item>
+           <item :useravg="cTitle1" :avg="closed" :unit="cunit"></item>
+           <item :useravg="cTitle2" :avg="unclosed" :unit="cunit"></item>
          </Col>
          <Col :span="12">
-           <lengthBar></lengthBar>
+           <lengthBar :max="cmax" :min="cmin" :avg="cavg"></lengthBar>
          </Col>
        </Row>
 
@@ -333,6 +333,11 @@
         cmax:'',
         cmin:'',
         ccc:[],
+        closed:'',
+        unclosed:'',
+        cTitle1:'',
+        cTitle2:'',
+        cunit:'件',
         //区域游客占比
         //投诉时长分析
         bar1:'base_1',
@@ -568,6 +573,11 @@
           this.cmax = resp.data.hits.max_proc
           this.cmin = resp.data.hits.min_proc
           this.ccc = resp.data.hits.proc_stat
+          this.closed = resp.data.hits.closed
+          this.unclosed = resp.data.hits.unclosed
+          this.cTitle1 = http.getToday().substring(5,7) + '月累计已处理投诉量'
+          this.cTitle2 = http.getToday().substring(5,7)  + '月累计处理中投诉量'
+
         })
         http.get('bi/get_complaint_trend_by_timespan', {
           startTime: http.gmt2strm(this.d11[0]),
