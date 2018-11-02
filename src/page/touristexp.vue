@@ -136,7 +136,7 @@
             <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
           </Select>
           <DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期"
-                      style="width:180px;float: right" @on-change="_dd2" :options="disoptionsdate"></DatePicker>
+                      style="width:220px;float: right" @on-change="_dd2" :options="disoptionsdate"></DatePicker>
 
           <RadioGroup v-model="dateChoice1" type="button" style="float: right" @on-change="dateChoice11">
             <Radio label="1">最近7天</Radio>

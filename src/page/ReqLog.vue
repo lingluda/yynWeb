@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div style="height:100%">
     <!-- <div class="tits">核心景区客流</div> -->
     <div class="ti">

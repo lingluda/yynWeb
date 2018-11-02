@@ -133,7 +133,7 @@
                 <Radio label="3">最近7天</Radio>
                 <Radio label="4">最近30天</Radio>
               </RadioGroup>
-              <DatePicker v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" placement="bottom-end" style="width:180px" @on-change="form1change1"></DatePicker>
+              <DatePicker v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" placement="bottom-end" style="width:220px" @on-change="form1change1"></DatePicker>
               <Select v-model="city1" style="width:120px;" @on-change="form1change12">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>

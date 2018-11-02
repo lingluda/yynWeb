@@ -27,6 +27,11 @@
             type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
           }
         },
+        legend: {
+          bottom:'1%',
+          icon: "circle",
+          data: ["最大等待时间", "平均处理时间", "最小等待时间"]
+        },
         color: [
           "#006EFF",
           "#29CC85",
@@ -41,7 +46,7 @@
         series: [
           {
             name:'最大等待时间',
-          data: [parseInt(this.ccc[0].max*100)/100,parseInt(this.ccc[1].max*100)/100,parseInt(this.ccc[2].max*100)/100],
+          data: this.ccc.map(i=>{return parseInt(i.max*100)/100}),
           type: 'bar',
             label: {
               normal: {
@@ -55,7 +60,7 @@
         },
           {
             name:'平均处理时间',
-            data:[parseInt(this.ccc[0].avg*100)/100,parseInt(this.ccc[1].avg*100)/100,parseInt(this.ccc[2].avg*100)/100,],
+            data: this.ccc.map(i=>{return parseInt(i.avg)/100}),
             type: 'bar',
             label: {
               normal: {
@@ -69,7 +74,7 @@
           },
           {
             name:'最小等待时间',
-            data: [parseInt(this.ccc[0].min*100)/100,parseInt(this.ccc[1].min*100)/100,parseInt(this.ccc[2].min*100)/100,],
+            data: this.ccc.map(i=>{return parseInt(i.min)/100}),
             type: 'bar',
             label: {
               normal: {

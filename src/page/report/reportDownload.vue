@@ -1,9 +1,9 @@
 <template>
   <div style="background:#f2f2f2;">
     <div class="tits">
-      <router-link to="report">报表下载</router-link>
+      <router-link to="report">报表下载{{download}}</router-link>
       <span style="font-size: 14px">> 预览</span></div>
-    <card style="margin: 20px;padding: 0 60px 40px 60px">
+    <card style="margin: 20px;padding: 0 60px 40px 60px" class="panel">
       <div style="text-align: center;font-size: 32px;font-weight: bold">数据报表</div>
       <div style="font-size: 28px">一、该报表时间段</div>
       <div>（{{d11[0]}}至{{d11[1]}}）</div>
@@ -94,16 +94,17 @@
 
       <div v-if="c3.indexOf('9')>-1">(3) 一机游用户消费
         <div>
-          一机游用户平均消费金额为{{avg.avg_amount}}元，</div><div v-if="rank.length!=0">用户在{{rank[0].name}}消费金额最高，为{{rank[0].avg}}元；</div><div>用户消费中，景区门票消费占比{{cate[1].value*100}}%，酒店消费占比{{cate[2].value*100}}%，机票消费占比{{cate[0].value*100}}%。
+          一机游用户平均消费金额为{{avg.avg_amount}}元，</div><div v-if="rank.length!=0">用户在{{rank[0].name}}消费金额最高，为{{rank[0].avg}}元；</div><div>用户消费中，景区门票消费占比{{parseInt(cate[1].value*10000)/100}}%，酒店消费占比{{parseInt(cate[2].value*10000)/100}}%，机票消费占比{{parseInt(cate[0].value*10000)/100}}%。
         </div>
         <Row style="margin-top: 20px">
-          <Col :span="6">人均消费
+        <!--  <Col :span="6">人均消费
             <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
-          </Col>
-          <Col :span="12" >
+          </Col>-->
+          <Col :span="11">
             游客消费地排行
-            <tstable v-if="ranks.length!=0" :rank="ranks" style="margin-top: 40px"></tstable></Col>
-          <Col :span="6">
+            <tstable v-if="ranks.length!=0" :rank="ranks" style="margin-top: 40px"></tstable>
+          </Col>
+          <Col :span="11">
             <exp_pie :wjj="wjj" :issend="issend" :cate="cate"></exp_pie>
           </Col>
         </Row>
@@ -237,6 +238,7 @@
         c2: this.$route.query.c2,
         c3: this.$route.query.c3,
         c4: this.$route.query.c4,
+        download: this.$route.query.download,
         FlowCity: this.$route.query.city,
         FlowCityName: '全省',
         //游客人数
@@ -286,7 +288,10 @@
             title: '所在州市',
             key: 'cityname'
           },
-
+          {
+            title:'累计接待量',
+            key:'cur'
+          },
           {
             title: '景区最优承载量',
             key: 'fit_capacity'
@@ -363,6 +368,12 @@
     },
     mounted() {
       this.init()
+      if (this.download==1){
+        setTimeout(() => {
+        this.send()
+        }, 1000);
+        this.download=0
+      }
     },
     methods: {
       send(){
@@ -392,7 +403,7 @@
           let tt = opts.join(',')
           console.log(tt)
           window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime='+http.gmt2strm(this.d11[0])+'&endtime='+http.gmt2strm(this.d11[1])+'&folder='+this.wjj+'&opts='+tt)
-        }, 4000);
+        }, 1000);
       },
       init() {
         http.get('bi/get_cityname_by_id',{city_id:this.FlowCity}).then(resp=>{
@@ -557,7 +568,7 @@
             for (var i=0;i<this.rank.length;i++){
               tt +=this.rank[i].avg
             }
-            this.ranks = this.rank.map(item =>{return{name:item.name,total:tt,pers:item.avg/tt,avg:'人均'+item.avg+'元'}})
+            this.ranks = this.rank.map(item =>{return{name:item.name,total:tt,pers:item.avg/tt*3,avg:'人均'+item.avg+'元'}})
           }
         })
 
@@ -574,7 +585,7 @@
 
         //游客体验-累计新增投诉量
         http.get('bi/get_complaint_by_date', {
-          startTime: http.gmt2strm(this.d11[0]),
+          date: http.gmt2strm(this.d11[0]),
           city_id: this.FlowCity
         }).then(resp => {
           this.ctotal = resp.data.hits.total
@@ -584,6 +595,10 @@
           this.cmax = resp.data.hits.max_proc
           this.cmin = resp.data.hits.min_proc
           this.ccc = resp.data.hits.proc_stat
+          console.log('this.ccc.map(i=>{return i.max})',this.ccc.map(i=>{return i.max}))
+          console.log('this.ccc.map(i=>{return i.max})',this.ccc.map(i=>{return i.avg}))
+          console.log('this.ccc.map(i=>{return i.max})',this.ccc.map(i=>{return i.min}))
+          console.log('this.ccc.map(i=>{return i.max})',this.ccc.map(i=>{return i.name}))
           this.closed = resp.data.hits.closed
           this.unclosed = resp.data.hits.unclosed
           this.cTitle1 = http.getToday().substring(5,7) + '月累计已处理投诉量'
@@ -635,7 +650,8 @@
         }
         return chartData;
       }
-    }
+    },
+
   }
 </script>
 
@@ -649,5 +665,5 @@
     background: #fff;
     border-bottom: 1px solid #e2e4e6;
   }
-
+  .panel div{line-height: 30px; margin: 10px;}
 </style>

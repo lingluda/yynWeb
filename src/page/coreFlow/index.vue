@@ -20,7 +20,7 @@
               <Radio label="1">近7日</Radio>
               <Radio label="2">近30日</Radio>
             </RadioGroup>
-            <DatePicker v-model="d11" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:180px" @on-change="dateChange"></DatePicker>
+            <DatePicker v-model="d11" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:220px" @on-change="dateChange"></DatePicker>
             <Select v-model="FlowCity" style="width: 120px" @on-change="dateChange">
               <Option v-for="city in provData" :value="city.id">{{city.name}}</Option>
             </Select>

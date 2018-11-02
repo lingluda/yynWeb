@@ -14,7 +14,7 @@
             <Radio label="1">近7日</Radio>
             <Radio label="2">近30日</Radio>
           </RadioGroup>
-          <DatePicker v-model="indexDate1" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:180px" ></DatePicker>
+          <DatePicker v-model="indexDate1" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:220px" ></DatePicker>
           <!--<span>-</span>-->
           <!--<DatePicker v-model="indexDate2" placement="bottom-end" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" ></DatePicker>-->
         </div>
@@ -26,7 +26,7 @@
               <div id="qsnet">
                 <div style="margin: 10px 0 0 5px;">
                 <span style="color: #000">景区影响力指数</span>
-                <Tooltip content="根据互联网中景区的搜索、查看量进行计算；" placement="right" max-width="200">
+                <Tooltip content="根据互联网中景区的搜索、查看量进行计算" placement="right" max-width="200">
                   <Icon size="19"  type="ios-help-circle-outline" />
                 </Tooltip>
                 </div>
@@ -58,7 +58,7 @@
               <div id="qsnet">
                 <div style="margin: 10px 0 0 5px;">
                   <span style="color: #000">景区传播力指数</span>
-                  <Tooltip content="根据游云南app中用户主动分享景区相关内容进行计算；" placement="right" max-width="200">
+                  <Tooltip content="根据游云南app中用户主动分享景区相关内容进行计算" placement="right" max-width="200">
                     <Icon size="19"  type="ios-help-circle-outline" />
                   </Tooltip>
                 </div>
@@ -89,7 +89,7 @@
               <div id="qsnet">
                 <div style="margin: 10px 0 0 5px;">
                   <span style="color: #000">景区美誉度指数</span>
-                  <Tooltip content="根据景区点赞评论及舆情情况进行计算；" placement="right" max-width="200">
+                  <Tooltip content="根据景区点赞评论及舆情情况进行计算" placement="right" max-width="200">
                     <Icon size="19"  type="ios-help-circle-outline" />
                   </Tooltip>
                 </div>

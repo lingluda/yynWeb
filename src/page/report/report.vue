@@ -3,7 +3,7 @@
     <div class="tits">报表下载</div>
     <card style="margin: 20px">
       <div style="margin-bottom: 20px">
-      <DatePicker type="daterange" v-model="reportDate" placeholder="Select date" style="width: 180px"></DatePicker>
+      <DatePicker type="daterange" v-model="reportDate" placeholder="Select date" style="width: 220px"></DatePicker>
       <RadioGroup type="button" @on-change="picDate">
         <Radio label="today">今天</Radio>
         <Radio label="yesterday">昨日</Radio>
@@ -100,35 +100,36 @@
       </div>
       <div style="margin: 20px 0 0 40%">
         <Button @click="goto">预览</Button>
-        <!--<Button>下载</Button>-->
+        <Button @click="download" :disabled='downling==1'>下载</Button>
       </div>
-      <div v-show="false">
-      <div v-if="checkAllGroup.indexOf('2')>-1" id="reportmap" style="width:100%;height:580px;"></div>
-      <div v-if="checkAllGroup.indexOf('3')>-1" id="indexline" style="width:100%;height:580px;"></div>
-      <div v-if="checkAllGroup3.indexOf('7')>-1">
-      <div id="b1" style="width:100%;height:580px;"></div>
-      <div id="b2" style="width:100%;height:580px;"></div>
-      <div id="b3" style="width:100%;height:580px;"></div>
-      <div id="b4" style="width:100%;height:580px;"></div>
-      </div>
-      <Row v-if="checkAllGroup2.indexOf('6')>-1">
-        <Col :span="8"><tstable :rank="influence"></tstable></Col>
-        <Col :span="8"><tstable :rank="transmission"></tstable></Col>
-        <Col :span="8"><tstable :rank="reputation"></tstable></Col>
-      </Row>
-      <Row style="margin-top: 20px"  v-if="checkAllGroup3.indexOf('9')>-1">
-        <Col :span="8">人均消费
-          <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
-        </Col>
-        <Col :span="8" >
-          游客消费地排行
-          <tstable v-if="ranks.length!=0" :rank="ranks" style="margin-top: 40px"></tstable></Col>
-        <Col :span="8"><div id="cashbar" style="width: 100%;height: 400px"></div></Col>
-      </Row>
-        <div id="lengthbar" style="width: 100%;height: 200px;"></div>
-        <div id="fff" style="height: 400px;width: 100%;"></div>
-        <!--<repotMap :mapdata="this.areaPeople1"></repotMap>-->
-      </div>
+      <iframe name="iframedownload" :src="downLoadUrl" frameborder="0" width="100%" height="0" style="dispaly:none"></iframe>
+      <!-- <div v-show="false">
+       <div v-if="checkAllGroup.indexOf('2')>-1" id="reportmap" style="width:100%;height:580px;"></div>
+       <div v-if="checkAllGroup.indexOf('3')>-1" id="indexline" style="width:100%;height:580px;"></div>
+       <div v-if="checkAllGroup3.indexOf('7')>-1">
+       <div id="b1" style="width:100%;height:580px;"></div>
+       <div id="b2" style="width:100%;height:580px;"></div>
+       <div id="b3" style="width:100%;height:580px;"></div>
+       <div id="b4" style="width:100%;height:580px;"></div>
+       </div>
+       <Row v-if="checkAllGroup2.indexOf('6')>-1">
+         <Col :span="8"><tstable :rank="influence"></tstable></Col>
+         <Col :span="8"><tstable :rank="transmission"></tstable></Col>
+         <Col :span="8"><tstable :rank="reputation"></tstable></Col>
+       </Row>
+       <Row style="margin-top: 20px"  v-if="checkAllGroup3.indexOf('9')>-1">
+         <Col :span="8">人均消费
+           <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
+         </Col>
+         <Col :span="8" >
+           游客消费地排行
+           <tstable v-if="ranks.length!=0" :rank="ranks" style="margin-top: 40px"></tstable></Col>
+         <Col :span="8"><div id="cashbar" style="width: 100%;height: 400px"></div></Col>
+       </Row>
+         <div id="lengthbar" style="width: 100%;height: 200px;"></div>
+         <div id="fff" style="height: 400px;width: 100%;"></div>
+         &lt;!&ndash;<repotMap :mapdata="this.areaPeople1"></repotMap>&ndash;&gt;
+       </div>-->
 
     </card>
   </div>
@@ -136,17 +137,17 @@
 
 <script>
   import http from '@/http.js'
-  import "echarts/map/js/yunnan.js";
+ /* import "echarts/map/js/yunnan.js";
   import repotMap from './repotMap1'
   import indexLine from './IndexLine1'
   import item from './item'
   import ImgBar from './ImgBar1'
   import exp from './exp'
   import exp_pie from './exp_pie'
-  import tstable from './tstable'
+  import tstable from './tstable'*/
   export default {
     name: "report",
-    components: {
+    /*components: {
       repotMap,
       indexLine,
       ImgBar,
@@ -154,122 +155,123 @@
       exp,
       exp_pie,
       tstable,
-    },
+    },*/
     data(){
       return{
+        downling:'',
         showchech:1,
-        FlowCityName: '全省',
-        //游客人数
-        tourPeople: '',
-        //区域游客占比
-        areaPeople: [],
-        areaPeople1: [],
-        //游客趋势
-        trendPeople: [],
-        trendPeople1: [],
-        //核心景区排行
-        coreSenic: [],
-        columns1: [
-          {
-            title: '景区名称',
-            key: 'name',
-            render: (h, params) => {
-              return h('div', [
-                h('img', {
-                  style: {
-                    height: '30px',
-                    width: '30px',
-                  },
-                  attrs: {
-                    src: params.row.image.thumb_url
-                  }
-                }),
-                h('span',{
-                  style:{
-                    position:'absolute',
-                    marginTop:'9px',
-                    marginLeft:'5px'
-                  }
-                }, params.row.name)
-              ]);
-            }
-          },
-          {
-            title: '景区级别',
-            key: 'grade_alias'
-          },
-          {
-            title: '所在区县',
-            key: 'distname'
-          },
-          {
-            title: '所在州市',
-            key: 'cityname'
-          },
+        /* FlowCityName: '全省',
+         //游客人数
+         tourPeople: '',
+         //区域游客占比
+         areaPeople: [],
+         areaPeople1: [],
+         //游客趋势
+         trendPeople: [],
+         trendPeople1: [],
+         //核心景区排行
+         coreSenic: [],
+         columns1: [
+           {
+             title: '景区名称',
+             key: 'name',
+             render: (h, params) => {
+               return h('div', [
+                 h('img', {
+                   style: {
+                     height: '30px',
+                     width: '30px',
+                   },
+                   attrs: {
+                     src: params.row.image.thumb_url
+                   }
+                 }),
+                 h('span',{
+                   style:{
+                     position:'absolute',
+                     marginTop:'9px',
+                     marginLeft:'5px'
+                   }
+                 }, params.row.name)
+               ]);
+             }
+           },
+           {
+             title: '景区级别',
+             key: 'grade_alias'
+           },
+           {
+             title: '所在区县',
+             key: 'distname'
+           },
+           {
+             title: '所在州市',
+             key: 'cityname'
+           },
 
-          {
-            title: '景区最优承载量',
-            key: 'fit_capacity'
-          },
-          {
-            title: '最大承载量',
-            key: 'max_capacity',
-            width:115,
-            render:(h,params)=>{
-              if (params.row.max_capacity==0) {
-                return h('span','暂无数据')
-              } else {
-                return h('div',[
-                  h('span',params.row.max_capacity)
-                ])
-              }
-            }
-          },
-          {
-            title: '营业时间',
-            key: 'busi_time_alias'
-          },
-        ],
-        //景区指数排行
-        influence: [],
-        transmission: [],
-        reputation: [],
-        //基本画像
-        imggender: [],
-        imgage: [],
-        imgcar: [],
-        imgcash: [],
-        imgedu: [],
-        imgmobile: [],
-        cfcity:[],
-        cfprov:[],
-        //人口迁徙
-        inMove:[],
-        outMove:[],
-        //一机游用户消费
-        avg: '',
-        cate: [],
-        rank: [],
-        ranks: [],
-        //线下消费
-        //游客体验-累计新增投诉量
-        clink:'',
-        cratio:'',
-        ctotal:'',
-        cavg:'',
-        cmax:'',
-        cmin:'',
-        ccc:[],
-        //区域游客占比
-        //投诉时长分析
-        bar1:'base_1',
-        bar2:'base_2',
-        bar3:'base_3',
-        bar4:'base_4',
-        useravg:'用户平均消费金额',
-        avgunit:'元',
-        issend:0,
-        wjj:'',
+           {
+             title: '景区最优承载量',
+             key: 'fit_capacity'
+           },
+           {
+             title: '最大承载量',
+             key: 'max_capacity',
+             width:115,
+             render:(h,params)=>{
+               if (params.row.max_capacity==0) {
+                 return h('span','暂无数据')
+               } else {
+                 return h('div',[
+                   h('span',params.row.max_capacity)
+                 ])
+               }
+             }
+           },
+           {
+             title: '营业时间',
+             key: 'busi_time_alias'
+           },
+         ],
+         //景区指数排行
+         influence: [],
+         transmission: [],
+         reputation: [],
+         //基本画像
+         imggender: [],
+         imgage: [],
+         imgcar: [],
+         imgcash: [],
+         imgedu: [],
+         imgmobile: [],
+         cfcity:[],
+         cfprov:[],
+         //人口迁徙
+         inMove:[],
+         outMove:[],
+         //一机游用户消费
+         avg: '',
+         cate: [],
+         rank: [],
+         ranks: [],
+         //线下消费
+         //游客体验-累计新增投诉量
+         clink:'',
+         cratio:'',
+         ctotal:'',
+         cavg:'',
+         cmax:'',
+         cmin:'',
+         ccc:[],
+         //区域游客占比
+         //投诉时长分析
+         bar1:'base_1',
+         bar2:'base_2',
+         bar3:'base_3',
+         bar4:'base_4',
+         useravg:'用户平均消费金额',
+         avgunit:'元',
+         issend:0,
+         wjj:'',*/
 
         city:'',
         senic:'',
@@ -301,20 +303,22 @@
         checkAll4: false,
         checkAllGroup4: [],
         isshow4:1,
+        downLoadUrl:''
       }
     },
     mounted(){
       this.getCityS()
     },
     methods:{
+      download(){
+        this.downling=1
+        this.downLoadUrl='#/reportDownload?s1='+http.gmt2strm(this.reportDate[0])+'&s2='+http.gmt2strm(this.reportDate[1])+
+          '&c='+this.checkAllGroup+'&c1='+this.checkAllGroup1+'&c2='+this.checkAllGroup1+'&c3='+this.checkAllGroup3+
+          '&c4='+this.checkAllGroup4+'&city='+this.city+'&senic='+this.senic+'&download=1';
+        window.open(this.downLoadUrl,'iframedownload');
+      },
       getCityS(){
-        if (http.gmt2strm(this.reportDate[0])==http.gmt2strm(this.reportDate[1])) {
-          this.showchech = 1
-          console.log(this.checkAllGroup3)
-        }else {
-          this.showchech = 2
-          console.log(this.checkAllGroup3)
-        }
+
         http.get("bi/get_all_city_prov", {}).then(resp => {
           this.cityData = resp.data.hits;
           this.city = resp.data.hits[0].id;
@@ -324,17 +328,17 @@
             }
           })
         });
-        this.indexMaps()
+       /* this.indexMaps()
         this.indexLine()
         this.initImg()
         this.cash()
         this.onecash()
-        this.initexp()
+        this.initexp()*/
         //游客趋势
         //基本画像
 
       },
-      initLeng(){
+   /*   initLeng(){
         let lbar = this.$echarts.init(document.getElementById('lengthbar'))
         lbar.setOption({
           animation: false,
@@ -729,7 +733,7 @@
             }
           ]
         })
-      },
+      },*/
       citychange(){
         this.senic=''
         http.get('bi/get_scenic_by_city', {city_id: this.city}).then(resp => {
@@ -737,6 +741,13 @@
             this.senicData = resp.data.hits
           }
         })
+      },
+      wdate(){
+        if (http.gmt2strm(this.reportDate[0])==http.gmt2strm(this.reportDate[1])) {
+          this.showchech = 1
+        }else {
+          this.showchech = 2
+        }
       },
       picDate(val){
         if (val=='today'){
@@ -758,13 +769,7 @@
         if (val=='lastm'){
           this.reportDate =[http.getLstMonthFirstday(),http.getLstMonthEndday()]
         };
-        if (http.gmt2strm(this.reportDate[0])==http.gmt2strm(this.reportDate[1])) {
-          this.showchech = 1
-          console.log(this.checkAllGroup3)
-        }else {
-          this.showchech = 2
-          console.log(this.checkAllGroup3)
-        }
+
       },
       goto(){
         this.$router.push({path:'reportDownload',query:{
@@ -911,11 +916,7 @@
     },
     watch:{
       reportDate:'wdate',
-      city:'wcity',
-      checkAllGroup:'wdate',
-      checkAllGroup2:'wdate',
-      checkAllGroup3:'wdate',
-      checkAllGroup4:'wdate',
+
     }
   }
 </script>

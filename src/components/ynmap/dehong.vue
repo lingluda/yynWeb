@@ -20,8 +20,9 @@
     },
     methods: {
       initMap() {
-        let myData =  this.mapData.hits.slice(0,3).map(item => {return { name: item.name,coord:item.coord}});
-        let map = this.$echarts.init(document.getElementById("main"))
+        let myData = this.mapData.hits.slice(0, 3).map(item => {
+          return {name: item.name, coord: item.coord,value:item.cur}
+        });   let map = this.$echarts.init(document.getElementById("main"))
         map.setOption({
           geo: {
             label: {
@@ -59,6 +60,17 @@
                   show: true,
                   fontSize: 12,
                   padding:4
+                },
+                emphasis:{
+                  label: {
+                    position: "right",
+                    color: "#fff",
+                    backgroundColor: 'grey',
+                    formatter: "{b}：{@coord}人",
+                    show: true,
+                    fontSize: 12,
+                    padding: 4
+                  },
                 },
                 itemStyle: {
                   normal: {

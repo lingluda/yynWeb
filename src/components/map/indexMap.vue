@@ -77,7 +77,8 @@
                     normal: {
                       show: true,
                       textStyle: {
-                        color: '#006EFF'
+                        backgroundColor:'#323232',
+                        color: '#fff',
                       },
                       formatter: '{b}\n{c}%',
                       borderWidth:0
@@ -85,7 +86,8 @@
                   },
                   itemStyle: {
                     normal:{
-                      borderColor: 'rgba(0, 0, 0, 0.2)'
+                      backgroundColor:'#323232',
+                      borderColor: '#fff'
                     },
                     emphasis:{
                       areaColor: null,
@@ -93,7 +95,7 @@
                       shadowOffsetY: 0,
                       shadowBlur: 20,
                       borderWidth: 0,
-                      shadowColor: 'rgba(0, 0, 0, 0.5)'
+                      shadowColor: '#fff'
                     }
                   },
                   data:this.mapdata.map(i=>{return{name:i.name,value:parseInt(i.value*100)/100}})

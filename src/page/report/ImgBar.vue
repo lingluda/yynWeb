@@ -68,7 +68,7 @@
               length:5,
               length2:4
             },
-            data: this.sx
+            data: this.sx.map(i=>{return{name:i.name,value:parseInt(i.value*10000)/10000}})
           }
         ]
       })

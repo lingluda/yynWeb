@@ -98,7 +98,7 @@
             <span style="font-weight: bold;color: #000000">用户趋势分析</span>
 
             <DatePicker placement="bottom-end" type="daterange"  v-model="picMonth" @on-change="change1" placeholder="自选时间"  :options="disoptionsdate"
-                        style="width: 180px;float: right"></DatePicker>
+                        style="width: 220px;float: right"></DatePicker>
             <RadioGroup v-model="cho7" type="button" style="float: right" @on-change="choose7">
               <Radio label="1">最近7日</Radio>
               <Radio label="2">最近30日</Radio>

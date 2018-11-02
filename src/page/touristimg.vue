@@ -20,7 +20,7 @@
           <Radio label="1">近7日</Radio>
           <Radio label="2">近30日</Radio>
         </RadioGroup>
-        <DatePicker type="daterange" v-model="cpicDate" placeholder="自选时间" style="width: 180px" @on-change="dateChange" :options="disoptionsdate"></DatePicker>
+        <DatePicker type="daterange" v-model="cpicDate" placeholder="自选时间" style="width: 220px" @on-change="dateChange" :options="disoptionsdate"></DatePicker>
         <Row :gutter="16" style="margin-top: 20px">
           <Col span="6">
             <div id="sex">
@@ -105,7 +105,7 @@
               <Radio label="1">近7日</Radio>
               <Radio label="2">近30日</Radio>
             </RadioGroup>
-            <DatePicker v-model="cashdate1" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="请选择日期" style="width:180px" ></DatePicker>
+            <DatePicker v-model="cashdate1" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="请选择日期" style="width:220px" ></DatePicker>
           </div>
         </div>
         <Row :gutter="16">
@@ -164,13 +164,15 @@
       <card style="margin-top: 20px">
         <div style="height: 40px">
           <span style="font-weight: bold;color: #000000">线下用户消费维度分析</span>
-
+          <Tooltip content="根据线下商家的诚信码支付数据计算" placement="right" max-width="200">
+            <Icon size="19" type="ios-help-circle-outline" />
+          </Tooltip>
           <div style="float: right">
             <RadioGroup type="button" @on-change="cashdatechange2">
               <Radio label="1">近7日</Radio>
               <Radio label="2">近30日</Radio>
             </RadioGroup>
-            <DatePicker v-model="cashdate2" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="请选择日期" style="width:180px" ></DatePicker>
+            <DatePicker v-model="cashdate2" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="请选择日期" style="width:220px" ></DatePicker>
           </div>
         </div>
         <Row :gutter="16">
@@ -178,9 +180,7 @@
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
                 <span style="color: #000">人均消费</span>
-                <Tooltip content="根据线下商家的诚信码支付数据计算" placement="right" max-width="200">
-                  <Icon size="19" type="ios-help-circle-outline" />
-                </Tooltip>
+
               </div>
               <Row style="margin: 90px 0 0 50px">
                 <Col :span="8">

@@ -3,14 +3,14 @@
     <ul style="list-style: none">
       <li class="qsnet_li" v-for="(item,index) in rank" :key="index">
         <Row class="qsnet_row">
-          <Col :span="2">
+          <Col :span="1">
             <i class="qsnet_idx">{{index+1}}</i>
           </Col>
           <Col :span="4">{{item.name}}</Col>
-          <Col :span="14" style="margin-top: 5px">
+          <Col :span="10" style="margin-top: 5px">
             <sb :pers=item.pers*100></sb>
           </Col>
-          <Col :span="4">{{item.avg}}</Col>
+          <Col :span="8">{{item.avg}}</Col>
         </Row>
       </li>
     </ul>

@@ -40,9 +40,10 @@ export default {
           };
         })
         let aMapData2 =  this.mapData.dist.map(item => {return { name: item.name,value:item.value}});
-        console.log('aMapData2',aMapData2)
-        console.log('aMapData1',aMapData)
         var option = {
+          tooltip: {
+            formatter: '{b}\n{c}人',
+          },
           visualMap: {
             min: 0,
             max: aMapData2[0].value,

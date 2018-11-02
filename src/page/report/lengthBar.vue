@@ -29,6 +29,7 @@
             fontSize: 12
           }
         },
+
         tooltip: {
           trigger: 'axis',
           axisPointer: {
