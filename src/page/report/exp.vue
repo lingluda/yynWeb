@@ -44,10 +44,11 @@
           type: 'value'
         },
         series: [
+
           {
-            name:'最大等待时间',
-          data: this.ccc.map(i=>{return parseInt(i.max*100)/100}),
-          type: 'bar',
+            name:'平均处理时间',
+            data: this.ccc.map(i=>{return parseInt(i.avg*100)/100}),
+            type: 'bar',
             label: {
               normal: {
                 show: true,
@@ -57,10 +58,10 @@
                 }
               }
             },
-        },
+          },
           {
-            name:'平均处理时间',
-            data: this.ccc.map(i=>{return parseInt(i.avg)/100}),
+            name:'最大等待时间',
+            data: this.ccc.map(i=>{return parseInt(i.max*100)/100}),
             type: 'bar',
             label: {
               normal: {
@@ -74,7 +75,7 @@
           },
           {
             name:'最小等待时间',
-            data: this.ccc.map(i=>{return parseInt(i.min)/100}),
+            data: this.ccc.map(i=>{return parseInt(i.min*100)/100}),
             type: 'bar',
             label: {
               normal: {
@@ -104,7 +105,7 @@
               "data" : this.picBase64Info
             },
             cache : false,
-            async : false,
+            async : true,
             dataType : "json",
             success : function(data) {},
 

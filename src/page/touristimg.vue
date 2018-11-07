@@ -78,7 +78,7 @@
           <Col span="12">
             <div>
               <Tabs v-model="tabname"
-                    style="border-top: 1px solid #dcdee2;border-left: 1px solid #dcdee2;height: 557px">
+                    style="border-top: 1px solid #dcdee2;border-left: 1px solid #dcdee2;height: 565px">
                 <TabPane label="迁入" name="in">
                   <Table height="550" :columns="columns1" :data="data3"></Table>
                 </TabPane>
@@ -109,7 +109,7 @@
           </div>
         </div>
         <Row :gutter="16">
-          <Col :span="8">
+          <Col :span="7">
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
               <span style="color: #000">人均消费</span>
@@ -117,16 +117,16 @@
               </div>
               <Row style="margin: 90px 0 0 50px">
                 <Col :span="8">
-                  <img src="../assets/imgs/cash1.png" style="margin-right:20px;width:60px;height:60px"/>
+                  <img src="../assets/imgs/cash1.png" style="margin-left:-20px;width:60px;height:60px"/>
                 </Col>
                 <Col :span="16" style="margin-left: -10px">
-                  <div style="margin-bottom: 3px;color: #000">用户平均消费金额</div>
+                     <div style="margin-bottom: 3px;color: #000">用户平均消费金额</div>
                   <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">{{cashmax1vag}}</span> <span>元</span></div>
                 </Col>
               </Row>
             </div>
           </Col>
-          <Col :span="8">
+          <Col :span="9">
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
                 <span style="color: #000">游客消费地排行</span>
@@ -140,10 +140,15 @@
                         <i class="qsnet_idx">{{index + 1}}</i>
                         <!--<span class="qsnet_sp">111</span>-->
                       </Col>
-                      <Col span="5" class="qsnet_num">{{item.name}}</Col>
+                      <Col v-if="item.names==''" span="5" class="qsnet_num">{{item.name.substring(0,4)}}</Col>
+                      <Col v-if="item.names!=''" span="5" class="qsnet_num">
+                      <Tooltip placement="top" max-width="200" :content=item.name>
+                        {{item.name.substring(0,4)}}
+                      </Tooltip>
+                      </Col>
                       <Col span="9" style="margin: 5px 0 0 0">  <pers-st :pers='item.pers' ></pers-st></Col>
 
-                      <Col span="8" class="qsnet_num">人均消费{{item.avg}}元</Col>
+                      <Col span="8" class="qsnet_num">人均{{item.avg}}元</Col>
                     </Row>
                   </li>
                 </ul>
@@ -169,14 +174,14 @@
           </Tooltip>
           <div style="float: right">
             <RadioGroup type="button" @on-change="cashdatechange2">
-              <Radio label="1">近7日</Radio>
-              <Radio label="2">近30日</Radio>
+              <Radio label="large7">近7日</Radio>
+              <Radio label="small">近30日</Radio>
             </RadioGroup>
             <DatePicker v-model="cashdate2" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="请选择日期" style="width:220px" ></DatePicker>
           </div>
         </div>
         <Row :gutter="16">
-          <Col :span="8">
+          <Col :span="7">
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
                 <span style="color: #000">人均消费</span>
@@ -184,7 +189,7 @@
               </div>
               <Row style="margin: 90px 0 0 50px">
                 <Col :span="8">
-                  <img src="../assets/imgs/cash1.png" style="margin-right:20px;width:60px;height:60px"/>
+                  <img src="../assets/imgs/cash1.png" style="margin-left:-20px;width:60px;height:60px"/>
                 </Col>
                 <Col :span="16" style="margin-left: -10px">
                   <div style="margin-bottom: 3px;color: #000">用户平均消费金额</div>
@@ -193,7 +198,7 @@
               </Row>
             </div>
           </Col>
-          <Col :span="8">
+          <Col :span="9">
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
                 <span style="color: #000">游客消费地排行</span>
@@ -207,10 +212,15 @@
                         <i class="qsnet_idx">{{index + 1}}</i>
                         <!--<span class="qsnet_sp">111</span>-->
                       </Col>
-                      <Col span="5" class="qsnet_num">{{item.name}}</Col>
+                      <Col v-if="item.names==''" span="5" class="qsnet_num">{{item.name}}</Col>
+                      <Col v-if="item.names!=''" span="5" class="qsnet_num">
+                        <Tooltip placement="top" max-width="200" :content=item.name>
+                          {{item.name.substring(0,4)}}
+                        </Tooltip>
+                      </Col>
                       <Col span="9" style="margin: 5px 0 0 0">  <pers-st :pers='item.pers' ></pers-st></Col>
 
-                      <Col span="8" class="qsnet_num">人均消费{{item.avg}}元</Col>
+                      <Col span="8" class="qsnet_num">人均{{item.avg}}元</Col>
                     </Row>
                   </li>
                 </ul>
@@ -459,7 +469,7 @@
         ccc:'',
         ccc1:'',
         cccM:'',
-        hotlineDate:http.getYesterDay(),
+        hotlineDate:http.if10(),
         provx: [],
         provy: [],
         cityx: [],
@@ -481,7 +491,7 @@
         cityData: [],
         cityData1: [],
         proData: [],
-        cpicDate: [http.getToday(),http.getToday()],
+        cpicDate: [http.if10(),http.if10()],
         picDate3: http.getYesterDay(),
         picDate4: [this.d22,this.d11],
         //cpicDate: http.getToday(),
@@ -526,7 +536,9 @@
         cashData: [],
         disoptionsdate: {
             disabledDate (date) {
-                return date< new Date(2018,7,1) || date > new Date()
+              const end = new Date()
+              end.setDate(end.getDate()-1)
+                return date< new Date(2018,7,1) || date > end
             }
         }
       };
@@ -536,6 +548,7 @@
     },
     methods: {
       slelecti7(val){
+
         if (val==1){
           this.cpicDate=[http.getWeekAgo(),http.getYesterDay()]
           this.dateChange()
@@ -566,11 +579,19 @@
           for (var i=0;i<cashmax1ranks.length;i++) {
             totalavg +=cashmax1ranks[i].avg
           }
-          console.log('totalavg',totalavg)
+          for (var i=0;i<cashmax1ranks.length;i++) {
+            if (http.StrLen(cashmax1ranks[i].name)>8) {
+              cashmax1ranks[i].names = cashmax1ranks[i].name
+            } else{
+              cashmax1ranks[i].names=''
+          }
+          }
+
           for (var i=0;i<cashmax1ranks.length;i++) {
             cashmax1ranks[i].pers = cashmax1ranks[i].avg/totalavg*300
           }
           this.cashmax1rank = cashmax1ranks.sort((v1, v2) => v2.avg - v1.avg);
+          console.log(this.cashmax1rank)
           this.initCash();
         })
       },
@@ -582,7 +603,7 @@
         }
       },
       cashmax2(){
-        http.get('bi/get_consume_by_datespan',{startTime:http.gmt2strm(this.cashdate2[0]),endTime:http.gmt2strm(this.cashdate2[1])}).then(resp=>{
+        http.get('bi/get_offline_consume_by_datespan',{startTime:http.gmt2strm(this.cashdate2[0]),endTime:http.gmt2strm(this.cashdate2[1])}).then(resp=>{
           this.cashmax2vag = http.qfw(resp.data.hits.avg.avg_amount)
           let cashmax1ranks = resp.data.hits.rank
           let cashDatas = resp.data.hits.cate;
@@ -596,7 +617,13 @@
           for (var i=0;i<cashmax1ranks.length;i++) {
             totalavg +=cashmax1ranks[i].avg
           }
-          console.log('totalavg',totalavg)
+          for (var i=0;i<cashmax1ranks.length;i++) {
+            if (http.StrLen(cashmax1ranks[i].name)>8) {
+              cashmax1ranks[i].names = cashmax1ranks[i].name
+            } else{
+              cashmax1ranks[i].names=''
+            }
+          }
           for (var i=0;i<cashmax1ranks.length;i++) {
             cashmax1ranks[i].pers = cashmax1ranks[i].avg/totalavg*300
           }
@@ -1036,15 +1063,19 @@
             {
               name: "消费分析",
               type: "pie",
-              radius: '70%',
+              radius: '60%',
               label: {
                 normal: {
                   show: true,
-                  position: 'inner',
+                  position: 'outside',
                   formatter: '{b}\n{d}%',
                 },
               },
-              labelLine: false,
+              labelLine: {
+                show:true,
+                length:4,
+                length2:5
+              },
               itemStyle: {
                 borderColor: '#fff',
                 borderWidth: 1
@@ -1079,15 +1110,20 @@
             {
               name: "消费分析",
               type: "pie",
-              radius: '70%',
+              radius: '60%',
+              avoidLabelOverlap: true,
               label: {
                 normal: {
                   show: true,
-                  position: 'inner',
+                  position: 'outside',
                   formatter: '{b}\n{d}%',
                 },
               },
-              labelLine: false,
+              labelLine: {
+                show:true,
+                length:4,
+                length2:5
+              },
               itemStyle: {
                 borderColor: '#fff',
                 borderWidth: 1

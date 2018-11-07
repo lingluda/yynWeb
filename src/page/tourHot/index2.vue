@@ -16,10 +16,9 @@
               </Tooltip>
             </div>
             <div class="lyrd_index_search_right">
-              <RadioGroup v-model="dateChoice1" type="button">
-                <Radio label="1">今日</Radio>
+              <!--<RadioGroup v-model="dateChoice1" type="button">
                 <Radio label="2">昨日</Radio>
-              </RadioGroup>
+              </RadioGroup>-->
               <DatePicker v-model="datefff" :options="disoptionsdate" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
               <Select v-model="city" style="width:120px;" @on-change="form1change3">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
@@ -116,7 +115,6 @@
                 </ul>
               </Col>
             </Row>
-
           </div>
           </div>
         </card>
@@ -186,7 +184,9 @@ export default {
       isshowmap1:1,
       disoptionsdate: {
         disabledDate (date) {
-          return date< new Date(2018,7,1) || date > new Date()
+          const end = new Date()
+          end.setDate(end.getDate()-1)
+          return date< new Date(2018,7,1) || date > end
         }
       },
       isshow1:1,
@@ -203,7 +203,7 @@ export default {
       totalP: "",
       lineDatax: [],
       lineDatay: [],
-      datefff: http.getToday(),
+      datefff: http.getYesterDay(),
       cdate: "",
       date1: [http.getWeekAgo(), http.getToday()],
       cityData: [],
@@ -278,7 +278,7 @@ export default {
         })
       });
 
-      this.datefff = http.getToday();
+      this.datefff = http.getYesterDay();
       this.pieData1 = [];
       this.pieData2map = [];
       http
@@ -534,7 +534,7 @@ export default {
       if (this.citysenic1=='') {
         this.isshowmap1 = 1
         console.log('this.isshowmap', this.isshowmap)
-        this.isshowmap1 = 1
+        //this.isshowmap1 = 1
         if (this.city == 0 || this.city == "undefied" || this.city == null) {
           this.btitle = "各市州";
           this.isshowmap = 0
@@ -744,7 +744,8 @@ export default {
         http
           .get("bi/get_tourism_dist_by_date", {
             date: http.gmt2str(this.datefff),
-            city_id: this.city
+            city_id: this.city,
+            senic_id:this.citysenic1
           })
           .then(resp => {
             this.pieData = resp.data.hits;
@@ -822,7 +823,8 @@ export default {
         http
           .get("bi/get_tourism_dist_by_date", {
             date: http.gmt2str(this.datefff),
-            city_id: this.city
+            city_id: this.city,
+            senic_id:this.citysenic1
           })
           .then(resp => {
             this.pieData = resp.data.hits;

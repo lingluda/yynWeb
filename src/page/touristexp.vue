@@ -430,6 +430,7 @@
             data: this.linex
           },
           yAxis: {
+            name:'单位：次数',
             type: "value",
             splitLine: {
               lineStyle: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div id="pie" style="width: 100%;height: 300px;"></div>
+  <div :id="id" style="width: 100%;height: 300px;"></div>
   </div>
 </template>
 <script>
@@ -10,7 +10,9 @@
     props:{
       wjj:String,
       issend:Number,
-      cate:Array
+      cate:Array,
+      id:String,
+      pic:String,
     },
     data () {
       return {
@@ -18,7 +20,7 @@
       }
     },
     mounted(){
-      let pie=this.$echarts.init(document.getElementById('pie'))
+      let pie=this.$echarts.init(document.getElementById(this.id))
       pie.setOption({
         animation: false,
         title : {
@@ -46,15 +48,19 @@
         series : [
           {
             type: 'pie',
-            data:this.cate,
+            data: this.cate,
             label: {
               normal: {
                 show: true,
-                position: 'inner',
+                position: 'outside',
                 formatter: '{b}\n{d}%',
               }
             },
-            labelLine: false,
+            labelLine: {
+              show:true,
+              length:5,
+              length2:4
+            },
             itemStyle: {
               borderColor: '#fff',
               borderWidth: 1
@@ -64,6 +70,7 @@
 
       })
       this.picBase64Info = pie.getDataURL();
+      //console.log(this.picBase64Info)
     },
     methods:{
 
@@ -74,11 +81,11 @@
           url : "bi/uploadimg", //?folder=" + folder + "&imgtype=" + imgtype,
           data : {
             "folder" : this.wjj,
-            "imgtype" : 'img_port_ cons_yjy',
+            "imgtype" : this.pic,
             "data" : this.picBase64Info
           },
           cache : false,
-          async : false,
+          async : true,
           dataType : "json",
           success : function(data) {},
 

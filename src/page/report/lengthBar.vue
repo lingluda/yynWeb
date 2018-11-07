@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div>{{cavg}}
   <div id="lengthb" style="width: 100%;height: 200px;"></div>
   </div>
 </template>
@@ -8,11 +8,9 @@
   export default {
     name: "lengthBar",
      props:{
-       wjj:String,
-       avg:Number,
-       max:Number,
-       min:Number,
-       issend:Number,
+       wjj: String,
+       cavg: Array,
+       issend: Number,
     },
     data(){
       return{
@@ -20,8 +18,8 @@
       }
     },
     mounted() {
-      let lbar = this.$echarts.init(document.getElementById('lengthb'))
-      lbar.setOption({
+      let Fbar = this.$echarts.init(document.getElementById('lengthb'))
+      Fbar.setOption({
         animation: false,
         title: {
           text: '已关闭投诉处理时长',
@@ -50,21 +48,15 @@
         yAxis: {
           name:'单位(小时)',
           type: 'category',
-          data: ['最小时长', '最大时长', '平均时长'],
+          data: ['平均时长', '最大时长', '最小时长'],
         },
         series: [
           {
             type: 'bar',
-            data: [this.min,parseInt(this.max*100)/100,parseInt(this.avg*100)/100],
-            label: {
-              normal: {
-                show: true,
-                position: 'right',
-                textStyle:{
-                  color:'#000'
-                }
-              }
-            },
+             //data: [6,85,0],
+            //data: [parseInt(this.cavg[2]*100)/100,parseInt(this.cavg[1]*100)/100,parseInt(this.cavg[0]*100)/100],
+            data: this.cavg,
+
           }
         ]
       })
@@ -84,7 +76,7 @@
               "data" : this.picBase64Info
             },
             cache : false,
-            async : false,
+            async : true,
             dataType : "json",
             success : function(data) {},
 

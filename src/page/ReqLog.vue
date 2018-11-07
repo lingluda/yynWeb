@@ -15,6 +15,7 @@
     <Table :columns="reqColumn" :data="reqData"></Table>
     </div>
     </div>
+
 </template>
 
 <script>

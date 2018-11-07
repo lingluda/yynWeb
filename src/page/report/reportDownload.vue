@@ -12,7 +12,8 @@
       <div style="font-size: 28px">3.1 旅游热度概况</div>
 
       <div v-if="c.indexOf('1')>-1">(1) 游客人数
-        <div>{{FlowCityName}} 总接待游客量为 {{tourPeople.total}} 人次，与昨日环比 {{tourPeople.ratio}}，与上月同比 {{tourPeople.link}}。</div>
+        <div>{{FlowCityName}} 总接待游客量为 {{tourPeople.total}} 人次，与昨日环比 {{tourPeople.ratio}}，与上月同比 {{tourPeople.link}}。
+        </div>
       </div>
 
       <div v-if="c.indexOf('2')>-1">(2) {{FlowCityName}}游客占比
@@ -23,13 +24,15 @@
         <div>（排名第四 {{areaPeople[3].name}}）接待人数约 {{areaPeople[3].value}}人，占比总量 {{areaPeople[3].proportion}}%;</div>
         <div>（排名第五 {{areaPeople[4].name}}）接待人数约 {{areaPeople[4].value}}人，占比总量 {{areaPeople[4].proportion}}%;</div>
         <div style="width: 400px;height: 500px;">
-          <repotMap :issend="issend" :wjj="wjj" :mapdata="this.areaPeople1" style="width: 100%;height: 500px;"></repotMap>
+          <repotMap :issend="issend" :wjj="wjj" :mapdata="this.areaPeople1"
+                    style="width: 100%;height: 500px;"></repotMap>
         </div>
       </div>
 
       <div v-if="c.indexOf('3')>-1">(3) 游客趋势
         <div>
-          {{trendPeople[0].date}} 日客流量最大，为 {{trendPeople[0].value}}人；{{trendPeople[trendPeople.length-1].date}} 日客流量最小，为 {{trendPeople[trendPeople.length-1].value}}人。
+          {{trendPeople[0].date}} 日客流量最大，为 {{trendPeople[0].value}}人；{{trendPeople[trendPeople.length-1].date}} 日客流量最小，为
+          {{trendPeople[trendPeople.length-1].value}}人。
         </div>
         <indexLine :issend="issend" :wjj="wjj" :trendPeople1="trendPeople1"></indexLine>
       </div>
@@ -51,12 +54,15 @@
         <div>景区美誉度指数最大的为 {{reputation[0].name}} ，指数值为 {{reputation[0].avg}}；</div>
         <div>景区传播力指数最大的为 {{transmission[0].name}}，指数值为 {{transmission[0].avg}}；</div>
         <div v-if="rank.length!=0">
-          <div>(1)影响力指数</div>
-          <tstable :rank="influence"></tstable>
-          <div>(2)美誉度指数</div>
-          <tstable :rank="transmission"></tstable>
-          <div>(3)传播力指数</div>
-          <tstable :rank="reputation"></tstable>
+          <div id="img_idx_1">(1)影响力指数
+            <tstable :rank="influence"></tstable>
+          </div>
+          <div id="img_idx_3">(2)美誉度指数
+            <tstable :rank="transmission"></tstable>
+          </div>
+          <div id="img_idx_2">(3)传播力指数
+            <tstable :rank="reputation"></tstable>
+          </div>
         </div>
       </div>
 
@@ -75,16 +81,28 @@
         <div>{{cfcity[0].name}}来源游客量最大，占比总游客的{{parseInt(cfcity[0].origin_percent*10000)/100}}%；</div>
         <div>{{cfprov[0].name}}来源游客量最大，占比总游客的{{parseInt(cfprov[0].origin_percent*10000)/100}}%。</div>
         <Row :gutter="16">
-          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar1" :sx="imggender" :t="t1"></ImgBar></Col>
-          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar2" :sx="imgage" :t="t2"></ImgBar></Col>
-          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar3" :sx="imgedu" :t="t3"></ImgBar></Col>
-          <Col :span="6"><ImgBar :issend="issend" :wjj="wjj" :main="bar4" :sx="imgcash" :t="t4"></ImgBar></Col>
+          <Col :span="6">
+            <ImgBar :issend="issend" :wjj="wjj" :main="bar1" :sx="imggender" :t="t1"></ImgBar>
+          </Col>
+          <Col :span="6">
+            <ImgBar :issend="issend" :wjj="wjj" :main="bar2" :sx="imgage" :t="t2"></ImgBar>
+          </Col>
+          <Col :span="6">
+            <ImgBar :issend="issend" :wjj="wjj" :main="bar3" :sx="imgedu" :t="t3"></ImgBar>
+          </Col>
+          <Col :span="6">
+            <ImgBar :issend="issend" :wjj="wjj" :main="bar4" :sx="imgcash" :t="t4"></ImgBar>
+          </Col>
         </Row>
       </div>
 
       <div v-if="c3.indexOf('8')>-1&&d11[0]==d11[1]">(2) 人口迁徙
-        <div>由 {{inMove[0].from}} 迁入 {{inMove[0].to}} 的游客量最多， {{inMove[0].line}} 热度最大，热度值为 {{inMove[0].score}}，游客中飞机出游的占比 {{parseInt(inMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(inMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(inMove[0].car*10000)/100}}%；</div>
-        <div>  由 {{outMove[0].from}} 迁出 {{outMove[0].to}} 的游客量最多， {{outMove[0].line}} 热度最大，热度值为{{outMove[0].score}}，游客中飞机出游的占比{{parseInt(outMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(outMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(outMove[0].car*10000)/100}}%。
+        <div>由 {{inMove[0].from}} 迁入 {{inMove[0].to}} 的游客量最多， {{inMove[0].line}} 热度最大，热度值为
+          {{inMove[0].score}}，游客中飞机出游的占比
+          {{parseInt(inMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(inMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(inMove[0].car*10000)/100}}%；
+        </div>
+        <div> 由 {{outMove[0].from}} 迁出 {{outMove[0].to}} 的游客量最多， {{outMove[0].line}}
+          热度最大，热度值为{{outMove[0].score}}，游客中飞机出游的占比{{parseInt(outMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(outMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(outMove[0].car*10000)/100}}%。
         </div>
         <div>1.迁入</div>
         <Table :columns="intable" :data="inMove"></Table>
@@ -94,50 +112,80 @@
 
       <div v-if="c3.indexOf('9')>-1">(3) 一机游用户消费
         <div>
-          一机游用户平均消费金额为{{avg.avg_amount}}元，</div><div v-if="rank.length!=0">用户在{{rank[0].name}}消费金额最高，为{{rank[0].avg}}元；</div><div>用户消费中，景区门票消费占比{{parseInt(cate[1].value*10000)/100}}%，酒店消费占比{{parseInt(cate[2].value*10000)/100}}%，机票消费占比{{parseInt(cate[0].value*10000)/100}}%。
+          一机游用户平均消费金额为{{avg.avg_amount}}元，
+        </div>
+        <div v-if="rank.length!=0">用户在{{rank[0].name}}消费金额最高，为{{rank[0].avg}}元；</div>
+        <div>
+          用户消费中，景区门票消费占比{{parseInt(cate[1].value*10000)/100}}%，酒店消费占比{{parseInt(cate[2].value*10000)/100}}%，机票消费占比{{parseInt(cate[0].value*10000)/100}}%。
         </div>
         <Row style="margin-top: 20px">
-        <!--  <Col :span="6">人均消费
-            <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
-          </Col>-->
-          <Col :span="11">
+          <!--  <Col :span="6">人均消费
+              <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
+            </Col>-->
+          <Col :span="11" id="img_port_yjy_1">
             游客消费地排行
-            <tstable v-if="ranks.length!=0" :rank="ranks" style="margin-top: 40px"></tstable>
+            <tstable v-if="rankk.length!=0" :rank="rankk" style="margin-top: 40px"></tstable>
           </Col>
           <Col :span="11">
-            <exp_pie :wjj="wjj" :issend="issend" :cate="cate"></exp_pie>
+            <exp_pie :id="pieid1" :pic="pic1" :wjj="wjj" :issend="issend" :cate="cate"></exp_pie>
           </Col>
         </Row>
       </div>
 
-      <!--  <div v-if="c3.indexOf('10')>-1">(3) 游客线下消费
-         <div>一机游用户平均消费金额为 元，用户在 （消费地） 消费金额最高，为 元；用户消费中，景区门票消费占比 %，酒店消费占比 %，机票消费占比 %。</div>
-       </div>-->
+      <div v-if="c3.indexOf('10')>-1">(3) 游客线下消费
+        <div>
+          一机游用户平均消费金额为{{avgs.avg_amount}}元，
+        </div>
+        <div v-if="ranks.length!=0">用户在{{ranks[0].name}}消费金额最高，为{{ranks[0].avg}}元；</div>
+        <div v-for="(i,index) in cates" :key="index">用户消费中，
+          {{i.name}}消费占比{{parseInt(i.value*10000)/100}}%，
+        </div>
+        <Row style="margin-top: 20px">
+          <!--  <Col :span="6">人均消费
+              <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
+            </Col>-->
+          <Col :span="11" id="img_port_off_1">
+            游客消费地排行
+            <tstable v-if="rankks.length!=0" :rank="rankks" style="margin-top: 40px"></tstable>
+          </Col>
+          <Col :span="11">
+            <exp_pie :id="pieid2" :pic="pic2" :wjj="wjj" :issend="issend" :cate="cates"></exp_pie>
+          </Col>
+        </Row>
+      </div>
 
       <div style="font-size: 28px">3.5 游客体验</div>
       <div v-if="c4.indexOf('11')>-1">(1) 累计新增投诉量
         <div>累计新增投诉量为{{ctotal}}件，与上月同比{{clink}} % 。与昨日环比{{cratio}} %</div>
       </div>
       <div v-if="c4.indexOf('12')>-1">(2) 投诉时长分析
-        <div> {{d11[0]}}至{{d11[1]}} 平台累计已处理投诉量{{closed}}件，累计处理中投诉量{{unclosed}}件；已关闭投诉中，平均处理时长为{{parseInt(cavg*100)/100}}小时，最大处理时长为{{parseInt(cmax*100)/100}}小时，最小处理时长为{{parseInt(cmin*100)/100}}小时。</div>
+        <div> {{d11[0]}}至{{d11[1]}}
+          平台累计已处理投诉量{{closed}}件，累计处理中投诉量{{unclosed}}件；已关闭投诉中，平均处理时长为{{parseInt(cavg[0]*100)/100}}小时，最大处理时长为{{parseInt(cavg[1]*100)/100}}小时，最小处理时长为{{parseInt(cavg[2]*100)/100}}小时。
+        </div>
 
-       <Row>
-         <Col :span="12">
-           <item :useravg="cTitle1" :avg="closed" :unit="cunit"></item>
-           <item :useravg="cTitle2" :avg="unclosed" :unit="cunit"></item>
-         </Col>
-         <Col :span="12">
-           <lengthBar :max="cmax" :min="cmin" :avg="cavg" :issend="issend" :wjj="wjj"></lengthBar>
-         </Col>
-       </Row>
+        <Row>
+        <!--  <Col :span="12">
+            <item :useravg="cTitle1" :avg="closed" :unit="cunit"></item>
+            <item :useravg="cTitle2" :avg="unclosed" :unit="cunit"></item>
+          </Col>-->
+          <Col :span="24">
+            <lengthBar :cavg="cavg" :issend="issend" :wjj="wjj"></lengthBar>
+          </Col>
+        </Row>
       </div>
-      <div v-if="c4.indexOf('13')>-1">(3) 投诉对象及处理情况分析
-        <div>游客发起投诉后等待处理的平均时长为{{parseInt(ccc[0].avg*100)/100}}小时，最大时长为{{parseInt(ccc[0].max*100)/100}}小时，最小时长为{{parseInt(ccc[0].min*100)/100}}小时；</div>
-        <div>平台投诉处理的平均时长为{{parseInt(ccc[1].avg*100)/100}}小时，最大时长为{{parseInt(ccc[1].avg*100)/100}} 小时，最小时长为{{parseInt(ccc[1].avg*100)/100}} 小时；</div>
-        <div>游客投诉申诉后等待处理的平均时长为{{parseInt(ccc[2].avg*100)/100}}小时，最大时长为{{parseInt(ccc[2].avg*100)/100}} 小时，最小时长为{{parseInt(ccc[2].avg*100)/100}} 小时。</div>
+      <div v-if="c4.indexOf('13')>-1&&this.ccc.length!=0">(3) 投诉对象及处理情况分析
+        <div>
+          游客发起投诉后等待处理的平均时长为{{parseInt(ccc[0].avg*100)/100}}小时，最大时长为{{parseInt(ccc[0].max*100)/100}}小时，最小时长为{{parseInt(ccc[0].min*100)/100}}小时；
+        </div>
+        <div>平台投诉处理的平均时长为{{parseInt(ccc[1].avg*100)/100}}小时，最大时长为{{parseInt(ccc[1].max*100)/100}}
+          小时，最小时长为{{parseInt(ccc[1].min*100)/100}} 小时；
+        </div>
+        <div>游客投诉申诉后等待处理的平均时长为{{parseInt(ccc[2].avg*100)/100}}小时，最大时长为{{parseInt(ccc[2].max*100)/100}}
+          小时，最小时长为{{parseInt(ccc[2].min*100)/100}} 小时。
+        </div>
         <exp :ccc="ccc" :issend="issend" :wjj="wjj"></exp>
       </div>
-      <Button @click="send" type="primary" style="float: right;margin-top: 12px" :disabled='issend==1'>下载</Button>
+      <Button @click="sends" type="primary" style="float: right;margin-top: 12px" :disabled='issends==1'>下载</Button>
 
     </card>
   </div>
@@ -154,6 +202,7 @@
   import exp_pie from './exp_pie'
   import tstable from './tstable'
   import TableRenderHeader from "iview/src/components/table/header";
+  import html2canvas from 'html2canvas'
 
   export default {
     name: "reportDownload",
@@ -170,65 +219,65 @@
     },
     data() {
       return {
-        intable:[
+        intable: [
           {
-            title:'线路',
-            key:'line',
+            title: '线路',
+            key: 'line',
           },
           {
-            title:'热度',
-            key:'score',
+            title: '热度',
+            key: 'score',
           },
           {
-            title:'汽车',
-            key:'car',
-            render: (h,p)=>{
-              return h('div',parseInt(p.row.car*10000)/100+'%')
+            title: '汽车',
+            key: 'car',
+            render: (h, p) => {
+              return h('div', parseInt(p.row.car * 10000) / 100 + '%')
             }
           },
           {
-            title:'火车',
-            key:'train',
-            render: (h,p)=>{
-              return h('div',parseInt(p.row.train*10000)/100+'%')
+            title: '火车',
+            key: 'train',
+            render: (h, p) => {
+              return h('div', parseInt(p.row.train * 10000) / 100 + '%')
             }
           },
           {
-            title:'飞机',
-            key:'plane',
-            render: (h,p)=>{
-              return h('div',parseInt(p.row.plane*10000)/100+'%')
+            title: '飞机',
+            key: 'plane',
+            render: (h, p) => {
+              return h('div', parseInt(p.row.plane * 10000) / 100 + '%')
             }
           }
         ],
-        outtable:[
+        outtable: [
           {
-            title:'线路',
-            key:'line',
+            title: '线路',
+            key: 'line',
           },
           {
-            title:'热度',
-            key:'score',
+            title: '热度',
+            key: 'score',
           },
           {
-            title:'汽车',
-            key:'car',
-            render: (h,p)=>{
-              return h('div',parseInt(p.row.car*10000)/100+'%')
+            title: '汽车',
+            key: 'car',
+            render: (h, p) => {
+              return h('div', parseInt(p.row.car * 10000) / 100 + '%')
             }
           },
           {
-            title:'火车',
-            key:'train',
-            render: (h,p)=>{
-              return h('div',parseInt(p.row.train*10000)/100+'%')
+            title: '火车',
+            key: 'train',
+            render: (h, p) => {
+              return h('div', parseInt(p.row.train * 10000) / 100 + '%')
             }
           },
           {
-            title:'飞机',
-            key:'plane',
-            render: (h,p)=>{
-              return h('div',parseInt(p.row.plane*10000)/100+'%')
+            title: '飞机',
+            key: 'plane',
+            render: (h, p) => {
+              return h('div', parseInt(p.row.plane * 10000) / 100 + '%')
             }
           }
         ],
@@ -266,11 +315,11 @@
                     src: params.row.image.thumb_url
                   }
                 }),
-                h('span',{
-                  style:{
-                    position:'absolute',
-                    marginTop:'9px',
-                    marginLeft:'5px'
+                h('span', {
+                  style: {
+                    position: 'absolute',
+                    marginTop: '9px',
+                    marginLeft: '5px'
                   }
                 }, params.row.name)
               ]);
@@ -289,8 +338,8 @@
             key: 'cityname'
           },
           {
-            title:'累计接待量',
-            key:'cur'
+            title: '累计接待量',
+            key: 'cur'
           },
           {
             title: '景区最优承载量',
@@ -299,13 +348,13 @@
           {
             title: '最大承载量',
             key: 'max_capacity',
-            width:115,
-            render:(h,params)=>{
-              if (params.row.max_capacity==0) {
-                return h('span','暂无数据')
+            width: 115,
+            render: (h, params) => {
+              if (params.row.max_capacity == 0) {
+                return h('span', '暂无数据')
               } else {
-                return h('div',[
-                  h('span',params.row.max_capacity)
+                return h('div', [
+                  h('span', params.row.max_capacity)
                 ])
               }
             }
@@ -326,102 +375,140 @@
         imgcash: [],
         imgedu: [],
         imgmobile: [],
-        cfcity:[],
-        cfprov:[],
+        cfcity: [],
+        cfprov: [],
         //人口迁徙
-        inMove:[],
-        outMove:[],
+        inMove: [],
+        outMove: [],
         //一机游用户消费
+        pieid1: 'pie1',
+        pic1: 'img_port_yjy_2',
         avg: '',
         cate: [],
         rank: [],
-        ranks: [],
+        rankk: [],
         //线下消费
+        pieid2: 'pie2',
+        pic2: 'img_port_off_2',
+        avgs: '',
+        cates: [],
+        ranks: [],
+        rankks: [],
         //游客体验-累计新增投诉量
-        clink:'',
-        cratio:'',
-        ctotal:'',
-        cavg:'',
-        cmax:'',
-        cmin:'',
-        ccc:[],
-        closed:'',
-        unclosed:'',
-        cTitle1:'',
-        cTitle2:'',
-        cunit:'件',
+        clink: '',
+        cratio: '',
+        ctotal: '',
+        cavg: [],
+        cmax: '',
+        cmin: '',
+        ccc: [],
+        closed: '',
+        unclosed: '',
+        cTitle1: '',
+        cTitle2: '',
+        cunit: '件',
         //区域游客占比
         //投诉时长分析
-        bar1:'base_1',
-        bar2:'base_2',
-        bar3:'base_3',
-        bar4:'base_4',
-        t1:'性别占比（%）',
-        t2:'年龄占比（%）',
-        t3:'学历占比（%）',
-        t4:'消费能力（%）',
-        useravg:'用户平均消费金额',
-        avgunit:'元',
-        issend:0,
-        wjj:'',
+        bar1: 'base_1',
+        bar2: 'base_2',
+        bar3: 'base_3',
+        bar4: 'base_4',
+        t1: '性别占比（%）',
+        t2: '年龄占比（%）',
+        t3: '学历占比（%）',
+        t4: '消费能力（%）',
+        useravg: '用户平均消费金额',
+        avgunit: '元',
+        issend: 0,
+        issends: 0,
+        wjj: http.gmt2strmst(new Date()),
+        div1:'img_idx_1',
+        div2:'img_idx_2',
+        div3:'img_idx_3',
       }
     },
     mounted() {
       this.init()
-      if (this.download==1){
+      if (this.download == 1) {
         setTimeout(() => {
-        this.send()
-        }, 1000);
-        this.download=0
+          this.send()
+        }, 4000);
+        this.download = 0
       }
     },
     methods: {
-      send(){
-        this.issend=1
-        this.wjj=http.gmt2strmst(new Date())
-        setTimeout(() => {
-          let opts =[]
-          if (this.c.length>0){
-            opts.push(100)
+      send() {
+        let self = this
+        return Promise.try(function () {
+          if (self.c.indexOf('1')||self.c.indexOf('3')||self.c3.indexOf('7')||self.c3.indexOf('9')||self.c3.indexOf('10')||self.c4.indexOf('12')||self.c4.indexOf('13')) {
+            self.issend = 1;
           }
-          if (this.c1.length>0){
-            opts.push(200)
+          if (self.c2.indexOf('6')>-1) {
+            self.getdiv('img_idx_1','img_idx_1')
+            self.getdiv('img_idx_2','img_idx_2')
+            self.getdiv('img_idx_3','img_idx_3')
           }
-          if (this.c2.length>0){
-            opts.push(300)
+          if (self.c3.indexOf('9')>-1) {
+            self.getdiv('img_port_yjy_1','img_port_yjy_1')
           }
-          if (this.c3.length>0){
-            opts.push(400)
+          if (self.c3.indexOf('10')>-1) {
+            self.getdiv('img_port_off_1','img_port_off_1')
           }
-          if (this.c4.length>0){
-            opts.push(500)
-          }
-          opts.push(this.c)
-          opts.push(this.c1)
-          opts.push(this.c3)
-          opts.push(this.c4)
-          let tt = opts.join(',')
-          console.log(tt)
-          window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime='+http.gmt2strm(this.d11[0])+'&endtime='+http.gmt2strm(this.d11[1])+'&folder='+this.wjj+'&opts='+tt)
-        }, 1000);
+        })
+
+      },
+      sends(){
+        let self = this
+        this.send().then(val=>{
+          console.log('val?',val)
+          self.uploadpic()
+          self.issends = 1;
+          console.log(121212)
+        })
+      },
+      uploadpic(){
+        let opts = []
+        if (this.c.length > 0) {
+          opts.push(100)
+        }
+        if (this.c1.length > 0) {
+          opts.push(200)
+        }
+        if (this.c2.length > 0) {
+          opts.push(300)
+        }
+        if (this.c3.length > 0) {
+          opts.push(400)
+        }
+        if (this.c4.length > 0) {
+          opts.push(500)
+        }
+        opts.push(this.c)
+        opts.push(this.c1)
+        opts.push(this.c3)
+        opts.push(this.c4)
+        let tt = opts.join(',')
+        console.log(tt)
+        window.open('https://glpt.ybsjyyn.com/as/bi/downrep?startTime=' + http.gmt2strm(this.d11[0]) + '&endtime=' + http.gmt2strm(this.d11[1]) + '&folder=' + this.wjj + '&opts=' + tt)
+        return 'success'
       },
       init() {
-        http.get('bi/get_cityname_by_id',{city_id:this.FlowCity}).then(resp=>{
-          if (resp.data.hits!=''){
-            this.FlowCityName=resp.data.hits
+        http.get('bi/get_cityname_by_id', {city_id: this.FlowCity}).then(resp => {
+          if (resp.data.hits != '') {
+            this.FlowCityName = resp.data.hits
           }
 
           //人口迁徙
           http.get('bi/get_migrate_by_date', {
             date: http.gmt2strm(this.d11[0]),
             city_name: this.FlowCityName,
-            top:10,
-            io:'in',
+            top: 10,
+            io: 'in',
           }).then(resp => {
-            if (resp.data.hits.length!=0){
-              this.inMove =resp.data.hits.sort((v1,v2)=>v2.n-v1.n)
-              for (var i=0;this.inMove.length;i++){
-                this.inMove[i].line=this.inMove[i].from+'-'+this.inMove[i].to
+            if (resp.data.hits.length != 0) {
+              this.inMove = resp.data.hits.sort((v1, v2) => v2.n - v1.n)
+              for (var i = 0; this.inMove.length; i++) {
+                this.inMove[i].line = this.inMove[i].from + '-' + this.inMove[i].to
               }
             }
 
@@ -431,18 +518,17 @@
           http.get('bi/get_migrate_by_date', {
             date: http.gmt2strm(this.d11[0]),
             city_name: this.FlowCityName,
-            top:10,
-            io:'out',
+            top: 10,
+            io: 'out',
           }).then(resp => {
-            if (resp.data.hits.length!=0){
-              this.outMove =resp.data.hits.sort((v1,v2)=>v2.n-v1.n)
-              for (var i=0;this.outMove.length;i++){
-                this.outMove[i].line=this.outMove[i].from+'-'+this.outMove[i].to
+            if (resp.data.hits.length != 0) {
+              this.outMove = resp.data.hits.sort((v1, v2) => v2.n - v1.n)
+              for (var i = 0; this.outMove.length; i++) {
+                this.outMove[i].line = this.outMove[i].from + '-' + this.outMove[i].to
               }
             }
           })
         })
-
 
 
         //游客人数
@@ -473,7 +559,8 @@
           city_id: this.FlowCity
         }).then(resp => {
           //console.log('asdasdasdasdasdas',resp.data.hits.list)
-          this.trendPeople1 = resp.data.hits.list.sort((v1, v2) => v2.timestamp - v1.timestamp);;
+          this.trendPeople1 = resp.data.hits.list.sort((v1, v2) => v2.timestamp - v1.timestamp);
+
           this.trendPeople = resp.data.hits.list.sort((v1, v2) => v2.value - v1.value);
         })
 
@@ -490,24 +577,30 @@
         http.get('bi/get_scenic_influence_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
-          top:5
+          top: 5
         }).then(resp => {
-          this.influence = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
+          this.influence = resp.data.hits.map(i => {
+            return {name: i.name, pers: i.score / 10, avg: i.score + '分'}
+          })
         })
 
         http.get('bi/get_scenic_transmission_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
-          top:5
+          top: 5
         }).then(resp => {
-          this.transmission = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
+          this.transmission = resp.data.hits.map(i => {
+            return {name: i.name, pers: i.score / 10, avg: i.score + '分'}
+          })
         })
         http.get('bi/get_scenic_reputation_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
-          top:5
+          top: 5
         }).then(resp => {
-          this.reputation = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
+          this.reputation = resp.data.hits.map(i => {
+            return {name: i.name, pers: i.score / 10, avg: i.score + '分'}
+          })
         })
         //基本画像
         http.get('bi/get_portrait_base_by_datespan', {
@@ -529,16 +622,16 @@
         http.get('bi/get_portrait_origin_by_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
-          type:'city',
+          type: 'city',
         }).then(resp => {
-          this.cfcity =resp.data.hits.sort((v1,v2)=>v2.origin_percent - v1.origin_percent)
+          this.cfcity = resp.data.hits.sort((v1, v2) => v2.origin_percent - v1.origin_percent)
         })
         http.get('bi/get_portrait_origin_by_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
-          type:'prov',
+          type: 'prov',
         }).then(resp => {
-          this.cfprov =resp.data.hits.sort((v1,v2)=>v2.origin_percent - v1.origin_percent)
+          this.cfprov = resp.data.hits.sort((v1, v2) => v2.origin_percent - v1.origin_percent)
         })
         /*  http.get('bi/get_portrait_origin_by_datespan', {
             startTime: http.gmt2strm(this.d11[0]),
@@ -557,52 +650,85 @@
         http.get('bi/get_consume_by_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
-          city_id: this.FlowCity
+          //city_id: this.FlowCity
         }).then(resp => {
           this.avg = resp.data.hits.avg
           this.cate = resp.data.hits.cate
           this.rank = resp.data.hits.rank
-          if (this.rank.length!=0){
+          if (this.rank.length != 0) {
             this.rank = resp.data.hits.rank.sort((v1, v2) => v2.avg - v1.avg)
-            let tt= 0
-            for (var i=0;i<this.rank.length;i++){
-              tt +=this.rank[i].avg
+            let tt = 0
+            for (var i = 0; i < this.rank.length; i++) {
+              tt += this.rank[i].avg
             }
-            this.ranks = this.rank.map(item =>{return{name:item.name,total:tt,pers:item.avg/tt*3,avg:'人均'+item.avg+'元'}})
+            this.rankk = this.rank.map(item => {
+              return {name: item.name, total: tt, pers: item.avg / tt * 3, avg: '人均' + item.avg + '元'}
+            })
           }
         })
 
 
+        //线下消费
+        http.get('bi/get_offline_consume_by_datespan', {
+          startTime: http.gmt2strm(this.d11[0]),
+          endTime: http.gmt2strm(this.d11[1]),
+          //city_id: this.FlowCity
+        }).then(resp => {
+          this.avgs = resp.data.hits.avg
+          this.cates = resp.data.hits.cate
+          /*    if (resp.data.hits.cate.length!=0){
+              for (var i=0;i<resp.data.hits.cate.length;i++){
+                if (resp.data.hits.cate[i].value!=0){
+                  this.cates.push(resp.data.hits.cate[i])
+                }
+              }
+              }*/
+          this.ranks = resp.data.hits.rank
+          if (this.ranks.length != 0) {
+            this.ranks = resp.data.hits.rank.sort((v1, v2) => v2.avg - v1.avg)
+            let tt = 0
+            for (var i = 0; i < this.ranks.length; i++) {
+              tt += this.ranks[i].avg
+            }
+            this.rankks = this.ranks.map(item => {
+              return {name: item.name, total: tt, pers: item.avg / tt * 3, avg: '人均' + item.avg + '元'}
+            })
+          }
+        })
 
-        /*    //线下消费
-            http.get('bi/get_key_scenic_tourist_datespan_withdist', {
-            startTime: http.gmt2strm(this.d11[0]),
-            endTime: http.gmt2strm(this.d11[1]),
-            city_id: this.FlowCity
-          }).then(resp => {
-            console.log(resp)
-          })*/
 
         //游客体验-累计新增投诉量
-        http.get('bi/get_complaint_by_date', {
-          date: http.gmt2strm(this.d11[0]),
+        http.get('bi/get_complaint_by_mon', {
+          date: http.gmt2strm(this.d11[0]).substring(0, 7),
           city_id: this.FlowCity
         }).then(resp => {
           this.ctotal = resp.data.hits.total
           this.clink = resp.data.hits.link
           this.cratio = resp.data.hits.ratio
-          this.cavg = resp.data.hits.avg_proc
+            setTimeout(() => {
+              this.cavg.push(parseInt(resp.data.hits.avg_proc * 100) / 100)
+              this.cavg.push(parseInt(resp.data.hits.max_proc * 100) / 100)
+              this.cavg.push(parseInt(resp.data.hits.min_proc * 100) / 100)
+            },1000)
           this.cmax = resp.data.hits.max_proc
           this.cmin = resp.data.hits.min_proc
           this.ccc = resp.data.hits.proc_stat
-          console.log('this.ccc.map(i=>{return i.max})',this.ccc.map(i=>{return i.max}))
-          console.log('this.ccc.map(i=>{return i.max})',this.ccc.map(i=>{return i.avg}))
-          console.log('this.ccc.map(i=>{return i.max})',this.ccc.map(i=>{return i.min}))
-          console.log('this.ccc.map(i=>{return i.max})',this.ccc.map(i=>{return i.name}))
-          this.closed = resp.data.hits.closed
-          this.unclosed = resp.data.hits.unclosed
-          this.cTitle1 = http.getToday().substring(5,7) + '月累计已处理投诉量'
-          this.cTitle2 = http.getToday().substring(5,7)  + '月累计处理中投诉量'
+          console.log('this.ccc.map(i=>{return i.max})', this.ccc.map(i => {
+            return i.max
+          }))
+          console.log('this.ccc.map(i=>{return i.max})', this.ccc.map(i => {
+            return i.avg
+          }))
+          console.log('this.ccc.map(i=>{return i.max})', this.ccc.map(i => {
+            return i.min
+          }))
+          console.log('this.ccc.map(i=>{return i.max})', this.ccc.map(i => {
+            return i.name
+          }))
+          this.closed = resp.data.hits.closed.toString()
+          this.unclosed = resp.data.hits.unclosed.toString()
+          this.cTitle1 = http.getToday().substring(5, 7) + '月累计已处理投诉量'
+          this.cTitle2 = http.getToday().substring(5, 7) + '月累计处理中投诉量'
 
         })
         http.get('bi/get_complaint_trend_by_timespan', {
@@ -633,25 +759,44 @@
           })
   */
       },
-      getTop3(allDate){
+      getTop3(allDate) {
         const initLen = 3
-        const chartData =  allDate.slice(0, initLen)
+        const chartData = allDate.slice(0, initLen)
         let extraValue = 0
-        for (let i = initLen, len = allDate.length; i < len; i++){
+        for (let i = initLen, len = allDate.length; i < len; i++) {
           if (allDate[i]) {
             extraValue += allDate[i].value
           }
         }
-        if(extraValue) {
+        if (extraValue) {
           chartData.push({
             name: '其他',
             value: extraValue
           })
         }
         return chartData;
-      }
-    },
+      },
+      getdiv(f,n,callback) {
+        html2canvas(document.getElementById(f.toString())).then(canvas => {
+          $.ajax({
+            type: "POST",
+            url: "bi/uploadimg", //?folder=" + folder + "&imgtype=" + imgtype,
+            data: {
+              "folder": this.wjj,
+              "imgtype": n,
+              "data": canvas.toDataURL("image/png")
+            },
+            cache: false,
+            async: true,
+            dataType: "json",
+            success: function (data) {
+              callback()
+            },
+          });
+        })
 
+      },
+    }
   }
 </script>
 
@@ -665,5 +810,9 @@
     background: #fff;
     border-bottom: 1px solid #e2e4e6;
   }
-  .panel div{line-height: 30px; margin: 10px;}
+
+  .panel div {
+    line-height: 30px;
+    margin: 10px;
+  }
 </style>

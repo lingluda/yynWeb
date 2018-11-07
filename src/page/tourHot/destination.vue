@@ -3,7 +3,7 @@
     <div class="ti">
       <span style="color: rgb(102, 159, 199);">旅游热度</span>
       <Icon type="ios-arrow-forward" />
-      <span style="font-size: 12px;color: #000">热度排行</span>
+      <span style="font-size: 12px;color: #000">核心指数排行</span>
     </div>
     <div class="tabpane_content">
       <card>

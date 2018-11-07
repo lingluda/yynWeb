@@ -17,7 +17,7 @@
     name: "item",
     props: {
       useravg: String,
-      avg:Number,
+      avg:String,
       unit:String
     }
   }

@@ -233,6 +233,7 @@
             data: this.lineDatay
           },
           yAxis: {
+            name:'单位：人',
             type: 'value',
             boundaryGap: [0, 0.01],
             splitLine: {

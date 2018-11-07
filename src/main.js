@@ -10,6 +10,7 @@ import 'iview/dist/styles/iview.css';
 import "babel-polyfill"
 import macarons from 'echarts/theme/macarons'
 import  '../src/assets/js/iframeResizer.contentWindow.js'
+import  '../src/assets/js/html2canvas.min.js'
 import http from "./http";
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false

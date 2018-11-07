@@ -1,6 +1,7 @@
 <template>
-    <!-- <div id="chartFlowMap" style="height:563px;"></div> -->
+    <div>
     <div id="main" style="width:100%;height:580px;"></div>
+    </div>
 </template>
  
 <script>
@@ -51,7 +52,7 @@ export default {
             realtime: true,
             calculable: true,
             inRange: {
-              color: ["#a7cdff", "#3d91ff", "#0059e0", "#001780"]
+              color: ["#8dc5ff", "#479eff", "#094ce0", "#011180"]
             }
           },
           series: [
@@ -62,10 +63,10 @@ export default {
               layoutCenter: ["50%", "50%"],
               layoutSize: "100%",
               itemStyle: {
+                borderRadius: 100,
                 normal: {
-                  borderColor: "rgba(100,149,237,1)",
+                  borderColor: "#fff",
                   color: "#1b1b1b",
-                  borderWidth: 0.5
                 }
               },
               hoverable: false,
@@ -76,7 +77,7 @@ export default {
                 label: {
                   normal: {
                     color: "#fff",
-                    backgroundColor: 'grey',
+                    backgroundColor: '#6e6c6e',
                     formatter: "{b}",
                     show: true,
                     fontSize: 12,

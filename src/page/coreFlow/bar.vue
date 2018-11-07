@@ -83,7 +83,7 @@
                 ],
                 yAxis : [
                   {
-                    name: '游客人数',
+                    name: '游客人数(万人)',
                     nameGap: 20,
                     nameTextStyle: {
                       color: '#999'
@@ -104,7 +104,7 @@
                       }
                     }
                   }, {
-                    name: '游客变化量',
+                    name: '游客变化量(万人)',
                     nameGap: 20,
                     nameTextStyle: {
                       color: '#999'

@@ -16,6 +16,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "echarts": "^4.1.0",
+    "html2canvas": "^1.0.0-alpha.12",
     "iview": "^3.0.1",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",

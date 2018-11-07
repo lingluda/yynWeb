@@ -10,13 +10,13 @@
       <card>
         <div class="lyrd_index_search">
           <div class="lyrd_index_search_left">
-            <span class="lyrd_index_search_title">景区实时游客人数排行</span>
+            <span class="lyrd_index_search_title">景区接待游客排行</span>
             <Tooltip content="此地图统计各州市AAAA及以上景区" placement="right" max-width="220">
               <Icon size="19" style="margin: 7px 0px 0px 0px" type="ios-help-circle-outline" />
             </Tooltip>
           </div>
           <div style="float: right">
-            <RadioGroup type="button" @on-change="pic7">
+            <RadioGroup type="button" v-model="select7" @on-change="pic7">
               <Radio label="1">近7日</Radio>
               <Radio label="2">近30日</Radio>
             </RadioGroup>
@@ -26,6 +26,7 @@
             </Select>
           </div>
         </div>
+
         <Row :gutter="20">
           <Col span="12">
             <div class="borderBlock">
@@ -55,7 +56,8 @@
             <!--<router-link :to="{path:'coreFlow/list',query:{sdate:d11}}"><p style="text-align: right;">查看更多 >></p></router-link>-->
           </Col>
         </Row>
-
+        <div v-if="d11[0].toString()==d11[1].toString()" style="position: absolute;margin-top: -610px;margin-left: 20px">云南省各州市景区实时游客</div>
+        <div v-if="d11[0].toString()!=d11[1].toString()" style="position: absolute;margin-top: -610px;margin-left: 20px">云南省各州市景区累计接待游客</div>
       </card>
 
       <card style="margin-top: 20px">
@@ -116,6 +118,7 @@
     },
     data(){
       return{
+        select7:'',
         lastTime:'',
         mapData:[],
         listData:[],
@@ -138,12 +141,13 @@
           http.get('bi/get_key_scenic_tourist_datespan_withdist',{pindex:1,size:9,startTime:http.gmt2strm(this.d11[0]),endTime:http.gmt2strm(this.d11[1]),city_id:this.FlowCity}).then(res=>{
             this.mapData=res.data
             this.listData=res.data.hits
-            this.lastTime = http.gmt2strms(res.data.hits[0].timestamp)
+            if (res.data.hits[0]['timestamp']!=undefined) {
+              this.lastTime = http.gmt2strms(res.data.hits[0].timestamp)
+            }
           })
         })
       },
       pic7(val){
-        console.log(http.gmt2strm(this.d11[0]))
         if (val==1){
           this.d11=[http.getWeekAgo(),http.getToday()]
           this.dateChange()
@@ -153,12 +157,13 @@
         }
       },
       dateChange(){
-       // this.mapData=[]
-        console.log(http.gmt2strm(this.d11[0]))
+        this.select7=''
         http.get('bi/get_key_scenic_tourist_datespan_withdist',{pindex:1,size:9,startTime:http.gmt2strm(this.d11[0]),endTime:http.gmt2strm(this.d11[1]),city_id:this.FlowCity}).then(res=>{
           this.mapData=res.data
           this.listData=res.data.hits
-          this.lastTime = http.gmt2strms(res.data.hits[0].timestamp)
+          if (res.data.hits[0]['timestamp']!=undefined) {
+            this.lastTime = http.gmt2strms(res.data.hits[0].timestamp)
+          }
         })
       },
       goto(){

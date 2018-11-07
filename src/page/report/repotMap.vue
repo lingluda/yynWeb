@@ -94,7 +94,7 @@
                 "data" : this.picBase64Info
               },
               cache : false,
-              async : false,
+              async : true,
               dataType : "json",
               success : function(data) {},
 

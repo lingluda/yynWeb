@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div id="main" style="width:100%;height:100%;">
+  <div id="main" style="width:100%;height:500px;">
   </div>
   </div>
 </template>
@@ -35,7 +35,7 @@
                 realtime: true,
                 calculable: true,
                 inRange: {
-                  color: ['#92cde8', '#3190ce']
+                  color: ["#8dc5ff", "#479eff", "#094ce0", "#011180"]
                 }
               },
               /*geo: {
@@ -77,8 +77,8 @@
                     normal: {
                       show: true,
                       textStyle: {
-                        backgroundColor:'#323232',
-                        color: '#fff',
+                        //backgroundColor:'#737373',
+                        color: '#000',
                       },
                       formatter: '{b}\n{c}%',
                       borderWidth:0
@@ -86,7 +86,7 @@
                   },
                   itemStyle: {
                     normal:{
-                      backgroundColor:'#323232',
+                      backgroundColor:'#7b7b7b',
                       borderColor: '#fff'
                     },
                     emphasis:{

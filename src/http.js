@@ -7,11 +7,14 @@ axios.interceptors.response.use(
       const code = response.data.errcode
       const msg = response.data.errmsg || '接口返回错误'
       // Message.error(msg)
+      if (response.config.url.indexOf('write_js_log')>-1){
+        return false
+      }
       axios.get('bi/write_js_log?uri='+response.config.url+'&msg='+msg)
-      console.error(`cgi: ${response.config.url}`, {
+   /*   console.error(`cgi: ${response.config.url}`, {
         code,
         msg
-      })
+      })*/
       throw new Error(msg)
     }
     return response
@@ -41,7 +44,7 @@ http.get = function (url, data) {
   if (JSON.stringify(data) == '{}') {
     data = { 1: 1 }
   }
-  return axios.get(url + '?' + encodeUrl(data))
+  return axios.get(url + '?' + encodeUrl(data)+'&r='+Math.random())
 }
 http.getcn = function(id){
     var cc =''
@@ -61,6 +64,30 @@ http.getcs = function(id){
     scenicname=res.data.hits
   })
   return scenicname
+}
+http.if10 = function () {
+  var data = new Date()
+  var hour = data.getHours()
+  var minutes = data.getMinutes()
+  if (hour*60+minutes>=630){
+    data.setDate(data.getDate()-1)
+  }else {
+    data.setDate(data.getDate()-2)
+  }
+  var day = data.getDate()
+  var year = data.getUTCFullYear()
+  var month = data.getMonth() + 1
+  if (month < 10) {
+    var currentMonth = '0' + month
+  } else {
+    currentMonth = month.toString()
+  }
+  if (day < 10) {
+    var currentDay = '0' + day
+  } else {
+    currentDay = day.toString()
+  }
+  return year + '-' + currentMonth + '-' + currentDay
 }
 http.getMonday = function () {
   var data = new Date()

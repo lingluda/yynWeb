@@ -391,7 +391,6 @@
     },
     methods: {
       init() {
-
         http.get('bi/get_all_city', {}).then(resp => {
           this.cityData = resp.data.hits;
           this.modelcity = resp.data.hits[0].id
@@ -555,14 +554,7 @@
       initline() {
         var mybar = this.$echarts.init(document.getElementById("mybar"));
         var option = {
-          title: {
-            text: "人数",
-            textStyle: {
-              fontSize: 12,
-              color: "#999"
-            },
-            padding: [20, 0, 3, 80]
-          },
+
           tooltip: {
             trigger: "axis",
             //formatter: '{b0}<br />{a1} {c1} 人<br />{a0} {c0} 人',
@@ -586,6 +578,7 @@
             data: this.lineDatax
           },
           yAxis: {
+            name: "单位：人",
             type: 'value',
             boundaryGap: [0, 0.01],
             splitLine: {
@@ -730,6 +723,7 @@
         })
       },
       picsb() {
+        //this.senicData=[]
         http.get('bi/get_scenic_by_city', {city_id: this.city11}).then(resp => {
           this.senicData = resp.data.hits
           this.senic_id5 = this.senicData[0].id
@@ -787,6 +781,7 @@
         })
       },
       ssdsadfa() {
+        //this.pspsp()
         this.lineDatay1 = []
         this.lineDatax = []
         this.lineDatay2 = []
@@ -828,7 +823,7 @@
       //city11:'sinic',
       senic_id: 'p1',
       senic_id5: 'pccsscs',
-      modelcity: 'pspsp',
+      //modelcity: 'pspsp',
       modelsenic: 'ssdsadfa',
     }
   };
