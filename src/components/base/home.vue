@@ -1,19 +1,4 @@
 <template>
-  <!-- <div>
-     <Row>
-      <navbar ></navbar>
-     </Row>
-       <Row>
-       <Col span="4">
-       <sidebar/>
-       </Col>
-       <Col span="20">
-       <div style="padding:20px">
-       <router-view/>
-       </div>
-       </Col>
-     </Row>
-  </div> -->
   <Layout>
     <Header style="background: rgb(38, 38, 38);padding: unset;height: 50px">
       <Row type="flex" justify="center" align="middle" style="height: 50px">
