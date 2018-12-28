@@ -18,7 +18,7 @@
                             style="width: 150px;"></DatePicker>
 
                 <Select size="small" v-model="city" clearable style="width: 150px" >
-                  <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+                  <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
                 </Select>
 
                 <!--<city_select></city_select>-->
@@ -65,7 +65,7 @@
                             style="width: 200px;"></DatePicker>
 
                 <Select size="small" v-model="city1" clearable style="width: 150px" >
-                  <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+                  <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
                 </Select>
 
                 <Row style="border: 1px solid #dcdee2;margin-bottom: 20px;margin-top: 20px">
@@ -159,7 +159,7 @@
     },
     methods: {
       getCity(){
-        http.get('bi/get_all_city_prov',{}).then(resp=>{
+        http.post('bi/get_all_city_prov',{}).then(resp=>{
           this.cityData = resp.data.hits;
         })
       },
@@ -246,12 +246,12 @@
         console.log('当前时间：',datea)
         this.cdate = datea
         console.log('this.date::',this.date)
-        http.get('bi/get_tourism_dist_by_date',{date:this.cdate,city_id:this.city}).then(resp=>{
+        http.post('bi/get_tourism_dist_by_date',{date:this.cdate,city_id:this.city}).then(resp=>{
           this.pieData = resp.data.hits;
           console.log(this.pieData)
           this.initBar()
         })
-        http.get('bi/get_tourism_qty_by_date',{date:this.cdate,city_id:this.city}).then(resp=>{
+        http.post('bi/get_tourism_qty_by_date',{date:this.cdate,city_id:this.city}).then(resp=>{
           console.log('qq1qqq',resp.data.hits.total)
           this.link = resp.data.hits.link;
           this.ratio = resp.data.hits.ratio;
@@ -271,7 +271,7 @@
         )
         this.end=dateq;
         console.log(1111111111111111111111)
-        http.get('bi/get_tourism_trend_by_timespan',{startTime:this.start,endTime:this.end,city_id:this.city1}).then(resp=>{
+        http.post('bi/get_tourism_trend_by_timespan',{startTime:this.start,endTime:this.end,city_id:this.city1}).then(resp=>{
           console.log(resp.data)
           this.totalP = resp.data.hits.total;
           for(var i=0;i<resp.data.hits.list.length;i++){

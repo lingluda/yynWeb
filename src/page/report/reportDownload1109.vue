@@ -2,39 +2,32 @@
   <div style="background:#f2f2f2;">
     <div class="tits">
       <router-link to="report">报表下载{{download}}</router-link>
-      <span style="font-size: 14px"> 预览</span></div>
-    <card>
-      <div style="text-align: center;font-size: 32px;font-weight: bold">数据报表</div><Button @click="busc">ddd</Button>
+      <span style="font-size: 14px">> 预览</span></div>
+    <card >
+      <div style="text-align: center;font-size: 32px;font-weight: bold">数据报表</div>
       <div style="font-size: 28px">一、该报表时间段</div>
       <div>（{{d11[0]}}至{{d11[1]}}）</div>
       <div style="font-size: 28px">二、报表区域：{{FlowCityName}}</div>
       <div style="font-size: 28px">三、报表数据</div>
       <div style="font-size: 28px">3.1 旅游热度概况</div>
 
-    <!--  <div>(1) 游客人数
+      <div>(1) 游客人数
         <div>{{FlowCityName}} 总接待游客量为 {{tourPeople.total}} 人次，与昨日环比 {{tourPeople.ratio}}，与上月同比 {{tourPeople.link}}。
         </div>
-      </div>-->
+      </div>
 
-      <div>(2) {{FlowCityName}}游客占比{{scenic}}
-        <!--<div> {{FlowCityName}}接待游客占比量前5分别为：</div>
+      <div>(2) {{FlowCityName}}游客占比
+        <div> {{FlowCityName}}接待游客占比量前5分别为：</div>
         <div>（排名第一 {{areaPeople[0].name}}）接待人数约 {{areaPeople[0].value}}人，占比总量 {{areaPeople[0].proportion}}%;</div>
         <div>（排名第二 {{areaPeople[1].name}}）接待人数约 {{areaPeople[1].value}}人，占比总量 {{areaPeople[1].proportion}}%;</div>
         <div>（排名第三 {{areaPeople[2].name}}）接待人数约 {{areaPeople[2].value}}人，占比总量 {{areaPeople[2].proportion}}%;</div>
         <div>（排名第四 {{areaPeople[3].name}}）接待人数约 {{areaPeople[3].value}}人，占比总量 {{areaPeople[3].proportion}}%;</div>
-        <div>（排名第五 {{areaPeople[4].name}}）接待人数约 {{areaPeople[4].value}}人，占比总量 {{areaPeople[4].proportion}}%;</div>-->
-        <div id="img_visitor_dist" style="width: 400px;height: 500px;" v-if="this.FlowCity==0">
+        <div>（排名第五 {{areaPeople[4].name}}）接待人数约 {{areaPeople[4].value}}人，占比总量 {{areaPeople[4].proportion}}%;</div>
+        <div id="img_visitor_dist" style="width: 400px;height: 500px;">
           <repotMap :issend="issend" :wjj="wjj" :mapdata="this.areaPeople1"
                     style="width: 100%;height: 500px;"></repotMap>
         </div>
-        <div id="img_visitor_dist" v-if="this.FlowCity!=0">
-        <pie :title="''" :id="'pie21312312'"
-             :x="this.areaPeople1x"
-             :y="this.areaPeople1" ></pie>
-
       </div>
-      </div>
-
 
       <div>(3) 游客趋势
         <div>
@@ -46,7 +39,7 @@
 
 
       <div style="font-size: 28px">3.2 核心景区排行</div>
-     <!-- <div>
+      <div>
         <div>{{FlowCityName}} 累计游客人数排行前五分别为：</div>
         <div> {{coreSenic[0].name}}，接待游客人 {{coreSenic[0].cur}}人次；</div>
         <div> {{coreSenic[1].name}}，接待游客人 {{coreSenic[1].cur}}人次；</div>
@@ -54,39 +47,50 @@
         <div> {{coreSenic[3].name}}，接待游客人 {{coreSenic[3].cur}}人次；</div>
         <div> {{coreSenic[4].name}}，接待游客人 {{coreSenic[4].cur}}人次；</div>
         <Table :columns="columns1" stripe size="small" :data="coreSenic"></Table>
-      </div>-->
-      <div style="font-size: 28px">3.3 景区指数排行</div>
-      <div id="img_idx_1">
-
-        <Row >
-          <Col :span="8">
-            <div style="margin-bottom: 10px">景区影响力指数</div>
-            <tstable :rank="influence"></tstable>
-          </Col>
-          <Col :span="8">
-            <div style="margin-bottom: 10px">景区传播力指数</div>
-            <tstable :rank="transmission"></tstable>
-          </Col>
-          <Col :span="8">
-            <div style="margin-bottom: 10px">景区美誉度指数</div>
-            <tstable :rank="reputation"></tstable>
-          </Col>
-        </Row>
       </div>
-      <div style="font-size: 28px">3.4 游客画像</div>
+      <div style="font-size: 28px">3.3 景区指数排行</div>
       <div>
-        (1) 基本画像
-        <div>{{FlowCityName}} 来访游客中:</div>
-        <!--<div> 男士 占比{{parseInt(imggender[0].value*10000)/100}}%，女士 占比{{parseInt(imggender[1].value*10000)/100}}%；</div>-->
-        <!--<div> {{imgage[0].name}}年龄段的游客最多，占比{{parseInt(imgage[0].value*10000)/100}}%；</div>-->
-        <!--<div> {{imgedu[0].name}}学历 的游客最多，占比{{parseInt(imgedu[0].value*10000)/100}}%；</div>-->
-        <!--<div>消费能力为 {{imgcash[0].name}} 的游客最多，占比{{parseInt(imgcash[0].value*10000)/100}}%；</div>-->
-        <div>有{{parseInt(imgcar[0].value*10000)/100}}%的游客 有车，{{parseInt(imgcar[1].value*10000)/100}}%的游客 无车；</div>
-       <!-- <div>
-          {{parseInt(imgmobile[1].value*10000)/100}}%的游客手机终端类型为IOS，{{parseInt(imgmobile[0].value*10000)/100}}%的游客手机终端类型为Android；
+        <div>景区影响力指数最大的为 {{influence[0].name}} ，指数值为 {{influence[0].avg}}；</div>
+        <div>景区美誉度指数最大的为 {{reputation[0].name}} ，指数值为 {{reputation[0].avg}}；</div>
+        <div>景区传播力指数最大的为 {{transmission[0].name}}，指数值为 {{transmission[0].avg}}；</div>
+       <Row id="img_idx_1">
+         <Col :span="8">
+           <tstable :rank="influence"></tstable>
+         </Col>
+         <Col :span="8">
+           <tstable :rank="transmission"></tstable>
+         </Col>
+         <Col :span="8">
+           <tstable :rank="reputation"></tstable>
+         </Col>
+       </Row>
+        <!--<div v-if="rank.length!=0">
+          <div id="img_idx_1">(1)影响力指数
+            <tstable :rank="influence"></tstable>
+          </div>
+          <div id="img_idx_3">(2)美誉度指数
+
+          </div>
+          <div id="img_idx_2">(3)传播力指数
+
+          </div>
         </div>-->
-        <!--<div>{{cfcity[0].name}}来源游客量最大，占比总游客的{{parseInt(cfcity[0].origin_percent*10000)/100}}%；</div>-->
-        <!--<div>{{cfprov[0].name}}来源游客量最大，占比总游客的{{parseInt(cfprov[0].origin_percent*10000)/100}}%。</div>-->
+      </div>
+
+      <div style="font-size: 28px">3.4 游客画像</div>
+
+      <div>(1) 基本画像
+        <div>{{FlowCityName}} 来访游客中:</div>
+        <div> 男士 占比{{parseInt(imggender[0].value*10000)/100}}%，女士 占比{{parseInt(imggender[1].value*10000)/100}}%；</div>
+        <div> {{imgage[0].name}}年龄段的游客最多，占比{{parseInt(imgage[0].value*10000)/100}}%；</div>
+        <div> {{imgedu[0].name}}学历 的游客最多，占比{{parseInt(imgedu[0].value*10000)/100}}%；</div>
+        <div>消费能力为 {{imgcash[0].name}} 的游客最多，占比{{parseInt(imgcash[0].value*10000)/100}}%；</div>
+        <div>有{{parseInt(imgcar[0].value*10000)/100}}%的游客 有车，{{parseInt(imgcar[1].value*10000)/100}}%的游客 无车；</div>
+        <div>
+          {{parseInt(imgmobile[1].value*10000)/100}}%的游客手机终端类型为IOS，{{parseInt(imgmobile[0].value*10000)/100}}%的游客手机终端类型为Android；
+        </div>
+        <div>{{cfcity[0].name}}来源游客量最大，占比总游客的{{parseInt(cfcity[0].origin_percent*10000)/100}}%；</div>
+        <div>{{cfprov[0].name}}来源游客量最大，占比总游客的{{parseInt(cfprov[0].origin_percent*10000)/100}}%。</div>
         <Row id="img_port_base_1">
           <Col :span="6">
             <ImgBar :issend="issend" :wjj="wjj" :main="bar1" :sx="imggender" :t="t1"></ImgBar>
@@ -103,7 +107,7 @@
         </Row>
       </div>
 
-   <!--   <div>(2) 人口迁徙
+      <div>(2) 人口迁徙
         <div>由 {{inMove[0].from}} 迁入 {{inMove[0].to}} 的游客量最多， {{inMove[0].line}} 热度最大，热度值为
           {{inMove[0].score}}，游客中飞机出游的占比
           {{parseInt(inMove[0].plane*10000)/100}}%，火车出游的占比{{parseInt(inMove[0].train*10000)/100}}%，汽车出游的占比{{parseInt(inMove[0].car*10000)/100}}%；
@@ -115,41 +119,48 @@
         <Table stripe size="small" :columns="intable" :data="inMove"></Table>
         <div>2.迁出</div>
         <Table stripe size="small" :columns="outtable" :data="outMove"></Table>
-      </div>-->
+      </div>
 
       <div>(3) 游云南App用户消费
-
+        <div>
+          游云南App用户平均消费金额为{{avg.avg_amount}}元，
+        </div>
+        <div v-if="rank.length!=0">用户在{{rank[0].name}}消费金额最高，为{{rank[0].avg}}元；</div>
+        <div>
+          用户消费中，景区门票消费占比{{parseInt(cate[1].value*10000)/100}}%，酒店消费占比{{parseInt(cate[2].value*10000)/100}}%，机票消费占比{{parseInt(cate[0].value*10000)/100}}%。
+        </div>
         <Row id="img_port_yjy_1">
-          <Col :span="6">人均消费
-            <div style="margin-top: 40px">
-              <item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item>
-            </div>
-          </Col>
-          <Col :span="10">
+            <Col :span="6">人均消费
+              <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
+            </Col>
+          <Col :span="10" >
             游客消费地排行
             <tstable1 v-if="rankk.length!=0" :rank="rankk" style="margin-top: 40px"></tstable1>
           </Col>
           <Col :span="8">
-            <exp_pie :id="pieid1" :cate="cate"></exp_pie>
+            <exp_pie :id="pieid1" :pic="pic1" :wjj="wjj" :issend="issend" :cate="cate"></exp_pie>
           </Col>
         </Row>
       </div>
 
       <div>(3) 游客线下消费
-
-
+        <div>
+          游云南App用户平均消费金额为{{avgs.avg_amount}}元，
+        </div>
+        <div v-if="ranks.length!=0">用户在{{ranks[0].name}}消费金额最高，为{{ranks[0].avg}}元；</div>
+        <div v-for="(i,index) in cates" :key="index">用户消费中，
+          {{i.name}}消费占比{{parseInt(i.value*10000)/100}}%，
+        </div>
         <Row id="img_port_off_1">
-          <Col :span="6">人均消费
-            <div style="margin-top: 40px">
-              <item :useravg="useravg" :avg="avgs.avg_amount" :unit="avgunit"></item>
-            </div>
-          </Col>
-          <Col :span="10">
+           <Col :span="6">人均消费
+              <div style="margin-top: 40px"><item :useravg="useravg" :avg="avg.avg_amount" :unit="avgunit"></item></div>
+            </Col>
+          <Col :span="10" >
             游客消费地排行
             <tstable1 v-if="rankks.length!=0" :rank="rankks" style="margin-top: 40px"></tstable1>
           </Col>
           <Col :span="8">
-            <exp_pie :id="pieid2" :cate="cates"></exp_pie>
+            <exp_pie :id="pieid2" :pic="pic2" :wjj="wjj" :issend="issend" :cate="cates"></exp_pie>
           </Col>
         </Row>
       </div>
@@ -160,21 +171,31 @@
       </div>
       <div>(2) 投诉时长分析
         <div> {{d11[0]}}至{{d11[1]}}
+          平台累计已处理投诉量{{closed}}件，累计处理中投诉量{{unclosed}}件；已关闭投诉中，平均处理时长为{{parseInt(cavg[0]*100)/100}}小时，最大处理时长为{{parseInt(cavg[1]*100)/100}}小时，最小处理时长为{{parseInt(cavg[2]*100)/100}}小时。
         </div>
 
         <Row id="img_comp_pic_1">
-          <Col :span="6">
-            <item :useravg="cTitle1" :avg="closed" :unit="cunit"></item>
-            <item :useravg="cTitle2" :avg="unclosed" :unit="cunit"></item>
-          </Col>
+            <Col :span="6">
+              <item :useravg="cTitle1" :avg="closed" :unit="cunit"></item>
+              <item :useravg="cTitle2" :avg="unclosed" :unit="cunit"></item>
+            </Col>
           <Col :span="18">
+            <!--<lengthBar :cavg="cavg" :issend="issend" :wjj="wjj"></lengthBar>-->
             <div id="lengthbs" style="width: 100%;height: 200px;"></div>
           </Col>
         </Row>
       </div>
       <div>(3) 投诉对象及处理情况分析
-        <div id="img_comp_pic_2" style="height: 400px;width: 100%;"></div>
-        <!--<exp id="img_comp_pic_2" :ccc="ccc" :issend="issend" :wjj="wjj"></exp>-->
+        <div>
+          游客发起投诉后等待处理的平均时长为{{parseInt(ccc[0].avg*100)/100}}小时，最大时长为{{parseInt(ccc[0].max*100)/100}}小时，最小时长为{{parseInt(ccc[0].min*100)/100}}小时；
+        </div>
+        <div>平台投诉处理的平均时长为{{parseInt(ccc[1].avg*100)/100}}小时，最大时长为{{parseInt(ccc[1].max*100)/100}}
+          小时，最小时长为{{parseInt(ccc[1].min*100)/100}} 小时；
+        </div>
+        <div>游客投诉申诉后等待处理的平均时长为{{parseInt(ccc[2].avg*100)/100}}小时，最大时长为{{parseInt(ccc[2].max*100)/100}}
+          小时，最小时长为{{parseInt(ccc[2].min*100)/100}} 小时。
+        </div>
+        <exp id="img_comp_pic_2" :ccc="ccc" :issend="issend" :wjj="wjj"></exp>
       </div>
       <Button @click="send" type="primary" style="float: right;margin-top: 12px" :disabled='issends==1'>下载</Button>
 
@@ -195,7 +216,7 @@
   import tstable1 from './tstable1'
   import TableRenderHeader from "iview/src/components/table/header";
   import html2canvas from 'html2canvas'
-  import pie from './component/pie'
+
   export default {
     name: "reportDownload",
     components: {
@@ -205,7 +226,6 @@
       ImgBar,
       item,
       exp,
-      pie,
       lengthBar,
       exp_pie,
       tstable,
@@ -213,7 +233,7 @@
     },
     data() {
       return {
-        htmldata: '',
+        htmldata:'',
         intable: [
           {
             title: '线路',
@@ -284,15 +304,12 @@
         c4: this.$route.query.c4,
         download: this.$route.query.download,
         FlowCity: this.$route.query.city,
-        scenic: this.$route.query.scenic,
-        wjj: this.$route.query.wjj,
         FlowCityName: '全省',
         //游客人数
         tourPeople: '',
         //区域游客占比
         areaPeople: [],
         areaPeople1: [],
-        areaPeople1x: [],
         //游客趋势
         trendPeople: [],
         trendPeople1: [],
@@ -419,34 +436,39 @@
         avgunit: '元',
         issend: 0,
         issends: 0,
-        //wjj: http.gmt2strmst(new Date()),
+        wjj: http.gmt2strmst(new Date()),
         div1: 'img_idx_1',
         div2: 'img_idx_2',
         div3: 'img_idx_3',
         fff: [],
       }
     },
-
     mounted() {
       this.init()
+      if (this.download == 1) {
+        console.log('this.download',this.fff.length >= 8)
         setTimeout(() => {
           this.send()
-        }, 2000);
+        }, 1500);
+        this.download = 0
+      }
     },
     methods: {
-      busc(){
-
-        this.bus.$emit("toChangeTitle", 12);
-        console.log('today')
-      },
       send() {
-        this.fff = []
+        this.fff=[]
         this.getdiv('img_idx_1', 'img_idx_1')
+       /* this.getdiv('img_idx_2', 'img_idx_2')
+        this.getdiv('img_idx_3', 'img_idx_3')*/
         this.getdiv('img_visitor_dist', 'img_visitor_dist')
         this.getdiv('img_visitor_trend', 'img_visitor_trend')
         this.getdiv('img_port_base_1', 'img_port_base_1')
+   /*     this.getdiv('img_port_base_2', 'img_port_base_2')
+        this.getdiv('img_port_base_3', 'img_port_base_3')
+        this.getdiv('img_port_base_4', 'img_port_base_4')*/
         this.getdiv('img_port_yjy_1', 'img_port_yjy_1')
+        // this.getdiv('img_port_yjy_2', 'img_port_yjy_2')
         this.getdiv('img_port_off_1', 'img_port_off_1')
+        // this.getdiv('img_port_off_2', 'img_port_off_2')
         this.getdiv('img_comp_pic_1', 'img_comp_pic_1')
         this.getdiv('img_comp_pic_2', 'img_comp_pic_2')
       },
@@ -472,16 +494,16 @@
         opts.push(this.c3)
         opts.push(this.c4)
         let tt = opts.join(',')
-        window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime=' + http.gmt2strm(this.d11[0]) + '&endTime=' + http.gmt2strm(this.d11[1]) +'&scenic='+this.scenic+ '&folder=' + this.wjj +'&city_id='+this.FlowCity+ '&opts=' + tt)
+        window.open('https://tglpt.ybsjyyn.com/as/bi/downrep?startTime=' + http.gmt2strm(this.d11[0]) + '&endtime=' + http.gmt2strm(this.d11[1]) + '&folder=' + this.wjj + '&opts=' + tt)
         return 'success'
       },
       init() {
-        /*http.post('bi/get_cityname_by_id', {city_id: this.FlowCity}).then(resp => {
+        http.post('bi/get_cityname_by_id', {city_id: this.FlowCity}).then(resp => {
           if (resp.data.hits != '') {
             this.FlowCityName = resp.data.hits
-          }*/
+          }
 
-        /*  //人口迁徙
+          //人口迁徙
           http.post('bi/get_migrate_by_date', {
             date: http.gmt2strm(this.d11[0]),
             city_name: this.FlowCityName,
@@ -510,16 +532,18 @@
                 this.outMove[i].line = this.outMove[i].from + '-' + this.outMove[i].to
               }
             }
-          })*/
-       // })
+          })
+        })
+
+
         //游客人数
-     /*   http.post('bi/get_tourism_qty_by_datespan', {
+        http.post('bi/get_tourism_qty_by_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
           city_id: this.FlowCity
         }).then(resp => {
           this.tourPeople = resp.data.hits
-        })*/
+        })
 
         //区域游客占比
         http.post('bi/get_tourism_dist_by_datespan', {
@@ -530,9 +554,6 @@
           this.areaPeople = resp.data.hits
           this.areaPeople1 = resp.data.hits.map(item => {
             return {name: item.name, value: item.proportion}
-          })
-          this.areaPeople1x = resp.data.hits.map(item => {
-            return {name: item.name}
           })
         })
 
@@ -549,13 +570,13 @@
         })
 
         //核心景区排行
-    /*    http.post('bi/get_key_scenic_tourist_datespan_withdist', {
+        http.post('bi/get_key_scenic_tourist_datespan_withdist', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
           city_id: this.FlowCity
         }).then(resp => {
           this.coreSenic = resp.data.hits
-        })*/
+        })
 
         //景区指数排行
         http.post('bi/get_scenic_influence_datespan', {
@@ -603,7 +624,7 @@
           this.imgedu = this.getTop3(this.imgedu);
           this.imgmobile = resp.data.hits.mobile
         })
-     /*   http.post('bi/get_portrait_origin_by_datespan', {
+        http.post('bi/get_portrait_origin_by_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
           type: 'city',
@@ -616,7 +637,20 @@
           type: 'prov',
         }).then(resp => {
           this.cfprov = resp.data.hits.sort((v1, v2) => v2.origin_percent - v1.origin_percent)
-        })*/
+        })
+        /*  http.post('bi/get_portrait_origin_by_datespan', {
+            startTime: http.gmt2strm(this.d11[0]),
+            endTime: http.gmt2strm(this.d11[1]),
+            type:prov,
+            city_id: this.FlowCity
+          }).then(resp => {
+            console.log(resp)
+
+          })*/
+
+        //人口迁徙
+
+
         //游云南App用户消费
         http.post('bi/get_consume_by_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
@@ -637,6 +671,8 @@
             })
           }
         })
+
+
         //线下消费
         http.post('bi/get_offline_consume_by_datespan', {
           startTime: http.gmt2strm(this.d11[0]),
@@ -645,6 +681,13 @@
         }).then(resp => {
           this.avgs = resp.data.hits.avg
           this.cates = resp.data.hits.cate
+          /*    if (resp.data.hits.cate.length!=0){
+              for (var i=0;i<resp.data.hits.cate.length;i++){
+                if (resp.data.hits.cate[i].value!=0){
+                  this.cates.push(resp.data.hits.cate[i])
+                }
+              }
+              }*/
           this.ranks = resp.data.hits.rank
           if (this.ranks.length != 0) {
             this.ranks = resp.data.hits.rank.sort((v1, v2) => v2.avg - v1.avg)
@@ -660,37 +703,24 @@
 
 
         //游客体验-累计新增投诉量
-        var url =''
-        var moddata=''
-        if (http.gmt2strm(this.d11[0])==http.gmt2strm(this.d11[1])) {
-           url = 'bi/get_complaint_by_date'
-          moddata=http.gmt2strm(this.d11[0])
-          this.cTitle1= this.d11[0].substring(8,10) + '日已处理投诉量'
-          this.cTitle2= this.d11[0].substring(8,10) + '日处理中投诉量'
-        }else {
-           url = 'bi/get_complaint_by_mon'
-          moddata=http.gmt2strm(this.d11[0]).substring(0, 7)
-          this.cTitle1 = this.d11[0].substring(5, 7) + '月累计已处理投诉量'
-          this.cTitle2 = this.d11[0].substring(5, 7) + '月累计处理中投诉量'
-        }
-        http.post(url, {
-          date: moddata,
+        http.post('bi/get_complaint_by_mon', {
+          date: http.gmt2strm(this.d11[0]).substring(0, 7),
           city_id: this.FlowCity
         }).then(resp => {
           this.ctotal = resp.data.hits.total
           this.clink = resp.data.hits.link
           this.cratio = resp.data.hits.ratio
-            this.cavg = []
+          setTimeout(() => {
+            this.cavg=[]
             this.cavg.push(resp.data.hits.avg_proc.toFixed(2))
             this.cavg.push(resp.data.hits.max_proc.toFixed(2))
             this.cavg.push(resp.data.hits.min_proc.toFixed(2))
-          console.log('echart2',this)
             let Fbar = this.$echarts.init(document.getElementById('lengthbs'))
             Fbar.setOption({
               animation: false,
               title: {
                 text: '已关闭投诉处理时长',
-                textStyle: {
+                textStyle:{
                   fontSize: 12
                 }
               },
@@ -701,7 +731,7 @@
                   type: 'shadow'
                 }
               },
-              color: ["#006EFF", "#29CC85", "#ffbb00", "#ff584c"],
+              color:["#006EFF", "#29CC85", "#ffbb00", "#ff584c"],
               grid: {
                 left: '3%',
                 right: '4%',
@@ -713,27 +743,29 @@
                 boundaryGap: [0, 0.01]
               },
               yAxis: {
-                name: '单位(小时)',
+                name:'单位(小时)',
                 type: 'category',
                 data: ['平均时长', '最大时长', '最小时长'],
               },
               series: [
                 {
                   type: 'bar',
+                  //data: [6,85,0],
+                  //data: [parseInt(this.cavg[2]*100)/100,parseInt(this.cavg[1]*100)/100,parseInt(this.cavg[0]*100)/100],
                   data: this.cavg,
                   label: {
                     normal: {
                       show: true,
                       position: 'right',
-                      textStyle: {
-                        color: '#000'
+                      textStyle:{
+                        color:'#000'
                       }
                     }
                   },
                 }
               ]
             })
-
+          }, 1000)
           this.cmax = resp.data.hits.max_proc
           this.cmin = resp.data.hits.min_proc
           this.ccc = resp.data.hits.proc_stat
@@ -749,88 +781,39 @@
           console.log('this.ccc.map(i=>{return i.max})', this.ccc.map(i => {
             return i.name
           }))
-          let xbar = this.$echarts.init(document.getElementById('img_comp_pic_2'))
-          xbar.setOption({
-            animation: false,
-            tooltip : {
-              trigger: 'axis',
-              axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-              }
-            },
-            legend: {
-              bottom:'1%',
-              icon: "circle",
-              data: ["最大等待时间", "平均处理时间", "最小等待时间"]
-            },
-            color: [
-              "#006EFF",
-              "#29CC85",
-              "#ffbb00",],
-            xAxis: {
-              type: 'category',
-              data: this.ccc.map(i=>{return i.name})
-            },
-            yAxis: {
-              type: 'value'
-            },
-            series: [
-
-              {
-                name:'平均处理时间',
-                data: this.ccc.map(i=>{return i.avg.toFixed(2)}),
-                type: 'bar',
-                label: {
-                  normal: {
-                    show: true,
-                    position: 'top',
-                    textStyle:{
-                      color:'#000'
-                    }
-                  }
-                },
-              },
-              {
-                name:'最大等待时间',
-                data: this.ccc.map(i=>{return i.max.toFixed(2)}),
-                type: 'bar',
-                label: {
-                  normal: {
-                    show: true,
-                    position: 'top',
-                    textStyle:{
-                      color:'#000'
-                    }
-                  }
-                },
-              },
-              {
-                name:'最小等待时间',
-                data: this.ccc.map(i=>{return i.min.toFixed(2)}),
-                type: 'bar',
-                label: {
-                  normal: {
-                    show: true,
-                    position: 'top',
-                    textStyle:{
-                      color:'#000'
-                    }
-                  }
-                },
-              },
-            ]
-          })
-          this.closed = resp.data.hits.closed
-          this.unclosed = resp.data.hits.unclosed
+          this.closed = resp.data.hits.closed.toString()
+          this.unclosed = resp.data.hits.unclosed.toString()
+          this.cTitle1 = http.getToday().substring(5, 7) + '月累计已处理投诉量'
+          this.cTitle2 = http.getToday().substring(5, 7) + '月累计处理中投诉量'
 
         })
-    /*    http.post('bi/get_complaint_trend_by_timespan', {
+        http.post('bi/get_complaint_trend_by_timespan', {
           startTime: http.gmt2strm(this.d11[0]),
           endTime: http.gmt2strm(this.d11[1]),
           city_id: this.FlowCity
         }).then(resp => {
 
+        })
+
+
+        //投诉时长分析
+        /* http.post('bi/get_key_scenic_tourist_datespan_withdist', {
+          startTime: http.gmt2strm(this.d11[0]),
+          endTime: http.gmt2strm(this.d11[1]),
+          city_id: this.FlowCity
+        }).then(resp => {
+          console.log(resp)
         })*/
+
+        //投诉对象及处理情况分析
+        /*  http.post('bi/get_key_scenic_tourist_datespan_withdist', {
+            startTime: http.gmt2strm(this.d11[0]),
+            endTime: http.gmt2strm(this.d11[1]),
+            city_id: this.FlowCity
+          }).then(resp => {
+            console.log(resp)
+          })
+  */
       },
       getTop3(allDate) {
         const initLen = 3
@@ -869,6 +852,18 @@
               console.log(s.fff)
             },
           });
+          /*    var data= {
+                  "folder": this.wjj,
+                    "imgtype": n,
+                    "data": canvas.toDataURL("image/png")
+                }
+                console.log(111111)
+             http.posts('bi/uploadimg',data).then(resp=>{
+               console.log(111111)
+               console.log(resp)
+               console.log(111111)
+
+             })*/
         })
         return s.fff
       },
@@ -878,24 +873,9 @@
         console.log('this.fff', this.fff.length)
         console.log('this.opt', opts)
         console.log('this.optl', opts.length)
-        if (this.fff.length >= 8 && this.download == 1) {
+        if (this.fff.length >= 8) {
           this.uploadpic()
-        }
-        if (this.fff.length >= 8 && this.download != 1) {
-          /*this.$router.push({
-            path: 'reportDownload2', query: {
-              s1: this.$route.query.s1,
-              s2: this.$route.query.s2,
-              c: this.$route.query.c,
-              c1: this.$route.query.c1,
-              c2: this.$route.query.c2,
-              c3: this.$route.query.c3,
-              c4: this.$route.query.c4,
-              city: this.$route.city,
-              senic: this.$route.senic,
-              download:2
-            }
-          })*/
+
         }
       }
     },

@@ -1,6 +1,6 @@
 <template>
     <div style="height:100%;">
-        <div class="tits">云南省2018年1-8月旅游行业关键指标
+        <div class="tits">云南省2018年1-10月旅游行业关键指标
             <Tooltip content="云南全省旅游行业运行关键指标，数据来源：省旅游行业快报" placement="right" max-width="200">
                 <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
             </Tooltip>
@@ -16,7 +16,7 @@
                                 <span class="lyrd_index_today_visit">全省旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">47,187</span>
+                                <span class="lyrd_index_today_num">60,086</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                                 <span class="lyrd_index_today_visit">国内旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">46,701</span>
+                                <span class="lyrd_index_today_num">59,482</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                                 <span class="lyrd_index_today_visit">海外旅游接待人数</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">486</span>
+                                <span class="lyrd_index_today_num">604</span>
                                 <span class="lyrd_index_today_dw">万人次</span>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                                 <span class="lyrd_index_today_visit">全省旅游业总收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">59,076,450</span>
+                                <span class="lyrd_index_today_num">75,634,529</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                 <span class="lyrd_index_today_visit">国内旅游收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">57,307,819</span>
+                                <span class="lyrd_index_today_num">73,416,882</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                                 <span class="lyrd_index_today_visit">旅游外汇收入</span>
                             </div>
                             <div>
-                                <span class="lyrd_index_today_num">1,525,282</span>
+                                <span class="lyrd_index_today_num">2,217,647</span>
                                 <span class="lyrd_index_today_dw">万元</span>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                 <Row :gutter="20">
                     <Col span="12">
                     <div class="borderBlock">
-                        <tourOverseas></tourOverseas> 
+                        <tourOverseas></tourOverseas>
                     </div>
                     </Col>
                     <Col span="12">

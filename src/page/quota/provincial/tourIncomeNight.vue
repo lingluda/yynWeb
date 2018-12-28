@@ -10,7 +10,7 @@ export default {
             this.$echarts.init(document.querySelector("#tourIncomeNight")).setOption({
                 color: ['#63cd8d', '#a9a9a9'],
                 title:{
-                    text: "{a|国内过夜旅游收入} {b|（单位：万元）}",
+                    text: "{a|国内过夜旅游收入} {b|（单位：亿元）}",
                     textStyle: {
                         rich: {
                             a: {
@@ -25,7 +25,7 @@ export default {
                     }
                 },
                 xAxis: {
-                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月'],
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月'],
                     axisLabel: {
                         interval: 0,
                         color: '#999'
@@ -85,7 +85,7 @@ export default {
                         splitLine: {
                             show: false
                         },
-                        axisLabel: {
+                         axisLabel: {
                             color: '#999',
                             formatter: '{value}%'
                         },
@@ -93,16 +93,7 @@ export default {
                         max: 60
                     }
                 ],
-                legend: [
-                    {
-                        y: 'bottom',
-                        itemGap: 30,
-                        data: [
-                            { name: '国内过夜旅游收入', icon: 'circle' },
-                            '年同比增长率'
-                        ]
-                    }
-                ],
+
                 tooltip: {
                     trigger: 'axis'
                 },
@@ -124,13 +115,13 @@ export default {
                                 color: '#000'
                             }
                         },
-                        data: [408, 573, 528, 525, 536, 518, 620, 689]
+                        data: [408, 573, 528, 525, 536, 518, 620, 689,580,672]
                     }, {
                         type: 'line',
                         name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [3.98, 39.22, 29.62, 40.74, 21.02, 18.51, 13.68, 6.87]
+                        data: [3.98, 39.22, 29.62, 40.74, 21.02, 18.51, 13.68, 6.87,19.51,11.75]
                     }
                 ]
             });

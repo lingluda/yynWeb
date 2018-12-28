@@ -28,6 +28,7 @@
             data: this.trendPeople1.map(item=>{return item.date})
           },
           yAxis: {
+            name:'单位：人次',
             type: 'value'
           },
           lineStyle: {

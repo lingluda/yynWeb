@@ -59,7 +59,7 @@
       login(val){
         this.$refs[val].validate((valid)=>{
           if(valid){
-            http.get('bi/login',{user_name:this.formInline.user,pwd:this.formInline.password}).then(resp=>{
+            http.post('bi/login',{user_name:this.formInline.user,pwd:this.formInline.password}).then(resp=>{
               if(resp.data.errcode===0){
                 // 设置当前用户级别为省级
                 // this.$store.commit('setUserLevel',{ level : 'provincial'});

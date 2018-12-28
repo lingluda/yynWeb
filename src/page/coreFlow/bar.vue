@@ -19,7 +19,7 @@
       },
       methods:{
           barInit(){
-            http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.ss),top:10}).then(resp=>{
+            http.post('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.ss),top:10}).then(resp=>{
               let max2data = resp.data.hits.sort((v1,v2)=> v2.ince - v1.ince)
               let max2n=[]
               let max2y=[]

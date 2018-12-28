@@ -16,6 +16,7 @@ Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.use(iView);
 /* eslint-disable no-new */
+Vue.prototype.buszz = new Vue()
 new Vue({
   el: '#app',
   router,
@@ -24,13 +25,44 @@ new Vue({
   template: '<App/>'
 })
 //系统错误捕获
-const errorHandler = (error, vm)=>{
- // console.error('抛出全局异常');
-  //console.error(vm);
-  //console.error(error);
+const errorHandler = (error, vm, info)=>{
+  console.error('抛出全局异常');
+  console.error(vm);
+  console.error(error);
+  console.error(info);
+  let {
+    message, // 异常信息
+    name, // 异常名称
+    script,  // 异常脚本url
+    line,  // 异常行号
+    column,  // 异常列号
+    stack  // 异常堆栈信息
+  } = error;
+  console.log('errorerrorerrorerror:::::',error)
+  console.log(window.performance)
   http.get('bi/write_js_log',{msg:error}).then(resp=>{
-    //console.log(resp)
+    console.log(window.performance)
   })
 }
 Vue.config.errorHandler = errorHandler;
 Vue.prototype.$throw = (error)=> errorHandler(error,this);
+
+window.onerror = function (msg, url, lineNo, columnNo, error) {
+  var string = msg.toLowerCase();
+  var substring = "script error";
+  if (string.indexOf(substring) > -1){
+    alert('Script Error: See Browser Console for Detail');
+  } else {
+    var message = [
+      'Message: ' + msg,
+      'URL: ' + url,
+      'Line: ' + lineNo,
+      'Column: ' + columnNo,
+      'Error object: ' + JSON.stringify(error)
+    ].join(' - ');
+
+    alert(message);
+  }
+
+  return false;
+};

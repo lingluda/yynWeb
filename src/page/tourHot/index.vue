@@ -17,7 +17,7 @@
             <DatePicker size="small" v-model="date" type="date" placeholder="自选时间" @on-change="change1"
                         style="width: 150px;"></DatePicker>
             <Select size="small" v-model="city" clearable style="width: 150px" @on-change="change3">
-              <Option v-for="item in cityData" :value="item.code">{{item.name}}</Option>
+              <Option v-for="item in cityData" :value="item.code" :key="item.id">{{item.name}}</Option>
             </Select>
             </div>
           </div>
@@ -70,27 +70,27 @@
       },
       change1(val){
         this.date = val;
-        http.get('bi/get_tourism_dist_by_date',{date:this.date,city:this.city}).then(resp=>{
+        http.post('bi/get_tourism_dist_by_date',{date:this.date,city:this.city}).then(resp=>{
           this.pieData = resp.data.hits;
           console.log(this.pieData)
           this.initBar()
         })
-        http.get('bi/get_tourism_qty_by_date',{date:this.date,city:this.city}).then(resp=>{
+        http.post('bi/get_tourism_qty_by_date',{date:this.date,city:this.city}).then(resp=>{
           console.log('qq1qqq',resp)
         })
       },
       change3(val){
         this.city = val;
-        http.get('bi/get_tourism_dist_by_date',{date:this.date,city:this.city}).then(resp=>{
+        http.post('bi/get_tourism_dist_by_date',{date:this.date,city:this.city}).then(resp=>{
           console.log(resp)
           this.pieData = resp.hits;
         })
-        http.get('bi/get_tourism_qty_by_date',{date:this.date,city:this.city}).then(resp=>{
+        http.post('bi/get_tourism_qty_by_date',{date:this.date,city:this.city}).then(resp=>{
           console.log('qq1qqq',resp)
         })
       },
       getCity(){
-        http.get('bi/get_all_city_prov',{}).then(resp=>{
+        http.post('bi/get_all_city_prov',{}).then(resp=>{
           this.cityData = resp.data.hits;
         })
       },

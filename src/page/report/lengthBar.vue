@@ -1,5 +1,5 @@
 <template>
-  <div>{{cavg}}
+  <div>dddd
   <div id="lengthb" style="width: 100%;height: 200px;"></div>
   </div>
 </template>
@@ -18,8 +18,8 @@
       }
     },
     mounted() {
-      let Fbar = this.$echarts.init(document.getElementById('lengthb'))
-      Fbar.setOption({
+      let lbar = this.$echarts.init(document.getElementById('lengthb'))
+      lbar.setOption({
         animation: false,
         title: {
           text: '已关闭投诉处理时长',
@@ -48,15 +48,24 @@
         yAxis: {
           name:'单位(小时)',
           type: 'category',
-          data: ['平均时长', '最大时长', '最小时长'],
+          data: ['最小时长', '最大时长', '平均时长'],
         },
         series: [
           {
             type: 'bar',
-             //data: [6,85,0],
-            //data: [parseInt(this.cavg[2]*100)/100,parseInt(this.cavg[1]*100)/100,parseInt(this.cavg[0]*100)/100],
-            data: this.cavg,
+             data: [6.0341,85.7478,0.0022],
+           // data: [parseInt(this.ccc[2]*100)/100,parseInt(this.ccc[1]*100)/100,parseInt(this.ccc[0]*100)/100],
+            //data: this.cavg,
 
+            label: {
+              normal: {
+                show: true,
+                position: 'right',
+                textStyle:{
+                  color:'#000'
+                }
+              }
+            },
           }
         ]
       })

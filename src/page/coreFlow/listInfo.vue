@@ -163,7 +163,7 @@
               title: '实时游客人数',
               key: 'isclose',
               render:(h,params)=>{
-                if (params.row.n>params.row.fit){
+                if (params.row.n>params.row.fit*0.8){
                   return h('div',[
                     h('Tooltip',{
                       style:{
@@ -171,7 +171,7 @@
                       },
                       attrs:{
                         maxWidth:'200',
-                        content:'现景区人数已超出景区最优承载人数',
+                        content:'当前游客人数已超过该景区最优承载量的80%',
                         placement:'top'
                       }
                     },params.row.isclose)
@@ -250,7 +250,7 @@
               key: 'isclose',
 
             },
-            {
+           /* {
               title: '景区最优承载量',
               key: 'fit'
             },
@@ -267,14 +267,14 @@
                   ])
                 }
               }
-            },
+            },*/
             {
               title: '营业时间',
               key: 'busi_time_alias'
             },
           ]
         }
-        http.get('bi/get_key_scenic_tourist_datespan',{pindex:this.current,size:this.psize,startTime:this.$route.query.d1,endTime:this.$route.query.d2,city_id:this.$route.query.c1}).then(resp=>{
+        http.post('bi/get_key_scenic_tourist_datespan',{pindex:this.current,size:this.psize,startTime:this.$route.query.d1,endTime:this.$route.query.d2,city_id:this.$route.query.c1}).then(resp=>{
           this.data1=resp.data.hits
           this.total=parseInt(resp.data.total)
           for (var i=0;i<this.data1.length;i++){

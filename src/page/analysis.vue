@@ -16,7 +16,7 @@
             </div>
             <div>
               <Select style="width: 120px" v-model="city1">
-                <Option v-for="item in cityDataall" :value="item.code">{{item.name}}</Option>
+                <Option v-for="item in cityDataall" :value="item.code" :key="item.id">{{item.name}}</Option>
               </Select>
               <DatePicker placement="bottom-end" type="date" v-model="date1" placeholder="自选时间" style="width: 120px"
                           :options="disoptionsdate"></DatePicker>
@@ -27,7 +27,7 @@
             <div id="health" style="width: 100%;height: 260px;margin-top: -20px"></div>
           </Col>
           <!--<Col span="12" style="padding:0 50px">
-            <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">一机游情绪</div>
+            <div style="text-align: center;font-weight: bold;color: rgb(0,0,0)">游云南App情绪</div>
             <div id="unhealth" style="width: 100%;height: 260px;margin-top: -20px"></div>
           </Col>-->
         </Row>
@@ -260,15 +260,17 @@
       this.init();
       this.initHealth1();
       this.initUNHealth1();
+      http.post('bi/write_run_log',{obj:'舆情分析',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
+      })
     },
     methods: {
       init() {
         this.date1 = http.getToday()
-        http.get('bi/get_all_city_prov', {}).then(resp => {
+        http.post('bi/get_all_city_prov', {}).then(resp => {
           this.cityDataall = resp.data.hits;
           this.city1 = resp.data.hits[0].code;
         })
-        http.get('bi/get_all_city', {}).then(resp => {
+        http.post('bi/get_all_city', {}).then(resp => {
           this.cityData = resp.data.hits;
           this.city2 = resp.data.hits[0].code;
         })
@@ -557,7 +559,7 @@
         this.pie1 = []
         this.pie2 = []
         if (this.city1) {
-          http.get('bi/get_pom_by_date', {date: http.gmt2str(this.date1), area_code: this.city1}).then(resp => {
+          http.post('bi/get_pom_by_date', {date: http.gmt2str(this.date1), area_code: this.city1}).then(resp => {
             this.pie1 = resp.data.hits;
             if (this.pie1[2].proportion > 20) {
               this.title1 = '不健康'

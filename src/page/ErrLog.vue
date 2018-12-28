@@ -45,7 +45,7 @@
       },
       methods:{
           init(){
-            http.get('bi/get_log_err',{startTime:http.gmt2strms(this.sDate[0]),endTime:http.gmt2strms(this.sDate[1])}).then(resp=>{
+            http.post('bi/get_log_err',{startTime:http.gmt2strms(this.sDate[0]),endTime:http.gmt2strms(this.sDate[1])}).then(resp=>{
               this.errData=resp.data.hits
               for (var i=0;i<this.errData.length;i++){
                 this.errData[i].time = http.gmt2strms(this.errData[i].addTime)

@@ -8,14 +8,10 @@
             <span style="font-weight: bold;color: #000000">投诉分析</span>
           </div>
           <div>
-            <!--  <RadioGroup type="button" v-model="picTo">
-                <Radio label="1">今日</Radio>
-                <Radio label="2">昨日</Radio>
-              </RadioGroup>-->
             <DatePicker type="date" v-model="picdate1" placeholder="自选时间" style="width: 120px"
                         :options="disoptionsdate" @on-change="pic1"></DatePicker>
             <Select style="width: 120px" v-model="p11" @on-change="ppp1">
-              <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+              <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
             </Select>
           </div>
         </div>
@@ -27,14 +23,13 @@
                 <div class="lyrd_index_count_num">
                   <div>
                     <span class="lyrd_index_today_visit">当日新增投诉量</span>
-                    <!--{{(this.picdate1).toString().substring(8,10)}}日-->
                   </div>
+
                   <div v-if="isshow1==1">
                     <span class="lyrd_index_today_num">{{add}}</span>
                     <span class="lyrd_index_today_dw">件</span>
-                    <!-- <span>(新关闭{{close}}，未关闭{{unclose}})</span> -->
                   </div>
-                  <div v-if="isshow1==2" style="margin-top: 20px">暂无数据</div>
+                  <div v-if="isshow1==2" style="margin-top: 20px">暂无历史数据</div>
                 </div>
               </div>
             </Col>
@@ -46,12 +41,13 @@
                     <span class="lyrd_index_today_visit">与昨日环比</span>
 
                   </div>
-                  <div v-if="isshow2==1">
-                    <span class="lyrd_index_today_num">{{ratio}}</span><span style="color: #006eff;">%</span>
-                    <span v-if="showud1==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
-                    <span v-if="showud1!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
+                  <div v-if="pred>=0">
+                    <span v-if="ratio<0" class="lyrd_index_today_num">{{-ratio}} <span style="color: #006eff;">%</span></span>
+                    <span v-if="ratio>=0" class="lyrd_index_today_num">{{ratio}} <span style="color: #006eff;">%</span></span>
+                    <span v-if="ratio<0">(<Icon style="color: green" type="md-arrow-down" size="22"/>)</span>
+                    <span v-if="ratio>0">(<Icon style="color: #ffbb00" type="md-arrow-up" size="22"/>)</span>
                   </div>
-                  <div v-if="isshow2==2" style="margin-top: 20px">暂无数据</div>
+                  <div v-if="pred<0" style="margin-top: 20px">暂无历史数据</div>
                 </div>
               </div>
             </Col>
@@ -62,12 +58,14 @@
                   <div>
                     <span class="lyrd_index_today_visit">与上月同比</span>
                   </div>
-                  <div v-if="isshow3==1">
-                    <span class="lyrd_index_today_num">{{link}}</span> <span style="color: #006eff;">%</span>
-                    <span v-if="showud2==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
-                    <span v-if="showud2!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
+                  <div v-if="prem>=0">
+
+                    <span v-if="link<0" class="lyrd_index_today_num">{{-link}} <span style="color: #006eff;">%</span></span>
+                    <span v-if="link>=0" class="lyrd_index_today_num">{{link}} <span style="color: #006eff;">%</span></span>
+                    <span v-if="link<0">(<Icon style="color: green" type="md-arrow-down" size="22"/>)</span>
+                    <span v-if="link>0">(<Icon style="color: #ffbb00" type="md-arrow-up" size="22"/>)</span>
                   </div>
-                  <div v-if="isshow3==2" style="margin-top: 20px">暂无数据</div>
+                  <div v-if="prem<0" style="margin-top: 20px">暂无历史数据</div>
                 </div>
               </div>
             </Col>
@@ -85,7 +83,7 @@
             <DatePicker type="month" placement="bottom-end" v-model="picdate2" placeholder="自选时间" style="width: 120px"
                         :options="disoptionsdates" @on-change="pic2"></DatePicker>
             <Select style="width: 120px" v-model="p11" @on-change="ppp2">
-              <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+              <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
             </Select>
           </div>
         </div>
@@ -96,7 +94,7 @@
                 <div style="margin-top:40px;display:flex">
                   <img src="../assets/imgs/exp5.png" style="margin-right:20px;width:60px;height:60px"/>
                   <div>
-                    <div style="color:#000;font-size:16px">{{titleDate}}平台累计已处理投诉量</div>
+                    <div style="color:#000;font-size:16px">平台累计已处理投诉量</div>
                     <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">{{close1}}</span>件</div>
                   </div>
                 </div>
@@ -105,7 +103,7 @@
                 <div style="margin-top:25px;display:flex">
                   <img src="../assets/imgs/exp4.png" style="margin-right:20px;width:60px;height:60px"/>
                   <div>
-                    <div style="color:#000;font-size:16px">{{titleDate}}平台累计处理中投诉量</div>
+                    <div style="color:#000;font-size:16px">平台累计处理中投诉量</div>
                     <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">{{unclose1}}</span>件</div>
                   </div>
                 </div>
@@ -127,21 +125,16 @@
       <card class="card_margin">
         <div style="margin-bottom: 20px;">
           <span style="font-weight: bold;color: #000000">投诉量趋势分析</span>
-          <!--<DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM" type="daterange" placeholder="Select date" style="width: 140px;float: right"></DatePicker>-->
-          <!--  <DatePicker v-model="dd1" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
-            <span style="float: right;padding:5px 5px 0px 5px">-</span>
-            <DatePicker v-model="dd2" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
-    -->
+
           <Select style="width: 120px;float: right" v-model="p11" @on-change="ppp3">
-            <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+            <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
           </Select>
           <DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期"
                       style="width:220px;float: right" @on-change="_dd2" :options="disoptionsdate"></DatePicker>
+          <Button @click="dateChoice11(2)" style="float: right">近30日</Button>
 
-          <RadioGroup v-model="dateChoice1" type="button" style="float: right" @on-change="dateChoice11">
-            <Radio label="1">最近7天</Radio>
-            <Radio label="2">最近30天</Radio>
-          </RadioGroup>
+          <Button @click="dateChoice11(1)" style="float: right">近7日</Button>
+
         </div>
         <div id="myline" style="height: 400px;border: 1px solid #dcdee2;"></div>
       </card>
@@ -272,6 +265,8 @@
         unclose: "",
         close1: "",
         unclose1: "",
+        pred: "",
+        prem: "",
         timeX: [],
         timeY: [],
         procX1: [],
@@ -293,6 +288,8 @@
     },
     mounted() {
       this.init();
+      http.post('bi/write_run_log',{obj:'游客体验',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
+      })
     },
     methods: {
       dateChoice11(val) {
@@ -311,8 +308,8 @@
         this.procX3 = []
         this.procY1 = []
         this.timeX = []
-        this.titleDate = '近7天'
-        http.get('bi/get_complaint_by_date', {date: http.getYesterDay()}).then(resp => {
+        //this.titleDate = '近7天'
+        http.post('bi/get_complaint_by_date', {date: http.getYesterDay(),city_id:this.p11}).then(resp => {
           this.close1 = http.qfw(resp.data.hits.closed);
           this.unclose1 = http.qfw(resp.data.hits.unclosed);
           this.timeX.push(parseInt(resp.data.hits.min_proc * 100) / 100);
@@ -329,7 +326,7 @@
         })
       },
       init() {
-        http.get('bi/get_all_city_prov', {}).then(resp => {
+        http.post('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
           this.p11 = resp.data.hits[0].id
           this.p12 = resp.data.hits[0].id
@@ -430,7 +427,7 @@
             data: this.linex
           },
           yAxis: {
-            name:'单位：次数',
+            name:'单位：件',
             type: "value",
             splitLine: {
               lineStyle: {
@@ -620,46 +617,30 @@
         complaint2.setOption(option2);
       },
       pic1() {
-        http
-          .get("bi/get_complaint_by_date", {date: http.gmt2str(this.picdate1), city_id: this.p11})
+        http.post("bi/get_complaint_by_date", {date: http.gmt2str(this.picdate1), city_id: this.p11})
           .then(resp => {
               this.add = http.qfw(resp.data.hits.total);
               this.close = http.qfw(resp.data.hits.closed);
               this.unclose = http.qfw(resp.data.hits.unclosed);
-              if (resp.data.hits.link < 0) {
-                this.link = -resp.data.hits.link;
-                this.showud2 = 1
-              } else {
-                this.link = resp.data.hits.link;
-                this.showud2 = 2
-              }
-              if (resp.data.hits.ratio < 0) {
-                this.ratio = -resp.data.hits.ratio;
-                this.showud1 = 1
-              } else {
-                this.ratio = resp.data.hits.ratio;
-                this.showud1 = 2
-              }
-            if (!('hits' in resp.data)) {
-              this.isshow1=2
-            }
-            if (!('hits' in resp.data)||resp.data.hits.prem==0||resp.data.hits.prem==-1) {
-              this.isshow2=2
-            }
-            if (!('hits' in resp.data)||resp.data.hits.pred==0||resp.data.hits.pred==-1) {
-              this.isshow3=2
-            }
+              this.link = resp.data.hits.link;
+              this.ratio = resp.data.hits.ratio;
+              this.pred = resp.data.hits.pred;
+              this.prem = resp.data.hits.prem;
+
           });
       },
       pic2() {
+        if (this.picdate2==''||this.picdate2==undefined){
+          this.change7()
+          console.log('this.change7()')
+        } else {
         this.procX1 = [];
         this.procX2 = [];
         this.procX3 = [];
         this.procY1 = [];
         this.timeX = [];
-        this.titleDate = this.picdate2.getMonth() + 1 + '月'
-        http
-          .get("bi/get_complaint_by_mon", {date: http.gmt2strm(this.picdate2),city_id:this.p11})
+        //this.titleDate = this.picdate2.getMonth() + 1 + '月'
+        http.post("bi/get_complaint_by_mon", {date: http.gmt2strm(this.picdate2),city_id:this.p11})
           .then(resp => {
             this.close1 = http.qfw(resp.data.hits.closed);
             this.unclose1 = http.qfw(resp.data.hits.unclosed);
@@ -675,6 +656,7 @@
             }
             this.closeComplaint();
           });
+      }
       },
       pic3() {
         this.linex = []
@@ -709,35 +691,15 @@
         this._dd2()
       },
       ppp() {
-        http
-          .get("bi/get_complaint_by_date", {date: http.gmt2str(this.picdate1), city_id: this.p11})
+        http.post("bi/get_complaint_by_date", {date: http.gmt2str(this.picdate1), city_id: this.p11})
           .then(resp => {
               this.add = http.qfw(resp.data.hits.total);
               this.close = http.qfw(resp.data.hits.closed);
               this.unclose = http.qfw(resp.data.hits.unclosed);
-              if (resp.data.hits.link < 0) {
-                this.link = -resp.data.hits.link;
-                this.showud2 = 1
-              } else {
-                this.link = resp.data.hits.link;
-                this.showud2 = 2
-              }
-              if (resp.data.hits.ratio < 0) {
-                this.ratio = -resp.data.hits.ratio;
-                this.showud1 = 1
-              } else {
-                this.ratio = resp.data.hits.ratio;
-                this.showud1 = 2
-              }
-            if (!('hits' in resp.data)) {
-              this.isshow1=2
-            }
-            if (!('hits' in resp.data)||resp.data.hits.prem==0||resp.data.hits.prem==-1) {
-              this.isshow2=2
-            }
-            if (!('hits' in resp.data)||resp.data.hits.pred==0||resp.data.hits.pred==-1) {
-              this.isshow3=2
-            }
+            this.link = resp.data.hits.link;
+            this.ratio = -resp.data.hits.ratio;
+            this.pred = resp.data.hits.pred;
+            this.prem = resp.data.hits.prem;
           });
       },
       ptt() {
@@ -751,8 +713,7 @@
       _dd2() {
         this.linex = []
         this.liney = []
-        http
-          .get("bi/get_complaint_trend_by_timespan", {
+        http.post("bi/get_complaint_trend_by_timespan", {
             startTime: http.gmt2str(this.picdate3[0]),
             endTime: http.gmt2str(this.picdate3[1]),
             city_id: this.p11
@@ -767,13 +728,7 @@
       }
     },
     watch: {
-      //picdate1: 'pic1',
-      //picdate2: 'pic2',
-      //picdate3:'pic3',
-     // p11: 'ppp',
-      //p12: 'pic2',
       picTo: 'ptt',
-      //dd1:'_dd2'
     }
   };
 </script>

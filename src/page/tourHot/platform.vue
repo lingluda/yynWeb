@@ -31,7 +31,7 @@
                     <span style="font-size: 32px;color: #006eff;font-weight: 600">{{addtotal}}</span>
                     <span style="color: #006eff">人</span>
                     </div>
-                    <div v-if="issh1==2" style="margin-top: 20px">暂无数据</div>
+                    <div v-if="issh1==2" style="margin-top: 20px">暂无历史数据</div>
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
@@ -39,14 +39,14 @@
                       <span :style="{color:color2}" v-if="isshoe1==1">
                         <Icon v-if="is2==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/>
                         <Icon v-if="is2!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{fratio}}%&nbsp;&nbsp;</span>
-                    <span v-if="isshoe1==2">暂无数据</span>
+                    <span v-if="isshoe1==2">暂无历史数据</span>
                     </div>
                     <div style="background-color: #f6f8fa;margin-top: 10px;padding-top: 2px">
                     <span >&nbsp;&nbsp;与上月同比&nbsp;&nbsp;&nbsp;&nbsp; </span>
                       <span :style="{color:color1}" v-if="isshoe2==1">
                         <Icon v-if="is1==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/>
                         <Icon v-if="is1!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{flink}}%&nbsp;&nbsp;</span>
-                      <span v-if="isshoe2==2">暂无数据</span>
+                      <span v-if="isshoe2==2">暂无历史数据</span>
                     </div>
                   </Col>
                 </Row>
@@ -69,7 +69,7 @@
                     <span style="font-size: 32px;color: #006eff;font-weight: 600">{{adutotal}}</span>
                     <span style="color: #006eff">人</span>
                     </div>
-                    <div v-if="issh2==2" style="margin-top: 20px">暂无数据</div>
+                    <div v-if="issh2==2" style="margin-top: 20px">暂无历史数据</div>
                   </Col>
                   <Col span="10">
                     <div style="background-color: #f6f8fa;padding-top: 2px">
@@ -77,7 +77,7 @@
                       <span :style="{color:color4}" v-if="isshoe3==1">
                         <Icon v-if="is4==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/>
                         <Icon v-if="is4!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{ratio}}%&nbsp;&nbsp;</span>
-                      <span v-if="isshoe3==2">暂无数据</span>
+                      <span v-if="isshoe3==2">暂无历史数据</span>
                     </div>
 
                     <div style="background-color: #f6f8fa;margin-top: 10px;padding-top: 2px">
@@ -85,7 +85,7 @@
                       <span :style="{color:color3}" v-if="isshoe4==1">
                         <Icon v-if="is3==1" type="ios-arrow-round-up" size="22" style="margin-bottom: 4px"/>
                         <Icon v-if="is3!=1" type="ios-arrow-round-down" size="22" style="margin-bottom: 4px"/>{{link}}%&nbsp;&nbsp;</span>
-                      <span v-if="isshoe4==2">暂无数据</span>
+                      <span v-if="isshoe4==2">暂无历史数据</span>
                     </div>
                   </Col>
                 </Row>
@@ -99,10 +99,12 @@
 
             <DatePicker placement="bottom-end" type="daterange"  v-model="picMonth" @on-change="change1" placeholder="自选时间"  :options="disoptionsdate"
                         style="width: 220px;float: right"></DatePicker>
-            <RadioGroup v-model="cho7" type="button" style="float: right" @on-change="choose7">
-              <Radio label="1">最近7日</Radio>
-              <Radio label="2">最近30日</Radio>
-            </RadioGroup>
+            <Button @click="choose7(2)" style="float: right">近30日</Button>
+
+            <Button @click="choose7(1)" style="float: right">近7日</Button>
+
+
+
            <!-- <DatePicker v-model="dd1" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
             <span style="float: right;padding:5px 5px 0px 5px">-</span>
             <DatePicker v-model="dd2" placement="bottom-end" format="yyyy-MM" type="month" placeholder="Select date" style="width: 85px;float: right"></DatePicker>
@@ -177,6 +179,8 @@
     },
     mounted() {
       this.init()
+      http.post('bi/write_run_log',{obj:'平台运营',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
+      })
     },
     methods: {
       choose7(val){
@@ -185,7 +189,7 @@
         this.lineDatax1 = []
         this.lineDatax2 = []
         this.lineDatay = []
-        http.get('bi/get_ops_trend_date', {startTime: http.getWeekAgo(), endTime: http.getYesterDay(), type: 'd'}).then(resp => {
+        http.post('bi/get_ops_trend_date', {startTime: http.getWeekAgo(), endTime: http.getYesterDay(), type: 'd'}).then(resp => {
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.lineDatax1.push(resp.data.hits[i].dau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)
@@ -199,7 +203,7 @@
           this.lineDatax1 = []
           this.lineDatax2 = []
           this.lineDatay = []
-          http.get('bi/get_ops_trend_date', {startTime: http.getMonthAgo(), endTime: http.getYesterDay(), type: 'd'}).then(resp => {
+          http.post('bi/get_ops_trend_date', {startTime: http.getMonthAgo(), endTime: http.getYesterDay(), type: 'd'}).then(resp => {
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.lineDatax1.push(resp.data.hits[i].dau)
               this.lineDatax2.push(resp.data.hits[i].incr_num)
@@ -213,7 +217,7 @@
         this.lineDatax1 = []
         this.lineDatax2 = []
         this.lineDatay = []
-        http.get('bi/get_ops_trend_date', {startTime: http.getWeekAgo(), endTime: http.getToday(), type: 'd'}).then(resp => {
+        http.post('bi/get_ops_trend_date', {startTime: http.getWeekAgo(), endTime: http.getToday(), type: 'd'}).then(resp => {
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.lineDatax1.push(resp.data.hits[i].dau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)
@@ -275,7 +279,7 @@
         this.lineDatax1 = []
         this.lineDatax2 = []
         this.lineDatay = []
-        http.get('bi/get_ops_trend_date', {startTime: val1[0], endTime: val1[1], type: 'd'}).then(resp => {
+        http.post('bi/get_ops_trend_date', {startTime: val1[0], endTime: val1[1], type: 'd'}).then(resp => {
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.lineDatax1.push(resp.data.hits[i].dau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)
@@ -285,7 +289,7 @@
         })
       },
       wp1(){
-        http.get('bi/get_ops_qty_by_date', {date: http.gmt2str(this.picDate)}).then(resp => {
+        http.post('bi/get_ops_qty_by_date', {date: http.gmt2str(this.picDate)}).then(resp => {
           this.addtotal=http.qfw(resp.data.hits[0].total)
           this.aduData = resp.data.hits[1]
           this.adutotal=http.qfw(resp.data.hits[1].total)
@@ -370,7 +374,7 @@
         this.lineDatax1 = []
         this.lineDatax2 = []
         this.lineDatay = []
-        http.get('bi/get_ops_trend_date', {startTime: http.gmt2str(this.dd2), endTime: http.gmt2str(this.dd1), type: 'd'}).then(resp => {
+        http.post('bi/get_ops_trend_date', {startTime: http.gmt2str(this.dd2), endTime: http.gmt2str(this.dd1), type: 'd'}).then(resp => {
           for (var i = 0; i < resp.data.hits.length; i++) {
             this.lineDatax1.push(resp.data.hits[i].mau)
             this.lineDatax2.push(resp.data.hits[i].incr_num)

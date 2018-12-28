@@ -14,10 +14,10 @@
             </div>
           </div>
           <Select style="width: 120px" v-model="city11" @on-change="sinic">
-            <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+            <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
           </Select>
           <Select style="width: 120px" v-model="senic_id" @on-change="searchformi">
-            <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
+            <Option v-for="item in senicData" :value="item.id" :key="item.id">{{item.name}}</Option>
           </Select>
           <DatePicker type="date" v-model="date11" @on-change="searchformi" placeholder="自选时间" style="width: 120px"
                       :options="disoptionsdate"></DatePicker>
@@ -30,11 +30,11 @@
             <Option value="15">15分钟</Option>
           </Select>
         </div>
-        <div class="mapContainer">
-          <hot_map :x2="this.hotmapx" :x3="hotmapd" :x4="this.hotmapll" style="width: 100%;height: 400px;"
+        <div>
+          <iframe name="ifmap" :src="iframeSrc" style="width: 100%;height: 470px;border: 0px"></iframe>
+        <!--  <hot_map :x2="this.hotmapx" :x3="hotmapd" :x4="this.hotmapll" style="width: 100%;height: 400px;"
                    class="heatmap">
-
-          </hot_map>
+          </hot_map>-->
           <!--      <div id="hotmap" style="width: 100%;height: 400px;" class="heatmap">
                    <div class="visualmap">
                      <div>
@@ -53,7 +53,7 @@
 
                  </div>-->
         </div>
-        <div id="timeline" style="width: 100%;height: 60px;"></div>
+        <!--<div id="timeline" style="width: 100%;height: 60px;"></div>-->
       </card>
       <card class="card_margin">
         <div style="margin-bottom: 20px">
@@ -67,10 +67,10 @@
                           style="width: 120px;" :options="disoptionsdate"></DatePicker>
 
               <Select style="width: 120px" v-model="city11">
-                <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+                <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
               </Select>
               <Select style="width: 120px" v-model="senic_id5">
-                <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
+                <Option v-for="item in senicData" :value="item.id" :key="item.id">{{item.name}}</Option>
               </Select>
             </div>
           </div>
@@ -88,9 +88,11 @@
                     <div v-if="isshowd1==1">
                       <span class="lyrd_hotmap_today_num">{{currentTime}}</span>
                       <span class="lyrd_hotmap_today_dw">人</span>
-                      <span>(当日峰值{{daymount}})</span>
+                      <span v-if="fisshow==2">(当日峰值{{daymount}})</span>
+                      <span v-if="fisshow==1" style="color: red">(当日峰值{{daymount}})</span>
+                      <span>(最优承载量{{fit_capacity}})</span>
                     </div>
-                    <div v-if="isshowd1==2" style="margin-top: 20px">暂无数据</div>
+                    <div v-if="isshowd1==2" style="margin-top: 20px">暂无历史数据</div>
                   </div>
                 </div>
               </Col>
@@ -105,7 +107,7 @@
                       <span v-if="showud1==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
                       <span v-if="showud1!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                     </div>
-                    <div v-if="isshowd2==2" style="margin-top: 20px">暂无数据</div>
+                    <div v-if="isshowd2==2" style="margin-top: 20px">暂无历史数据</div>
                   </div>
                 </div>
               </Col>
@@ -120,7 +122,7 @@
                       <span v-if="showud2==1">(<Icon :style={color:color2} type="md-arrow-down" size="22"/>)</span>
                       <span v-if="showud2!=1">(<Icon :style={color:color1} type="md-arrow-up" size="22"/>)</span>
                     </div>
-                    <div v-if="isshowd3==2" style="margin-top: 20px">暂无数据</div>
+                    <div v-if="isshowd3==2" style="margin-top: 20px">暂无历史数据</div>
                   </div>
                 </div>
               </Col>
@@ -138,10 +140,10 @@
           </div>
           <div>
             <Select style="width: 120px" v-model="city11">
-              <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+              <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
             </Select>
             <DatePicker v-model="da1" type="date" placeholder="Select date"
-                        style="width: 120px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
+                        style="width: 130px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
             <Select style="width: 120px" v-model="power1" @on-change="picd">
               <Option value="60">60分钟</Option>
               <Option value="30">30分钟</Option>
@@ -149,10 +151,10 @@
           </div>
           <div style="margin-top: 10px">
             <Select style="width: 120px" v-model="modelsenic">
-              <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
+              <Option v-for="item in senicData" :value="item.id" :key="item.id">{{item.name}}</Option>
             </Select>
             <DatePicker v-model="da2" type="date" placeholder="Select date"
-                        style="width: 120px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
+                        style="width: 130px;" @on-change="picd" :options="disoptionsdate"></DatePicker>
             <span style="margin-left: 5px">选择对比日期</span>
           </div>
           <div class="hotmap_klqs">
@@ -322,7 +324,7 @@
   import http from "@/http.js";
   // import AMap from "AMap";
   import hottk from '../../components/map/hotMap'
-
+  import Bus from '@/Bus.js'
   var map;
   var heatmap;
   var testData;
@@ -332,6 +334,7 @@
     },
     data() {
       return {
+        iframeSrc:'',
         openTime: '',
         is1: 2,
         isshowd1: 1,
@@ -358,6 +361,8 @@
         date11: http.getToday(),
         dataIndex: 0,
         x: 0,
+        x1:0,
+        x2:0,
         timelines: [],
         lineDatax: [],
         lineDatay1: [],
@@ -373,6 +378,8 @@
         picDate6: http.getToday(),
         ratio: '',
         daymount: '',
+        fit_capacity: '',
+        fisshow:'',
         currentTime: '',
         touristc: '',
         hotmapx: [],
@@ -388,20 +395,27 @@
     },
     mounted() {
       this.init();
+      http.post('bi/write_run_log',{obj:' 景区客流热力',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
+      })
     },
     methods: {
       init() {
-        http.get('bi/get_all_city', {}).then(resp => {
+
+        http.post('bi/get_all_city', {}).then(resp => {
           this.cityData = resp.data.hits;
           this.modelcity = resp.data.hits[0].id
           this.city11 = resp.data.hits[0].id
+         // this.iframeSrc ='#hotmaps?city_id='+this.city11
+          this.buszz.$emit('city_id',this.city11)
+          this.iframeSrc = '/as/#/hotmaps?city_id='+this.city11+'&date='+http.gmt2str(this.date11)+'&scenic='+this.senic_id+'&min='+this.power
+
           this.piccity = resp.data.hits[0].id
-          http.get('bi/get_scenic_by_city', {city_id: this.city11}).then(resp => {
+          http.post('bi/get_scenic_by_city', {city_id: this.city11}).then(resp => {
             this.senicData = resp.data.hits
             this.senic_id = this.senicData[0].id
           })
         })
-        http.get('bi/get_scenic_tourist_compare_by_date', {
+        http.post('bi/get_scenic_tourist_compare_by_date', {
           startTime: http.gmt2str(this.da1),
           startTime1: http.gmt2str(this.da2),
 
@@ -431,7 +445,7 @@
           this.initline();
         })
         this.hotmapl = []
-        http.get('bi/get_scenic_tourist_heat_dist', {
+        http.post('bi/get_scenic_tourist_heat_dist', {
           date: http.gmt2str(this.date11),
           scenic: this.senic_id,
           min: this.power
@@ -445,19 +459,22 @@
         })
       },
       searchformi() {
-        this.hotmapl = []
-        http.get('bi/get_scenic_tourist_heat_dist', {
-          date: http.gmt2str(this.date11),
-          scenic: this.senic_id,
-          min: this.power
-        }).then(resp => {
-          this.hotmapx = [resp.data.hits[0].points[0].lng, resp.data.hits[0].points[0].lat]
-          this.hotmapd = resp.data.hits;
-          for (var i = 0; i < resp.data.hits.length; i++) {
-            this.hotmapl.push(resp.data.hits[i].time)
-          }
-          this.hotmapll = this.hotmapl
-        })
+        console.log(this.x2)
+        if (this.x2==0){
+          document.getElementsByName("ifmap")[0].src='/as/#/hotmap1?city_id='+this.city11+'&date='+http.gmt2str(this.date11)+'&scenic='+this.senic_id+'&min='+this.power
+
+          this.x2 =1
+          console.log(document.getElementsByName("ifmap"))
+          return false
+        }
+        console.log(this.x2)
+        if (this.x2==1){
+          document.getElementsByName("ifmap")[0].src='/as/#/hotmaps?city_id='+this.city11+'&date='+http.gmt2str(this.date11)+'&scenic='+this.senic_id+'&min='+this.power
+
+          this.x2 =0
+          console.log(document.getElementsByName("ifmap"))
+          return false
+        }
       },
       picd() {
         this.lineDatay1 = []
@@ -465,7 +482,7 @@
         this.lineDatax = []
         this.lineDatayn1=''
         this.lineDatayn2=''
-        http.get('bi/get_scenic_tourist_compare_by_date', {
+        http.post('bi/get_scenic_tourist_compare_by_date', {
           startTime: http.gmt2str(this.da1),
           startTime1: http.gmt2str(this.da2),
           scenic: this.modelsenic,
@@ -498,7 +515,7 @@
         this.lineDatax = []
         this.lineDatayn1=''
         this.lineDatayn2=''
-        http.get('bi/get_scenic_tourist_compare_by_date', {
+        http.post('bi/get_scenic_tourist_compare_by_date', {
           startTime: http.gmt2str(this.da1),
           startTime1: http.gmt2str(this.da2),
           scenic: this.modelsenic,
@@ -660,7 +677,7 @@
       },
 
       pic1() {
-        http.get('bi/get_scenic_tourist_by_date', {
+        http.post('bi/get_scenic_tourist_by_date', {
           date: http.gmt2str(this.picDate6),
           scenic: this.senic_id5
         }).then(resp => {
@@ -685,6 +702,12 @@
           }
           this.daymount = http.qfw(resp.data.hits.his);
           this.currentTime = http.qfw(resp.data.hits.real);
+          this.fit_capacity = http.qfw(resp.data.hits.fit_capacity);
+          if (resp.data.hits.real>=resp.data.hits.fit_capacity) {
+            this.fisshow=1
+          }else {
+            this.fisshow=2
+          }
           this.touristc = resp.data.hits.link;
           if (this.daymount == 0) {
             this.isshowd1 = 2
@@ -704,34 +727,35 @@
         })
       },
       sinic() {
-        http.get('bi/get_scenic_by_city', {city_id: this.city11}).then(resp => {
-          this.senicData = resp.data.hits
-          this.senic_id = this.senicData[0].id
-          this.hotmapl = []
-          http.get('bi/get_scenic_tourist_heat_dist', {
-            date: http.gmt2str(this.date11),
-            scenic: this.senic_id,
-            min: this.power
-          }).then(resp => {
-            this.hotmapx = [resp.data.hits[0].points[0].lng, resp.data.hits[0].points[0].lat]
-            this.hotmapd = resp.data.hits;
-            for (var i = 0; i < resp.data.hits.length; i++) {
-              this.hotmapl.push(resp.data.hits[i].time)
-            }
-            this.hotmapll = this.hotmapl
-          })
+        console.log(this.city11)
+        let self = this
+        http.post('bi/get_scenic_by_city', {city_id: self.city11}).then(resp => {
+          self.senicData = resp.data.hits
+          self.senic_id = self.senicData[0].id
+          if (self.x1==0){
+            document.getElementsByName("ifmap")[0].src='/as/#/hotmap2?city_id='+self.city11+'&date='+http.gmt2str(self.date11)+'&scenic='+self.senic_id+'&min='+self.power
+            self.x1 =1
+            console.log(document.getElementsByName("ifmap"))
+            return false
+          }
+          if (self.x1==1){
+            document.getElementsByName("ifmap")[0].src='/as/#/hotmap3?city_id='+self.city11+'&date='+http.gmt2str(self.date11)+'&scenic='+self.senic_id+'&min='+self.power
+            self.x1 =0
+            console.log(document.getElementsByName("ifmap"))
+            return false
+          }
         })
       },
       picsb() {
         //this.senicData=[]
-        http.get('bi/get_scenic_by_city', {city_id: this.city11}).then(resp => {
+        http.post('bi/get_scenic_by_city', {city_id: this.city11}).then(resp => {
           this.senicData = resp.data.hits
           this.senic_id5 = this.senicData[0].id
           this.modelsenic = this.senicData[0].id
         })
       },
       pccsscs() {
-        http.get('bi/get_scenic_tourist_by_date', {
+        http.post('bi/get_scenic_tourist_by_date', {
           date: http.gmt2str(this.picDate6),
           scenic: this.senic_id5
         }).then(resp => {
@@ -756,6 +780,12 @@
           }
           this.daymount = http.qfw(resp.data.hits.his);
           this.currentTime = http.qfw(resp.data.hits.real);
+          this.fit_capacity = http.qfw(resp.data.hits.fit_capacity);
+          if (resp.data.hits.real>=resp.data.hits.fit_capacity) {
+            this.fisshow=1
+          }else {
+            this.fisshow=2
+          }
           this.touristc = resp.data.hits.link;
           if (this.daymount == 0) {
             this.isshowd1 = 2

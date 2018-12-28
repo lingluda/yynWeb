@@ -1,5 +1,5 @@
 <template>
-  <div class="flowList" style="height:600px">
+  <div class="flowList" style="height:605px">
     <Table :columns="columns1" :data="listData" size="large" style="width: 100%"></Table>
 
   </div>
@@ -29,6 +29,7 @@
               {
                 title: '景区名称',
                 key: 'name',
+                //width:280,
                 render: (h, params) => {
                   return h('div', [
                     h('img', {
@@ -58,7 +59,7 @@
                   if (params.row.n==-1){
                     return h('span','已闭园')
                   }
-                  if (params.row.n/params.row.max_capacity>0.8&&params.row.max_capacity!=0){
+                  if (params.row.n/params.row.fit_capacity>0.8&&params.row.fit_capacity!=0){
                     return h('div',[
                       h('Tooltip',{
                         style:{
@@ -66,7 +67,7 @@
                         },
                         attrs:{
                           maxWidth:'120',
-                          content:'当前游客人数已超过该景区最大承载量的80%',
+                          content:'当前游客人数已超过该景区最优承载量的80%',
                           placement:'top'
                         }
                       },params.row.n)
@@ -78,26 +79,27 @@
                   }
                 }
               },
+
+              {
+                title: '最优承载量',
+                key: 'fit_capacity',
+                width:115,
+                render:(h,params)=>{
+                  if (params.row.fit_capacity==0) {
+                    return h('span','暂无数据')
+                  } else {
+                    return h('div',[
+                      h('span',params.row.fit_capacity)
+                    ])
+                  }
+                }
+              },
               {
                 title:'当日接待量',
                 key:'cur',
                 width:115,
 
               },
-              {
-                title: '最大承载量',
-                key: 'max_capacity',
-                width:115,
-                render:(h,params)=>{
-                  if (params.row.max_capacity==0) {
-                    return h('span','暂无数据')
-                  } else {
-                    return h('div',[
-                      h('span',params.row.max_capacity)
-                    ])
-                  }
-                }
-              }
             ]
           }else {
             this.columns1=[
@@ -129,10 +131,7 @@
                 title:'累计接待量',
                 key:'cur'
               },
-              {
-                title: '最大承载量',
-                key: 'max_capacity'
-              }
+
             ]
           }
 

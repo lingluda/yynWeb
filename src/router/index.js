@@ -82,6 +82,13 @@ export default new Router({
           }
         },
         {
+          path: 'reportDownload2',
+          name: 'reportDownload',
+          component: resolve => {
+            require(['../page/report/reportDownload2.vue'], resolve)
+          }
+        },
+        {
           path: 'reportDownload',
           name: 'reportDownload',
           component: resolve => {
@@ -107,6 +114,32 @@ export default new Router({
           name: 'hotmap',
           component: resolve => {
             require(['../page/tourHot/hotmap.vue'], resolve)
+          }
+        },
+        {
+          path: '/hotmaps',
+          name: 'hotmaps',
+          component: resolve => {
+            require(['@/components/map/hotMap.vue'], resolve)
+          }
+        },
+        {
+          path: '/hotmap1',
+          name: 'hotmaps1',
+          component: resolve => {
+            require(['@/components/map/hotMap1.vue'], resolve)
+          }
+        },{
+          path: '/hotmap2',
+          name: 'hotmaps2',
+          component: resolve => {
+            require(['@/components/map/hotMap2.vue'], resolve)
+          }
+        },{
+          path: '/hotmap3',
+          name: 'hotmaps3',
+          component: resolve => {
+            require(['@/components/map/hotMap3.vue'], resolve)
           }
         },
         {

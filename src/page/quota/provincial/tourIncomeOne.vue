@@ -10,7 +10,7 @@ export default {
             this.$echarts.init(document.querySelector("#tourIncomeOne")).setOption({
                 color: ['#63cd8d', '#a9a9a9'],
                 title:{
-                    text: "{a|国内一日旅游收入} {b|（单位：万元）}",
+                    text: "{a|国内一日旅游收入} {b|（单位：亿元）}",
                     textStyle: {
                         rich: {
                             a: {
@@ -25,7 +25,7 @@ export default {
                     }
                 },
                 xAxis: {
-                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月'],
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月'],
                     axisLabel: {
                         interval: 0,
                         color: '#999'
@@ -122,13 +122,13 @@ export default {
                                 color: '#000'
                             }
                         },
-                        data: [130, 218, 168, 143, 159, 155, 163, 189]
+                        data: [130, 218, 168, 143, 159, 155, 163, 189,149,210]
                     }, {
                         type: 'line',
                         name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [-3.4, 66.8, 50.57, 39.06, 25.09, 36.47, 28.11, 28.91]
+                        data: [-3.4, 66.8, 50.57, 39.06, 25.09, 36.47, 28.11, 28.91,22.61,25.27]
                     }
                 ]
             });

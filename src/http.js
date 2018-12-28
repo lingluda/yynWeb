@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message } from 'iview'
-
+import iView from 'iview'
 axios.interceptors.response.use(
   response => {
     if (response.status === 200 && response.data.errcode !== 0) {
@@ -27,24 +27,37 @@ axios.interceptors.response.use(
 
 let http = {}
 http.posts = function (url, data) {
-  return axios.post({
-    method:'post',
-    url:url,
-    params:{data}
-  })
+  if (document.cookie.length>0){
+    return axios.post(url,data)
+  }else {
+    window.href('https://tglpt.ybsjyyn.com/login')
+  }
+
 }
 http.post = function (url, data) {
-  console.log(data)
+  iView.LoadingBar.start()
   if (Object.keys(data).length == 0) {
     data = { 1: 1 }
   }
+  //if (document.cookie.length>0){
+  iView.LoadingBar.finish()
   return axios.post(url + '?' + encodeUrl(data))
+
 }
+/* else {
+    window.open('https://tglpt.ybsjyyn.com/login','_self')
+  }
+}*/
 http.get = function (url, data) {
   if (JSON.stringify(data) == '{}') {
     data = { 1: 1 }
   }
+  if (document.cookie.length>0){
   return axios.get(url + '?' + encodeUrl(data)+'&r='+Math.random())
+}
+  else {
+    window.open('https://tglpt.ybsjyyn.com/login','_self')
+  }
 }
 http.getcn = function(id){
     var cc =''
@@ -64,6 +77,41 @@ http.getcs = function(id){
     scenicname=res.data.hits
   })
   return scenicname
+}
+http.if7s = function (){
+  var data = new Date()
+  var hour = data.getHours()
+  var minutes = data.getMinutes()
+  if (hour*60+minutes>=420){
+    data.setDate(data.getDate()-1)
+  }else {
+    data.setDate(data.getDate()-2)
+  }
+  return data
+}
+http.if7 = function () {
+  var data = new Date()
+  var hour = data.getHours()
+  var minutes = data.getMinutes()
+  if (hour*60+minutes>=420){
+    data.setDate(data.getDate()-1)
+  }else {
+    data.setDate(data.getDate()-2)
+  }
+  var day = data.getDate()
+  var year = data.getUTCFullYear()
+  var month = data.getMonth() + 1
+  if (month < 10) {
+    var currentMonth = '0' + month
+  } else {
+    currentMonth = month.toString()
+  }
+  if (day < 10) {
+    var currentDay = '0' + day
+  } else {
+    currentDay = day.toString()
+  }
+  return year + '-' + currentMonth + '-' + currentDay
 }
 http.if10 = function () {
   var data = new Date()
@@ -397,6 +445,16 @@ http.addr2lnglat = function (addr) {
   }
   return result
 }
+http.getParams = function(prm){
+  var args = getUrlAllParams();
+  //如果要查找参数key:
+  if (args[prm] != undefined) {
+    //如果要查找参数key:
+    return args[prm];
+  } else {
+    return "";
+  }
+}
 http.qfw = function (num) {
   var reg = /\d{1,3}(?=(\d{3})+$)/g
   return (num + '').replace(reg, '$&,')
@@ -427,5 +485,20 @@ function encodeUrl (obj) {
   })(obj)
   return url.substring(0, url.length - 1)
 }
-
+function getUrlAllParams() {
+  var args = new Object();
+  var query = window.location.href; //获取查询串
+  console.log(window.location.href)
+  console.log(window.location.search)
+  query=query.substring(query.lastIndexOf('?')+1)
+  var pairs = query.split("&"); //在逗号处断开
+  for (var i = 0; i < pairs.length; i++) {
+    var pos = pairs[i].indexOf('='); //查找name=value
+    if (pos == -1) continue; //如果没有找到就跳过
+    var argname = pairs[i].substring(0, pos); //提取name
+    var value = pairs[i].substring(pos + 1); //提取value
+    args[argname] = unescape(value); //存为属性
+  }
+  return args;
+}
 export default http

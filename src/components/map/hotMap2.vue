@@ -53,6 +53,7 @@
         console.log('citycitycitycitycity::',this.power)
         this.timelines=[]
         http.get('bi/get_scenic_tourist_heat_dist',{city_id:this.city,date:this.date,scenic:this.scenic,min:this.power}).then(resp=>{
+           // http.get('bi/get_scenic_tourist_heat_dist',{date:'2018-11-11',scenic:'e4fc748a-a60c-4716-687b-01254d621833',min:'60'}).then(resp=>{
           this.centerx = [resp.data.hits[0].points[0].lng,resp.data.hits[0].points[0].lat]
           this.testData=resp.data.hits;
           for (var i = 0; i < resp.data.hits.length; i++) {

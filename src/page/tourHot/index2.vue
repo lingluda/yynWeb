@@ -16,16 +16,14 @@
               </Tooltip>
             </div>
             <div class="lyrd_index_search_right">
-              <!--<RadioGroup v-model="dateChoice1" type="button">
-                <Radio label="2">昨日</Radio>
-              </RadioGroup>-->
+
               <DatePicker v-model="datefff" :options="disoptionsdate" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
               <Select v-model="city" style="width:120px;" @on-change="form1change3">
-                <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
+                <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
               </Select>
               <Select v-model="citysenic1" style="width:120px;" placeholder="景区" @on-change="form1change">
                 <Option value="" v-if="senicData.length==0" disabled>请先选择州市</Option>
-                <Option v-for="item in senicData" :value="item.id">{{item.name}}</Option>
+                <Option v-for="item in senicData" :value="item.id" :key="item.id">{{item.name}}</Option>
               </Select>
             </div>
           </div>
@@ -43,7 +41,7 @@
                     <span class="lyrd_index_today_num">{{total.toString().substring(0,total.toString().length-3)}}</span>
                     <span class="lyrd_index_today_dw">人次</span>
                   </div>
-                  <div v-if="isshow1==2" style="margin-top: 20px">暂无数据</div>
+                  <div v-if="isshow1==2" style="margin-top: 20px">暂无历史数据</div>
                 </div>
 
               </div>
@@ -64,7 +62,7 @@
                     <span v-if="showud1!=1">(
                       <Icon :style={color:color1} type="md-arrow-up" size="22" />)</span>
                   </div>
-                  <div v-if="isshow2==2" style="margin-top: 20px">暂无数据</div>
+                  <div v-if="isshow2==2" style="margin-top: 20px">暂无历史数据</div>
                 </div>
               </div>
               </Col>
@@ -84,7 +82,7 @@
                     <span v-if="showud2!=1">(
                       <Icon :style={color:color2} type="md-arrow-down" size="22" />)</span>
                   </div>
-                  <div v-if="isshow3==2" style="margin-top: 20px">暂无数据</div>
+                  <div v-if="isshow3==2" style="margin-top: 20px">暂无历史数据</div>
                 </div>
               </div>
               </Col>
@@ -106,10 +104,10 @@
               <!--{{(this.datefff).toString().substring(8,10)}}日-->
             </div>
             <Row >
-              <Col span="12">
+              <Col span="11">
                 <x_map :mapdata="this.pieData2map" style="width: 100%;height: 500px;"></x_map>
               </Col>
-              <Col span="12" style="display: flex;justify-items: center;padding: 20px;">
+              <Col span="13" style="display: flex;justify-items: center;padding: 20px;">
                 <ul class="ul">
                   <li v-for="item in pieData1">{{item.name}}</li>
                 </ul>
@@ -127,17 +125,17 @@
 
             </div>
             <div class="lyrd_index_search_right">
-              <RadioGroup v-model="dateChoice2" type="button">
-                <Radio label="3">最近7天</Radio>
-                <Radio label="4">最近30天</Radio>
-              </RadioGroup>
-              <DatePicker v-model="date1" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" placement="bottom-end" style="width:220px" @on-change="form1change1"></DatePicker>
+              <Button @click="p2(1)">近7日</Button>
+              <Button @click="p2(2)">近30日</Button>
+
+
+              <DatePicker v-model="date1" format="yyyy-MM-dd" :options="disoptionsdate" type="daterange" placeholder="请选择日期" placement="bottom-end" style="width:220px" @on-change="form1change12"></DatePicker>
               <Select v-model="city1" style="width:120px;" @on-change="form1change12">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
               <Select v-model="citysenic2" style="width:120px;" placeholder="景区" @on-change="form1change1">
                 <Option value="" v-if="senicData2.length==0" disabled>请先选择州市</Option>
-                <Option v-for="item in senicData2" :value="item.id">{{item.name}}</Option>
+                <Option v-for="item in senicData2" :value="item.id" :key="item.id">{{item.name}}</Option>
               </Select>
             </div>
           </div>
@@ -186,7 +184,7 @@ export default {
         disabledDate (date) {
           const end = new Date()
           end.setDate(end.getDate()-1)
-          return date< new Date(2018,7,1) || date > end
+          return date< new Date(2018,9,23) || date > end
         }
       },
       isshow1:1,
@@ -203,9 +201,9 @@ export default {
       totalP: "",
       lineDatax: [],
       lineDatay: [],
-      datefff: http.getYesterDay(),
+      datefff: http.if10(),
       cdate: "",
-      date1: [http.getWeekAgo(), http.getToday()],
+      date1: [http.getWeekAgo(), http.if10()],
       cityData: [],
       senicData: [],
       senicData2: [],
@@ -261,28 +259,34 @@ export default {
       this.initLine();
     }, 50);
     this.getCity();
-    this.form1change1()
+    console.log(window.performance.timing.domInteractive - window.performance.timing.domLoading)
+    http.post('bi/write_run_log',{obj:'旅游热度概况',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
+    })
     //this.init()
   },
   methods: {
+    indexDateChange(){
+      this
+    },
     getCity() {
-      http.get("bi/get_all_city_prov", {}).then(resp => {
+      http.post("bi/get_all_city_prov", {}).then(resp => {
         this.cityData = resp.data.hits;
         this.city = resp.data.hits[0].id;
         this.city1 = resp.data.hits[0].id;
-        http.get('bi/get_scenic_by_city', {city_id: this.city}).then(resp => {
+
+        http.post('bi/get_scenic_by_city', {city_id: this.city}).then(resp => {
           if (resp.data.errcode === 0) {
             this.senicData = resp.data.hits
             this.senicData2 = resp.data.hits
+            this.form1change12()
           }
         })
       });
 
-      this.datefff = http.getYesterDay();
+      this.datefff = http.if10();
       this.pieData1 = [];
       this.pieData2map = [];
-      http
-        .get("bi/get_tourism_dist_by_date", {
+      http.post("bi/get_tourism_dist_by_date", {
           date: http.gmt2str(this.datefff),
           city_id: this.city
         })
@@ -307,8 +311,7 @@ export default {
           }
           this.initBar();
         });
-      http
-        .get("bi/get_tourism_qty_by_date", {
+      http.post("bi/get_tourism_qty_by_date", {
           date: http.gmt2str(this.datefff),
           city_id: this.city
         })
@@ -543,7 +546,7 @@ export default {
           this.isshowmap = 1
         }
         this.pieData1 = [];
-        http.get('bi/get_scenic_by_city', {city_id: this.city}).then(resp => {
+        http.post('bi/get_scenic_by_city', {city_id: this.city}).then(resp => {
           if (resp.data.errcode === 0) {
             this.senicData = resp.data.hits
           }
@@ -552,8 +555,7 @@ export default {
           this.isshowmap1 = 1
           console.log('ssssssssss', this.isshowmap1)
         })
-        http
-          .get("bi/get_tourism_dist_by_date", {
+        http.post("bi/get_tourism_dist_by_date", {
             date: http.gmt2str(this.datefff),
             city_id: this.city
           })
@@ -578,8 +580,7 @@ export default {
             }
             this.initBar();
           });
-        http
-          .get("bi/get_tourism_qty_by_date", {
+        http.post("bi/get_tourism_qty_by_date", {
             date: http.gmt2str(this.datefff),
             city_id: this.city,
             scenic: this.citysenic1
@@ -628,8 +629,7 @@ export default {
           });
       }else {
         this.isshowmap1=2
-        http
-          .get("bi/get_tourism_qty_by_date", {
+        http.post("bi/get_tourism_qty_by_date", {
             date: http.gmt2str(this.datefff),
             city_id: this.city,
             scenic: this.citysenic1
@@ -679,19 +679,40 @@ export default {
       }
     },
     form1change12(){
-      http.get('bi/get_scenic_by_city',{city_id:this.city1}).then(resp=>{
+      http.post('bi/get_scenic_by_city',{city_id:this.city1}).then(resp=>{
         this.senicData2=resp.data.hits
         this.citysenic2=''
+        this.totalP = "";
+        this.lineDatax = [];
+        this.lineDatay = [];
+
+        http.post("bi/get_tourism_trend_by_timespan", {
+          startTime: http.gmt2str(this.date1[0]),
+          endTime: http.gmt2str(this.date1[1]),
+          city_id: this.city1,
+          scenic: this.citysenic2
+        })
+          .then(resp => {
+            this.totalP = resp.data.hits.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');//使用正则替换，每隔三个数加一个',';
+            for (var i = 0; i < resp.data.hits.list.length; i++) {
+              this.lineDatax.push(resp.data.hits.list[i].date);
+              this.lineDatay.push(parseInt(resp.data.hits.list[i].value/100) / 100);
+            }
+            this.initLine();
+          });
       })
-      this.form1change1()
     },
     form1change1() {
+      if (this.citysenic2==''||this.citysenic2==undefined){
+        console.log(1)
+        return false
+      } else {
+        console.log(this.citysenic2)
       this.totalP = "";
       this.lineDatax = [];
       this.lineDatay = [];
 
-      http
-        .get("bi/get_tourism_trend_by_timespan", {
+      http.post("bi/get_tourism_trend_by_timespan", {
           startTime: http.gmt2str(this.date1[0]),
           endTime: http.gmt2str(this.date1[1]),
           city_id: this.city1,
@@ -705,13 +726,13 @@ export default {
           }
           this.initLine();
         });
+    }
     },
     form1change2() {
       this.totalP = "";
       this.lineDatax = [];
       this.lineDatay = [];
-      http
-        .get("bi/get_tourism_trend_by_timespan", {
+      http.post("bi/get_tourism_trend_by_timespan", {
           startTime: http.gmt2str(this.date1[0]),
           endTime: http.gmt2str(this.date1[1]),
           city_id: this.city1,
@@ -726,14 +747,14 @@ export default {
           this.initLine();
         });
     },
-    p2() {
-      if (this.dateChoice2 == 3) {
-        this.date1 = [http.getWeekAgo(), http.getToday()];
-        this.form1change1()
+    p2(val) {
+      if (val == 1) {
+        this.date1 = [http.getWeekAgo(), http.if10()];
+        this.form1change12()
       }
-      if (this.dateChoice2 == 4) {
-        this.date1 = [http.getMonthAgo(), http.getToday()];
-        this.form1change1()
+      if (val == 2) {
+        this.date1 = [http.getMonthAgo(), http.if10()];
+        this.form1change12()
       }
     },
     p1() {
@@ -741,8 +762,7 @@ export default {
         this.datefff = http.getToday();
         this.pieData1 = [];
         this.pieData2map = [];
-        http
-          .get("bi/get_tourism_dist_by_date", {
+        http.post("bi/get_tourism_dist_by_date", {
             date: http.gmt2str(this.datefff),
             city_id: this.city,
             senic_id:this.citysenic1
@@ -768,8 +788,7 @@ export default {
             }
             this.initBar();
           });
-        http
-          .get("bi/get_tourism_qty_by_date", {
+        http.post("bi/get_tourism_qty_by_date", {
             date: http.gmt2str(this.datefff),
             city_id: this.city
           })
@@ -820,8 +839,7 @@ export default {
         this.datefff = http.getYesterDay();
         this.pieData1 = [];
         this.pieData2map = [];
-        http
-          .get("bi/get_tourism_dist_by_date", {
+        http.post("bi/get_tourism_dist_by_date", {
             date: http.gmt2str(this.datefff),
             city_id: this.city,
             senic_id:this.citysenic1
@@ -847,8 +865,7 @@ export default {
             }
             this.initBar();
           });
-        http
-          .get("bi/get_tourism_qty_by_date", {
+        http.post("bi/get_tourism_qty_by_date", {
             date: http.gmt2str(this.datefff),
             city_id: this.city
           })
@@ -906,8 +923,7 @@ export default {
       this.datefff = date;
       this.pieData1 = [];
       this.pieData2map = [];
-      http
-        .get("bi/get_tourism_dist_by_date", {
+      http.post("bi/get_tourism_dist_by_date", {
           date: http.gmt2str(this.datefff),
           city_id: this.city
         })
@@ -932,8 +948,7 @@ export default {
           }
           this.initBar();
         });
-      http
-        .get("bi/get_tourism_qty_by_date", {
+      http.post("bi/get_tourism_qty_by_date", {
           date: http.gmt2str(this.datefff),
           city_id: this.city
         })
@@ -1004,7 +1019,7 @@ export default {
   .ul{
     list-style: none outside none; margin:0; padding: 0;margin-top: 120px;
   }
-  .ul li{ float:left;   width: 140px;  padding: 10px; border-bottom: 1px solid #dbdbdb   }
+  .ul li{ float:left; font-size: 12px;  width: 140px;  padding: 10px; border-bottom: 1px solid #dbdbdb   }
   .ti {
     margin-bottom: unset !important;
   color: #000;

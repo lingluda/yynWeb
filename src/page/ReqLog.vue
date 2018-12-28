@@ -50,7 +50,7 @@
       },
       methods:{
         init(){
-          http.get('bi/get_log_req',{startTime:http.gmt2strms(this.sDate[0]),endTime:http.gmt2strms(this.sDate[1])}).then(resp=>{
+          http.post('bi/get_log_req',{startTime:http.gmt2strms(this.sDate[0]),endTime:http.gmt2strms(this.sDate[1])}).then(resp=>{
             this.reqData = resp.data.hits
             for (var i=0;i<this.reqData.length;i++){
               this.reqData[i].time = http.gmt2strms(this.reqData[i].addTime)

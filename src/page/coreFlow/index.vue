@@ -12,23 +12,24 @@
           <div class="lyrd_index_search_left">
             <span class="lyrd_index_search_title">景区接待游客排行</span>
             <Tooltip content="此地图统计各州市AAAA及以上景区" placement="right" max-width="220">
-              <Icon size="19" style="margin: 7px 0px 0px 0px" type="ios-help-circle-outline" />
+              <Icon size="19" style="margin: 7px 0px 0px 0px" type="ios-help-circle-outline"/>
             </Tooltip>
           </div>
           <div style="float: right">
-            <RadioGroup type="button" v-model="select7" @on-change="pic7">
-              <Radio label="1">近7日</Radio>
-              <Radio label="2">近30日</Radio>
-            </RadioGroup>
-            <DatePicker v-model="d11" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:220px" @on-change="dateChange"></DatePicker>
+            <Button @click="pic7(1)">近7日</Button>
+            <Button @click="pic7(2)">近30日</Button>
+
+
+            <DatePicker v-model="d11" :options="disoptionsdate" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期"
+                        style="width:220px" @on-change="dateChange"></DatePicker>
             <Select v-model="FlowCity" style="width: 120px" @on-change="dateChange">
-              <Option v-for="city in provData" :value="city.id">{{city.name}}</Option>
+              <Option v-for="city in provData" :value="city.id" :key="city.id">{{city.name}}</Option>
             </Select>
           </div>
         </div>
 
         <Row :gutter="20">
-          <Col span="12">
+          <Col span="11">
             <div class="borderBlock">
               <coreFlow :mapData="mapData" v-if="FlowCity==0"></coreFlow>
               <kunming :mapData="mapData" v-if="FlowCity==385"></kunming>
@@ -48,22 +49,28 @@
               <yuxi :mapData="mapData" v-if="FlowCity==393"></yuxi>
               <zhaotong :mapData="mapData" v-if="FlowCity==394"></zhaotong>
             </div>
-          <div style="margin-top: 8px">最后一次更新时间：{{lastTime}}</div>
+            <div style="margin-top: 8px">最后一次更新时间：{{lastTime}}</div>
           </Col>
-          <Col span="12">
-              <list :startDate="d11"  :listData="listData"></list>
+          <Col span="13">
+            <list :startDate="d11" :listData="listData"></list>
             <a style="float: right;" @click="goto">查看更多 >></a>
             <!--<router-link :to="{path:'coreFlow/list',query:{sdate:d11}}"><p style="text-align: right;">查看更多 >></p></router-link>-->
           </Col>
         </Row>
-        <div v-if="d11[0].toString()==d11[1].toString()" style="position: absolute;margin-top: -610px;margin-left: 20px">云南省各州市景区实时游客</div>
-        <div v-if="d11[0].toString()!=d11[1].toString()" style="position: absolute;margin-top: -610px;margin-left: 20px">云南省各州市景区累计接待游客</div>
+        <div v-if="d11[0].toString()==d11[1].toString()"
+             style="position: absolute;margin-top: -620px;margin-left: 20px">{{city}}各景区实时游客
+        </div>
+        <div v-if="d11[0].toString()!=d11[1].toString()"
+             style="position: absolute;margin-top: -630px;margin-left: 20px">
+          {{city}}各景区{{sd.substring(5,10)}}至{{ed.substring(5,10)}}累计接待游客
+        </div>
       </card>
 
       <card style="margin-top: 20px">
         <div style="margin-bottom: 20px">
           <span style="font-weight: bold;color: #000">景区客流变化</span><span>（单位：万人）</span>
-          <DatePicker type="date" v-model="picdate" placement="bottom-end" placeholder="Select date" style="width: 120px;float: right"></DatePicker>
+          <DatePicker type="date" v-model="picdate" placement="bottom-end" placeholder="Select date"
+                      style="width: 120px;float: right"></DatePicker>
 
         </div>
 
@@ -94,6 +101,7 @@
   import xishuangbanna from '../../components/ynmap/xishuangbanna'
   import yuxi from '../../components/ynmap/yuxi'
   import zhaotong from '../../components/ynmap/zhaotong'
+
   export default {
     components: {
       coreFlow,
@@ -116,58 +124,88 @@
       yuxi,
       zhaotong
     },
-    data(){
-      return{
-        select7:'',
-        lastTime:'',
-        mapData:[],
-        listData:[],
-        d11:[http.getToday(),http.getToday()],
-        FlowCity:'',
-        provData:[],
-        picdate:http.getYesterDay()
+    data() {
+      return {
+        city:'全省',
+        sd: '',
+        ed: '',
+        select7: '',
+        lastTime: '',
+        mapData: [],
+        listData: [],
+        d11: [http.getToday(), http.getToday()],
+        FlowCity: '',
+        provData: [],
+        disoptionsdate: {
+          disabledDate(date) {
+            return date < new Date(2018, 7, 1) || date > new Date()
+          }
+        },
+        picdate: http.getToday()
       }
     },
-    mounted(){
+    mounted() {
       this.init()
-    },
-    methods:{
-      init(){
 
-        http.get('bi/get_all_city_prov',{}).then(resp=>{
-          this.provData=resp.data.hits
+    },
+    methods: {
+      init() {
+
+        http.post('bi/get_all_city_prov', {}).then(resp => {
+          this.provData = resp.data.hits
           this.FlowCity = this.provData[0].id
 
-          http.get('bi/get_key_scenic_tourist_datespan_withdist',{pindex:1,size:9,startTime:http.gmt2strm(this.d11[0]),endTime:http.gmt2strm(this.d11[1]),city_id:this.FlowCity}).then(res=>{
-            this.mapData=res.data
-            this.listData=res.data.hits
-            if (res.data.hits[0]['timestamp']!=undefined) {
+          http.post('bi/get_key_scenic_tourist_datespan_withdist', {
+            pindex: 1,
+            size: 9,
+            startTime: http.gmt2strm(this.d11[0]),
+            endTime: http.gmt2strm(this.d11[1]),
+            city_id: this.FlowCity
+          }).then(res => {
+            this.mapData = res.data
+            this.listData = res.data.hits
+            if (res.data.hits[0]['timestamp'] != undefined) {
               this.lastTime = http.gmt2strms(res.data.hits[0].timestamp)
             }
           })
         })
       },
-      pic7(val){
-        if (val==1){
-          this.d11=[http.getWeekAgo(),http.getToday()]
+      pic7(val) {
+        if (val == 1) {
+          this.d11 = [http.getWeekAgo(), http.getToday()]
           this.dateChange()
-        }else {
-          this.d11=[http.getMonthAgo(),http.getToday()]
+        } else {
+          this.d11 = [http.getMonthAgo(), http.getToday()]
           this.dateChange()
         }
       },
-      dateChange(){
-        this.select7=''
-        http.get('bi/get_key_scenic_tourist_datespan_withdist',{pindex:1,size:9,startTime:http.gmt2strm(this.d11[0]),endTime:http.gmt2strm(this.d11[1]),city_id:this.FlowCity}).then(res=>{
-          this.mapData=res.data
-          this.listData=res.data.hits
-          if (res.data.hits[0]['timestamp']!=undefined) {
+      dateChange() {
+        this.select7 = ''
+        this.sd = http.gmt2strm(this.d11[0])
+        this.ed = http.gmt2strm(this.d11[1])
+        http.post('bi/get_key_scenic_tourist_datespan_withdist', {
+          pindex: 1,
+          size: 9,
+          startTime: http.gmt2strm(this.d11[0]),
+          endTime: http.gmt2strm(this.d11[1]),
+          city_id: this.FlowCity
+        }).then(res => {
+          let s = this
+          http.post('bi/get_cityname_by_id',{city_id:this.FlowCity}).then(resp=>{
+            s.city=resp.data.hits
+          })
+          this.mapData = res.data
+          this.listData = res.data.hits
+          if (res.data.hits[0]['timestamp'] != undefined) {
             this.lastTime = http.gmt2strms(res.data.hits[0].timestamp)
           }
         })
       },
-      goto(){
-        this.$router.push({path:'coreFlow/list',query:{d1:http.gmt2strm(this.d11[0]),d2:http.gmt2strm(this.d11[1]),c1:this.FlowCity}})
+      goto() {
+        this.$router.push({
+          path: 'coreFlow/list',
+          query: {d1: http.gmt2strm(this.d11[0]), d2: http.gmt2strm(this.d11[1]), c1: this.FlowCity}
+        })
       }
     },
 
@@ -221,7 +259,7 @@
   }
 
   .borderBlock {
-    padding: 10px 10px 0px 20px;
+    padding: 40px 10px 0px 20px;
     border: 1px solid #dcdee2;
   }
 </style>

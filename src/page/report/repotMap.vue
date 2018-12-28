@@ -1,5 +1,7 @@
 <template>
+  <div>
   <div id="mains" style="width:100%;height:580px;"></div>
+  </div>
 </template>
 
 <script>
@@ -37,12 +39,12 @@
           visualMap: {
             show:false,
             min: 0,
-            max: 100,
+            max: 30,
             text:['High','Low'],
             realtime: false,
             calculable: true,
             inRange: {
-              color: ['#e0ffff', '#006edd']
+              color: ["#8dc5ff", "#479eff", "#094ce0", "#011180"]
             }
           },
           series : [

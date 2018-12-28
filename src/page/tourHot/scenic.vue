@@ -22,7 +22,7 @@
           </RadioGroup>
           <div style="border: 1px solid #e8eaec;margin-top: 20px">
             <div style="margin-bottom: 20px">
-              <span style="font-weight: bold;color: #000000">一机游用户DAU (单位：万次)</span>
+              <span style="font-weight: bold;color: #000000">游云南App用户DAU (单位：万次)</span>
               <Tooltip content="Hereisthe111111111111111prompt text" placement="right" max-width="200"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
               </Tooltip>
             </div>
@@ -127,7 +127,7 @@
     },
     methods: {
       init(){
-        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
+        http.post('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
           console.log(resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax1.push(resp.data.hits[i].name)
@@ -135,7 +135,7 @@
           }
           this.initSimBars()
         })
-        http.get('bi/get_scenic_tourist_top_by_date',{date:'2018-09-17',top:10}).then(resp=>{
+        http.post('bi/get_scenic_tourist_top_by_date',{date:'2018-09-17',top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.max1his.push(resp.data.hits[i].his)
             this.max1n.push(resp.data.hits[i].n)
@@ -143,7 +143,7 @@
           }
           this.initMax1()
         })
-        http.get('bi/get_scenic_tourist_ince_by_date',{date:'2018-09-16',top:10}).then(resp=>{
+        http.post('bi/get_scenic_tourist_ince_by_date',{date:'2018-09-16',top:10}).then(resp=>{
           console.log('top',resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.max2his.push(resp.data.hits[i].ince)
@@ -324,7 +324,7 @@
       chanchange(){
         this.barDatax1=[]
         this.barDatay1=[]
-        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
+        http.post('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
           console.log(resp.data.hits)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax1.push(resp.data.hits[i].name)

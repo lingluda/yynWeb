@@ -108,7 +108,7 @@
             width:115,
             render:(h,params)=>{
               if (params.row.max_capacity==0) {
-                return h('span','暂无数据')
+                return h('span','暂无历史数据')
               } else {
                 return h('div',[
                   h('span',params.row.max_capacity)
@@ -137,7 +137,7 @@
         //人口迁徙
         inMove:[],
         outMove:[],
-        //一机游用户消费
+        //游云南App用户消费
         avg: '',
         cate: [],
         rank: [],
@@ -169,7 +169,7 @@
     },
     methods:{
       indexMap(){
-        http.get('bi/get_tourism_dist_by_date',{date:'2018-9-16'}).then(resp=>{
+        http.post('bi/get_tourism_dist_by_date',{date:'2018-9-16'}).then(resp=>{
           this.pieData2map=resp.data.hits.map(item=>{return{name:item.name,value:item.proportion}})
           console.log(this.pieData2map)
         })
@@ -180,8 +180,8 @@
         this.onecash()
       },
       onecash(){
-        //一机游用户消费
-        http.get('bi/get_consume_by_datespan', {
+        //游云南App用户消费
+        http.post('bi/get_consume_by_datespan', {
           startTime: http.gmt2strm(this.reportDate[0]),
           endTime: http.gmt2strm(this.reportDate[1]),
           city_id: this.city
@@ -202,7 +202,7 @@
       },
       cash(){
         //景区指数排行
-        http.get('bi/get_scenic_influence_datespan', {
+        http.post('bi/get_scenic_influence_datespan', {
           startTime: http.gmt2strm(this.reportDate[0]),
           endTime: http.gmt2strm(this.reportDate[1]),
           top:5
@@ -210,14 +210,14 @@
           this.influence = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
         })
 
-        http.get('bi/get_scenic_transmission_datespan', {
+        http.post('bi/get_scenic_transmission_datespan', {
           startTime: http.gmt2strm(this.reportDate[0]),
           endTime: http.gmt2strm(this.reportDate[1]),
           top:5
         }).then(resp => {
           this.transmission = resp.data.hits.map(i=>{return{name:i.name,pers:i.score/10,avg:i.score+'分'}})
         })
-        http.get('bi/get_scenic_reputation_datespan', {
+        http.post('bi/get_scenic_reputation_datespan', {
           startTime: http.gmt2strm(this.reportDate[0]),
           endTime: http.gmt2strm(this.reportDate[1]),
           top:5
@@ -268,7 +268,7 @@
       },
       indexMaps(){
         //区域游客占比
-        http.get('bi/get_tourism_dist_by_datespan', {
+        http.post('bi/get_tourism_dist_by_datespan', {
           startTime: http.gmt2strm(this.reportDate[0]),
           endTime: http.gmt2strm(this.reportDate[1]),
           city_id: this.city
@@ -335,7 +335,7 @@
         })
       },
       indexLine(){
-        http.get('bi/get_tourism_trend_by_timespan', {
+        http.post('bi/get_tourism_trend_by_timespan', {
           startTime: http.gmt2strm(this.reportDate[0]),
           endTime: http.gmt2strm(this.reportDate[1]),
           city_id: this.city
@@ -375,7 +375,7 @@
         })
       },
       initImg(){
-        http.get('bi/get_portrait_base_by_datespan', {
+        http.post('bi/get_portrait_base_by_datespan', {
           startTime: http.gmt2strm(this.reportDate[0]),
           endTime: http.gmt2strm(this.reportDate[1]),
           city_id: this.city

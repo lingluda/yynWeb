@@ -10,13 +10,10 @@
         <div style="height: 40px">
           <span style="font-weight: bold;color: #000000">景区指数排行</span>
         <div style="float: right">
-          <RadioGroup v-model="select07" type="button" @on-change="slelect7">
-            <Radio label="1">近7日</Radio>
-            <Radio label="2">近30日</Radio>
-          </RadioGroup>
-          <DatePicker v-model="indexDate1" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期" style="width:220px" ></DatePicker>
-          <!--<span>-</span>-->
-          <!--<DatePicker v-model="indexDate2" placement="bottom-end" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" ></DatePicker>-->
+          <Button @click="slelect7(7)">近7日</Button>
+          <Button @click="slelect7(30)">近30日</Button>
+
+          <DatePicker v-model="indexDate1" placement="bottom-end" format="yyyy-MM-dd" type="daterange" :options="disoptionsdate" placeholder="请选择日期" style="width:220px" ></DatePicker>
         </div>
         </div>
 
@@ -26,7 +23,7 @@
               <div id="qsnet">
                 <div style="margin: 10px 0 0 5px;">
                 <span style="color: #000">景区影响力指数</span>
-                <Tooltip content="根据互联网中景区的搜索、查看量进行计算" placement="right" max-width="200">
+                <Tooltip content="根据游云南App景区相关页面访问量计算" placement="right" max-width="200">
                   <Icon size="19"  type="ios-help-circle-outline" />
                 </Tooltip>
                 </div>
@@ -37,14 +34,14 @@
                         <i class="qsnet_idx">{{index+1}}</i>
                         <!--<span class="qsnet_sp">111</span>-->
                       </Col>
-                      <Col v-if="items.names==''" span="5" class="qsnet_num">{{items.name.substring(0,4)}}</Col>
-                      <Col v-if="items.names!=''" span="5" class="qsnet_num">
+                      <Col v-if="items.names==''" span="12" class="qsnet_num">{{items.name.substring(0,10)}}</Col>
+                      <Col v-if="items.names!=''" span="12" class="qsnet_num">
                         <Tooltip placement="top" max-width="200" :content=items.name>
-                        {{items.name.substring(0,4)}}
+                        {{items.name.substring(0,10)}}
                         </Tooltip>
                       </Col>
 
-                      <Col span="14" style="margin: 5px 0 0 0">  <pers-st :pers=items.score*10 ></pers-st></Col>
+                      <Col span="7" style="margin: 5px 0 0 0">  <pers-st :pers=items.score*10 ></pers-st></Col>
 
                       <Col span="3" class="qsnet_num">{{items.score}}分</Col>
                     </Row>
@@ -69,13 +66,13 @@
                         <i class="qsnet_idx">{{index+1}}</i>
                         <!--<span class="qsnet_sp">111</span>-->
                       </Col>
-                      <Col v-if="items.names==''" span="5" class="qsnet_num">{{items.name.substring(0,4)}}</Col>
-                      <Col v-if="items.names!=''" span="5" class="qsnet_num">
+                      <Col v-if="items.names==''" span="12" class="qsnet_num">{{items.name.substring(0,10)}}</Col>
+                      <Col v-if="items.names!=''" span="12" class="qsnet_num">
                         <Tooltip placement="top" max-width="200" :content=items.name>
-                          {{items.name.substring(0,4)}}
+                          {{items.name.substring(0,10)}}
                         </Tooltip>
                       </Col>
-                      <Col span="14" style="margin: 5px 0 0 0">  <pers-st :pers=items.score*10 ></pers-st></Col>
+                      <Col span="7" style="margin: 5px 0 0 0">  <pers-st :pers=items.score*10 ></pers-st></Col>
 
                       <Col span="3" class="qsnet_num">{{items.score}}分</Col>
                     </Row>
@@ -100,13 +97,13 @@
                         <i class="qsnet_idx">{{index+1}}</i>
                         <!--<span class="qsnet_sp">111</span>-->
                       </Col>
-                      <Col v-if="items.names==''" span="5" class="qsnet_num">{{items.name.substring(0,4)}}</Col>
-                      <Col v-if="items.names!=''" span="5" class="qsnet_num">
+                      <Col v-if="items.names==''" span="12" class="qsnet_num">{{items.name.substring(0,10)}}</Col>
+                      <Col v-if="items.names!=''" span="12" class="qsnet_num">
                         <Tooltip placement="top" max-width="200" :content=items.name>
-                          {{items.name.substring(0,4)}}
+                          {{items.name.substring(0,10)}}
                         </Tooltip>
                       </Col>
-                      <Col span="14" style="margin: 5px 0 0 0">  <pers-st :pers=items.score*10 ></pers-st></Col>
+                      <Col span="7" style="margin: 5px 0 0 0">  <pers-st :pers=items.score*10 ></pers-st></Col>
 
                       <Col span="3" class="qsnet_num">{{items.score}}分</Col>
                     </Row>
@@ -115,15 +112,13 @@
               </div>
             </div>
           </Col>
-
-
         </Row>
       </card>
       <card style="margin: 20px 0px 20px 0px">
         <div style="margin-bottom: 20px;">
           <span style="font-weight: bold;color: #000000">热门路线</span>
           <!--<pers-st :pers="21"></pers-st>-->
-          <Tooltip content="一机游app对各线路页面下单量排行" placement="right" max-width="220"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
+          <Tooltip content="游云南App对各线路页面访问量排行" placement="right" max-width="220"><Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline" />
           </Tooltip>
           <DatePicker v-model="picDate3" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right" :options="disoptionsdate"></DatePicker>
         </div>
@@ -132,15 +127,15 @@
           <table style="border: 1px solid rgb(220, 222, 226);width: 100%;text-align: left;border-collapse:collapse">
             <tr>
               <td style="width: 30%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门线路名称</td>
-              <td style="width: 40%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">下单次数</td>
+              <td style="width: 40%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">访问量</td>
               <!--<td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa">热门路线(次)</td>-->
-              <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa;text-align: center">下单平均价格(￥)</td>
+              <td style="width: 20%;padding: 10px;border-bottom: 1px solid rgb(206,226,225);background-color: #f6f8fa;text-align: center">线路价格(￥)</td>
             </tr>
 
             <tr v-for="item in fdata">
 
               <td style="border-bottom: 1px dashed rgb(206,226,225);font-size: 12px">{{item.name}}</td>
-              <td style="border-bottom: 1px dashed rgb(206,226,225)"> <pers-st :pers=item.tpers :persn=item.order></pers-st></td>
+              <td style="border-bottom: 1px dashed rgb(206,226,225)"> <pers-st :pers=item.tpers :persn=item.pv></pers-st></td>
               <!--<td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225)">{{item.dau}}</td>-->
               <td style="font-weight: bold;border-bottom: 1px dashed rgb(206,226,225);text-align: center">{{item.price}}</td>
             </tr>
@@ -157,8 +152,8 @@
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div class="tabpane_content_title">
               <div>
-                <span style="color: #000;font-size:14px;font-weight: bold">一机游当日搜索各目的地访问用户数据 </span>
-                <span style="color: #a5a5a5;font-size:12px;">(单位：万人)</span>
+                <span style="color: #000;font-size:14px;font-weight: bold">游云南App当日各目的地页面访问数据 </span>
+                <span style="color: #a5a5a5;font-size:12px;">(单位：万人次)</span>
               </div>
               <DatePicker v-model="picDate1" placement="bottom-end" type="date" placeholder="Select date" style="width: 120px;float: right" :options="disoptionsdate"></DatePicker>
             </div>
@@ -173,8 +168,8 @@
           <div style="border: 1px solid #dcdee2;margin-top: 20px">
             <div class="tabpane_content_title">
                <div >
-                 <span style="color: #000;font-weight:bold;font-size:14px;">一机游当日搜索各景区访问用户数据 </span>
-                  <span style="color: #a5a5a5;font-size:12px;">(单位：万人)</span>
+                 <span style="color: #000;font-weight:bold;font-size:14px;">游云南App当日各目的地页面访问数据 </span>
+                  <span style="color: #a5a5a5;font-size:12px;">(单位：万人次)</span>
                 </div>
               <DatePicker  placement="bottom-end" v-model="picDate2" type="date" placeholder="Select date" style="width:120px;float: right" :options="disoptionsdate"></DatePicker>
             </div>
@@ -313,13 +308,13 @@ table{
     data() {
       return {
         select07:'',
-        indexDate1:[http.getYesterDay(),http.getYesterDay()],
+        indexDate1:[http.if7(),http.if7()],
         indexDate2:http.getYesterDay(),
         unitD:'',
         addling:'1',
-        picDate1:http.getYesterDay(),
-        picDate2:http.getYesterDay(),
-        picDate3:http.getYesterDay(),
+        picDate1:http.if7(),
+        picDate2:http.if7(),
+        picDate3:http.if7(),
         picDate4:http.getToday(),
         picDate5:http.getToday(),
         chan:'app',
@@ -366,7 +361,15 @@ table{
         max2name:[],
         disoptionsdate: {
             disabledDate (date) {
-                return date< new Date(2018,7,1) || date > new Date()
+              var data = new Date()
+              var hour = data.getHours()
+              var minutes = data.getMinutes()
+              if (hour*60+minutes>=420){
+                return date< new Date(2018,7,1) || date > data.setDate(data.getDate()-1)
+              }else {
+                return date< new Date(2018,7,1) || date > data.setDate(data.getDate()-2)
+              }
+
             }
         },
         influence:[],
@@ -375,52 +378,59 @@ table{
       }
     },
     mounted() {
-
+     this.init()
+      http.post('bi/write_run_log',{obj:' 核心指数排行',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
+      })
     },
     methods: {
-      slelect7(){
-        if (this.select07==1){
+      init(){
+        http.post('bi/get_hot_line_by_date',{date:http.gmt2str(this.picDate3),top:10}).then(resp=>{
+          if (resp.data.hits.length==0){
+            this.picDate3 = http.gmt2strm(this.picDate3.setDate(this.picDate3.getDate()-1))
+            this.init()
+          }
+        })
+      },
+      slelect7(val){
+        if (val==7){
           this.indexDate1=[http.getWeekAgo(),http.getToday()]
           this.indexDate2=http.getToday()
         }
-        if (this.select07==2){
+        if (val==30){
           this.indexDate1=[http.getMonthAgo(),http.getToday()]
           this.indexDate2=http.getToday()
         }
       },
       initIndex(){
-        http.get('bi/get_scenic_influence_datespan',{startTime:http.gmt2strm(this.indexDate1[0]),endTime:http.gmt2strm(this.indexDate1[1]),top:5}).then(resp=>{
+        http.post('bi/get_scenic_influence_datespan',{startTime:http.gmt2strm(this.indexDate1[0]),endTime:http.gmt2strm(this.indexDate1[1]),top:5}).then(resp=>{
           this.influence = resp.data.hits
           for (var i=0;i<this.influence.length;i++){
-            if (http.StrLen(this.influence[i].name)>10){
+            if (http.StrLen(this.influence[i].name)>20){
               this.influence[i].names = this.influence[i].name
             }else {
               this.influence[i].names=''
             }
           }
-          console.log(this.influence)
         })
-        http.get('bi/get_scenic_transmission_datespan',{startTime:http.gmt2strm(this.indexDate1[0]),endTime:http.gmt2strm(this.indexDate1[1]),top:5}).then(resp=>{
+        http.post('bi/get_scenic_transmission_datespan',{startTime:http.gmt2strm(this.indexDate1[0]),endTime:http.gmt2strm(this.indexDate1[1]),top:5}).then(resp=>{
           this.transmission = resp.data.hits
           for (var i=0;i<this.transmission.length;i++){
-            if (http.StrLen(this.transmission[i].name)>10){
+            if (http.StrLen(this.transmission[i].name)>20){
               this.transmission[i].names = this.transmission[i].name
             }else {
               this.transmission[i].names=''
             }
           }
-          console.log(this.transmission)
         })
-        http.get('bi/get_scenic_reputation_datespan',{startTime:http.gmt2strm(this.indexDate1[0]),endTime:http.gmt2strm(this.indexDate1[1]),top:5}).then(resp=>{
+        http.post('bi/get_scenic_reputation_datespan',{startTime:http.gmt2strm(this.indexDate1[0]),endTime:http.gmt2strm(this.indexDate1[1]),top:5}).then(resp=>{
           this.reputation = resp.data.hits
           for (var i=0;i<this.reputation.length;i++){
-            if (http.StrLen(this.reputation[i].name)>10){
+            if (http.StrLen(this.reputation[i].name)>20){
               this.reputation[i].names = this.reputation[i].name
             }else {
               this.reputation[i].names=''
             }
           }
-          console.log(this.reputation)
         })
       },
       initSimBar(){
@@ -773,7 +783,7 @@ table{
         var date = new Date().format(
           "yyyy-MM-dd"
         )
-        http.get('bi/get_hot_desc_vist_qty_by_date',{chan:this.chan,date:'2018-09-01',top:10}).then(resp=>{
+        http.post('bi/get_hot_desc_vist_qty_by_date',{chan:this.chan,date:'2018-09-01',top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)
             this.barDatay.push(parseInt(resp.data.hits[i].dau/100)/100)
@@ -784,7 +794,7 @@ table{
       chanchange1(){
         this.barDatax1=[]
         this.barDatay1=[]
-        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
+        http.post('bi/get_hot_scenic_vist_qty_by_date',{chan:this.chanclick,date:'2018-09-01',top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax1.push(resp.data.hits[i].name)
             this.barDatay1.push(parseInt(resp.data.hits[i].dau/100)/100)
@@ -795,7 +805,7 @@ table{
       click1(){
         this.barDatax=[]
         this.barDatay=[]
-        http.get('bi/get_hot_desc_vist_qty_by_date',{chan:'app',date:http.gmt2str(this.picDate1),top:10}).then(resp=>{
+        http.post('bi/get_hot_desc_vist_qty_by_date',{chan:'app',date:http.gmt2str(this.picDate1),top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax.push(resp.data.hits[i].name)
             this.barDatay.push(parseInt(resp.data.hits[i].dau/100)/100)
@@ -806,7 +816,7 @@ table{
       click2(){
         this.barDatax1=[]
         this.barDatay1=[]
-        http.get('bi/get_hot_scenic_vist_qty_by_date',{chan:'app',date:http.gmt2str(this.picDate2),top:10}).then(resp=>{
+        http.post('bi/get_hot_scenic_vist_qty_by_date',{chan:'app',date:http.gmt2str(this.picDate2),top:10}).then(resp=>{
           for (var i=0;i<resp.data.hits.length;i++) {
             this.barDatax1.push(resp.data.hits[i].name)
             this.barDatay1.push(parseInt(resp.data.hits[i].dau/100)/100)
@@ -815,10 +825,10 @@ table{
         })
       },
       click3(){
-        http.get('bi/get_hot_line_by_date',{date:http.gmt2str(this.picDate3),top:10}).then(resp=>{
-          this.fdata = resp.data.hits;
+        http.post('bi/get_hot_line_by_date',{date:http.gmt2str(this.picDate3),top:10}).then(resp=>{
+          this.fdata = resp.data.hits.slice(0,5);
           for (var i=0;i<resp.data.hits.length;i++){
-            this.fdata[i].tpers=this.fdata[i].order/(this.fdata[0].order*0.7)*100
+            this.fdata[i].tpers=this.fdata[i].pv/(this.fdata[0].pv*1.1)*100
           }
         })
       },
@@ -826,7 +836,7 @@ table{
         this.max1his=[]
         this.max1n=[]
         this.max1y=[]
-        http.get('bi/get_scenic_tourist_top_by_date',{date:http.gmt2str(this.picDate4),top:10}).then(resp=>{
+        http.post('bi/get_scenic_tourist_top_by_date',{date:http.gmt2str(this.picDate4),top:10}).then(resp=>{
           let max1data=resp.data.hits.sort((v1, v2) => v1.n - v2.n);
           for (var i=0;i<resp.data.hits.length;i++) {
             this.max1his.push(parseInt(max1data[i].his/100)/100)
@@ -841,7 +851,7 @@ table{
         this.max2y=[]
         this.max2name=[]
         this.max2his=[]
-        http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
+        http.post('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
           let max2data = resp.data.hits.sort((v1,v2)=> v1.n - v2.n)
           for (var i=0;i<resp.data.hits.length;i++) {
             this.max2his.push(parseInt(max2data[i].ince/100)/100)
@@ -859,8 +869,7 @@ table{
           this.max2y=[]
           this.max2name=[]
           this.max2his=[]
-          console.log(this.unitD)
-          http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
+          http.post('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
             let max2data = resp.data.hits.sort((v1,v2)=> v1.n - v2.n)
             for (var i=0;i<resp.data.hits.length;i++) {
               this.max2his.push(parseInt(max2data[i].ince/100)/100)
@@ -877,8 +886,7 @@ table{
           this.max2y=[]
           this.max2name=[]
           this.max2his=[]
-          console.log(this.unitD)
-          http.get('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
+          http.post('bi/get_scenic_tourist_ince_by_date',{date:http.gmt2str(this.picDate5),top:10}).then(resp=>{
             let max2data = resp.data.hits.sort((v1,v2)=> v1.n - v2.n)
             for (var i=0;i<resp.data.hits.length;i++) {
               this.max2his.push(max2data[i].rate)

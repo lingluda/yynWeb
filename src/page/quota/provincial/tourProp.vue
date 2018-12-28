@@ -38,10 +38,10 @@ export default {
                         borderColor: '#fff'
                     },
                     data:[
-                        {value:3711561, name: '外国人' },
-                        {value:436095, name:'台湾同胞'},
-                        {value:207203, name:'澳门同胞'},
-                        {value:506821, name:'香港同胞'},
+                        {value:4654736, name: '外国人' },
+                        {value:557128, name:'台湾同胞'},
+                        {value:242689, name:'澳门同胞'},
+                        {value:594078, name:'香港同胞'},
                     ]
                 }]
             });

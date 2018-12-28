@@ -16,10 +16,10 @@
           <Option value="" v-if="senicData.length==0" disabled>请先选择州市</Option>
           <Option v-for="(item, index) in senicData" :value="item.id" :key="index">{{item.name}}</Option>
         </Select>
-        <RadioGroup type="button" @on-change="slelecti7">
-          <Radio label="1">近7日</Radio>
-          <Radio label="2">近30日</Radio>
-        </RadioGroup>
+        <Button @click="slelecti7(1)">近7日</Button>
+        <Button @click="slelecti7(2)">近30日</Button>
+
+
         <DatePicker type="daterange" v-model="cpicDate" placeholder="自选时间" style="width: 220px" @on-change="dateChange" :options="disoptionsdate"></DatePicker>
         <Row :gutter="16" style="margin-top: 20px">
           <Col span="6">
@@ -96,15 +96,13 @@
       </card>
       <card style="margin-top: 20px">
         <div style="height: 40px">
-          <span style="font-weight: bold;color: #000000">一机游用户消费维度分析</span>
+          <span style="font-weight: bold;color: #000000">游云南App用户消费维度分析</span>
           <Tooltip content="根据游云南app中用户的消费进行计算分析" placement="right" max-width="200">
             <Icon size="19" type="ios-help-circle-outline" />
           </Tooltip>
           <div style="float: right">
-            <RadioGroup type="button" @on-change="cashdatechange1">
-              <Radio label="1">近7日</Radio>
-              <Radio label="2">近30日</Radio>
-            </RadioGroup>
+            <Button @click="cashdatechange1(1)">近7日</Button>
+            <Button @click="cashdatechange1(2)">近30日</Button>
             <DatePicker v-model="cashdate1" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="请选择日期" style="width:220px" ></DatePicker>
           </div>
         </div>
@@ -173,10 +171,10 @@
             <Icon size="19" type="ios-help-circle-outline" />
           </Tooltip>
           <div style="float: right">
-            <RadioGroup type="button" @on-change="cashdatechange2">
-              <Radio label="large7">近7日</Radio>
-              <Radio label="small">近30日</Radio>
-            </RadioGroup>
+            <Button @click="cashdatechange2(1)">近7日</Button>
+            <Button @click="cashdatechange2(2)">近30日</Button>
+
+
             <DatePicker v-model="cashdate2" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="请选择日期" style="width:220px" ></DatePicker>
           </div>
         </div>
@@ -458,8 +456,8 @@
         cashmax1rank:[],
         cashmax2vag:'',
         cashmax2rank:[],
-        cashdate1:[http.getYesterDay(),http.getToday()],
-        cashdate2:[http.getYesterDay(),http.getToday()],
+        cashdate1:[http.getWeekAgo(),http.getToday()],
+        cashdate2:[http.getWeekAgo(),http.getToday()],
         ioindex:1,
         d11:http.getMonthAgo(),
         d22:'2018-01',
@@ -538,13 +536,15 @@
             disabledDate (date) {
               const end = new Date()
               end.setDate(end.getDate()-1)
-                return date< new Date(2018,7,1) || date > end
+                return date< new Date(2018,9,23) || date > end
             }
         }
       };
     },
     mounted() {
       this.init();
+      http.post('bi/write_run_log',{obj:'游客画像',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
+      })
     },
     methods: {
       slelecti7(val){
@@ -565,7 +565,7 @@
         }
       },
       cashmax1(){
-        http.get('bi/get_consume_by_datespan',{startTime:http.gmt2strm(this.cashdate1[0]),endTime:http.gmt2strm(this.cashdate1[1])}).then(resp=>{
+        http.post('bi/get_consume_by_datespan',{startTime:http.gmt2strm(this.cashdate1[0]),endTime:http.gmt2strm(this.cashdate1[1])}).then(resp=>{
           this.cashmax1vag = http.qfw(resp.data.hits.avg.avg_amount)
           let cashmax1ranks = resp.data.hits.rank
           let cashDatas = resp.data.hits.cate;
@@ -603,7 +603,7 @@
         }
       },
       cashmax2(){
-        http.get('bi/get_offline_consume_by_datespan',{startTime:http.gmt2strm(this.cashdate2[0]),endTime:http.gmt2strm(this.cashdate2[1])}).then(resp=>{
+        http.post('bi/get_offline_consume_by_datespan',{startTime:http.gmt2strm(this.cashdate2[0]),endTime:http.gmt2strm(this.cashdate2[1])}).then(resp=>{
           this.cashmax2vag = http.qfw(resp.data.hits.avg.avg_amount)
           let cashmax1ranks = resp.data.hits.rank
           let cashDatas = resp.data.hits.cate;
@@ -645,17 +645,15 @@
         this.ccc1='';
         this.senicData=[];
         if (val) {
-          http.get('bi/get_scenic_by_city',{city_id:val}).then(resp=>{
+          http.post('bi/get_scenic_by_city',{city_id:val}).then(resp=>{
             this.senicData=resp.data.hits
             this.ccc1='';
           })
         }
-        http
-          .get("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
+        http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),city_id:val})
           .then(this.getPortraitData);
-                  http
-          .get("bi/get_portrait_origin_by_datespan", {
+                  http.post("bi/get_portrait_origin_by_datespan", {
             //date: this.cpicDate,
             startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),
@@ -670,8 +668,7 @@
             }
             this.initCity();
           });
-        http
-          .get("bi/get_portrait_origin_by_datespan", {
+        http.post("bi/get_portrait_origin_by_datespan", {
             ///date: this.cpicDate,
             startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),
@@ -692,7 +689,7 @@
           return
         }
         this.data2=[]
-        http.get("bi/get_migrate_by_date", {
+        http.post("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
           city_name: this.ccti,
           top: 10,
@@ -836,11 +833,11 @@
         }
       },
       init() {
-        http.get('bi/get_all_city_prov', {}).then(resp => {
+        http.post('bi/get_all_city_prov', {}).then(resp => {
           this.cityData = resp.data.hits;
           if (resp.data.hits) {
             this.ccc = resp.data.hits[0].id
-            http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
+            http.post('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
               this.senicData=resp.data.hits
               if (resp.data.hits) {
                 this.provy = [];
@@ -850,7 +847,7 @@
             })
           }
         })
-        http.get('bi/get_all_city', {}).then(resp => {
+        http.post('bi/get_all_city', {}).then(resp => {
           this.cityData1 = resp.data.hits;
           if (resp.data.hits) {
             this.ccti = resp.data.hits[0].name
@@ -866,17 +863,15 @@
         this.mobiley = [];
 
         if (this.ccc) {
-          http.get('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
+          http.post('bi/get_scenic_by_city',{city_id:this.ccc}).then(resp=>{
             this.senicData=resp.data.hits
             this.ccc1='';
           })
         }
-        http
-          .get("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
+        http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),city_id:this.ccc})
           .then(this.getPortraitData);
-        http
-          .get("bi/get_portrait_origin_by_datespan", {
+        http.post("bi/get_portrait_origin_by_datespan", {
             //date: http.gmt2str(this.cpicDate),
             startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),
@@ -891,8 +886,7 @@
             }
             this.initCity();
           });
-        http
-          .get("bi/get_portrait_origin_by_datespan", {
+        http.post("bi/get_portrait_origin_by_datespan", {
             //date: this.cpicDate,
             startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),
@@ -1377,7 +1371,7 @@
           this.ioindex=0
         }
         this.data2=[]
-        http.get("bi/get_migrate_by_date", {
+        http.post("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
           city_name: this.ccti,
           top: 10,
@@ -1413,12 +1407,10 @@
         this.mobiley = [];
         //var date = new Date(this.picDate).format("yyyy-MM-dd");
         //this.cpicDate = date;
-        http
-          .get("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
+        http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),city_id:this.ccc})
           .then(this.getPortraitData);
-        http
-          .get("bi/get_portrait_origin_by_datespan", {
+        http.post("bi/get_portrait_origin_by_datespan", {
             //date: this.cpicDate,
             startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),
@@ -1433,8 +1425,7 @@
             }
             this.initCity();
           });
-        http
-          .get("bi/get_portrait_origin_by_datespan", {
+        http.post("bi/get_portrait_origin_by_datespan", {
             //date: this.cpicDate,
             startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),
@@ -1451,16 +1442,14 @@
           });
       },
       dateChange3(){
-        http
-          .get("bi/get_consume_by_date", {date: http.gmt2str(this.picDate3), city_id:this.ccc})
+        http.post("bi/get_consume_by_date", {date: http.gmt2str(this.picDate3), city_id:this.ccc})
           .then(resp => {
             this.vagprice = http.qfw(resp.data.hits.avg_amount);
             this.middle = http.qfw(resp.data.hits.median_amount);
           });
       },
       dateChange4(){
-        http
-          .get("bi/get_consume_type_by_mon", {
+        http.post("bi/get_consume_type_by_mon", {
             startTime: http.gmt2str(this.picDate4[0]),
             endTime: http.gmt2str(this.picDate4[1]),
             city_id:this.ccc
@@ -1495,7 +1484,7 @@
       },
       _ccti(){
         this.data2=[]
-        http.get("bi/get_migrate_by_date", {
+        http.post("bi/get_migrate_by_date", {
           date: http.gmt2str(this.hotlineDate),
           city_name: this.ccti,
           top: 10,
@@ -1517,8 +1506,7 @@
       _d11(){
         this.picDate4[0]=this.d22;
         this.picDate4[1]=this.d11;
-        http
-          .get("bi/get_consume_type_by_mon", {
+        http.post("bi/get_consume_type_by_mon", {
             startTime: http.gmt2str(this.d11),
             endTime: http.gmt2str(this.d11),
             city_id:this.ccc

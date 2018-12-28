@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div>{{ccc}}
   <div id="main" style="height: 400px;width: 100%;"></div>
   </div>
 </template>
@@ -47,7 +47,7 @@
 
           {
             name:'平均处理时间',
-            data: this.ccc.map(i=>{return parseInt(i.avg*100)/100}),
+            data: this.ccc.map(i=>{return i.avg.toFixed(2)}),
             type: 'bar',
             label: {
               normal: {
@@ -61,7 +61,7 @@
           },
           {
             name:'最大等待时间',
-            data: this.ccc.map(i=>{return parseInt(i.max*100)/100}),
+            data: this.ccc.map(i=>{return i.max.toFixed(2)}),
             type: 'bar',
             label: {
               normal: {
@@ -75,7 +75,7 @@
           },
           {
             name:'最小等待时间',
-            data: this.ccc.map(i=>{return parseInt(i.min*100)/100}),
+            data: this.ccc.map(i=>{return i.min.toFixed(2)}),
             type: 'bar',
             label: {
               normal: {

@@ -6,11 +6,11 @@
           <Col :span="2">
             <i class="qsnet_idx">{{index+1}}</i>
           </Col>
-          <Col :span="8">{{item.name}}</Col>
+          <Col :span="6">{{item.name}}</Col>
           <Col :span="10" style="margin-top: 5px">
             <sb :pers=item.pers*100></sb>
           </Col>
-          <Col :span="4">{{item.avg}}</Col>
+          <Col :span="6">{{item.avg}}</Col>
         </Row>
       </li>
     </ul>
@@ -21,7 +21,7 @@
   import sb from '../analysisform'
 
   export default {
-    name: "tstable",
+    name: "tstable1",
     props:{
       rank:Array,
     },
@@ -46,8 +46,8 @@
 
   .qsnet_row {
     color: #000;
+    padding: 5px 0 5px 0;
     font-size: 14px;
-    height: 36px;
   }
 
   #qsnet li:nth-child(1) i,

@@ -10,7 +10,7 @@ export default {
             this.$echarts.init(document.querySelector("#tourIncomeTotal")).setOption({
                 color: ['#1aaba8', '#a9a9a9'],
                 title:{
-                    text: "{a|旅游业总收入} {b|（单位：万元）}",
+                    text: "{a|旅游业总收入} {b|（单位：亿元）}",
                     textStyle: {
                         rich: {
                             a: {
@@ -25,7 +25,7 @@ export default {
                     }
                 },
                 xAxis: {
-                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月'],
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月'],
                     axisLabel: {
                         interval: 0,
                         color: '#999'
@@ -124,13 +124,13 @@ export default {
                                 color: '#000'
                             }
                         },
-                        data: [555, 813, 718, 692, 721, 700, 806, 899]
+                        data: [555, 813, 718, 692, 721, 700, 806, 899,747,908]
                     }, {
                         type: 'line',
                         name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [2.37, 44.92, 33.1, 38.73, 21.37, 21.38, 15.88, 10.58]
+                        data: [2.37, 44.92, 33.1, 38.73, 21.37, 21.38, 15.88, 10.58,19.53,14.96]
                     }
                 ]
             });

@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
   .ivu-layout{background: #fff}
   .ivu-tabs-nav{margin-left: 25px;margin-bottom: 0px!important}
   .ivu-radio-group-button .ivu-radio-wrapper:first-child,.ivu-radio-group-button .ivu-radio-wrapper:last-child,.ivu-select-selection,.ivu-input{border-radius: 0}
@@ -26,4 +26,7 @@ export default {
   /* .ivu-card-body{padding: 16px 25px 30px;} */
   .ivu-card-body{padding: 20px 25px 30px;}
   .ivu-card{border-radius: 0}
+  .ivu-table-overflowX {
+    overflow-x:unset !important;
+  }
 </style>

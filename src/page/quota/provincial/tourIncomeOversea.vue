@@ -10,7 +10,7 @@ export default {
             this.$echarts.init(document.querySelector("#tourIncomeOversea")).setOption({
                 color: ['#63cd8d', '#a9a9a9'],
                 title:{
-                    text: "{a|旅游外汇收入} {b|（单位：万元）}",
+                    text: "{a|旅游外汇收入} {b|（单位：亿元）}",
                     textStyle: {
                         rich: {
                             a: {
@@ -25,7 +25,7 @@ export default {
                     }
                 },
                 xAxis: {
-                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月'],
+                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月'],
                     axisLabel: {
                         interval: 0,
                         color: '#999'
@@ -122,13 +122,13 @@ export default {
                                 color: '#000'
                             }
                         },
-                        data: [15, 21, 21, 23, 25, 26, 21, 21]
+                        data: [15, 21, 21, 23, 25, 26, 21, 21,19,22]
                     }, {
                         type: 'line',
                         name: '年同比增长率',
                         yAxisIndex: 1,
                         symbolSize: 6,
-                        data: [12.99, 16.93, 6.34, 3.86, 7.98, 2.92, -0.39, -3.04]
+                        data: [12.99, 16.93, 6.34, 3.86, 7.98, 2.92, -0.39, -3.04,0.1,32.33]
                     }
                 ]
             });
