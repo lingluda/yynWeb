@@ -27,11 +27,11 @@ axios.interceptors.response.use(
 
 let http = {}
 http.posts = function (url, data) {
-  if (document.cookie.length>0){
+  //if (document.cookie.length>0){
     return axios.post(url,data)
-  }else {
+ /* }else {
     window.href('https://tglpt.ybsjyyn.com/login')
-  }
+  }*/
 
 }
 http.post = function (url, data) {
@@ -52,12 +52,12 @@ http.get = function (url, data) {
   if (JSON.stringify(data) == '{}') {
     data = { 1: 1 }
   }
-  if (document.cookie.length>0){
+ // if (document.cookie.length>0){
   return axios.get(url + '?' + encodeUrl(data)+'&r='+Math.random())
-}
+/*}
   else {
     window.open('https://tglpt.ybsjyyn.com/login','_self')
-  }
+  }*/
 }
 http.getcn = function(id){
     var cc =''

@@ -21,8 +21,8 @@ export default new Router({
       children: [
                {
           path:'/',
-          name:'index',
-          redirect:'index'
+          name:'quota',
+          redirect:'quota'
         },
         {
           path: '/analysisform',
