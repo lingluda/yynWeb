@@ -267,13 +267,13 @@
   }
 
   .lyrd_hotmap_today_num {
-    font-size: 32px;
-    color: #006eff;
+    font-size: 36px;
+    color: #000000;
     line-height: 55px;
   }
 
   .lyrd_hotmap_today_dw {
-    color: #006eff;
+    color: #888;
     font-size: 16px;
     line-height: 55px;
   }
@@ -592,15 +592,43 @@
           xAxis: {
             type: "category",
             boundaryGap: false,
-            data: this.lineDatax
+            data: this.lineDatax,
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#E5E5E5'
+              }
+            },
+            axisLabel: {
+              color: '#888'
+            },
+            axisTick: {
+              alignWithLabel: true
+            }
           },
           yAxis: {
             name: "单位：人",
             type: 'value',
             boundaryGap: [0, 0.01],
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+
+            axisLabel: {
+              color: '#888'
+            },
             splitLine: {
               lineStyle: {
-                color: '#e8e8e8'
+                type : "dashed",
+                color: '#E6E9E9'
               }
             }
           },

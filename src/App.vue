@@ -29,4 +29,15 @@ export default {
   .ivu-table-overflowX {
     overflow-x:unset !important;
   }
+  .ivu-select-item-focus{
+    background: #006eff;
+    color: #ffffff;
+  }
+  .ivu-select-selection{
+    border: 1px solid #dddddd;
+  }
+  .ivu-select-item:hover{
+    background: #f2f2f2;
+  }
+
 </style>

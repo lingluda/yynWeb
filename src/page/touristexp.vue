@@ -129,7 +129,7 @@
           <Select style="width: 120px;float: right" v-model="p11" @on-change="ppp3">
             <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
           </Select>
-          <DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期"
+          <DatePicker v-model="picdate3" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="自选时间"
                       style="width:220px;float: right" @on-change="_dd2" :options="disoptionsdate"></DatePicker>
           <Button @click="dateChoice11(2)" style="float: right">近30日</Button>
 

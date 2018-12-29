@@ -16,13 +16,18 @@
             </Tooltip>
           </div>
           <div style="float: right">
-            <Button @click="pic7(1)">近7日</Button>
+         <!--   <Button @click="pic7(1)">近7日</Button>
             <Button @click="pic7(2)">近30日</Button>
-
-
-            <DatePicker v-model="d11" :options="disoptionsdate" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="请选择日期"
-                        style="width:220px" @on-change="dateChange"></DatePicker>
-            <Select v-model="FlowCity" style="width: 120px" @on-change="dateChange">
+-->
+            <RadioGroup v-model="buttonSize" type="button" @on-change="pic7">
+              <Radio label="1">今天</Radio>
+              <Radio label="2">昨天</Radio>
+              <Radio label="3">近7日</Radio>
+              <Radio label="4">近30日</Radio>
+            </RadioGroup>
+            <DatePicker v-model="d11" :options="disoptionsdate" placement="bottom-end" format="yyyy-MM-dd" type="daterange" placeholder="自选时间"
+                        style="width:180px" @on-change="dateChange"></DatePicker>
+            <Select v-model="FlowCity" style="width: 150px" @on-change="dateChange">
               <Option v-for="city in provData" :value="city.id" :key="city.id">{{city.name}}</Option>
             </Select>
           </div>
@@ -61,7 +66,7 @@
              style="position: absolute;margin-top: -620px;margin-left: 20px">{{city}}各景区实时游客
         </div>
         <div v-if="d11[0].toString()!=d11[1].toString()"
-             style="position: absolute;margin-top: -630px;margin-left: 20px">
+             style="position: absolute;margin-top: -620px;margin-left: 20px">
           {{city}}各景区{{sd.substring(5,10)}}至{{ed.substring(5,10)}}累计接待游客
         </div>
       </card>
@@ -126,6 +131,7 @@
     },
     data() {
       return {
+        buttonSize:'1',
         city:'全省',
         sd: '',
         ed: '',
@@ -172,9 +178,18 @@
       },
       pic7(val) {
         if (val == 1) {
+          this.d11 = [http.getToday(), http.getToday()]
+          this.dateChange()
+        }
+        if (val == 2) {
+          this.d11 = [http.getYesterDay(), http.getToday()]
+          this.dateChange()
+        }
+        if (val == 3) {
           this.d11 = [http.getWeekAgo(), http.getToday()]
           this.dateChange()
-        } else {
+        }
+        if (val == 4) {
           this.d11 = [http.getMonthAgo(), http.getToday()]
           this.dateChange()
         }

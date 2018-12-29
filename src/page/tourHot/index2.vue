@@ -17,11 +17,11 @@
             </div>
             <div class="lyrd_index_search_right">
 
-              <DatePicker v-model="datefff" :options="disoptionsdate" format="yyyy-MM-dd" type="date" placeholder="请选择日期" style="width:120px" @on-change="handleChange"></DatePicker>
-              <Select v-model="city" style="width:120px;" @on-change="form1change3">
+              <DatePicker v-model="datefff" :options="disoptionsdate" format="yyyy-MM-dd" type="date" placeholder="自选时间" style="width:120px" @on-change="handleChange"></DatePicker>
+              <Select v-model="city" style="width:150px;" @on-change="form1change3">
                 <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
               </Select>
-              <Select v-model="citysenic1" style="width:120px;" placeholder="景区" @on-change="form1change">
+              <Select v-model="citysenic1" style="width:150px;" placeholder="景区" @on-change="form1change">
                 <Option value="" v-if="senicData.length==0" disabled>请先选择州市</Option>
                 <Option v-for="item in senicData" :value="item.id" :key="item.id">{{item.name}}</Option>
               </Select>
@@ -125,15 +125,20 @@
 
             </div>
             <div class="lyrd_index_search_right">
-              <Button @click="p2(1)">近7日</Button>
-              <Button @click="p2(2)">近30日</Button>
+            <!--  <Button @click="p2(1)">近7日</Button>
+              <Button @click="p2(2)">近30日</Button>-->
 
-
-              <DatePicker v-model="date1" format="yyyy-MM-dd" :options="disoptionsdate" type="daterange" placeholder="请选择日期" placement="bottom-end" style="width:220px" @on-change="form1change12"></DatePicker>
-              <Select v-model="city1" style="width:120px;" @on-change="form1change12">
+              <RadioGroup v-model="buttonSize" type="button" @on-change="p2">
+                <Radio label="1">今天</Radio>
+                <Radio label="2">昨天</Radio>
+                <Radio label="3">近7日</Radio>
+                <Radio label="4">近30日</Radio>
+              </RadioGroup>
+              <DatePicker v-model="date1" format="yyyy-MM-dd" :options="disoptionsdate" type="daterange" placeholder="自选时间" placement="bottom-end" style="width:180px" @on-change="form1change12"></DatePicker>
+              <Select v-model="city1" style="width:150px;" @on-change="form1change12">
                 <Option v-for="item in cityData" :value="item.id">{{item.name}}</Option>
               </Select>
-              <Select v-model="citysenic2" style="width:120px;" placeholder="景区" @on-change="form1change1">
+              <Select v-model="citysenic2" style="width:150px;" placeholder="景区" @on-change="form1change1">
                 <Option value="" v-if="senicData2.length==0" disabled>请先选择州市</Option>
                 <Option v-for="item in senicData2" :value="item.id" :key="item.id">{{item.name}}</Option>
               </Select>
@@ -187,6 +192,7 @@ export default {
           return date< new Date(2018,9,23) || date > end
         }
       },
+      buttonSize:'3',
       isshow1:1,
       isshow2:1,
       isshow3:1,
@@ -465,12 +471,20 @@ export default {
         xAxis: {
           type: "category",
           data: this.lineDatax,
+          nameTextStyle: {
+            color: '#888'
+          },
           axisLine: {
             lineStyle: {
-              color: "#888888",
-              width: 2
+              color: '#E5E5E5'
             }
-          }
+          },
+          axisLabel: {
+            color: '#888'
+          },
+          axisTick: {
+            alignWithLabel: true
+          },
         },
         yAxis: {
           name: "万人",
@@ -478,10 +492,23 @@ export default {
             color: '#999'
           },
           type: "value",
+          nameTextStyle: {
+            color: '#888'
+          },
           axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+
+          axisLabel: {
+            color: '#888'
+          },
+          splitLine: {
             lineStyle: {
-              color: "#888888",
-              width: 2
+              type : "dashed",
+              color: '#E6E9E9'
             }
           }
         },
@@ -749,10 +776,18 @@ export default {
     },
     p2(val) {
       if (val == 1) {
-        this.date1 = [http.getWeekAgo(), http.if10()];
+        this.date1 = [http.getToday(), http.if10()];
         this.form1change12()
       }
       if (val == 2) {
+        this.date1 = [http.getYesterDay(), http.if10()];
+        this.form1change12()
+      }
+      if (val == 3) {
+        this.date1 = [http.getWeekAgo(), http.if10()];
+        this.form1change12()
+      }
+      if (val == 4) {
         this.date1 = [http.getMonthAgo(), http.if10()];
         this.form1change12()
       }
@@ -1118,13 +1153,13 @@ export default {
 }
 
 .lyrd_index_today_num {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 600;
-  color: #006eff;
+  color: #000000;
 }
 
 .lyrd_index_today_dw {
-  color: #006eff;
+  color: #888;
   font-size: 16px;
 }
 

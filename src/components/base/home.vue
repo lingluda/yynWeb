@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Header style="background: rgb(38, 38, 38);padding: unset;height: 50px">
+    <!--<Header style="background: rgb(38, 38, 38);padding: unset;height: 50px">
       <Row type="flex" justify="center" align="middle" style="height: 50px">
         <Col span="19">
           <div style="display: flex;">
@@ -21,12 +21,12 @@
           </div>
         </Col>
       </Row>
-    </Header>
+    </Header>-->
     <Layout>
-      <Sider hide-trigger style="display: flex;height: calc(100vh-50px);background-color: rgb(51, 51, 51)">
-        <span class="sidebars" @click="selected('quota')"><a v-if="'quota'===selecteds">关键指标</a><span
+      <!--<Sider hide-trigger style="display: flex;height: calc(100vh-50px);background-color: rgb(51, 51, 51)">
+      &lt;!&ndash;  <span class="sidebars" @click="selected('quota')"><a v-if="'quota'===selecteds">关键指标</a><span
                  v-if="'quota'!=selecteds">关键指标</span>
-          <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>
+          <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>&ndash;&gt;
         <span class="sidebars1" @click="selected('index')"><a v-if="'index'===selecteds">旅游热度</a><span
           v-if="'index'!=selecteds">旅游热度</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>
@@ -34,10 +34,12 @@
         <span class="sidebars1" @click="selected('coreFlow')"><a v-if="'coreFlow'===selecteds">核心景区</a><span
           v-if="'coreFlow'!=selecteds">核心景区</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>
+&lt;!&ndash;
 
         <span class="sidebars1" @click="selected('destination')"><a v-if="'destination'===selecteds">核心指数</a><span
           v-if="'destination'!=selecteds">核心指数</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>
+&ndash;&gt;
 
         <span class="sidebars1" @click="selected('hotmap')"><a v-if="'hotmap'===selecteds">景区热力</a><span
           v-if="'hotmap'!=selecteds">景区热力</span>
@@ -47,30 +49,30 @@
           v-if="'touristimg'!=selecteds">游客画像</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>
 
-        <span class="sidebars1" @click="selected('touristexp')"><a v-if="'touristexp'===selecteds">游客体验</a><span
+       &lt;!&ndash; <span class="sidebars1" @click="selected('touristexp')"><a v-if="'touristexp'===selecteds">游客体验</a><span
           v-if="'touristexp'!=selecteds">游客体验</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>
 
         <span class="sidebars1" @click="selected('analysis')"><a v-if="'analysis'===selecteds">舆情分析</a><span
           v-if="'analysis'!=selecteds">舆情分析</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>
-
+&ndash;&gt;
         <span class="sidebars1" @click="selected('report')"><a v-if="'report'===selecteds">报表下载</a><span
           v-if="'report'!=selecteds">报表下载</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>
 
-        <span class="sidebars1" @click="selected('reqlog')"><a v-if="'reqlog'===selecteds">访问日志</a><span
+     &lt;!&ndash;   <span class="sidebars1" @click="selected('reqlog')"><a v-if="'reqlog'===selecteds">访问日志</a><span
           v-if="'reqlog'!=selecteds">访问日志</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>
 
         <span class="sidebars1" @click="selected('errlog')"><a v-if="'errlog'===selecteds">异常日志</a><span
           v-if="'errlog'!=selecteds">异常日志</span>
           <Icon type="ios-arrow-forward" size="20" style="margin-left: 60px;"/></span>
+&ndash;&gt;
 
-
-      </Sider>
+      </Sider>-->
       <Content style="width:100%;height: calc(100vh-64px);">
-        <router-view></router-view>
+        <router-view style="min-width: 980px;"></router-view>
       </Content>
       <!-- <Footer><router-link to="tobaccobase">aaqa</router-link></Footer> -->
     </Layout>

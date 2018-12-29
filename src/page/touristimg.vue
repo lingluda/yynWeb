@@ -16,11 +16,16 @@
           <Option value="" v-if="senicData.length==0" disabled>请先选择州市</Option>
           <Option v-for="(item, index) in senicData" :value="item.id" :key="index">{{item.name}}</Option>
         </Select>
-        <Button @click="slelecti7(1)">近7日</Button>
-        <Button @click="slelecti7(2)">近30日</Button>
+       <!-- <Button @click="slelecti7(1)">近7日</Button>
+        <Button @click="slelecti7(2)">近30日</Button>-->
+        <RadioGroup v-model="buttonSize" type="button" @on-change="slelecti7">
+          <Radio label="1">今天</Radio>
+          <Radio label="2">昨天</Radio>
+          <Radio label="3">近7日</Radio>
+          <Radio label="4">近30日</Radio>
+        </RadioGroup>
 
-
-        <DatePicker type="daterange" v-model="cpicDate" placeholder="自选时间" style="width: 220px" @on-change="dateChange" :options="disoptionsdate"></DatePicker>
+        <DatePicker type="daterange" v-model="cpicDate" placeholder="自选时间" style="width: 180px" @on-change="dateChange" :options="disoptionsdate"></DatePicker>
         <Row :gutter="16" style="margin-top: 20px">
           <Col span="6">
             <div id="sex">
@@ -94,7 +99,7 @@
           </Col>
         </Row>
       </card>
-      <card style="margin-top: 20px">
+     <!-- <card style="margin-top: 20px">
         <div style="height: 40px">
           <span style="font-weight: bold;color: #000000">游云南App用户消费维度分析</span>
           <Tooltip content="根据游云南app中用户的消费进行计算分析" placement="right" max-width="200">
@@ -103,7 +108,7 @@
           <div style="float: right">
             <Button @click="cashdatechange1(1)">近7日</Button>
             <Button @click="cashdatechange1(2)">近30日</Button>
-            <DatePicker v-model="cashdate1" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="请选择日期" style="width:220px" ></DatePicker>
+            <DatePicker v-model="cashdate1" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="自选时间" style="width:220px" ></DatePicker>
           </div>
         </div>
         <Row :gutter="16">
@@ -136,7 +141,7 @@
                     <Row class="qsnet_row">
                       <Col span="2" style="line-height: 20px;margin: 0 -6px 2px 4px">
                         <i class="qsnet_idx">{{index + 1}}</i>
-                        <!--<span class="qsnet_sp">111</span>-->
+                        &lt;!&ndash;<span class="qsnet_sp">111</span>&ndash;&gt;
                       </Col>
                       <Col v-if="item.names==''" span="5" class="qsnet_num">{{item.name.substring(0,4)}}</Col>
                       <Col v-if="item.names!=''" span="5" class="qsnet_num">
@@ -163,8 +168,8 @@
             </div>
           </Col>
         </Row>
-      </card>
-      <card style="margin-top: 20px">
+      </card>-->
+   <!--   <card style="margin-top: 20px">
         <div style="height: 40px">
           <span style="font-weight: bold;color: #000000">线下用户消费维度分析</span>
           <Tooltip content="根据线下商家的诚信码支付数据计算" placement="right" max-width="200">
@@ -175,7 +180,7 @@
             <Button @click="cashdatechange2(2)">近30日</Button>
 
 
-            <DatePicker v-model="cashdate2" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="请选择日期" style="width:220px" ></DatePicker>
+            <DatePicker v-model="cashdate2" type="daterange" placement="bottom-end" format="yyyy-MM-dd"  placeholder="自选时间" style="width:220px" ></DatePicker>
           </div>
         </div>
         <Row :gutter="16">
@@ -208,7 +213,7 @@
                     <Row class="qsnet_row">
                       <Col span="2" style="line-height: 20px;margin: 0 -6px 2px 4px">
                         <i class="qsnet_idx">{{index + 1}}</i>
-                        <!--<span class="qsnet_sp">111</span>-->
+                        &lt;!&ndash;<span class="qsnet_sp">111</span>&ndash;&gt;
                       </Col>
                       <Col v-if="item.names==''" span="5" class="qsnet_num">{{item.name}}</Col>
                       <Col v-if="item.names!=''" span="5" class="qsnet_num">
@@ -235,7 +240,7 @@
             </div>
           </Col>
         </Row>
-      </card>
+      </card>-->
     </div>
   </div>
 </template>
@@ -377,6 +382,7 @@
     },
     data() {
       return {
+        buttonSize:'2',
         cashmax1vag:'',
         cashmax1rank:[],
         cashmax2vag:'',
@@ -475,20 +481,59 @@
       slelecti7(val){
 
         if (val==1){
-          this.cpicDate=[http.getWeekAgo(),http.getYesterDay()]
+          this.cpicDate=[http.getToday(),http.getToday()]
           this.dateChange()
-        } else {
-          this.cpicDate=[http.getMonthAgo(),http.getYesterDay()]
+        }
+        if (val==2){
+          this.cpicDate=[http.getYesterDay(),http.getToday()]
+          this.dateChange()
+        }
+        if (val==3){
+          this.cpicDate=[http.getWeekAgo(),http.getToday()]
+          this.dateChange()
+        }
+        if (val==4){
+          this.cpicDate=[http.getMonthAgo(),http.getToday()]
           this.dateChange()
         }
       },
-      cashdatechange1(val){
-        if (val==1){
-          this.cashdate1=[http.getWeekAgo(),http.getToday()]
-        }else {
-          this.cashdate1=[http.getMonthAgo(),http.getToday()]
-        }
+      //3.3.2来源城市
+      get_portrait_origin_by_date_p(sd,ed,t,s,c){
+        this.provx=[]
+        this.provy=[]
+        http.post("bi/get_portrait_origin_by_datespan", {
+          startTime:http.gmt2str(sd),
+          endTime:http.gmt2str(ed),
+          type: t,
+          scenic: s,
+          city_id: c
+        }).then(resp => {
+          for (var i = 0; i < resp.data.hits.length; i++) {
+            this.provx.push(resp.data.hits[i].name);
+            this.provy.push(parseInt(resp.data.hits[i].origin_percent * 10000)/100);
+
+          }
+          this.initPro();
+        });
       },
+    //3.3.3来源省份
+    get_portrait_origin_by_date_c(sd,ed,t,s,c){
+        this.cityx=[]
+        this.cityy=[]
+      http.post("bi/get_portrait_origin_by_datespan", {
+        startTime:http.gmt2str(sd),
+        endTime:http.gmt2str(ed),
+        type: t,
+        scenic: s,
+        city_id: c
+      }).then(resp => {
+        for (var i = 0; i < resp.data.hits.length; i++) {
+          this.cityx.push(resp.data.hits[i].name);
+          this.cityy.push(parseInt(resp.data.hits[i].origin_percent* 10000)/100);
+        }
+        this.initCity();
+      });
+    },
       cashmax1(){
         http.post('bi/get_consume_by_datespan',{startTime:http.gmt2strm(this.cashdate1[0]),endTime:http.gmt2strm(this.cashdate1[1])}).then(resp=>{
           this.cashmax1vag = http.qfw(resp.data.hits.avg.avg_amount)
@@ -575,9 +620,7 @@
             this.ccc1='';
           })
         }
-        http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
-            endTime:http.gmt2str(this.cpicDate[1]),city_id:val})
-          .then(this.getPortraitData);
+        http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),endTime:http.gmt2str(this.cpicDate[1]),city_id:val}).then(this.getPortraitData);
                   http.post("bi/get_portrait_origin_by_datespan", {
             //date: this.cpicDate,
             startTime:http.gmt2str(this.cpicDate[0]),
@@ -594,14 +637,12 @@
             this.initCity();
           });
         http.post("bi/get_portrait_origin_by_datespan", {
-            ///date: this.cpicDate,
             startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),
             type: "prov",
             scenic: "",
             city_id: this.ccc
-          })
-          .then(resp => {
+          }).then(resp => {
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.provx.push(resp.data.hits[i].name);
               this.provy.push(parseInt(resp.data.hits[i].origin_percent * 10000)/100);
@@ -1087,12 +1128,44 @@
           },
           xAxis: {
             type: "value",
-
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#E5E5E5'
+              }
+            },
+            axisLabel: {
+              color: '#888'
+            },
+            axisTick: {
+              alignWithLabel: true
+            },
             boundaryGap: [0, 0.1]
           },
           yAxis: {
             type: "category",
-            data: this.carDatax
+            data: this.carDatax,
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+
+            axisLabel: {
+              color: '#888'
+            },
+            splitLine: {
+              lineStyle: {
+                type : "dashed",
+                color: '#E6E9E9'
+              }
+            }
           },
 
           series: [
@@ -1140,12 +1213,44 @@
           },
           xAxis: {
             type: "value",
-
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#E5E5E5'
+              }
+            },
+            axisLabel: {
+              color: '#888'
+            },
+            axisTick: {
+              alignWithLabel: true
+            },
             boundaryGap: [0, 0.1]
           },
           yAxis: {
             type: "category",
-            data: this.mobilex
+            data: this.mobilex,
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+
+            axisLabel: {
+              color: '#888'
+            },
+            splitLine: {
+              lineStyle: {
+                type : "dashed",
+                color: '#E6E9E9'
+              }
+            }
           },
 
           series: [
@@ -1194,18 +1299,46 @@
           xAxis: {
             type: "category",
             data: this.cityx,
-            axisLabel: {
+           /* axisLabel: {
               interval: 0,
               formatter:echartsHelper.labelFormatter
+            },*/
+            nameTextStyle: {
+              color: '#888'
             },
+            axisLine: {
+              lineStyle: {
+                color: '#E5E5E5'
+              }
+            },
+            axisLabel: {
+              color: '#888'
+            },
+            axisTick: {
+              alignWithLabel: true
+            }
           },
           yAxis: {
             type: "value",
             boundaryGap: [0, 0.1],
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+
+            axisLabel: {
+              color: '#888'
+            },
             splitLine: {
-                lineStyle: {
-                    color: '#e8e8e8'
-                }
+              lineStyle: {
+                type : "dashed",
+                color: '#E6E9E9'
+              }
             }
           },
 
@@ -1255,18 +1388,46 @@
           xAxis: {
             type: "category",
             data: this.provx,
-            axisLabel: {
+          /*  axisLabel: {
               interval: 0,
               formatter:echartsHelper.labelFormatter
+            },*/
+            nameTextStyle: {
+              color: '#888'
             },
+            axisLine: {
+              lineStyle: {
+                color: '#E5E5E5'
+              }
+            },
+            axisLabel: {
+              color: '#888'
+            },
+            axisTick: {
+              alignWithLabel: true
+            }
           },
           yAxis: {
             type: "value",
             boundaryGap: [0, 0.1],
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+
+            axisLabel: {
+              color: '#888'
+            },
             splitLine: {
-                lineStyle: {
-                    color: '#e8e8e8'
-                }
+              lineStyle: {
+                type : "dashed",
+                color: '#E6E9E9'
+              }
             }
           },
 
@@ -1330,13 +1491,12 @@
         this.carDatay = [];
         this.mobilex = [];
         this.mobiley = [];
-        //var date = new Date(this.picDate).format("yyyy-MM-dd");
-        //this.cpicDate = date;
+        this.get_portrait_origin_by_date_p(this.cpicDate[0],this.cpicDate[1],'prov',null,this.ccc)
+        this.get_portrait_origin_by_date_c(this.cpicDate[0],this.cpicDate[1],'city',null,this.ccc)
         http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),city_id:this.ccc})
           .then(this.getPortraitData);
-        http.post("bi/get_portrait_origin_by_datespan", {
-            //date: this.cpicDate,
+       /* http.post("bi/get_portrait_origin_by_datespan", {
             startTime:http.gmt2str(this.cpicDate[0]),
             endTime:http.gmt2str(this.cpicDate[1]),
             type: "city",
@@ -1364,7 +1524,7 @@
               this.provy.push(parseInt(resp.data.hits[i].origin_percent * 10000)/100);
             }
             this.initPro();
-          });
+          });*/
       },
       dateChange3(){
         http.post("bi/get_consume_by_date", {date: http.gmt2str(this.picDate3), city_id:this.ccc})

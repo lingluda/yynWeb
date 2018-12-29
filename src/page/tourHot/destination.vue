@@ -13,7 +13,7 @@
           <Button @click="slelect7(7)">近7日</Button>
           <Button @click="slelect7(30)">近30日</Button>
 
-          <DatePicker v-model="indexDate1" placement="bottom-end" format="yyyy-MM-dd" type="daterange" :options="disoptionsdate" placeholder="请选择日期" style="width:220px" ></DatePicker>
+          <DatePicker v-model="indexDate1" placement="bottom-end" format="yyyy-MM-dd" type="daterange" :options="disoptionsdate" placeholder="自选时间" style="width:220px" ></DatePicker>
         </div>
         </div>
 
@@ -449,12 +449,20 @@ table{
           xAxis: {
             type: 'category',
             data: this.barDatax,
-            axisLine:{
-              lineStyle:{
-                color:'#888888',
-        width:2
-      }
-      },
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#E5E5E5'
+              }
+            },
+            axisLabel: {
+              color: '#888'
+            },
+            axisTick: {
+              alignWithLabel: true
+            }
           },
           grid: {
             left: '3%',
@@ -466,10 +474,23 @@ table{
           yAxis: {
             type: 'value',
             boundaryGap: [0, 0.1],
-            axisLine:{
-              lineStyle:{
-                color:'#888888',
-                width:2
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+
+            axisLabel: {
+              color: '#888'
+            },
+            splitLine: {
+              lineStyle: {
+                type : "dashed",
+                color: '#E6E9E9'
               }
             }
           },
@@ -717,7 +738,7 @@ table{
           xAxis: {
             type: 'category',
             data: this.barDatax1,
-            axisLabel: {
+           /* axisLabel: {
               interval: 0,
               formatter: echartsHelper.labelFormatter
             },
@@ -727,6 +748,20 @@ table{
                 color:'#888888',
                 width:2
               }
+            }*/
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#E5E5E5'
+              }
+            },
+            axisLabel: {
+              color: '#888'
+            },
+            axisTick: {
+              alignWithLabel: true
             }
           },
 
@@ -740,10 +775,23 @@ table{
           yAxis: {
             type: 'value',
             boundaryGap: [0, 0.1],
-            axisLine:{
-              lineStyle:{
-                color:'#888888',
-                width:2
+            nameTextStyle: {
+              color: '#888'
+            },
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+
+            axisLabel: {
+              color: '#888'
+            },
+            splitLine: {
+              lineStyle: {
+                type : "dashed",
+                color: '#E6E9E9'
               }
             }
           },

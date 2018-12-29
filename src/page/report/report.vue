@@ -3,13 +3,23 @@
     <div class="tits">报表下载</div>
     <card style="margin: 20px">
       <div style="margin-bottom: 20px">
-        <DatePicker type="daterange" v-model="reportDate" placeholder="Select date" style="width: 220px" :clearable="isclear"></DatePicker>
-        <Button @click="picDate('today')" label="today">今天</Button>
+       <!-- <Button @click="picDate('today')" label="today">今天</Button>
         <Button @click="picDate('yesterday')" label="yesterday">昨日</Button>
         <Button @click="picDate('week')" label="week">本周</Button>
         <Button @click="picDate('lastw')" label="lastw">上周</Button>
         <Button @click="picDate('month')" label="month">本月</Button>
-        <Button @click="picDate('lastm')" label="lastm">上月</Button>
+        <Button @click="picDate('lastm')" label="lastm">上月</Button>-->
+
+        <RadioGroup v-model="buttonSize" type="button" @on-change="picDate">
+          <Radio label="today">今天</Radio>
+          <Radio label="yesterday">昨天</Radio>
+          <Radio label="week">本周</Radio>
+          <Radio label="lastw">上周</Radio>
+          <Radio label="month">本月</Radio>
+          <Radio label="lastm">上月</Radio>
+        </RadioGroup>
+        <DatePicker type="daterange" v-model="reportDate" placeholder="Select date" style="width: 180px" :clearable="isclear"></DatePicker>
+
         <Select v-model="city" style="width:120px;" @on-change="citychange">
           <Option v-for="item in cityData" :value="item.id" :key="item.id">{{item.name}}</Option>
         </Select>
@@ -55,11 +65,11 @@
             </CheckboxGroup>
           </div>
         </div>
-        <div style="border-bottom: 1px dashed #e9e9e9;" v-if="senic.length==0">
+     <!--   <div style="border-bottom: 1px dashed #e9e9e9;" v-if="senic.length==0">
           <CheckboxGroup v-model="checkAllGroup2">
             <Checkbox label="6" style="padding: 10px 0 10px 10px;">景区指数排行</Checkbox>
           </CheckboxGroup>
-        </div>
+        </div>-->
         <div style="border-bottom: 1px dashed #e9e9e9;">
           <div style="padding:10px;">
             <Checkbox
@@ -78,13 +88,13 @@
                 <Checkbox disabled label="28" style="padding: 0 0 10px 50px">人口迁徙
                 </Checkbox>
               </Tooltip>
-              <Checkbox label="9" v-if="senic.length==0" style="padding: 0 0 10px 50px">一机游用户消费</Checkbox>
-              <Checkbox label="10" v-if="senic.length==0" style="padding: 0 0 10px 50px">游客线下消费</Checkbox>
+             <!-- <Checkbox label="9" v-if="senic.length==0" style="padding: 0 0 10px 50px">一机游用户消费</Checkbox>
+              <Checkbox label="10" v-if="senic.length==0" style="padding: 0 0 10px 50px">游客线下消费</Checkbox>-->
             </CheckboxGroup>
           </div>
         </div>
 
-        <div style="border-bottom: 1px dashed #e9e9e9;" v-if="senic.length==0">
+      <!--  <div style="border-bottom: 1px dashed #e9e9e9;" v-if="senic.length==0">
           <div style="padding:10px;">
             <Checkbox
               :indeterminate="indeterminate4"
@@ -101,7 +111,7 @@
               <Checkbox label="13" style="padding: 0 0 10px 50px">投诉对象及处理情况分析</Checkbox>
             </CheckboxGroup>
           </div>
-        </div>
+        </div>-->
       </div>
       <div style="margin: 20px 0 0 40%">
         <Button @click="goto" :disabled='downling1==1'>预览</Button>
@@ -124,6 +134,7 @@
 
     data() {
       return {
+        buttonSize:'week',
         isclear:false,
         wjj: http.gmt2strmst(new Date()),
         htmldata: '',
