@@ -4,7 +4,7 @@
     <div style="margin:20px;">
       <card>
         <div class="card_title">
-          <span style="font-weight: bold;color: #000000">基本属性分析</span>
+          <span style="font-size: 14px;font-weight: bold;color: #000000">基本属性分析</span>
           <Tooltip content="消费能力-腾讯数据统计的用户消费指数" placement="right" max-width="200">
             <Icon size="19" style="margin-bottom: 1px" type="ios-help-circle-outline"/>
           </Tooltip>
@@ -16,57 +16,55 @@
           <Option value="" v-if="senicData.length==0" disabled>请先选择州市</Option>
           <Option v-for="(item, index) in senicData" :value="item.id" :key="index">{{item.name}}</Option>
         </Select>
-       <!-- <Button @click="slelecti7(1)">近7日</Button>
-        <Button @click="slelecti7(2)">近30日</Button>-->
-        <RadioGroup v-model="buttonSize" type="button" @on-change="slelecti7">
-          <Radio label="1">今天</Radio>
-          <Radio label="2">昨天</Radio>
-          <Radio label="3">近7日</Radio>
-          <Radio label="4">近30日</Radio>
-        </RadioGroup>
+        <!--<Button @click="slelecti7(3)">近7日</Button>
+        <Button @click="slelecti7(4)">近30日</Button>-->
+         <RadioGroup v-model="buttonSize" type="button" @on-change="slelecti7">
+           <Radio label="1">今天</Radio>
+           <Radio label="2">昨天</Radio>
+           <Radio label="3">近7日</Radio>
+           <Radio label="4">近30日</Radio>
+         </RadioGroup>
 
         <DatePicker type="daterange" v-model="cpicDate" placeholder="自选时间" style="width: 180px" @on-change="dateChange" :options="disoptionsdate"></DatePicker>
         <Row :gutter="16" style="margin-top: 20px">
           <Col span="6">
-            <div id="sex">
-              <div style="height: inherit;"></div>
-              <!-- <Icon type="ios-woman" size="32" color="#ff50fe" class="sex-icon"/> -->
-              <!-- <Icon type="ios-man" size="32" color="#1ea9ff" class="sex-icon"/> -->
-            </div>
+            <pie :title="'性别占比（%）'" :color="['rgb(95,170,255)','rgb(255,104,192)']" :unit="''" :x="sexDatax" :y="sexDatay" class="card"></pie>
           </Col>
           <Col span="6">
-            <div id="in" class="tousimg_zb"></div>
+            <pie :title="'年龄占比（%）'" :unit="'人'" :x="ageDatax" :y="ageDatay" class="card"></pie>
           </Col>
           <Col span="6">
-            <div id="os" class="tousimg_zb"></div>
+            <pie :title="'学历占比（%）'" :unit="'人'" :x="eduDatax" :y="eduDatay" class="card"></pie>
           </Col>
           <Col span="6">
-            <div id="ios" class="tousimg_zb"></div>
+            <pie :title="'消费能力（%）'" :unit="'人'" :x="inDatax" :y="inDatay" class="card"></pie>
           </Col>
         </Row>
 
         <Row :gutter="16" style="margin-top: 23px">
           <Col span="12">
-            <div id="age" class="tousimg_zb1"></div>
+            <barx :title="'有车情况'" :unit="'天'" :x="carDatay" :y="carDatax"></barx>
+
           </Col>
           <Col span="12">
-            <div id="edu" class="tousimg_zb1"></div>
+            <barx :title="'终端类型'" :unit="'天'" :x="osDatay" :y="osDatax"></barx>
+
           </Col>
         </Row>
         <Row :gutter="16" style="margin-top: 23px;">
           <Col span="24">
-            <div id="city" class="tousimg_zb"></div>
+            <div ref="city" class="tousimg_zb"></div>
           </Col>
         </Row>
         <Row :gutter="16" style="margin-top: 23px;">
           <Col span="24">
-            <div id="province" class="tousimg_zb"></div>
+            <div ref="province" class="tousimg_zb"></div>
           </Col>
         </Row>
       </card>
       <card style="margin-top: 20px">
         <div class="card_title">
-          <span style="font-weight: bold;color: #000000">人口迁移分析</span>
+          <span style="font-size: 14px;font-weight: bold;color: #000000">人口迁移分析</span>
 
         </div>
         <RadioGroup type="button" @on-change="hotlinepic" v-model="trfcty">
@@ -115,7 +113,7 @@
           <Col :span="7">
             <div style="border: 1px solid #dcdee2;height: 300px">
               <div style="margin: 20px">
-              <span style="color: #000">人均消费</span>
+                <span style="color: #000">人均消费</span>
 
               </div>
               <Row style="margin: 90px 0 0 50px">
@@ -123,7 +121,7 @@
                   <img src="../assets/imgs/cash1.png" style="margin-left:-20px;width:60px;height:60px"/>
                 </Col>
                 <Col :span="16" style="margin-left: -10px">
-                     <div style="margin-bottom: 3px;color: #000">用户平均消费金额</div>
+                  <div style="margin-bottom: 3px;color: #000">用户平均消费金额</div>
                   <div style="color:#006eff"><span style="font-size: 32px;font-weight:600">{{cashmax1vag}}</span> <span>元</span></div>
                 </Col>
               </Row>
@@ -145,9 +143,9 @@
                       </Col>
                       <Col v-if="item.names==''" span="5" class="qsnet_num">{{item.name.substring(0,4)}}</Col>
                       <Col v-if="item.names!=''" span="5" class="qsnet_num">
-                      <Tooltip placement="top" max-width="200" :content=item.name>
-                        {{item.name.substring(0,4)}}
-                      </Tooltip>
+                        <Tooltip placement="top" max-width="200" :content=item.name>
+                          {{item.name.substring(0,4)}}
+                        </Tooltip>
                       </Col>
                       <Col span="9" style="margin: 5px 0 0 0">  <pers-st :pers='item.pers' ></pers-st></Col>
 
@@ -163,13 +161,13 @@
               <div style="margin: 20px">
                 <span style="color: #000">消费类型占比</span>
 
-                <div id="cash" style="height:250px;width:100%;"></div>
+                <div ref="cash" style="height:250px;width:100%;"></div>
               </div>
             </div>
           </Col>
         </Row>
-      </card>-->
-   <!--   <card style="margin-top: 20px">
+      </card>
+      <card style="margin-top: 20px">
         <div style="height: 40px">
           <span style="font-weight: bold;color: #000000">线下用户消费维度分析</span>
           <Tooltip content="根据线下商家的诚信码支付数据计算" placement="right" max-width="200">
@@ -235,7 +233,7 @@
               <div style="margin: 20px">
                 <span style="color: #000">消费类型占比</span>
 
-                <div id="cash1" style="height:250px;width:100%;"></div>
+                <div ref="cash1" style="height:250px;width:100%;"></div>
               </div>
             </div>
           </Col>
@@ -378,7 +376,9 @@
   export default {
     components:{
       "aaamap":gomap,
-      "pers-st":pers_st
+      "pers-st":pers_st,
+      pie: resolve => require(['../components/echarts/pie.vue'], resolve),
+      barx: resolve => require(['../components/echarts/barx.vue'], resolve),
     },
     data() {
       return {
@@ -410,11 +410,16 @@
         vagprice: "",
         middle: "",
         tabname: "in",
-        sexData: [],
-        inData: [],
-        osData: [],
-        ageData: [],
-        eduData: [],
+        sexDatay: [],
+        sexDatax: [],
+        inDatay: [],
+        inDatax: [],
+        osDatax: [],
+        osDatay: [],
+        ageDatax: [],
+        ageDatay: [],
+        eduDatax: [],
+        eduDatay: [],
         cliData: [],
         ddData: [],
         cityData: [],
@@ -464,11 +469,11 @@
         data3: [],
         cashData: [],
         disoptionsdate: {
-            disabledDate (date) {
-              const end = new Date()
-              end.setDate(end.getDate()-1)
-                return date< new Date(2018,9,23) || date > end
-            }
+          disabledDate (date) {
+            const end = new Date()
+            end.setDate(end.getDate()-1)
+            return date< new Date(2018,9,23) || date > end
+          }
         }
       };
     },
@@ -476,6 +481,9 @@
       this.init();
       http.post('bi/write_run_log',{obj:'游客画像',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
       })
+      /*window.onresize = function windowResize () {
+        location.reload()
+      }*/
     },
     methods: {
       slelecti7(val){
@@ -497,6 +505,30 @@
           this.dateChange()
         }
       },
+      //4.6.1基本属性分析
+      get_portrait_base_by_datespan(s,c,sd,ed){
+        http.post('bi/get_portrait_base_by_datespan',{scenic:s,city_id:c, startTime:http.gmt2str(sd),endTime:http.gmt2str(ed)}).then(resp=>{
+          console.log(resp)
+          this.sexDatax = resp.data.hits.gender.map(i=>{return i.name});
+          this.sexDatay = resp.data.hits.gender;
+          let consumpting = http.getTop3(resp.data.hits.consumpting,3);
+          this.inDatax = consumpting.map(i=>{return i.name})
+          this.inDatay = consumpting
+          let edu = http.getTop3(resp.data.hits.edu,3);
+          this.eduDatax = edu.map(i=>{return i.name})
+          this.eduDatay = edu
+          // let age = resp.data.hits.age.sort((v1, v2) => v2.value - v1.value);
+          let age = http.getTop3(resp.data.hits.age,3)
+          this.ageDatax = age.map(i=>{return i.name})
+          this.ageDatay = age
+
+          this.osDatax = resp.data.hits.mobile.map(i=>{return i.name});
+          this.osDatay = resp.data.hits.mobile.map(i=>{return (i.value*100).toFixed(2)});
+
+          this.carDatax = resp.data.hits.car.map(i=>{return i.name})
+          this.carDatay = resp.data.hits.car.map(i=>{return (i.value*100).toFixed(2)})
+        })
+      },
       //3.3.2来源城市
       get_portrait_origin_by_date_p(sd,ed,t,s,c){
         this.provx=[]
@@ -516,24 +548,24 @@
           this.initPro();
         });
       },
-    //3.3.3来源省份
-    get_portrait_origin_by_date_c(sd,ed,t,s,c){
+      //3.3.3来源省份
+      get_portrait_origin_by_date_c(sd,ed,t,s,c){
         this.cityx=[]
         this.cityy=[]
-      http.post("bi/get_portrait_origin_by_datespan", {
-        startTime:http.gmt2str(sd),
-        endTime:http.gmt2str(ed),
-        type: t,
-        scenic: s,
-        city_id: c
-      }).then(resp => {
-        for (var i = 0; i < resp.data.hits.length; i++) {
-          this.cityx.push(resp.data.hits[i].name);
-          this.cityy.push(parseInt(resp.data.hits[i].origin_percent* 10000)/100);
-        }
-        this.initCity();
-      });
-    },
+        http.post("bi/get_portrait_origin_by_datespan", {
+          startTime:http.gmt2str(sd),
+          endTime:http.gmt2str(ed),
+          type: t,
+          scenic: s,
+          city_id: c
+        }).then(resp => {
+          for (var i = 0; i < resp.data.hits.length; i++) {
+            this.cityx.push(resp.data.hits[i].name);
+            this.cityy.push(parseInt(resp.data.hits[i].origin_percent* 10000)/100);
+          }
+          this.initCity();
+        });
+      },
       cashmax1(){
         http.post('bi/get_consume_by_datespan',{startTime:http.gmt2strm(this.cashdate1[0]),endTime:http.gmt2strm(this.cashdate1[1])}).then(resp=>{
           this.cashmax1vag = http.qfw(resp.data.hits.avg.avg_amount)
@@ -554,7 +586,7 @@
               cashmax1ranks[i].names = cashmax1ranks[i].name
             } else{
               cashmax1ranks[i].names=''
-          }
+            }
           }
 
           for (var i=0;i<cashmax1ranks.length;i++) {
@@ -564,6 +596,13 @@
           console.log(this.cashmax1rank)
           this.initCash();
         })
+      },
+      cashdatechange1(val){
+        if (val==1){
+          this.cashdate1=[http.getWeekAgo(),http.getToday()]
+        }else {
+          this.cashdate1=[http.getMonthAgo(),http.getToday()]
+        }
       },
       cashdatechange2(val){
         if (val==1){
@@ -620,35 +659,9 @@
             this.ccc1='';
           })
         }
-        http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),endTime:http.gmt2str(this.cpicDate[1]),city_id:val}).then(this.getPortraitData);
-                  http.post("bi/get_portrait_origin_by_datespan", {
-            //date: this.cpicDate,
-            startTime:http.gmt2str(this.cpicDate[0]),
-            endTime:http.gmt2str(this.cpicDate[1]),
-            type: "city",
-            scenic: "",
-            city_id: this.ccc
-          })
-          .then(resp => {
-            for (var i = 0; i < resp.data.hits.length; i++) {
-              this.cityx.push(resp.data.hits[i].name);
-              this.cityy.push(parseInt(resp.data.hits[i].origin_percent* 10000)/100);
-            }
-            this.initCity();
-          });
-        http.post("bi/get_portrait_origin_by_datespan", {
-            startTime:http.gmt2str(this.cpicDate[0]),
-            endTime:http.gmt2str(this.cpicDate[1]),
-            type: "prov",
-            scenic: "",
-            city_id: this.ccc
-          }).then(resp => {
-            for (var i = 0; i < resp.data.hits.length; i++) {
-              this.provx.push(resp.data.hits[i].name);
-              this.provy.push(parseInt(resp.data.hits[i].origin_percent * 10000)/100);
-            }
-            this.initPro();
-          });
+        this.get_portrait_origin_by_date_p(this.cpicDate[0],this.cpicDate[1],'prov',null,this.ccc)
+        this.get_portrait_origin_by_date_c(this.cpicDate[0],this.cpicDate[1],'city',null,this.ccc)
+        this.get_portrait_base_by_datespan(null,this.ccc,this.cpicDate[0],this.cpicDate[1])
       },
       hotlinedp(){
         if (!this.ccti) {
@@ -808,7 +821,6 @@
               if (resp.data.hits) {
                 this.provy = [];
                 this.cityx = [];
-
               }
             })
           }
@@ -834,17 +846,18 @@
             this.ccc1='';
           })
         }
-        http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
-            endTime:http.gmt2str(this.cpicDate[1]),city_id:this.ccc})
-          .then(this.getPortraitData);
+        /* http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
+           endTime:http.gmt2str(this.cpicDate[1]),city_id:this.ccc})
+           .then(this.getPortraitData);*/
+        this.get_portrait_base_by_datespan(null,this.ccc,this.cpicDate[0],this.cpicDate[1])
         http.post("bi/get_portrait_origin_by_datespan", {
-            //date: http.gmt2str(this.cpicDate),
-            startTime:http.gmt2str(this.cpicDate[0]),
-            endTime:http.gmt2str(this.cpicDate[1]),
-            type: "city",
-            scenic: "",
-            city_id: this.ccc
-          })
+          //date: http.gmt2str(this.cpicDate),
+          startTime:http.gmt2str(this.cpicDate[0]),
+          endTime:http.gmt2str(this.cpicDate[1]),
+          type: "city",
+          scenic: "",
+          city_id: this.ccc
+        })
           .then(resp => {
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.cityx.push(resp.data.hits[i].name);
@@ -853,13 +866,13 @@
             this.initCity();
           });
         http.post("bi/get_portrait_origin_by_datespan", {
-            //date: this.cpicDate,
-            startTime:http.gmt2str(this.cpicDate[0]),
-            endTime:http.gmt2str(this.cpicDate[1]),
-            type: "prov",
-            scenic: "",
-            city_id: this.ccc
-          })
+          //date: this.cpicDate,
+          startTime:http.gmt2str(this.cpicDate[0]),
+          endTime:http.gmt2str(this.cpicDate[1]),
+          type: "prov",
+          scenic: "",
+          city_id: this.ccc
+        })
           .then(resp => {
             for (var i = 0; i < resp.data.hits.length; i++) {
               this.provx.push(resp.data.hits[i].name);
@@ -931,14 +944,14 @@
           width: 80,
           borderRadius: 10,
           rich: {
-              a: {
-                  color: '#878787',
-                  fontSize: 12
-              },
-              b: {
-                  color: '#000',
-                  fontSize: 12
-              }
+            a: {
+              color: '#878787',
+              fontSize: 12
+            },
+            b: {
+              color: '#000',
+              fontSize: 12
+            }
           }
         };
         // 前三数据
@@ -958,13 +971,13 @@
             value: extraValue
           })
         }
-
+        console.log('oOptions.eloOptions.eloOptions.el::',oOptions.el)
         this.$echarts.init(document.querySelector(oOptions.el)).setOption({
           color: oOptions.color,
           title: {
             text: oOptions.title,
             textStyle: {
-              fontSize: 14
+              fontSize: 12
             },
             x: 20,
             y: 15
@@ -1008,8 +1021,8 @@
       },
       initCash() {
         let aCashData = this.cashData.sort((v1, v2) => v2.value - v1.value);
-        let cashChart = this.$echarts.init(document.getElementById("cash"));
-        cashChart.setOption({
+        let dom = this.$refs.cash
+        let opt = {
           color: ["#006EFF", "#29CC85", "#ffbb00", "#ff584c", "#9741d9", "#1fc0cc"],
           legend: {
             //orient: "vertical",
@@ -1043,20 +1056,13 @@
               data: aCashData
             }
           ]
-        });
-        //触发tooltip显示事件
-        setTimeout(() => {
-          cashChart.dispatchAction({
-            type: 'showTip',
-            seriesIndex: 0,
-            dataIndex: 0
-          });
-        }, 1000);
+        }
+        this.echart(dom, opt, "pie")
       },
       initCash1() {
         let aCashData = this.cashData1.sort((v1, v2) => v2.value - v1.value);
-        let cashChart = this.$echarts.init(document.getElementById("cash1"));
-        cashChart.setOption({
+        let dom = this.$refs.cash1
+        let opt = {
           color: ["#006EFF", "#29CC85", "#ffbb00", "#ff584c", "#9741d9", "#1fc0cc"],
           legend: {
             //orient: "vertical",
@@ -1091,23 +1097,17 @@
               data: aCashData
             }
           ]
-        });
-        //触发tooltip显示事件
-        setTimeout(() => {
-          cashChart.dispatchAction({
-            type: 'showTip',
-            seriesIndex: 0,
-            dataIndex: 0
-          });
-        }, 1000);
+        }
+        this.echart(dom, opt, "pie")
       },
       initAge() {
-        let age = this.$echarts.init(document.getElementById("age"));
-        age.setOption({
+        // let age = this.$echarts.init(document.getElementById("age"));
+        let dom = this.$refs.age
+        let opt = {
           title: {
             text: "有车情况",
             textStyle: {
-              fontSize: 16
+              fontSize: 12
             },
             x: "0",
             y: 20
@@ -1124,6 +1124,7 @@
             left: "1%",
             right: "10%",
             bottom: "4%",
+            top:"50px",
             containLabel: true
           },
           xAxis: {
@@ -1184,15 +1185,16 @@
             }
           ],
           color: ["#006EFF"]
-        });
+        }
+        this.echart(dom, opt, "barx")
       },
       initEdu() {
-        let edu = this.$echarts.init(document.getElementById("edu"));
-        edu.setOption({
+        let dom = this.$refs.edu
+        let opt = {
           title: {
             text: "终端类型",
             textStyle: {
-              fontSize: 16
+              fontSize: 12
             },
             x: "0",
             y: 20
@@ -1209,6 +1211,7 @@
             left: "1%",
             right: "10%",
             bottom: "4%",
+            top:"50px",
             containLabel: true
           },
           xAxis: {
@@ -1269,15 +1272,16 @@
             }
           ],
           color: ["#006EFF"]
-        });
+        }
+        this.echart(dom, opt, "barx")
       },
       initCity() {
-        let city = this.$echarts.init(document.getElementById("city"));
-        city.setOption({
+        let dom = this.$refs.city
+        let opt = {
           title: {
             text: "来源城市",
             textStyle: {
-              fontSize: 16
+              fontSize: 12
             },
             x: 32,
             y: 20
@@ -1294,15 +1298,16 @@
             left: "5%",
             right: "5%",
             bottom: "20",
+            top:"50px",
             containLabel: true
           },
           xAxis: {
             type: "category",
             data: this.cityx,
-           /* axisLabel: {
-              interval: 0,
-              formatter:echartsHelper.labelFormatter
-            },*/
+            /* axisLabel: {
+               interval: 0,
+               formatter:echartsHelper.labelFormatter
+             },*/
             nameTextStyle: {
               color: '#888'
             },
@@ -1358,15 +1363,16 @@
             }
           ],
           color: ["#006EFF"]
-        });
+        }
+        this.echart(dom, opt, "barx")
       },
       initPro() {
-        let pro = this.$echarts.init(document.getElementById("province"));
-        pro.setOption({
+        let dom = this.$refs.province
+        let opt = {
           title: {
             text: "来源省份",
             textStyle: {
-              fontSize: 16
+              fontSize: 12
             },
             x: 32,
             y: 20
@@ -1383,15 +1389,16 @@
             left: "5%",
             right: "5%",
             bottom: "20",
+            top:"50px",
             containLabel: true
           },
           xAxis: {
             type: "category",
             data: this.provx,
-          /*  axisLabel: {
-              interval: 0,
-              formatter:echartsHelper.labelFormatter
-            },*/
+            /*  axisLabel: {
+                interval: 0,
+                formatter:echartsHelper.labelFormatter
+              },*/
             nameTextStyle: {
               color: '#888'
             },
@@ -1447,7 +1454,8 @@
             }
           ],
           color: ["#006EFF"]
-        });
+        }
+        this.echart(dom, opt, "barx")
       },
       clicktab() {
         if (this.tabname==='in'){
@@ -1493,38 +1501,39 @@
         this.mobiley = [];
         this.get_portrait_origin_by_date_p(this.cpicDate[0],this.cpicDate[1],'prov',null,this.ccc)
         this.get_portrait_origin_by_date_c(this.cpicDate[0],this.cpicDate[1],'city',null,this.ccc)
-        http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
-            endTime:http.gmt2str(this.cpicDate[1]),city_id:this.ccc})
-          .then(this.getPortraitData);
-       /* http.post("bi/get_portrait_origin_by_datespan", {
-            startTime:http.gmt2str(this.cpicDate[0]),
-            endTime:http.gmt2str(this.cpicDate[1]),
-            type: "city",
-            scenic: "",
-            city_id: this.ccc
-          })
-          .then(resp => {
-            for (var i = 0; i < resp.data.hits.length; i++) {
-              this.cityx.push(resp.data.hits[i].name);
-              this.cityy.push(parseInt(resp.data.hits[i].origin_percent* 10000)/100);
-            }
-            this.initCity();
-          });
-        http.post("bi/get_portrait_origin_by_datespan", {
-            //date: this.cpicDate,
-            startTime:http.gmt2str(this.cpicDate[0]),
-            endTime:http.gmt2str(this.cpicDate[1]),
-            type: "prov",
-            scenic: "",
-            city_id: this.ccc
-          })
-          .then(resp => {
-            for (var i = 0; i < resp.data.hits.length; i++) {
-              this.provx.push(resp.data.hits[i].name);
-              this.provy.push(parseInt(resp.data.hits[i].origin_percent * 10000)/100);
-            }
-            this.initPro();
-          });*/
+        this.get_portrait_base_by_datespan(null,this.ccc,this.cpicDate[0],this.cpicDate[1])
+        /*   http.post("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
+             endTime:http.gmt2str(this.cpicDate[1]),city_id:this.ccc})
+             .then(this.getPortraitData);*/
+        /* http.post("bi/get_portrait_origin_by_datespan", {
+             startTime:http.gmt2str(this.cpicDate[0]),
+             endTime:http.gmt2str(this.cpicDate[1]),
+             type: "city",
+             scenic: "",
+             city_id: this.ccc
+           })
+           .then(resp => {
+             for (var i = 0; i < resp.data.hits.length; i++) {
+               this.cityx.push(resp.data.hits[i].name);
+               this.cityy.push(parseInt(resp.data.hits[i].origin_percent* 10000)/100);
+             }
+             this.initCity();
+           });
+         http.post("bi/get_portrait_origin_by_datespan", {
+             //date: this.cpicDate,
+             startTime:http.gmt2str(this.cpicDate[0]),
+             endTime:http.gmt2str(this.cpicDate[1]),
+             type: "prov",
+             scenic: "",
+             city_id: this.ccc
+           })
+           .then(resp => {
+             for (var i = 0; i < resp.data.hits.length; i++) {
+               this.provx.push(resp.data.hits[i].name);
+               this.provy.push(parseInt(resp.data.hits[i].origin_percent * 10000)/100);
+             }
+             this.initPro();
+           });*/
       },
       dateChange3(){
         http.post("bi/get_consume_by_date", {date: http.gmt2str(this.picDate3), city_id:this.ccc})
@@ -1535,10 +1544,10 @@
       },
       dateChange4(){
         http.post("bi/get_consume_type_by_mon", {
-            startTime: http.gmt2str(this.picDate4[0]),
-            endTime: http.gmt2str(this.picDate4[1]),
-            city_id:this.ccc
-          })
+          startTime: http.gmt2str(this.picDate4[0]),
+          endTime: http.gmt2str(this.picDate4[1]),
+          city_id:this.ccc
+        })
           .then(resp => {
             //循环控制趟数
             this.cashData = resp.data.hits;
@@ -1560,11 +1569,9 @@
           this.carDatay = [];
           this.mobilex = [];
           this.mobiley = [];
-
-          http
-            .get("bi/get_portrait_base_by_datespan", {startTime:http.gmt2str(this.cpicDate[0]),
-              endTime:http.gmt2str(this.cpicDate[1]),city_id:this.ccc,scenic:this.ccc1})
-            .then(this.getPortraitData);
+          this.get_portrait_origin_by_date_p(this.cpicDate[0],this.cpicDate[1],'prov',this.ccc1,this.ccc)
+          this.get_portrait_origin_by_date_c(this.cpicDate[0],this.cpicDate[1],'city',this.ccc1,this.ccc)
+          this.get_portrait_base_by_datespan(this.ccc1,this.ccc,this.cpicDate[0],this.cpicDate[1])
         }
       },
       _ccti(){
@@ -1592,44 +1599,44 @@
         this.picDate4[0]=this.d22;
         this.picDate4[1]=this.d11;
         http.post("bi/get_consume_type_by_mon", {
-            startTime: http.gmt2str(this.d11),
-            endTime: http.gmt2str(this.d11),
-            city_id:this.ccc
-          })
+          startTime: http.gmt2str(this.d11),
+          endTime: http.gmt2str(this.d11),
+          city_id:this.ccc
+        })
           .then(resp => {
             this.cashData = resp.data.hits;
-           /* var s = 0;
-            var s1 = 0;
-            //为什么 isSort = true，不能写在循环外面
-            //因为 交换位置 isSort = false.  isSort的值永远是false 。我们要检测的是某一趟是否交换位置
-            for (var i = 0; i < this.cashData.length - 1; i++) {
-              var isSort = true; //假设排序ok
-              //控制两两比较的次数       1--6      2--5   4 3 2 1
-              for (var j = 0; j < this.cashData.length - 1 - i; j++) {
-                //两两比较   从小到大排序
+            /* var s = 0;
+             var s1 = 0;
+             //为什么 isSort = true，不能写在循环外面
+             //因为 交换位置 isSort = false.  isSort的值永远是false 。我们要检测的是某一趟是否交换位置
+             for (var i = 0; i < this.cashData.length - 1; i++) {
+               var isSort = true; //假设排序ok
+               //控制两两比较的次数       1--6      2--5   4 3 2 1
+               for (var j = 0; j < this.cashData.length - 1 - i; j++) {
+                 //两两比较   从小到大排序
 
-                //如果交换位置，说明没有排序好，如果不交换位置，说明排序好
-                if (this.cashData[j].total < this.cashData[j + 1].total) {
-                  isSort = false;  //没有排序好呢
-                  //交换位置
-                  var tmp = this.cashData[j];
-                  this.cashData[j] = this.cashData[j + 1];
-                  this.cashData[j + 1] = tmp;
-                }
+                 //如果交换位置，说明没有排序好，如果不交换位置，说明排序好
+                 if (this.cashData[j].total < this.cashData[j + 1].total) {
+                   isSort = false;  //没有排序好呢
+                   //交换位置
+                   var tmp = this.cashData[j];
+                   this.cashData[j] = this.cashData[j + 1];
+                   this.cashData[j + 1] = tmp;
+                 }
 
-                s++; //记录内循环的次数
-              }
-              s1++;  //记录外循环的次数
+                 s++; //记录内循环的次数
+               }
+               s1++;  //记录外循环的次数
 
-              if(isSort) {
-                //如果排序好了
-                break;
-              }
-            }
-            console.log('this.cashData：：',this.cashData)
-            for (var i = 0; i < resp.data.hits.length; i++) {
-              this.cashDataX.push(resp.data.hits[i].name);
-            }*/
+               if(isSort) {
+                 //如果排序好了
+                 break;
+               }
+             }
+             console.log('this.cashData：：',this.cashData)
+             for (var i = 0; i < resp.data.hits.length; i++) {
+               this.cashDataX.push(resp.data.hits[i].name);
+             }*/
             this.initCash();
           });
       }

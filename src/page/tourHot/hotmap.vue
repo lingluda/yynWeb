@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="tit">
-      <span style="color: rgb(102, 159, 199);">旅游热度</span>
-      <Icon type="ios-arrow-forward"/>
-      <span style="font-size: 12px;color: #000">景区客流热力</span>
+      <span style="color: #000;">景区热力</span>
+     <!-- <Icon type="ios-arrow-forward"/>
+      <span style="font-size: 12px;color: #000">景区客流热力</span>-->
     </div>
     <div class="tabpane_content">
       <card>
@@ -648,7 +648,10 @@
 
           ]
         };
-        mybar.setOption(option);
+        mybar.setOption(option)
+        window.onresize = function(){
+          mybar.resize();
+        }
       },
       initlines() {
         var mybar = this.$echarts.init(document.getElementById("mybar"));

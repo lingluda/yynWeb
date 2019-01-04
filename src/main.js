@@ -24,6 +24,9 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+// 封装echarts
+import myEcharts from "./libs/echarts/index.js"
+Vue.prototype.echart = myEcharts;
 //系统错误捕获
 const errorHandler = (error, vm, info)=>{
   console.error('抛出全局异常');

@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="ti">
-      <span style="color: rgb(102, 159, 199);">旅游热度</span>
-      <Icon type="ios-arrow-forward" />
-      <span style="font-size: 12px;">旅游热度概况</span>
+      <span style="color: #000;">旅游热度</span>
+      <!--<Icon type="ios-arrow-forward" />
+      <span style="font-size: 12px;">旅游热度概况</span>-->
     </div>
 
       <div label="首页" name="index" class="lyrd_sy_content">
@@ -551,7 +551,10 @@ export default {
             }
           }
         ]
-      });
+      })
+      window.onresize = function(){
+        myline.resize();
+      }
     },
     click(val) {
       this.$router.push(val);

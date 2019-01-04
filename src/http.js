@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Message } from 'iview'
+import '../src/dateFormate'
 import iView from 'iview'
 axios.interceptors.response.use(
   response => {
@@ -11,10 +12,10 @@ axios.interceptors.response.use(
         return false
       }
       axios.get('bi/write_js_log?uri='+response.config.url+'&msg='+msg)
-   /*   console.error(`cgi: ${response.config.url}`, {
-        code,
-        msg
-      })*/
+      /*   console.error(`cgi: ${response.config.url}`, {
+           code,
+           msg
+         })*/
       throw new Error(msg)
     }
     return response
@@ -28,10 +29,10 @@ axios.interceptors.response.use(
 let http = {}
 http.posts = function (url, data) {
   //if (document.cookie.length>0){
-    return axios.post(url,data)
- /* }else {
-    window.href('https://tglpt.ybsjyyn.com/login')
-  }*/
+  return axios.post(url,data)
+  /* }else {
+     window.href('https://tglpt.ybsjyyn.com/login')
+   }*/
 
 }
 http.post = function (url, data) {
@@ -52,22 +53,22 @@ http.get = function (url, data) {
   if (JSON.stringify(data) == '{}') {
     data = { 1: 1 }
   }
- // if (document.cookie.length>0){
+  // if (document.cookie.length>0){
   return axios.get(url + '?' + encodeUrl(data)+'&r='+Math.random())
-/*}
-  else {
-    window.open('https://tglpt.ybsjyyn.com/login','_self')
-  }*/
+  /*}
+    else {
+      window.open('https://tglpt.ybsjyyn.com/login','_self')
+    }*/
 }
 http.getcn = function(id){
-    var cc =''
+  var cc =''
   console.log(this)
-    let self =this
-    axios.get('bi/get_cityname_by_id?city_id='+id).then(function (res) {
-      console.log(1)
-      console.log(self)
-      self.cc= res.data.hits
-    })
+  let self =this
+  axios.get('bi/get_cityname_by_id?city_id='+id).then(function (res) {
+    console.log(1)
+    console.log(self)
+    self.cc= res.data.hits
+  })
   return cc
   console.log(2)
 }
@@ -308,37 +309,13 @@ http.getWeekAgo = function () {
 }
 http.getMonthAgo = function () {
   var data = new Date()
-  var year = data.getUTCFullYear()
-  var month = data.getMonth()
-  var day = data.getDate()
-  if (month < 10) {
-    var currentMonth = '0' + month
-  } else {
-    currentMonth = month.toString()
-  }
-  if (day < 10) {
-    var currentDay = '0' + day
-  } else {
-    currentDay = day.toString()
-  }
-  return year + '-' + currentMonth + '-' + currentDay
+  data.setDate(data.getDate()-30)
+  return data.format('yyyy-MM-dd')
 }
 http.get2MonthAgo = function () {
   var data = new Date()
-  var year = data.getUTCFullYear()
-  var month = data.getMonth()
-  var day = data.getDate()
-  if (month < 10) {
-    var currentMonth = '0' + month
-  } else {
-    currentMonth = month.toString()
-  }
-  if (day < 10) {
-    var currentDay = '0' + day
-  } else {
-    currentDay = day.toString()
-  }
-  return year + '-' + currentMonth + '-' + '01'
+  data.setDate(data.getDate()-60)
+  return data.format('yyyy-MM-dd')
 }
 http.gmt2str = function (time) {
   let date = new Date(time)
@@ -469,6 +446,24 @@ http.StrLen= function (str) {
     }
   }
   return len
+}
+http.getTop3 = function (all, min) {
+  const initLen = min
+  let allDate = all.sort((v1, v2) => v2.value - v1.value)
+  const chartData = allDate.slice(0, initLen)
+  let extraValue = 0
+  for (let i = initLen, len = allDate.length; i < len; i++) {
+    if (allDate[i]) {
+      extraValue += allDate[i].value
+    }
+  }
+  if (extraValue) {
+    chartData.push({
+      name: '其他',
+      value: extraValue
+    })
+  }
+  return chartData;
 }
 function encodeUrl (obj) {
   let url = ''

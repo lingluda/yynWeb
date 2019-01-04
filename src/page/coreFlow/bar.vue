@@ -83,7 +83,7 @@
                 ],
                 yAxis : [
                   {
-                    name: '游客人数(万人)',
+                    name: '游客人数',
                     nameGap: 20,
                     nameTextStyle: {
                       color: '#999'
@@ -104,7 +104,7 @@
                       }
                     }
                   }, {
-                    name: '游客变化量(万人)',
+                    name: '游客变化量',
                     nameGap: 20,
                     nameTextStyle: {
                       color: '#999'
@@ -180,6 +180,9 @@
                   }
                 ]
               })
+              window.onresize = function(){
+                bar.resize();
+              }
             })
           },
       },
