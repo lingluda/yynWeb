@@ -39,5 +39,7 @@ export default {
   .ivu-select-item:hover{
     background: #f2f2f2;
   }
-
+  .ivu-layout-sider{
+   // min-height: calc(100vh - 50px);
+  }
 </style>

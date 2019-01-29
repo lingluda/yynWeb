@@ -8,10 +8,10 @@ axios.interceptors.response.use(
       const code = response.data.errcode
       const msg = response.data.errmsg || '接口返回错误'
       // Message.error(msg)
-      if (response.config.url.indexOf('write_js_log')>-1){
+     /* if (response.config.url.indexOf('write_js_log')>-1){
         return false
-      }
-      axios.get('bi/write_js_log?uri='+response.config.url+'&msg='+msg)
+      }*/
+      //axios.get('bi/write_js_log?uri='+response.config.url+'&msg='+msg)
       /*   console.error(`cgi: ${response.config.url}`, {
            code,
            msg
@@ -496,4 +496,5 @@ function getUrlAllParams() {
   }
   return args;
 }
+//axios.defaults.baseURL = 'https://tglpt.ybsjyyn.com/as/'
 export default http

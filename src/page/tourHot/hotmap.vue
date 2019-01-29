@@ -395,8 +395,8 @@
     },
     mounted() {
       this.init();
-      http.post('bi/write_run_log',{obj:' 景区客流热力',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
-      })
+      //http.post('bi/write_run_log',{obj:' 景区客流热力',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
+      //})
     },
     methods: {
       init() {

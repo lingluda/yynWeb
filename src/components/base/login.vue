@@ -15,10 +15,10 @@
         </Input>
       </FormItem>
 
-      <FormItem prop="code">
+      <!--<FormItem prop="code">
         <Input type="text" v-model="formInline.code" placeholder="验证码">
         </Input>
-      </FormItem>
+      </FormItem>-->
       <FormItem>
         <Button style="width: 100%;background-color: #1076ff;color: white" @click="login('formInline')">登&nbsp;&nbsp;录</Button>
       </FormItem>
@@ -59,16 +59,16 @@
       login(val){
         this.$refs[val].validate((valid)=>{
           if(valid){
-            http.post('bi/login',{user_name:this.formInline.user,pwd:this.formInline.password}).then(resp=>{
-              if(resp.data.errcode===0){
+            //http.post('bi/login',{user_name:this.formInline.user,pwd:this.formInline.password}).then(resp=>{
+              //if(resp.data.errcode===0){
                 // 设置当前用户级别为省级
                 // this.$store.commit('setUserLevel',{ level : 'provincial'});
 
                 // 设置当前用户级别为市级
                 // this.$store.commit('setUserLevel',{ level : 'city'});
                 this.$router.push('index')
-              }
-            })
+              //}
+           // })
           }
         })
       },

@@ -288,8 +288,8 @@
     },
     mounted() {
       this.init();
-      http.post('bi/write_run_log',{obj:'游客体验',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
-      })
+      //http.post('bi/write_run_log',{obj:'游客体验',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
+      //})
     },
     methods: {
       dateChoice11(val) {

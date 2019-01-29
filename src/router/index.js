@@ -21,8 +21,8 @@ export default new Router({
       children: [
                {
           path:'/',
-          name:'quota',
-          redirect:'quota'
+          name:'index',
+          redirect:'index'
         },
         {
           path: '/analysisform',
@@ -116,32 +116,7 @@ export default new Router({
             require(['../page/tourHot/hotmap.vue'], resolve)
           }
         },
-        {
-          path: '/hotmaps',
-          name: 'hotmaps',
-          component: resolve => {
-            require(['@/components/map/hotMap.vue'], resolve)
-          }
-        },
-        {
-          path: '/hotmap1',
-          name: 'hotmaps1',
-          component: resolve => {
-            require(['@/components/map/hotMap1.vue'], resolve)
-          }
-        },{
-          path: '/hotmap2',
-          name: 'hotmaps2',
-          component: resolve => {
-            require(['@/components/map/hotMap2.vue'], resolve)
-          }
-        },{
-          path: '/hotmap3',
-          name: 'hotmaps3',
-          component: resolve => {
-            require(['@/components/map/hotMap3.vue'], resolve)
-          }
-        },
+
         {
           path: '/index2',
           name: 'Index',
@@ -192,6 +167,32 @@ export default new Router({
           }
         }
       ]
-    }
+    },
+    {
+      path: '/hotmaps',
+      name: 'hotmaps',
+      component: resolve => {
+        require(['@/components/map/hotMap.vue'], resolve)
+      }
+    },
+    {
+      path: '/hotmap1',
+      name: 'hotmaps1',
+      component: resolve => {
+        require(['@/components/map/hotMap1.vue'], resolve)
+      }
+    },{
+      path: '/hotmap2',
+      name: 'hotmaps2',
+      component: resolve => {
+        require(['@/components/map/hotMap2.vue'], resolve)
+      }
+    },{
+      path: '/hotmap3',
+      name: 'hotmaps3',
+      component: resolve => {
+        require(['@/components/map/hotMap3.vue'], resolve)
+      }
+    },
   ]
 })

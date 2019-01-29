@@ -179,8 +179,8 @@
     },
     mounted() {
       this.init()
-      http.post('bi/write_run_log',{obj:'平台运营',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
-      })
+      //http.post('bi/write_run_log',{obj:'平台运营',msg:window.performance.timing.domInteractive - window.performance.timing.domLoading}).then(resp=>{
+      //})
     },
     methods: {
       choose7(val){

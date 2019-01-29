@@ -1,7 +1,6 @@
 <template>
   <div class="flowList" style="height:605px">
     <Table :columns="columns1" :data="listData" size="large" style="width: 100%"></Table>
-
   </div>
 </template>
 <script>

@@ -58,7 +58,7 @@
           </Col>
           <Col span="13">
             <list :startDate="d11" :listData="listData"></list>
-            <a style="float: right;" @click="goto">查看更多 >></a>
+            <!--<a style="float: right;" @click="goto">查看更多 >></a>-->
             <!--<router-link :to="{path:'coreFlow/list',query:{sdate:d11}}"><p style="text-align: right;">查看更多 >></p></router-link>-->
           </Col>
         </Row>
